@@ -1,6 +1,6 @@
 import type { Product } from "./types";
 import { price } from "./price";
-import { BadgePercent } from "lucide-react";
+import { Tag } from "lucide-react";
 
 export function ProductPrice({ product }: { product: Product }) {
   const { priceCents, previousPriceCents } = product;
@@ -21,8 +21,8 @@ export function ProductPrice({ product }: { product: Product }) {
       {hasOffer && (
         <>
           <span className="offer-label">
-            <BadgePercent aria-hidden="true" />
-            Oferta imperdível
+            <Tag aria-hidden="true" />
+            <span>Oferta imperdível</span>
           </span>
           <p className="previous-price">
             <span className="sr-only">Preço anterior: </span>

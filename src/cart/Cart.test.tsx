@@ -15,12 +15,20 @@ const renderCatalog = () =>
     />,
   );
 
+async function addProduct(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(
+    screen.getByRole("button", { name: "Ver Tesoura de cozinha" }),
+  );
+  await user.click(
+    screen.getByRole("button", { name: /^Adicionar ao carrinho/ }),
+  );
+  await user.click(screen.getByRole("button", { name: /^Fechar$/ }));
+}
+
 test("adiciona, ajusta e remove produtos com total atualizado", async () => {
   const user = userEvent.setup();
   renderCatalog();
-  await user.click(
-    screen.getByRole("button", { name: "Adicionar Tesoura de cozinha" }),
-  );
+  await addProduct(user);
   await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
   const dialog = within(screen.getByRole("dialog"));
   expect(
@@ -43,9 +51,7 @@ test("adiciona, ajusta e remove produtos com total atualizado", async () => {
 test("reabrir recupera seleção e limpar exige confirmação", async () => {
   const user = userEvent.setup();
   const first = renderCatalog();
-  await user.click(
-    screen.getByRole("button", { name: "Adicionar Tesoura de cozinha" }),
-  );
+  await addProduct(user);
   first.unmount();
   renderCatalog();
   await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
@@ -65,9 +71,7 @@ test("reabrir recupera seleção e limpar exige confirmação", async () => {
 test("sincronização avisa antes de mudar o total", async () => {
   const user = userEvent.setup();
   const view = renderCatalog();
-  await user.click(
-    screen.getByRole("button", { name: "Adicionar Tesoura de cozinha" }),
-  );
+  await addProduct(user);
   await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
   view.rerender(
     <CatalogPage
@@ -95,9 +99,7 @@ test("sem armazenamento continua somando e informa limite da persistência", asy
   try {
     const user = userEvent.setup();
     renderCatalog();
-    await user.click(
-      screen.getByRole("button", { name: "Adicionar Tesoura de cozinha" }),
-    );
+    await addProduct(user);
     await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
     expect(screen.getByRole("alert")).toHaveTextContent("apenas nesta aba");
     expect(
@@ -111,9 +113,7 @@ test("sem armazenamento continua somando e informa limite da persistência", asy
 test("carrinho carregando não trata produtos como removidos", async () => {
   const user = userEvent.setup();
   const view = renderCatalog();
-  await user.click(
-    screen.getByRole("button", { name: "Adicionar Tesoura de cozinha" }),
-  );
+  await addProduct(user);
   view.rerender(
     <CatalogPage
       products={[]}

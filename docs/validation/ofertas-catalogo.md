@@ -22,3 +22,12 @@ com texto branco e ícone de desconto, por preferência explícita do usuário. 
 Validação em tablet Samsung/celular reais e com o vendedor continua pendente.
 As ofertas e fotos de demonstração são fictícias. O painel administrativo ainda
 não foi implementado; o preço anterior está no contrato público do catálogo.
+
+## Ajuste dos cards após feedback do usuário
+
+- Card inteiro abre os detalhes, com um único botão acessível, foco visível e
+  retorno do foco ao fechar. A adição ocorre somente dentro do modal.
+- Preços alinhados em cards com e sem oferta; removido botão de adicionar da lista.
+- Selo azul com ícone de etiqueta, fonte de peso 550 e alinhamento vertical central.
+- `npm test`: 73 testes passaram; `npm run test:e2e`: 21 testes passaram, incluindo
+  clique na parte inferior do card e alinhamento dos preços em 360, 800 e 1280 px.

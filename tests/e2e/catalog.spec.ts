@@ -148,3 +148,36 @@ test("oferta permanece no catálogo offline e detalhes usam duas colunas em tela
   const info = await page.locator(".product-detail-info").boundingBox();
   expect(photo!.x + photo!.width).toBeLessThan(info!.x);
 });
+
+test("card inteiro abre detalhes e preços ficam alinhados entre ofertas e produtos comuns", async ({
+  page,
+}) => {
+  for (const width of [1280, 800, 360]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    const cards = page.locator(".product-card");
+    await expect(cards).toHaveCount(10);
+    const first = cards.nth(0);
+    const second = cards.nth(1);
+    await expect(first.getByRole("button", { name: /Adicionar/ })).toHaveCount(
+      0,
+    );
+    const priceA = await first.locator(".product-price").boundingBox();
+    const priceB = await second.locator(".product-price").boundingBox();
+    expect(priceA!.y).toBeCloseTo(priceB!.y, 0);
+
+    const cardBox = await first.boundingBox();
+    const triggerBox = await first
+      .getByRole("button", { name: /Ver / })
+      .boundingBox();
+    expect(triggerBox!.height).toBeCloseTo(cardBox!.height - 2, 0);
+    await first.click({ position: { x: 20, y: cardBox!.height - 20 } });
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(
+      page
+        .getByRole("dialog")
+        .getByRole("button", { name: "Adicionar ao carrinho", exact: true }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Fechar", exact: true }).click();
+  }
+});

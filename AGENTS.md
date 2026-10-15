@@ -45,7 +45,11 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   Produtos sem preço anterior não recebem destaque de oferta. O carrinho usa
   somente o preço atual. Percentual em selo verde `#04a650` com texto branco.
   Selo "OFERTA IMPERDÍVEL" em azul com texto branco e ícone de desconto, conforme
-  referências e preferências explícitas do usuário.
+  referências e preferências explícitas do usuário. Conteúdo centralizado
+  verticalmente, fonte de peso moderado e ícone simples de etiqueta.
+- Card inteiro clicável para abrir os detalhes, com suporte a teclado e foco visível.
+  Adicionar ao carrinho somente no modal de detalhes; sem botão de adicionar na
+  listagem. Alinhar nome, área de oferta e preço entre cards com e sem promoção.
 - Detalhes em duas colunas nas telas maiores (foto à esquerda, informações e ações
   à direita), adaptados ao celular e à paisagem com pouca altura. Evitar rolagem
   desnecessária; manter categoria e código na mesma linha.

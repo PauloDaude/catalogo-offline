@@ -1,21 +1,15 @@
 import { test, expect } from "@playwright/test";
 
-import { prepare } from "./helpers";
+import { prepare, addToCart } from "./helpers";
 
 test("carrinho agrupa, altera quantidades e confirma limpeza", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/");
-  await page
-    .getByRole("button", { name: "Adicionar Tesoura multiuso", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Adicionar Tesoura multiuso", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Adicionar Garrafa térmica", exact: true })
-    .click();
+  await addToCart(page, "Tesoura multiuso");
+  await addToCart(page, "Tesoura multiuso");
+  await addToCart(page, "Garrafa térmica");
   const trigger = page.getByRole("button", { name: /Abrir carrinho, 3 itens/ });
   await expect(trigger).toContainText("R$ 78,00");
   expect(
@@ -52,12 +46,8 @@ test("seleção persiste ao fechar e reabrir offline", async ({
   context,
 }) => {
   await prepare(page);
-  await page
-    .getByRole("button", { name: "Adicionar Tesoura multiuso", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Adicionar Tesoura multiuso", exact: true })
-    .click();
+  await addToCart(page, "Tesoura multiuso");
+  await addToCart(page, "Tesoura multiuso");
   await context.setOffline(true);
   await page.close();
   const reopened = await context.newPage();
@@ -96,15 +86,8 @@ test("sincronização exige revisão antes de trocar preços e excluir indispon�
   context,
 }) => {
   await prepare(page);
-  await page
-    .getByRole("button", {
-      name: "Adicionar Panela para o dia a dia",
-      exact: true,
-    })
-    .click();
-  await page
-    .getByRole("button", { name: "Adicionar Vara de pesca", exact: true })
-    .click();
+  await addToCart(page, "Panela para o dia a dia");
+  await addToCart(page, "Vara de pesca");
   await context.route("**/demo/catalog.json", async (route) => {
     const response = await route.fetch();
     const snapshot = await response.json();
@@ -181,9 +164,7 @@ test("códigos curtos são únicos e aparecem no card e no carrinho", async ({
       })
       .getByText("#P006"),
   ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Adicionar Tesoura multiuso", exact: true })
-    .click();
+  await addToCart(page, "Tesoura multiuso");
   await page.getByRole("button", { name: /Abrir carrinho/ }).click();
   await expect(page.getByRole("dialog").getByText("#P006")).toBeVisible();
 });

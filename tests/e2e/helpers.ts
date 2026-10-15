@@ -28,3 +28,9 @@ export async function decodeAll(page: Page, count: number) {
       .toBe(true);
   }
 }
+
+export async function addToCart(page: Page, name: string) {
+  await page.getByRole("button", { name: `Ver ${name}`, exact: true }).click();
+  await page.getByRole("button", { name: /^Adicionar ao carrinho/ }).click();
+  await page.getByRole("button", { name: "Fechar", exact: true }).click();
+}
