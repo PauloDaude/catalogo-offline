@@ -116,7 +116,7 @@ caminho da foto de um produto, remove outro e incrementa a revisão.
 
 **Files:** Criar `src/catalog/storage.ts`, `src/catalog/storage.test.ts`; atualizar setup com fake-indexeddb.
 
-**Interfaces:** Produzir `createCatalogStore(dbName: string): CatalogStore`. Métodos: `readActive(): Promise<LocalCatalog | null>`, `readPhoto(path: string): Promise<Blob | undefined>`, `stagePhoto(operationId: string, path: string, blob: Blob): Promise<void>`, `activate(operationId: string, snapshot: CatalogSnapshot, now: string): Promise<void>`, `markChecked(now: string): Promise<void>`, `discardOperation(operationId: string): Promise<void>`, `prune(): Promise<void>`, `close(): void`.
+**Interfaces:** Produzir `createCatalogStore(dbName: string): CatalogStore`. Métodos: `readActive(): Promise<LocalCatalog | null>`, `readPhoto(path: string): Promise<Blob | undefined>`, `stagePhoto(operationId: string, path: string, blob: Blob): Promise<void>`, `activate(operationId: string, snapshot: CatalogSnapshot, now: string): Promise<void>`, `markChecked(now: string): Promise<void>`, `discardOperation(operationId: string): Promise<void>`, `prune(): Promise<void>`, `clearAbandonedStaging(): Promise<void>`, `close(): void`.
 
 - [x] Escrever testes: reabrir banco recupera dez produtos e bytes das fotos; ativação sem uma foto obrigatória falha e preserva A; erro ao gravar metadados reverte fotos/dados; interromper preparação deixa A disponível; snapshot vazio válido remove todos os produtos.
 - [x] Rodar `npm run test -- src/catalog/storage.test.ts`; confirmar falha funcional.
@@ -210,3 +210,7 @@ arquivos pertinentes, sem pastas locais `.agents`, `.codex`, `.aws` ou credencia
 - [Vite PWA: precache](https://vite-pwa-org.netlify.app/guide/service-worker-precache)
 - [Vite PWA: registro](https://vite-pwa-org.netlify.app/guide/register-service-worker)
 - [MDN: Web Locks](https://developer.mozilla.org/en-US/docs/Web/API/Web_Locks_API)
+
+## Correções da revisão final
+
+A implementação acrescenta `clearAbandonedStaging()` ao contrato do store. A chamada é feita somente sob Web Lock, antes de qualquer preparação, para recuperar downloads abandonados sem tocar em outra operação ativa. Notificações entre abas preservam o estado de uma sincronização local pendente. Evidências e decisões em `docs/validation/final-review.md`.

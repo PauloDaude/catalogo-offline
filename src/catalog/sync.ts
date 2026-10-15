@@ -14,6 +14,9 @@ export async function syncCatalog(
   options: SyncOptions,
 ): Promise<SyncResult> {
   return withSyncLock(async () => {
+    // No other download can be active while this lock is held. Previous owners
+    // that closed abruptly cannot execute their finally/catch cleanup.
+    await store.clearAbandonedStaging();
     for (let attempt = 0; attempt < 3; attempt++) {
       options.signal?.throwIfAborted();
       options.onProgress?.({ phase: "checking", completed: 0, total: 0 });

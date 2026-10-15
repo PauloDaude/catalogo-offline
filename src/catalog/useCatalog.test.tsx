@@ -2,8 +2,8 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { useCatalog } from "./useCatalog";
 import { createCatalogStore, type CatalogStore } from "./storage";
-import { snapshotA } from "../test/fixtures";
-import { installBrowserFakes, makeSource } from "../test/sync-fixtures";
+import { snapshotA, snapshotB } from "../test/fixtures";
+import { installBrowserFakes, makeSource, jpeg } from "../test/sync-fixtures";
 vi.mock("../pwa/register", () => ({
   ensureOfflineShell: async () => {},
   requestAppUpdate: async () => {},
@@ -89,4 +89,51 @@ test("falha de atualização mantém cópia e aviso", async () => {
   );
   expect(result.current.products).toHaveLength(10);
   expect(result.current.saved).toBe(true);
+});
+
+test("notificação de outra aba preserva sincronização local pendente", async () => {
+  const source = makeSource(snapshotA);
+  const { result } = renderHook(() => useCatalog(source, store));
+  await waitFor(() => expect(result.current.products).toHaveLength(10));
+  await act(() => result.current.prepareOffline());
+  // Outra aba já concluiu B; sua notificação pode chegar com atraso.
+  await store.stagePhoto("other-tab", "photos/p0-v2.jpg", jpeg());
+  await store.activate("other-tab", snapshotB, "2026-10-14T14:00:00.000Z");
+  const snapshotC = {
+    ...snapshotB,
+    revision: 3,
+    products: snapshotB.products.map((p, i) =>
+      i === 0 ? { ...p, priceCents: 3500, imagePath: "photos/p0-v3.jpg" } : p,
+    ),
+  };
+  source.getSnapshot = async () => snapshotC;
+  source.getRevision = async () => 3;
+  let release!: (value: Blob) => void;
+  let entered = false;
+  source.getPhoto = () => {
+    entered = true;
+    return new Promise<Blob>((resolve) => {
+      release = resolve;
+    });
+  };
+  let pending!: Promise<void>;
+  await act(async () => {
+    pending = result.current.prepareOffline();
+  });
+  await waitFor(() => expect(entered).toBe(true));
+  const publisher = new BroadcastChannel("catalog-updates");
+  try {
+    publisher.postMessage("updated");
+    await waitFor(() => expect(result.current.products).toHaveLength(9));
+    expect(result.current.state).toBe("syncing");
+    expect(result.current.message).not.toMatch(/Catálogo atualizado/);
+  } finally {
+    await act(async () => {
+      release(jpeg());
+      await pending;
+    });
+    publisher.close();
+  }
+  expect(result.current.products[0].priceCents).toBe(3500);
+  expect(result.current.state).toBe("saved");
 });

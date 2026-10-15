@@ -3,6 +3,8 @@ import { syncCatalog } from "./sync";
 import { createCatalogStore, type CatalogStore } from "./storage";
 import { snapshotA, snapshotB } from "../test/fixtures";
 import { installBrowserFakes, makeSource } from "../test/sync-fixtures";
+import { jpeg } from "../test/sync-fixtures";
+import Dexie from "dexie";
 const now = () => "2026-10-14T14:00:00.000Z";
 let store: CatalogStore;
 beforeEach(() => {
@@ -10,6 +12,23 @@ beforeEach(() => {
   store = createCatalogStore(crypto.randomUUID());
 });
 afterEach(() => store.close());
+test("nova tentativa limpa fotos abandonadas após encerramento abrupto", async () => {
+  const name = crypto.randomUUID();
+  store.close();
+  store = createCatalogStore(name);
+  await store.stagePhoto("crashed-operation", "photos/abandoned.jpg", jpeg());
+  store.close();
+  store = createCatalogStore(name);
+  await syncCatalog(makeSource(snapshotA), store, { now });
+  const inspection = new Dexie(name);
+  await inspection.open();
+  try {
+    expect(await inspection.table("stagedPhotos").count()).toBe(0);
+    expect((await store.readActive())?.photos.size).toBe(10);
+  } finally {
+    inspection.close();
+  }
+});
 test("ativa preço, foto e ocultação juntos", async () => {
   await syncCatalog(makeSource(snapshotA), store, { now });
   await syncCatalog(makeSource(snapshotB), store, { now });

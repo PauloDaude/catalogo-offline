@@ -212,7 +212,19 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
         void store
           .readActive()
           .then((local) => {
-            if (local && !disposed) applyLocal(local);
+            if (!local || disposed) return;
+            if (current.current) {
+              // A completed revision from another tab is usable, but does not
+              // complete this tab's own request or permit reload during it.
+              setView((v) => ({
+                ...v,
+                local,
+                snapshot: local.snapshot,
+                saved: true,
+              }));
+            } else {
+              applyLocal(local);
+            }
           })
           .catch(() => {});
       };

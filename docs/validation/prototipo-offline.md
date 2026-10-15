@@ -6,7 +6,7 @@ Entrega da etapa 1, com dados fictícios. Data de referência: 14/10/2026.
 
 | Verificação | Resultado |
 | --- | --- |
-| `npm run test` | 40 testes passaram |
+| `npm run test` | 42 testes passaram |
 | `npm run lint` | Sem erros |
 | `npm run build` | TypeScript, frontend e Service Worker compilados |
 | `npm run test:e2e` | 12 testes passaram no Chromium |
@@ -35,6 +35,10 @@ Playwright emite avisos de configuração de cores do terminal, sem falha nos te
 - Reiniciar o navegador com perfil persistente offline mantém as dez fotos.
 - Cache Storage não contém `/demo/`: o teste offline depende de IndexedDB para dados/fotos.
 - Duas abas ativam a mesma nova revisão, com preço, foto e ocultação coerentes.
+- Fotos de preparação abandonada por encerramento abrupto são limpas antes de
+  uma nova operação, sob a trava exclusiva.
+- Uma notificação atrasada de outra aba incorpora a revisão disponível sem
+  declarar concluída uma sincronização local que ainda está pendente.
 - Foto corrompida impede atualização; versão anterior continua disponível offline.
 - Texto com markup é apresentado como texto, sem interpretar HTML.
 
@@ -65,3 +69,10 @@ Preencher ao testar:
 
 Depois desses testes, ajustar a experiência conforme observações e planejar a
 integração de Supabase e gerenciamento. Não coletar credenciais em documentos de validação.
+
+## Revisão independente final
+
+Uma revisão de código encontrou dois problemas relevantes: Blobs abandonados após
+fechamento abrupto e notificação entre abas sobrescrevendo o estado de sincronização.
+Ambos receberam testes que falharam antes da correção e passaram depois, com a suíte
+completa novamente verde. Detalhes e decisões em `final-review.md` nesta pasta.

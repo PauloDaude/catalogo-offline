@@ -12,6 +12,7 @@ export type CatalogStore = {
   ): Promise<void>;
   markChecked(now: string): Promise<void>;
   discardOperation(operationId: string): Promise<void>;
+  clearAbandonedStaging(): Promise<void>;
   prune(): Promise<void>;
   close(): void;
 };
@@ -81,6 +82,10 @@ export function createCatalogStore(name: string): CatalogStore {
     },
     discardOperation: async (operationId) => {
       await staged.where("operationId").equals(operationId).delete();
+    },
+    // Caller must hold the origin-wide sync lock, before starting a new operation.
+    clearAbandonedStaging: async () => {
+      await staged.clear();
     },
     prune: () =>
       db.transaction("rw", catalog, photos, async () => {

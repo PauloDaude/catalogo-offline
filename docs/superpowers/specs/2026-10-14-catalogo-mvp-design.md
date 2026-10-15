@@ -1,7 +1,8 @@
 # Catálogo digital — proposta de arquitetura do MVP
 
-Status: arquitetura aceita para elaboração do plano do protótipo; implementação
-aguarda revisão do plano e escolha do método de execução.
+Status: etapa 1 implementada por execução direta autorizada e verificada em
+navegador. Validação com o vendedor e nos aparelhos Android reais permanece
+pendente. Etapas 2 e 3 ainda não foram implementadas.
 Data: 14/10/2026.
 
 ## 1. Objetivo e decisões confirmadas
@@ -272,7 +273,8 @@ obrigatórios; emulação de navegador não os substitui.
 
 ## 10. Próxima revisão
 
-O usuário autorizou elaborar o plano da etapa 1. Revisar o plano antes de implementar.
+O usuário autorizou e acompanhou o planejamento e a execução direta da etapa 1.
+O próximo passo é validar o protótipo nos aparelhos reais e com o vendedor.
 Detalhes do gerenciamento (categorias fixas, email e senha, exportação com
 restauração inicialmente técnica) serão confirmados no planejamento da etapa 2.
 
