@@ -63,7 +63,10 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   confirmação, persistência local e uso offline. Mudanças de preço/disponibilidade
   exigem revisão explícita antes de atualizar a seleção e o total.
   Botão do carrinho fixo no canto inferior direito em celular, tablet e desktop,
-  permanecendo visível durante a rolagem.
+  permanecendo visível durante a rolagem. Usar fundo azul em ambos os visuais.
+  No carrinho mobile, quantidade -/+ junto ao item, sem deslocar os controles para
+  uma linha isolada abaixo. Remoção por botão de ícone de lixeira ao lado do nome,
+  com rótulo acessível e alvo de toque de 48 px; não exibir botão textual Remover.
   Cada item mostra uma miniatura da foto atual do catálogo, inclusive offline,
   com indicação visual quando a foto não estiver disponível. Reutilizar as URLs
   de imagem da sessão; não persistir Blob URLs no localStorage do carrinho.
@@ -84,17 +87,23 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 ## Demonstração de catálogo para folhear
 
 - Após avaliação com o pai do usuário, foi aprovada uma demonstração de **uma
-  categoria (Cozinha)** com aparência de catálogo por páginas, sem gerar PDF.
-- Entrada pelo botão "Folhear catálogo" ou `?visualizacao=folhear`. O visual anterior
-  permanece disponível em `/` e pelo botão "Visual anterior", para comparação.
-- Nesta demonstração: dois produtos por página acima de 650 px; um por página em
-  telas menores. Anterior/Próxima explícitos, contador de página e índice de Cozinha.
-- Fotos inteiras com `object-fit: contain`, nome, código e preço simples. Promoção
-  discreta na página; detalhes e seleção reutilizam o fluxo existente.
+  categoria (Cozinha)**, sem gerar PDF. A primeira versão em páginas foi refinada
+  pelo usuário para um carrossel com um produto por vez em qualquer tela.
+- Entrada pelo botão "Folhear catálogo" ou `?visualizacao=folhear`. O visual de
+  listagem permanece disponível em `/` e pelo botão "Visual anterior".
+- Arrastar com dedo ou mouse para a **direita avança**, conforme pedido explícito;
+  esquerda retorna. Manter botões como alternativa acessível e contador do produto.
+  Arrasto não deve abrir detalhes; toque/click simples e teclado devem abrir.
+- Imagem grande como fundo (`object-fit: cover`), com código, nome e preço
+  sobrepostos em painel legível. Foto inteira disponível nos detalhes.
+- Usar os mesmos tokens de preço azul, selo azul OFERTA IMPERDÍVEL e percentual
+  verde `#04a650` com texto branco da listagem. Carrinho flutuante também azul.
 - Pesquisa limitada a Cozinha nesta etapa. Reaproveitar dados, fotos e consulta
   offline. Seleção preservada ao alternar os visuais. Sem animação de folha dobrando.
+- Hero removido da listagem por pedido do usuário; abrir diretamente o catálogo,
+  mantendo o header. Preparação offline permanece disponível abaixo dos produtos.
 - Avaliação pendente com o vendedor antes de estender a apresentação às demais
-  categorias. As regras de cards acima descrevem o visual anterior preservado.
+  categorias. As regras de cards acima descrevem a listagem preservada.
 - O PDF da empresa em `docs/` é apenas referência visual fornecida pelo usuário;
   não foi importado para o catálogo nem incluído na publicação.
 

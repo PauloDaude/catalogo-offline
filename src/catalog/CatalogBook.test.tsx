@@ -31,16 +31,19 @@ test("demonstração folheia Cozinha sem perder a seleção ao comparar os visua
   );
   await user.click(screen.getByRole("button", { name: "Folhear catálogo" }));
   expect(window.location.search).toBe("?visualizacao=folhear");
-  expect(screen.getByText("Página 1 de 2")).toBeVisible();
+  expect(screen.getByText("Produto 1 de 3")).toBeVisible();
   expect(
-    screen.getByRole("button", { name: "Página anterior" }),
+    screen.getByRole("button", { name: "Produto anterior" }),
   ).toBeDisabled();
   expect(
     screen.queryByRole("button", { name: "Ver Lanterna 3" }),
   ).not.toBeInTheDocument();
-  await user.click(screen.getByRole("button", { name: "Próxima página" }));
-  expect(screen.getByText("Página 2 de 2")).toBeVisible();
-  expect(screen.getByRole("button", { name: "Próxima página" })).toBeDisabled();
+  await user.click(screen.getByRole("button", { name: "Próximo produto" }));
+  await user.click(screen.getByRole("button", { name: "Próximo produto" }));
+  expect(screen.getByText("Produto 3 de 3")).toBeVisible();
+  expect(
+    screen.getByRole("button", { name: "Próximo produto" }),
+  ).toBeDisabled();
   await user.click(screen.getByRole("button", { name: "Ver Garrafa" }));
   await user.click(
     within(screen.getByRole("dialog")).getByRole("button", {
@@ -64,14 +67,16 @@ test("link direto abre o catálogo de páginas e pesquisa volta à primeira pág
       images={new Map()}
     />,
   );
-  await user.click(screen.getByRole("button", { name: "Próxima página" }));
+  await user.click(screen.getByRole("button", { name: "Próximo produto" }));
   await user.type(screen.getByRole("searchbox"), "panela");
-  expect(screen.getByText("Página 1 de 1")).toBeVisible();
+  expect(screen.getByText("Produto 1 de 1")).toBeVisible();
   expect(screen.getByRole("button", { name: "Ver Panela" })).toBeVisible();
   await user.clear(screen.getByRole("searchbox"));
   await user.type(screen.getByRole("searchbox"), "não existe");
   expect(screen.getByText("Nenhum produto encontrado")).toBeVisible();
-  expect(screen.getByRole("button", { name: "Próxima página" })).toBeDisabled();
+  expect(
+    screen.getByRole("button", { name: "Próximo produto" }),
+  ).toBeDisabled();
   await user.click(screen.getByRole("button", { name: "Limpar pesquisa" }));
-  expect(screen.getByText("Página 1 de 2")).toBeVisible();
+  expect(screen.getByText("Produto 1 de 3")).toBeVisible();
 });

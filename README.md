@@ -25,9 +25,11 @@ publicada; novos commits não atualizam o link automaticamente. Processo de atua
 em [docs/deployment/sites-preview.md](docs/deployment/sites-preview.md).
 
 Prévia de uma categoria no formato de páginas: [folhear Cozinha](https://catalogo-paulo-demo.safereed9.chatgpt.site/?visualizacao=folhear).
-Também acessível pelo botão **Folhear catálogo**. Usa dois produtos por página no
-tablet/desktop e um no celular, fotos inteiras, pesquisa em Cozinha e navegação
-Anterior/Próxima. **Visual anterior** permite comparar sem perder a seleção.
+Também acessível pelo botão **Folhear catálogo**. Exibe um produto por vez com
+foto grande de fundo e informações sobrepostas. Arrastar para a direita avança;
+para a esquerda retorna. Há botões como alternativa e pesquisa em Cozinha.
+**Visual anterior** permite comparar sem perder a seleção. A listagem abre direto
+nos produtos, com o header e sem Hero.
 Esta experiência está em avaliação antes de ser estendida às demais categorias.
 
 Esta entrega implementa a **etapa 1**: dez produtos fictícios. Não contém painel

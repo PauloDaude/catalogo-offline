@@ -92,30 +92,6 @@ export function CatalogPage({
         />
       </header>
       <main id="main">
-        {!bookMode && (
-          <section className="intro">
-            <div>
-              <p className="eyebrow">SIMPLES, PRÁTICO, PERTO DE VOCÊ</p>
-              <h1>
-                Encontre o que
-                <br className="desktop-break" /> você precisa.
-              </h1>
-              <p className="intro-description">
-                Da cozinha à pescaria, boas opções para facilitar o seu dia.
-                Explore os produtos e veja cada detalhe.
-              </p>
-            </div>
-            <aside className="intro-card">
-              <ShoppingBag aria-hidden="true" />
-              <strong>Seu catálogo, sempre à mão.</strong>
-              <p>
-                Salve os produtos neste aparelho para consultar mesmo sem
-                internet.
-              </p>
-            </aside>
-          </section>
-        )}
-        {!bookMode && children}
         <p
           className="sr-only"
           aria-live="polite"
@@ -137,7 +113,7 @@ export function CatalogPage({
             className="catalog-section"
           >
             <div className="catalog-toolbar">
-              <h2>Explore os produtos</h2>
+              <h1 className="catalog-title">Explore os produtos</h1>
               <TextField
                 aria-label="Pesquisar produtos"
                 value={query}
@@ -207,7 +183,9 @@ export function CatalogPage({
             )}
           </section>
         )}
-        {bookMode && <div className="book-sync">{children}</div>}
+        <div className={bookMode ? "book-sync" : "catalog-sync"}>
+          {children}
+        </div>
       </main>
       <footer>
         Catálogo de demonstração · Fotos ilustrativas · Preços fictícios

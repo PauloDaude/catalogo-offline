@@ -102,29 +102,28 @@ export function CartPanel({
                   key={item.id}
                   className="cart-item"
                 >
-                  <div className="cart-item-summary">
-                    <CartThumbnail
-                      src={productImages.get(item.id)}
-                      name={item.name}
-                    />
-                    <div className="cart-item-info">
-                      <h3>{item.name}</h3>
-                      <span className="product-code">#{item.code ?? "—"}</span>
-                      <p>
-                        {item.unavailable
-                          ? "Indisponível — fora do total"
-                          : `${price(item.priceCents)} por unidade`}
-                      </p>
-                      <Button
-                        variant="ghost"
-                        className="cart-remove touch-button"
-                        aria-label={`Remover ${item.name}`}
-                        onPress={() => cart.remove(item.id)}
-                      >
-                        <Trash2 aria-hidden="true" />
-                        Remover
-                      </Button>
-                    </div>
+                  <CartThumbnail
+                    src={productImages.get(item.id)}
+                    name={item.name}
+                  />
+                  <div className="cart-item-heading">
+                    <h3>{item.name}</h3>
+                    <Button
+                      variant="ghost"
+                      className="cart-remove touch-button"
+                      aria-label={`Remover ${item.name}`}
+                      onPress={() => cart.remove(item.id)}
+                    >
+                      <Trash2 aria-hidden="true" />
+                    </Button>
+                  </div>
+                  <div className="cart-item-info">
+                    <span className="product-code">#{item.code ?? "—"}</span>
+                    <p>
+                      {item.unavailable
+                        ? "Indisponível — fora do total"
+                        : `${price(item.priceCents)} por unidade`}
+                    </p>
                   </div>
                   <div className="cart-item-actions">
                     <div
