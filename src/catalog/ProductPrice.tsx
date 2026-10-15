@@ -2,7 +2,22 @@ import type { Product } from "./types";
 import { price } from "./price";
 import { Tag } from "lucide-react";
 
-export function ProductPrice({ product }: { product: Product }) {
+export function OfferLabel() {
+  return (
+    <span className="offer-label">
+      <Tag aria-hidden="true" />
+      <span>Oferta imperdível</span>
+    </span>
+  );
+}
+
+export function ProductPrice({
+  product,
+  showOfferLabel = true,
+}: {
+  product: Product;
+  showOfferLabel?: boolean;
+}) {
   const { priceCents, previousPriceCents } = product;
   const hasOffer =
     Number.isSafeInteger(previousPriceCents) &&
@@ -20,10 +35,7 @@ export function ProductPrice({ product }: { product: Product }) {
     <div className={`product-pricing${hasOffer ? " has-offer" : ""}`}>
       {hasOffer && (
         <>
-          <span className="offer-label">
-            <Tag aria-hidden="true" />
-            <span>Oferta imperdível</span>
-          </span>
+          {showOfferLabel && <OfferLabel />}
           <p className="previous-price">
             <span className="sr-only">Preço anterior: </span>
             <s>{price(previousPriceCents)}</s>

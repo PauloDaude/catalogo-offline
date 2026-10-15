@@ -49,7 +49,11 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   verticalmente, fonte de peso moderado e ícone simples de etiqueta.
 - Card inteiro clicável para abrir os detalhes, com suporte a teclado e foco visível.
   Adicionar ao carrinho somente no modal de detalhes; sem botão de adicionar na
-  listagem. Alinhar nome, área de oferta e preço entre cards com e sem promoção.
+  listagem. Nos cards, selo de oferta sobre a foto no canto superior esquerdo;
+  preço atual próximo ao nome e alinhado entre produtos com e sem promoção.
+  Percentual junto ao preço atual quando houver espaço e preço antigo menor abaixo.
+  Não reservar linhas vazias para o selo e o preço anterior dos produtos sem oferta.
+  Nos detalhes, o selo e o preço anterior permanecem no bloco de informações.
 - Detalhes em duas colunas nas telas maiores (foto à esquerda, informações e ações
   à direita), adaptados ao celular e à paisagem com pouca altura. Evitar rolagem
   desnecessária; manter categoria e código na mesma linha.

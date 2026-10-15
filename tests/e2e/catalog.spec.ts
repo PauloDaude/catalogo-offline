@@ -181,3 +181,32 @@ test("card inteiro abre detalhes e preços ficam alinhados entre ofertas e produ
     await page.getByRole("button", { name: "Fechar", exact: true }).click();
   }
 });
+
+test("ofertas ficam sobre a foto e preços próximos ao nome sem reservar área promocional", async ({
+  page,
+}) => {
+  for (const width of [1280, 800, 360]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    const cards = page.locator(".product-card");
+    await expect(cards).toHaveCount(10);
+    const offer = cards.nth(0);
+    const label = await offer.locator(".offer-label").boundingBox();
+    const photo = await offer.locator(".product-image").boundingBox();
+    expect(label!.y).toBeGreaterThanOrEqual(photo!.y);
+    expect(label!.y + label!.height).toBeLessThanOrEqual(
+      photo!.y + photo!.height,
+    );
+
+    for (const card of [offer, cards.nth(1)]) {
+      const name = await card.getByRole("heading").boundingBox();
+      const price = await card.locator(".product-price").boundingBox();
+      expect(price!.y - (name!.y + name!.height)).toBeLessThanOrEqual(12);
+    }
+    const currentPrice = await offer.locator(".product-price").boundingBox();
+    const oldPrice = await offer.locator(".previous-price").boundingBox();
+    expect(oldPrice!.y).toBeGreaterThanOrEqual(
+      currentPrice!.y + currentPrice!.height,
+    );
+  }
+});

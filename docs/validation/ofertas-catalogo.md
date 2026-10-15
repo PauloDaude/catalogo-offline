@@ -31,3 +31,18 @@ não foi implementado; o preço anterior está no contrato público do catálogo
 - Selo azul com ícone de etiqueta, fonte de peso 550 e alinhamento vertical central.
 - `npm test`: 73 testes passaram; `npm run test:e2e`: 21 testes passaram, incluindo
   clique na parte inferior do card e alinhamento dos preços em 360, 800 e 1280 px.
+
+## Cards compactos — proposta visual aprovada em conversa
+
+- Selo de oferta sobre a foto, no canto superior esquerdo.
+- Removidas as linhas reservadas ao selo/preço anterior dentro do card; preço
+  atual próximo ao nome e alinhado entre produtos com e sem oferta.
+- Preço anterior menor abaixo do atual; percentual ao lado quando houver espaço.
+  Em celular estreito, a linha de preço permite quebra sem overflow horizontal.
+- A apresentação no modal de detalhes permanece com selo e preço anterior no
+  bloco de informações.
+- `npm test`: 75 testes passaram. `npm run test:e2e`: 22 testes passaram,
+  incluindo posição do selo dentro da foto e distância entre nome/preço em
+  360, 800 e 1280 px, além das regressões do carrinho e consulta offline.
+- Build, lint, formatação e conferência visual em desktop/celular aprovados.
+  Validação em aparelhos Android reais continua pendente.

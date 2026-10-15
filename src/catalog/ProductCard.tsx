@@ -3,7 +3,7 @@ import { DialogTrigger } from "@/components/ui/dialog";
 
 import type { Product } from "./types";
 import { ProductDialog } from "./ProductDialog";
-import { ProductPrice } from "./ProductPrice";
+import { OfferLabel, ProductPrice } from "./ProductPrice";
 
 export function ProductCard({
   product,
@@ -42,6 +42,8 @@ export function ProductCard({
         ) : (
           <span className="image-placeholder">Foto indisponível</span>
         )}
+        {product.previousPriceCents !== undefined &&
+          product.previousPriceCents > product.priceCents && <OfferLabel />}
         <span className="image-hint">Ver detalhes</span>
       </div>
 
@@ -51,7 +53,10 @@ export function ProductCard({
           <span className="product-code">#{product.code ?? "—"}</span>
         </div>
         <h3>{product.name}</h3>
-        <ProductPrice product={product} />
+        <ProductPrice
+          product={product}
+          showOfferLabel={false}
+        />
       </div>
     </article>
   );

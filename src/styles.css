@@ -384,7 +384,7 @@ h2 {
 .product-info h3 {
   font-size: 16px;
   font-weight: 650;
-  margin: 6px 0 15px;
+  margin: 6px 0 10px;
   min-height: 2.8em;
   line-height: 1.4;
 }
@@ -427,40 +427,27 @@ h2 {
   flex-shrink: 0;
 }
 
-@media (max-width: 650px) {
-  .product-info .offer-label {
-    font-size: 9px;
-    letter-spacing: 0;
-    padding: 0 5px;
-  }
-}
-
-.product-info .product-pricing {
-  display: grid;
-  grid-template-rows: 24px 20px auto;
-  align-items: start;
-  justify-items: start;
-  margin-top: auto;
-}
-
-.product-info .offer-label {
-  grid-row: 1;
+.product-image .offer-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  max-width: calc(100% - 24px);
+  box-shadow: 0 2px 8px #172b4d18;
 }
 
 .product-info .previous-price {
-  grid-row: 2;
+  order: 1;
   margin: 0;
 }
 
-.product-info .price-line {
-  grid-row: 3;
-  min-height: 36px;
-  align-content: flex-start;
-}
-
 @media (max-width: 650px) {
-  .product-info .price-line {
-    min-height: 60px;
+  .product-image .offer-label {
+    top: 8px;
+    left: 8px;
+    max-width: calc(100% - 16px);
+    font-size: 9px;
+    letter-spacing: 0;
+    padding: 0 5px;
   }
 }
 
