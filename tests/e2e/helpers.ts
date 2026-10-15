@@ -11,6 +11,8 @@ export async function prepare(page: Page) {
     .click();
   await expect(page.getByRole("status")).toHaveText(
     "Catálogo salvo para usar sem internet",
+    // Installing the offline shell has its own 15-second timeout.
+    { timeout: 20_000 },
   );
 }
 

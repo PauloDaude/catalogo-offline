@@ -126,8 +126,9 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Hero removido da listagem por pedido do usuário; abrir diretamente o catálogo,
   mantendo o header. Preparação offline em card compacto fixo no canto inferior
   esquerdo; texto pequeno e ações curtas (Salvar offline/Atualizar). No celular,
-  posicionar acima da faixa do carrinho para evitar sobreposição entre controles.
-  Mensagens de erro, progresso e confirmação continuam visíveis.
+  manter botão offline e carrinho na mesma linha inferior, com altura de 56 px,
+  espaço entre eles e total visível. Estado online comum fica compacto; mensagens
+  de erro, progresso e confirmação aparecem acima dos botões e seguem acessíveis.
 - Avaliação de usabilidade com o vendedor continua pendente. As regras de cards
   da listagem acima descrevem o visual anterior preservado.
 - O PDF da empresa em `docs/` é apenas referência visual fornecida pelo usuário;

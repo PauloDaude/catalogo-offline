@@ -129,3 +129,26 @@ depois. Continuam no meio vertical da foto e mantêm foco/limites de navegação
 Build, lint e formatação passaram. Os 16 testes E2E de geometria, proporções,
 setas, gestos e adição ao carrinho passaram após o acabamento branco. Captura de
 Garrafa térmica em celular inspecionada. Nenhuma publicação online realizada.
+
+## Mesma linha no celular
+
+Pedido posterior substitui a posição empilhada: ação offline à esquerda e carrinho
+à direita agora ficam na mesma linha, com 56 px de altura. Larguras proporcionais
+reservam 8 px de espaço. Contador e total permanecem visíveis; mensagem online
+comum fica visualmente oculta no celular, preservando o live region. Progresso,
+erros e confirmação aparecem em aviso acima das ações; botão Atualizar permanece.
+
+Testes em 320/360/800/1280 verificam espaçamento e posição fixa; celular também
+verifica igualdade de altura e alinhamento vertical. Treze fluxos de controles,
+carrinho e offline passaram após o ajuste. Usuário autorizou commit e atualização
+online nesta etapa; futuras publicações seguem dependendo de novo pedido.
+
+Antes da publicação, a suíte completa revelou timeout intermitente na espera de
+preparação offline: o teste aguardava 8 s, abaixo do limite de 15 s da instalação
+do app shell. Repetição diagnóstica de oito navegações/preparações em contextos
+novos concluiu normalmente. A asserção de sucesso agora aguarda até 20 s, mantendo
+a exigência da confirmação real, sem alterar os limites ou comportamento do app.
+
+Verificação para publicação autorizada: 79 testes unitários/componentes e 54 E2E
+passaram. Build, lint e formatação verificados. Captura em 320 px com duas unidades
+no carrinho confirma ações lado a lado e total visível.

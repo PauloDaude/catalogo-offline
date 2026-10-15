@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-for (const width of [360, 800, 1280]) {
+for (const width of [320, 360, 800, 1280]) {
   test(`aviso offline fixo e compacto sem sobrepor carrinho em ${width}px`, async ({
     page,
   }) => {
@@ -22,9 +22,11 @@ for (const width of [360, 800, 1280]) {
     const cart = (await page
       .getByRole("button", { name: /Abrir carrinho/ })
       .boundingBox())!;
-    expect(
-      after.x + after.width <= cart.x || after.y + after.height <= cart.y,
-    ).toBe(true);
+    expect(after.x + after.width).toBeLessThanOrEqual(cart.x - 8);
+    if (width <= 650) {
+      expect(Math.abs(after.y - cart.y)).toBeLessThan(1);
+      expect(Math.abs(after.height - cart.height)).toBeLessThan(1);
+    }
     expect(
       (await panel.getByRole("button").boundingBox())!.height,
     ).toBeGreaterThanOrEqual(48);

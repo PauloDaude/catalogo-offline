@@ -22,6 +22,7 @@ export function SyncStatus({
     <section
       aria-label="Disponibilidade do catálogo"
       className="sync-panel"
+      data-compact={state === "online" && message === "Disponível online."}
     >
       <div className="sync-text">
         {state === "error" ? (
