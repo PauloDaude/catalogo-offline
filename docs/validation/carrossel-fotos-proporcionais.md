@@ -31,3 +31,7 @@ experimentar uma etiqueta de nome/preço saindo da lateral, como na referência.
 Após revisão visual do usuário, a dobra foi movida para trás da foto, com
 contorno curvo e gradiente azul discreto. Capturas desktop/celular inspecionadas;
 os dez testes de proporção, extensão clicável e gestos passaram novamente.
+
+Refino solicitado: sombra interna na dobra, sombra projetada junto à lateral
+e transição suave de cinza azulado para branco na superfície do card, dando
+volume à curva. Build e captura visual verificadas após o ajuste de sombra.
