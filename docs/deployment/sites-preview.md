@@ -105,10 +105,33 @@ Publicada em 15/10/2026 no mesmo endereço, com acesso público preservado.
 - Versão salva: `appgprj_6ad0df0dc2088191a7ed62dcf4a685cf~appgver_88d5aeddf7388191bd00960ff1b7b01d`.
 - Deployment: `appgdep_6ad12bbba5588191a12e15679974f4ba`, status `succeeded`.
 
-## Publicação suspensa por decisão do usuário
+## Pausa de publicações automáticas — registro histórico
 
 Em 15/10/2026 o usuário pediu para não publicar a cada mudança: aguardar confirmação
-explícita. Preview local em `http://127.0.0.1:4173/`. Sombra refinada, botão de adição
-direta, grade ajustável, gesto corrigido e abas estão no projeto local/GitHub e
-**não foram implantados** no link público. Arquivos preparados no checkout Sites
-não equivalem a publicação; fazer nova build e seguir o fluxo somente após pedido.
+explícita. Até novo pedido, os refinamentos ficaram no preview local
+`http://127.0.0.1:4173/` e no GitHub. Arquivos preparados no checkout Sites não
+equivalem a publicação. A versão 6 abaixo foi publicada após autorização explícita;
+publicações futuras continuam dependendo de pedido.
+
+## Versão 6 — abas, etiqueta branca e controles na mesma linha
+
+Publicada em 15/10/2026 após autorização explícita do usuário para commitar e
+atualizar o endereço online; acesso público preservado.
+
+- Build do catálogo: `2a16b45`.
+- Commit do repositório Sites: `57065ec90defc13b687a0aaf09a5896c359ce8ff`.
+- Versão salva: `appgprj_6ad0df0dc2088191a7ed62dcf4a685cf~appgver_a88e0bcd68dc81919429dd50db86795a`.
+- Deployment: `appgdep_6ad138b0386c8191be189bb2a3396736`, status `succeeded`.
+- Folhear como visual padrão, aba Ver grade, filtros/pesquisa compartilhados,
+  etiqueta branca sem dobra, setas nas bordas, adição direta ao carrinho e ação
+  offline na mesma linha do carrinho no celular. Controle de 1–5 itens removido.
+- Verificação local: 79 testes unitários/componentes e 54 E2E, build, lint e
+  formatação passaram. PDF de referência permanece fora do repositório e da build.
+
+Dispositivos com versão anterior em cache podem usar Reabrir atualizado quando
+oferecido pelo aplicativo. O roteiro completo em Android real segue pendente.
+
+Conferência anônima no domínio público, em 360×800: HTTP 200, carrossel padrão,
+abas, filtro Cozinha compartilhado, avanço pela seta lateral, adição de Panela
+com total de R$ 65,00 e controles flutuantes na mesma linha verificados. O roteiro
+completo offline foi executado localmente, sem repetição integral nesta publicação.
