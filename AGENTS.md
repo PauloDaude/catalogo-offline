@@ -209,5 +209,10 @@ Referências oficiais para consultar conforme necessário:
   upload e fluxos essenciais. Testar também modo avião no hardware real.
 - Categorias fixas, login por email/senha e detalhes de exportação/restauração estão
   descritos na especificação; conferir sua aprovação antes de tratá-los como definitivos.
+- Em 15/10/2026, o usuário autorizou publicar uma demonstração compartilhável no
+  Sites para mostrar ao pai. Projeto vinculado em `.openai/hosting.json`; reutilizar
+  esse `project_id`. Publicação estática em checkout separado `.sites-preview/`,
+  ignorado no repositório principal. Processo em `docs/deployment/sites-preview.md`.
+  O link representa a build publicada e não acompanha automaticamente a `main`.
 - Não publicar, criar recursos externos ou presumir contas/configurações existentes
   apenas porque estão citados nos documentos de planejamento.

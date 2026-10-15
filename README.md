@@ -19,6 +19,11 @@ carrinho** nos detalhes. Os cards também abrem pelo teclado com Enter ou Espaç
 Cada produto possui um código curto único, como `P001`, visível no card, nos
 detalhes e no carrinho. Esses códigos vêm dos dados e não mudam ao reordenar a lista.
 
+Demonstração pública para avaliação: [abrir catálogo](https://catalogo-paulo-demo.safereed9.chatgpt.site).
+O link funciona sem o computador de desenvolvimento ligado. É uma cópia da build
+publicada; novos commits não atualizam o link automaticamente. Processo de atualização
+em [docs/deployment/sites-preview.md](docs/deployment/sites-preview.md).
+
 Esta entrega implementa a **etapa 1**: dez produtos fictícios. Não contém painel
 administrativo, login, Supabase nem produtos reais. Não é o MVP completo de produção.
 
