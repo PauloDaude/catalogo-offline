@@ -33,3 +33,29 @@ test("nome com markup aparece como texto", () => {
   );
   expect(screen.getByText("<img src=x onerror=alert(1)>")).toBeVisible();
 });
+
+test("pesquisa e categoria são compartilhadas entre folhear e grade", async () => {
+  window.history.replaceState(null, "", "/");
+  const user = userEvent.setup();
+  render(
+    <CatalogPage
+      products={snapshotA.products}
+      images={new Map()}
+    />,
+  );
+
+  expect(screen.getAllByRole("searchbox")).toHaveLength(1);
+  await user.click(screen.getByRole("button", { name: "Iluminação" }));
+  await user.type(screen.getByRole("searchbox"), "Lanterna 1");
+  expect(screen.getByRole("button", { name: "Ver Lanterna 1" })).toBeVisible();
+  await user.click(screen.getByRole("tab", { name: "Ver grade" }));
+  expect(screen.getByRole("searchbox")).toHaveValue("Lanterna 1");
+  expect(screen.getByRole("button", { name: "Iluminação" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  expect(screen.getByRole("button", { name: "Ver Lanterna 1" })).toBeVisible();
+  await user.click(screen.getByRole("tab", { name: "Folhear catálogo" }));
+  expect(screen.getByRole("searchbox")).toHaveValue("Lanterna 1");
+  expect(screen.queryByText("Produtos por tela")).not.toBeInTheDocument();
+});

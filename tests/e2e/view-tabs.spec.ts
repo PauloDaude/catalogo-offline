@@ -7,7 +7,7 @@ for (const width of [320, 800, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
     const book = page.getByRole("tab", { name: "Folhear catálogo" });
-    const cards = page.getByRole("tab", { name: "Ver em cards" });
+    const cards = page.getByRole("tab", { name: "Ver grade" });
     await expect(book).toHaveAttribute("aria-selected", "true");
     await expect(
       page.getByRole("tabpanel", { name: "Folhear catálogo" }),

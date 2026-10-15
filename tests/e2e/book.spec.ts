@@ -12,6 +12,7 @@ for (const [width, height, perPage, pages] of [
   }) => {
     await page.setViewportSize({ width, height });
     await page.goto("/?visualizacao=folhear");
+    await page.getByRole("button", { name: "Cozinha", exact: true }).click();
     await expect(page.locator(".book-product")).toHaveCount(perPage);
     await expect(page.getByText(`Produto 1 de ${pages}`)).toBeVisible();
     await expect(
@@ -61,6 +62,7 @@ test("páginas reabrem offline e compartilham seleção com visual anterior", as
   await prepare(page);
   await context.setOffline(true);
   await page.goto("/?visualizacao=folhear");
+  await page.getByRole("button", { name: "Cozinha", exact: true }).click();
   await expect(page.locator(".book-product")).toHaveCount(1);
   await page.getByRole("button", { name: "Próximo produto" }).click();
   await page.getByRole("button", { name: "Próximo produto" }).click();
@@ -72,7 +74,12 @@ test("páginas reabrem offline e compartilham seleção com visual anterior", as
     .getByRole("button", { name: "Adicionar ao carrinho", exact: true })
     .click();
   await page.getByRole("button", { name: "Fechar", exact: true }).click();
-  await page.getByRole("tab", { name: "Ver em cards" }).click();
+  await page.getByRole("tab", { name: "Ver grade" }).click();
+  await expect(page.locator(".product-card")).toHaveCount(3);
+  await expect(
+    page.getByRole("button", { name: "Cozinha", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Todas", exact: true }).click();
   await expect(page.locator(".product-card")).toHaveCount(10);
   await page.getByRole("button", { name: /Abrir carrinho, 1 item/ }).click();
   await expect(page.locator(".cart-grand-total")).toHaveText("R$ 48,00");
@@ -86,6 +93,7 @@ test("pesquisa e redimensionamento não deixam página vazia", async ({
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/?visualizacao=folhear");
+  await page.getByRole("button", { name: "Cozinha", exact: true }).click();
   await page.getByRole("button", { name: "Próximo produto" }).click();
   await page.getByRole("button", { name: "Próximo produto" }).click();
   await page.setViewportSize({ width: 1280, height: 800 });
@@ -100,6 +108,6 @@ test("pesquisa e redimensionamento não deixam página vazia", async ({
   ).toBeVisible();
   await page.getByRole("searchbox").fill("produto inexistente");
   await expect(page.getByText("Nenhum produto encontrado")).toBeVisible();
-  await page.getByRole("button", { name: "Limpar pesquisa" }).click();
-  await expect(page.getByText("Produto 1 de 3")).toBeVisible();
+  await page.getByRole("button", { name: "Limpar filtros" }).click();
+  await expect(page.getByText("Produto 1 de 10")).toBeVisible();
 });

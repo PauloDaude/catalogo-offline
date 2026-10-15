@@ -86,20 +86,22 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 
 ## Demonstração de catálogo para folhear
 
-- Demonstração sem PDF, inicialmente em Cozinha, refinada para carrossel e
-  depois para grade controlável de **1 a 5 produtos por página**. Começar com um
-  produto e Cozinha; disponibilizar todas as categorias e filtro Todas.
-- A quantidade escolhida define os itens da página. Grade com até três colunas
-  em telas grandes, duas intermediárias e uma no celular para manter legibilidade.
-  Páginas finais mostram apenas os produtos restantes, sem duplicações.
-- Página inicial abre **Folhear catálogo** por padrão, com abas React Aria para
-  alternar entre **Folhear catálogo** e **Ver em cards**. Não acrescentar terceira
-  aba sem necessidade. Carrinho compartilhado entre os visuais.
+- Demonstração sem PDF: **Folhear catálogo** mostra um produto por vez;
+  **Ver grade** oferece a listagem de cards. O usuário removeu o controle de
+  quantidade de 1 a 5 produtos por tela por já existir a aba de grade.
+- Página inicial abre Folhear catálogo por padrão, com abas React Aria para
+  alternar entre Folhear catálogo e Ver grade. Não acrescentar terceira aba.
+  Carrinho, pesquisa e categoria são compartilhados entre os visuais.
+- Usar **um único filtro de categorias**, com o estilo arredondado da listagem,
+  e **uma única pesquisa** acima dos painéis. Começar em Todas. Alternar abas
+  mantém filtros; mudar pesquisa/categoria reinicia o carrossel no primeiro item.
+- Pesquisa alinhada verticalmente às abas no desktop; no celular, logo abaixo
+  delas, com a mesma largura e bordas alinhadas. Não repetir controles nos painéis.
 - `?visualizacao=folhear` abre carrossel e `?visualizacao=cards` abre listagem.
   A seleção da aba atualiza o parâmetro; a URL sem parâmetro abre carrossel.
 - Pedido mais recente corrige o sentido: arrastar da **direita para esquerda
-  avança**; esquerda para direita retorna. Com vários itens, avançar o grupo.
-  Manter botões como alternativa acessível e contador do intervalo de produtos.
+  avança**; esquerda para direita retorna.
+  Manter botões como alternativa acessível e contador do produto.
   Arrasto não deve abrir detalhes; toque/click simples e teclado devem abrir.
 - Foto inteira preservando a proporção original (`object-fit: contain`), com
   largura adaptada às imagens verticais, quadradas e horizontais; na visualização

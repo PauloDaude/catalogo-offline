@@ -90,31 +90,76 @@ export function CatalogPage({
           selectedKey={bookMode ? "folhear" : "cards"}
           onSelectionChange={(key) => changeView(key === "folhear")}
         >
-          <TabList
-            aria-label="Visualização do catálogo"
-            className="catalog-view-tabs"
+          <h1 className="sr-only">Catálogo de produtos</h1>
+          <div className="catalog-view-toolbar">
+            <TabList
+              aria-label="Visualização do catálogo"
+              className="catalog-view-tabs"
+            >
+              <Tab
+                id="folhear"
+                className="catalog-view-tab"
+              >
+                <BookOpen aria-hidden="true" />
+                Folhear catálogo
+              </Tab>
+              <Tab
+                id="cards"
+                className="catalog-view-tab"
+              >
+                <LayoutGrid aria-hidden="true" />
+                Ver grade
+              </Tab>
+            </TabList>
+            <TextField
+              aria-label="Pesquisar produtos"
+              value={query}
+              onChange={setQuery}
+              className="search-field"
+            >
+              <Search aria-hidden="true" />
+              <Input
+                type="search"
+                placeholder="O que você procura?"
+                className="search-input"
+              />
+            </TextField>
+          </div>
+          <nav
+            aria-label="Categorias"
+            className="category-list"
           >
-            <Tab
-              id="folhear"
-              className="catalog-view-tab"
-            >
-              <BookOpen aria-hidden="true" />
-              Folhear catálogo
-            </Tab>
-            <Tab
-              id="cards"
-              className="catalog-view-tab"
-            >
-              <LayoutGrid aria-hidden="true" />
-              Ver em cards
-            </Tab>
-          </TabList>
+            {(["Todas", ...categories] as const).map((c) => (
+              <Button
+                key={c}
+                variant={category === c ? "default" : "outline"}
+                aria-pressed={category === c}
+                onPress={() => setCategory(c)}
+                className="category-button"
+              >
+                {c}
+              </Button>
+            ))}
+          </nav>
+          <p
+            className="result-count"
+            aria-live="polite"
+          >
+            {filtered.length} {filtered.length === 1 ? "produto" : "produtos"}
+          </p>
+
           <TabPanel
             id="folhear"
             className="catalog-view-panel"
           >
             <CatalogBook
-              products={products}
+              key={`${category}:${query}`}
+              products={filtered}
+              category={category}
+              onClearFilters={() => {
+                setQuery("");
+                setCategory("Todas");
+              }}
               images={images}
               quantityFor={(id) =>
                 cart.items.find((item) => item.id === id)?.quantity ?? 0
@@ -130,45 +175,6 @@ export function CatalogPage({
               aria-label="Produtos"
               className="catalog-section"
             >
-              <div className="catalog-toolbar">
-                <h1 className="catalog-title">Explore os produtos</h1>
-                <TextField
-                  aria-label="Pesquisar produtos"
-                  value={query}
-                  onChange={setQuery}
-                  className="search-field"
-                >
-                  <Search aria-hidden="true" />
-                  <Input
-                    type="search"
-                    placeholder="O que você procura?"
-                    className="search-input"
-                  />
-                </TextField>
-              </div>
-              <nav
-                aria-label="Categorias"
-                className="category-list"
-              >
-                {(["Todas", ...categories] as const).map((c) => (
-                  <Button
-                    key={c}
-                    variant={category === c ? "default" : "outline"}
-                    aria-pressed={category === c}
-                    onPress={() => setCategory(c)}
-                    className="category-button"
-                  >
-                    {c}
-                  </Button>
-                ))}
-              </nav>
-              <p
-                className="result-count"
-                aria-live="polite"
-              >
-                {filtered.length}{" "}
-                {filtered.length === 1 ? "produto" : "produtos"}
-              </p>
               {filtered.length ? (
                 <div className="product-grid">
                   {filtered.map((product) => (

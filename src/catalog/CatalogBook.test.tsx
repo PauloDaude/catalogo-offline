@@ -36,6 +36,7 @@ test("demonstração folheia Cozinha sem perder a seleção ao comparar os visua
   expect(
     screen.getByRole("tabpanel", { name: "Folhear catálogo" }),
   ).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Cozinha" }));
   expect(screen.getByText("Produto 1 de 3")).toBeVisible();
   expect(
     screen.getByRole("button", { name: "Produto anterior" }),
@@ -56,7 +57,7 @@ test("demonstração folheia Cozinha sem perder a seleção ao comparar os visua
     }),
   );
   await user.click(screen.getByRole("button", { name: /^Fechar$/ }));
-  await user.click(screen.getByRole("tab", { name: "Ver em cards" }));
+  await user.click(screen.getByRole("tab", { name: "Ver grade" }));
   expect(window.location.search).toBe("?visualizacao=cards");
   expect(
     screen.getByRole("button", { name: /Abrir carrinho, 1 item/ }),
@@ -82,8 +83,8 @@ test("link direto abre o catálogo de páginas e pesquisa volta à primeira pág
   expect(
     screen.getByRole("button", { name: "Próximo produto" }),
   ).toBeDisabled();
-  await user.click(screen.getByRole("button", { name: "Limpar pesquisa" }));
-  expect(screen.getByText("Produto 1 de 3")).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Limpar filtros" }));
+  expect(screen.getByText("Produto 1 de 4")).toBeVisible();
 });
 
 test("faixa adiciona ao carrinho diretamente sem abrir detalhes", async () => {
@@ -109,47 +110,4 @@ test("faixa adiciona ao carrinho diretamente sem abrir detalhes", async () => {
   expect(
     screen.getByText("R$ 130,00", { selector: ".cart-grand-total" }),
   ).toBeVisible();
-});
-
-test("grade permite escolher de um a cinco produtos e mantém páginas completas", async () => {
-  window.history.replaceState(null, "", "/?visualizacao=folhear");
-  const user = userEvent.setup();
-  const many = Array.from({ length: 11 }, (_, i) => ({
-    ...products[0],
-    id: `item-${i}`,
-    code: `P${i}`,
-    name: `Produto ${i}`,
-  }));
-  render(
-    <CatalogPage
-      products={many}
-      images={new Map()}
-    />,
-  );
-
-  for (const count of [2, 3, 4, 5, 1]) {
-    await user.click(
-      screen.getByRole("button", {
-        name: `Mostrar ${count} ${count === 1 ? "produto" : "produtos"} por tela`,
-      }),
-    );
-    expect(
-      screen.getAllByRole("button", { name: /^Ver Produto/ }),
-    ).toHaveLength(count);
-  }
-  await user.click(
-    screen.getByRole("button", { name: "Mostrar 5 produtos por tela" }),
-  );
-  await user.click(screen.getByRole("button", { name: "Próximo produto" }));
-  expect(screen.getByText("Produtos 6–10 de 11")).toBeVisible();
-  await user.click(screen.getByRole("button", { name: "Próximo produto" }));
-  expect(screen.getAllByRole("button", { name: /^Ver Produto/ })).toHaveLength(
-    1,
-  );
-  expect(screen.getByText("Produtos 11–11 de 11")).toBeVisible();
-  expect(
-    screen.getByRole("button", { name: "Próximo produto" }),
-  ).toBeDisabled();
-  await user.type(screen.getByRole("searchbox"), "Produto 0");
-  expect(screen.getByText("Produtos 1–1 de 1")).toBeVisible();
 });

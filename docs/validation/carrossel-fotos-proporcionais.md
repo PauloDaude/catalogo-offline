@@ -74,3 +74,23 @@ com testes específicos em 320, 800 e 1280 px para aba padrão, seleção explí
 recarregamento do visual escolhido, troca por teclado e preservação do carrinho.
 Build, lint e formatação passaram. Build registra aviso de chunk acima de 500 kB
 (após incluir React Aria Tabs) e aviso existente de Workbox; não impedem a build.
+
+## Simplificação dos filtros — decisão posterior
+
+Removido controle de 1–5 itens: folhear exibe um produto; a aba Ver grade oferece
+os cards. Pesquisa e categorias agora pertencem a CatalogPage, acima dos painéis,
+com o mesmo estilo arredondado. Ambos os visuais usam exatamente os mesmos filtros.
+Todas é o filtro inicial; a troca de aba preserva pesquisa/categoria/carrinho.
+Alterar filtros volta ao primeiro produto, e Limpar filtros limpa pesquisa e categoria.
+
+Pesquisa alinhada com abas no desktop e logo abaixo no celular, com mesma largura.
+Capturas em 1280×900 e 360×800 inspecionadas. Testes de grade múltipla foram
+substituídos por testes de filtros compartilhados, alinhamento e ausência de
+controles duplicados em 360, 800 e 1280 px. Publicação segue dependente de confirmação.
+
+Verificação desta simplificação: 79 testes unitários/componentes, build, lint e
+formatação passaram. O teste offline foi atualizado para verificar a categoria
+Cozinha preservada ao trocar de aba e então limpar para Todas; essa expectativa
+substitui o comportamento antigo de reiniciar filtros. Demais 47 testes E2E
+passaram na execução completa; fluxos de folhear, filtros e abas repetidos após
+corrigir a expectativa do teste offline.
