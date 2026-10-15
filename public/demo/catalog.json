@@ -1,0 +1,76 @@
+{
+  "revision": 1,
+  "updatedAt": "2026-10-14T12:00:00.000Z",
+  "products": [
+    {
+      "id": "panela",
+      "name": "Panela para o dia a dia",
+      "category": "Cozinha",
+      "priceCents": 6500,
+      "imagePath": "photos/panela.jpg"
+    },
+    {
+      "id": "utensilios",
+      "name": "Utensílios de cozinha",
+      "category": "Cozinha",
+      "priceCents": 2500,
+      "imagePath": "photos/utensilios.jpg"
+    },
+    {
+      "id": "pesca",
+      "name": "Kit de pesca",
+      "category": "Pesca",
+      "priceCents": 4500,
+      "imagePath": "photos/pesca.jpg"
+    },
+    {
+      "id": "sombrinha",
+      "name": "Sombrinha resistente",
+      "category": "Outros",
+      "priceCents": 3500,
+      "imagePath": "photos/sombrinha.jpg"
+    },
+    {
+      "id": "lanterna",
+      "name": "Lanterna portátil",
+      "category": "Iluminação",
+      "priceCents": 3000,
+      "imagePath": "photos/lanterna.jpg"
+    },
+    {
+      "id": "tesoura",
+      "name": "Tesoura multiuso",
+      "category": "Ferramentas",
+      "priceCents": 1500,
+      "imagePath": "photos/tesoura.jpg"
+    },
+    {
+      "id": "garrafa",
+      "name": "Garrafa térmica",
+      "category": "Cozinha",
+      "priceCents": 4800,
+      "imagePath": "photos/garrafa.jpg"
+    },
+    {
+      "id": "ferramentas",
+      "name": "Jogo de ferramentas",
+      "category": "Ferramentas",
+      "priceCents": 8500,
+      "imagePath": "photos/ferramentas.jpg"
+    },
+    {
+      "id": "acessorios",
+      "name": "Acessórios para viagem",
+      "category": "Outros",
+      "priceCents": 2200,
+      "imagePath": "photos/acessorios.jpg"
+    },
+    {
+      "id": "vara",
+      "name": "Vara de pesca",
+      "category": "Pesca",
+      "priceCents": 7500,
+      "imagePath": "photos/vara.jpg"
+    }
+  ]
+}

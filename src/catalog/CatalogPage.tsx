@@ -1,0 +1,25 @@
+import { useState } from 'react';
+import { Search, ShoppingBag } from 'lucide-react';
+import { TextField } from 'react-aria-components';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { categories, type Category, type Product } from './types';
+import { filterProducts } from './search';
+import { ProductCard } from './ProductCard';
+export type CatalogPageProps = { products: Product[]; images: Map<string, string>; children?: React.ReactNode };
+export function CatalogPage({ products, images, children }: CatalogPageProps) {
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState<Category | 'Todas'>('Todas');
+  const filtered = filterProducts(products, query, category);
+  return <div className="catalog-shell">
+    <header className="site-header"><a href={import.meta.env.BASE_URL} className="brand"><span className="brand-icon"><ShoppingBag aria-hidden="true" /></span><span>Catálogo<span className="brand-subtitle">Produtos para o seu dia a dia</span></span></a><span className="header-note">Escolha com calma.</span></header>
+    <main id="main"><section className="intro"><div><p className="eyebrow">SIMPLES, PRÁTICO, PERTO DE VOCÊ</p><h1>Encontre o que<br className="desktop-break" /> você precisa.</h1><p className="intro-description">Da cozinha à pescaria, boas opções para facilitar o seu dia. Explore os produtos e veja cada detalhe.</p></div><aside className="intro-card"><ShoppingBag aria-hidden="true" /><strong>Seu catálogo, sempre à mão.</strong><p>Salve os produtos neste aparelho para consultar mesmo sem internet.</p></aside></section>
+      {children}
+      <section aria-label="Produtos" className="catalog-section"><div className="catalog-toolbar"><h2>Explore os produtos</h2><TextField aria-label="Pesquisar produtos" value={query} onChange={setQuery} className="search-field"><Search aria-hidden="true" /><Input type="search" placeholder="O que você procura?" className="search-input" /></TextField></div>
+        <nav aria-label="Categorias" className="category-list">{(['Todas', ...categories] as const).map(c => <Button key={c} variant={category === c ? 'default' : 'outline'} aria-pressed={category === c} onPress={() => setCategory(c)} className="category-button">{c}</Button>)}</nav>
+        <p className="result-count" aria-live="polite">{filtered.length} {filtered.length === 1 ? 'produto' : 'produtos'}</p>
+        {filtered.length ? <div className="product-grid">{filtered.map(product => <ProductCard key={product.id} product={product} image={images.get(product.imagePath)} />)}</div> : <div className="empty-state"><Search aria-hidden="true" /><h3>Nenhum produto encontrado</h3><p>Tente outro nome ou escolha uma categoria diferente.</p><Button variant="outline" onPress={() => { setQuery(''); setCategory('Todas'); }}>Limpar filtros</Button></div>}
+      </section>
+    </main><footer>Catálogo de demonstração · Fotos ilustrativas · Preços fictícios</footer>
+  </div>;
+}

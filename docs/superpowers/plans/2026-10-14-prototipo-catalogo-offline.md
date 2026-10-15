@@ -96,7 +96,7 @@ Cada tarefa abaixo usa esses contratos. Nas funções de teste, `snapshotA` e
 `snapshotB` são fixtures independentes: A contém dez produtos; B muda preço e
 caminho da foto de um produto, remove outro e incrementa a revisão.
 
-### Tarefa 1: catálogo online utilizável e contratos
+### Task 1: catálogo online utilizável e contratos
 
 **Files:** Criar configurações, componentes UI, tema, fixtures, `src/catalog/{types,validation,search,source}.ts`, `src/{main,App}.tsx`, `src/catalog/{CatalogPage,ProductCard,ProductDialog}.tsx`, `src/test/setup.ts`, `src/catalog/search.test.ts`, `src/catalog/source.test.ts`.
 
@@ -112,7 +112,7 @@ caminho da foto de um produto, remove outro e incrementa a revisão.
 - [ ] Executar testes, `npm run build` e `npm run lint`; abrir a página a 360 px e em tablet, sem overflow horizontal, verificar fechamento do dialog e retorno do foco. Estado sem resultados contém “Nenhum produto encontrado”.
 - [ ] Commitar arquivos explícitos desta tarefa: `feat: add responsive demo catalog`.
 
-### Tarefa 2: persistência consistente de produtos e fotos
+### Task 2: persistência consistente de produtos e fotos
 
 **Files:** Criar `src/catalog/storage.ts`, `src/catalog/storage.test.ts`; atualizar setup com fake-indexeddb.
 
@@ -125,7 +125,7 @@ caminho da foto de um produto, remove outro e incrementa a revisão.
 - [ ] Rodar os testes; todos passam, incluindo rollback e reabertura. Documentar que estimativa de espaço não garante sucesso de escrita.
 - [ ] Commit: `feat: persist complete catalog snapshots with Dexie`.
 
-### Tarefa 3: sincronização validada e exclusiva
+### Task 3: sincronização validada e exclusiva
 
 **Files:** Criar `src/catalog/{image-download,sync,sync-lock}.ts` e seus `.test.ts`.
 
@@ -140,7 +140,7 @@ caminho da foto de um produto, remove outro e incrementa a revisão.
 - [ ] Rodar testes e build; confirmar nenhuma chamada de rede dentro de transação IndexedDB.
 - [ ] Commit: `feat: synchronize catalog atomically with validated photos`.
 
-### Tarefa 4: PWA e integração dos estados na interface
+### Task 4: PWA e integração dos estados na interface
 
 **Files:** Criar `src/pwa/{sw,register}.ts`, `src/catalog/{useCatalog,SyncStatus}.tsx`, `src/catalog/useCatalog.test.tsx`; modificar App/CatalogPage, estilos, vite.config e package.json.
 
@@ -157,7 +157,7 @@ caminho da foto de um produto, remove outro e incrementa a revisão.
 - [ ] Rodar testes, lint e build; confirmar SW não inclui imagens do catálogo no precache. Protótipo não mostra botão de gerenciamento não funcional; documentar que o acesso será adicionado na etapa 2.
 - [ ] Commit: `feat: enable explicit offline preparation and PWA shell`.
 
-### Tarefa 5: verificação da build em navegador
+### Task 5: verificação da build em navegador
 
 **Files:** Criar `playwright.config.ts`, `tests/e2e/{catalog,offline,sync}.spec.ts`; atualizar scripts.
 
@@ -172,7 +172,7 @@ caminho da foto de um produto, remove outro e incrementa a revisão.
 - [ ] Executar uma vez `npm run test`, `npm run lint`, `npm run build` e `npm run test:e2e`, registrar resultados e limitações.
 - [ ] Commit: `test: verify production offline and synchronization flows`.
 
-### Tarefa 6: entrega do protótipo para validação real
+### Task 6: entrega do protótipo para validação real
 
 **Files:** Criar `README.md`, `docs/validation/prototipo-offline.md`; atualizar AGENTS.md e o status deste plano.
 
