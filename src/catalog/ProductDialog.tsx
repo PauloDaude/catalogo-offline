@@ -19,8 +19,10 @@ export function ProductDialog({
       showCloseButton={false}
       className="product-dialog"
     >
-      <DialogTitle>{product.name}</DialogTitle>
-      <p className="product-code">#{product.code ?? "—"}</p>
+      <div className="product-dialog-heading">
+        <DialogTitle>{product.name}</DialogTitle>
+        <span className="product-code">#{product.code ?? "—"}</span>
+      </div>
       {image && (
         <img
           src={image}
@@ -29,14 +31,16 @@ export function ProductDialog({
         />
       )}
       <p className="product-price">{price(product.priceCents)}</p>
-      <Button
-        className="touch-button"
-        isDisabled={quantity >= 999}
-        onPress={onAdd}
-      >
-        Adicionar ao carrinho{quantity > 0 ? ` (${quantity} na seleção)` : ""}
-      </Button>
-      <DialogClose className="touch-button">Fechar</DialogClose>
+      <div className="product-dialog-actions">
+        <Button
+          className="touch-button"
+          isDisabled={quantity >= 999}
+          onPress={onAdd}
+        >
+          Adicionar ao carrinho{quantity > 0 ? ` (${quantity} na seleção)` : ""}
+        </Button>
+        <DialogClose className="touch-button">Fechar</DialogClose>
+      </div>
     </Dialog>
   );
 }

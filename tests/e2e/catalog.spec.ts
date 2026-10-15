@@ -80,3 +80,35 @@ test("texto não executa markup e aplicação só acessa origem local", async ({
   await expect(page.getByText("<img src=x onerror=alert(1)>")).toBeVisible();
   expect(external).toEqual([]);
 });
+
+test("detalhes do produto cabem na tela sem rolagem interna", async ({
+  page,
+}) => {
+  for (const [width, height] of [
+    [1280, 800],
+    [360, 640],
+    [640, 360],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await page
+      .getByRole("button", { name: "Ver Panela para o dia a dia", exact: true })
+      .click();
+    await page
+      .locator(".dialog-image")
+      .evaluate((image: HTMLImageElement) => image.decode());
+    const modal = page.locator(".product-dialog");
+    expect(
+      await modal.evaluate(
+        (element) => element.scrollHeight <= element.clientHeight + 1,
+      ),
+    ).toBe(true);
+    await expect(
+      page.getByRole("button", { name: "Adicionar ao carrinho", exact: true }),
+    ).toBeInViewport({ ratio: 1 });
+    await expect(
+      page.getByRole("button", { name: "Fechar", exact: true }),
+    ).toBeInViewport({ ratio: 1 });
+    await page.getByRole("button", { name: "Fechar", exact: true }).click();
+  }
+});
