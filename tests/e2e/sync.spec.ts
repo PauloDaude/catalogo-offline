@@ -7,7 +7,7 @@ const original = JSON.parse(await readFile("public/demo/catalog.json", "utf8"));
 
 const updated = {
   ...original,
-  revision: 2,
+  revision: original.revision + 1,
   products: original.products
     .slice(0, 9)
     .map((p: Record<string, unknown>, i: number) =>

@@ -97,6 +97,9 @@ export function CartPanel({ cart }: { cart: Cart }) {
                 >
                   <div className="cart-item-info">
                     <h3>{item.name}</h3>
+                    <span className="product-code">
+                      Código {item.code ?? "—"}
+                    </span>
                     <p>
                       {item.unavailable
                         ? "Indisponível — fora do total"

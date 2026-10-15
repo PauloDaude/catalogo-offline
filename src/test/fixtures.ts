@@ -5,6 +5,7 @@ export const snapshotA: CatalogSnapshot = {
   updatedAt: "2026-10-14T12:00:00.000Z",
   products: Array.from({ length: 10 }, (_, i) => ({
     id: `p${i}`,
+    code: `P${String(i + 1).padStart(3, "0")}`,
     name: i === 0 ? "Tesoura de cozinha" : `Lanterna ${i}`,
     priceCents: 2500,
     category: i === 0 ? "Cozinha" : "Iluminação",

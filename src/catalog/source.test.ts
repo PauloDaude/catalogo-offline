@@ -57,3 +57,36 @@ test("rejeita caminho externo e protocolo perigoso", () => {
       }),
     ).toThrow();
 });
+
+test("mantém código curto único e estável após reordenar produtos", () => {
+  const products = snapshotA.products.map((product, index) => ({
+    ...product,
+    code: `P${String(index + 1).padStart(3, "0")}`,
+  }));
+  const result = parseSnapshot({
+    ...snapshotA,
+    products: [...products].reverse(),
+  });
+  expect(result.products.find((product) => product.id === "p0")?.code).toBe(
+    "P001",
+  );
+  expect(result.products[0].code).toBe("P010");
+});
+
+test("rejeita códigos curtos duplicados ou fora do padrão", () => {
+  expect(() =>
+    parseSnapshot({
+      ...snapshotA,
+      products: [
+        { ...snapshotA.products[0], code: "P001" },
+        { ...snapshotA.products[1], code: "P001" },
+      ],
+    }),
+  ).toThrow();
+  expect(() =>
+    parseSnapshot({
+      ...snapshotA,
+      products: [{ ...snapshotA.products[0], code: "um-codigo-muito-longo" }],
+    }),
+  ).toThrow();
+});

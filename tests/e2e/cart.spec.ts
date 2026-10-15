@@ -66,6 +66,9 @@ test("seleção persiste ao fechar e reabrir offline", async ({
     .getByRole("button", { name: /Abrir carrinho, 2 itens/ })
     .click();
   await expect(reopened.locator(".cart-grand-total")).toHaveText("R$ 30,00");
+  await expect(
+    reopened.getByRole("dialog").getByText("Código P006"),
+  ).toBeVisible();
   await reopened
     .getByRole("button", { name: "Aumentar quantidade de Tesoura multiuso" })
     .click();
@@ -157,4 +160,32 @@ test("botão do carrinho permanece fixo no canto inferior direito durante rolage
     expect(after!.y).toBeCloseTo(before!.y, 0);
     await expect(button).toBeInViewport();
   }
+});
+
+test("códigos curtos são únicos e aparecem no card e no carrinho", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator(".product-card .product-code")).toHaveCount(10);
+  const codes = await page
+    .locator(".product-card .product-code")
+    .allTextContents();
+  expect(new Set(codes).size).toBe(10);
+  expect(codes.every((code) => /^Código P\d{3}$/.test(code))).toBe(true);
+  await expect(
+    page
+      .locator(".product-card")
+      .filter({
+        has: page.getByRole("heading", {
+          name: "Tesoura multiuso",
+          exact: true,
+        }),
+      })
+      .getByText("Código P006"),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Adicionar Tesoura multiuso", exact: true })
+    .click();
+  await page.getByRole("button", { name: /Abrir carrinho/ }).click();
+  await expect(page.getByRole("dialog").getByText("Código P006")).toBeVisible();
 });

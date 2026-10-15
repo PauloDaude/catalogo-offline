@@ -45,6 +45,7 @@ export function ProductCard({
       </DialogTrigger>
       <div className="product-info">
         <span className="product-category">{product.category}</span>
+        <span className="product-code">Código {product.code ?? "—"}</span>
         <h3>{product.name}</h3>
         <p className="product-price">{price(product.priceCents)}</p>
         <Button

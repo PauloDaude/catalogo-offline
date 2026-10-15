@@ -1,6 +1,7 @@
 import type { Product } from "../catalog/types";
 
 export type CartItem = Pick<Product, "id" | "name" | "priceCents"> & {
+  code?: string;
   quantity: number;
   unavailable?: boolean;
 };
@@ -30,7 +31,10 @@ export function parseCart(raw: string | null): CartItem[] {
         !Number.isInteger(row.quantity) ||
         row.quantity < 1 ||
         row.quantity > 999 ||
-        (row.unavailable !== undefined && typeof row.unavailable !== "boolean")
+        (row.unavailable !== undefined &&
+          typeof row.unavailable !== "boolean") ||
+        (row.code !== undefined &&
+          (typeof row.code !== "string" || !/^P\d{3}$/.test(row.code)))
       )
         return [];
 
@@ -40,6 +44,7 @@ export function parseCart(raw: string | null): CartItem[] {
         name: row.name,
         priceCents: row.priceCents,
         quantity: row.quantity,
+        ...(row.code === undefined ? {} : { code: row.code }),
         ...(row.unavailable === undefined
           ? {}
           : { unavailable: row.unavailable }),
@@ -56,12 +61,21 @@ export function addItem(items: CartItem[], product: Product): CartItem[] {
   const found = items.find((item) => item.id === product.id);
 
   if (found)
-    return setQuantity(items, product.id, Math.min(999, found.quantity + 1));
+    return setQuantity(
+      items.map((item) =>
+        item.id === product.id
+          ? { ...item, code: item.code ?? product.code }
+          : item,
+      ),
+      product.id,
+      Math.min(999, found.quantity + 1),
+    );
 
   return [
     ...items,
     {
       id: product.id,
+      code: product.code,
       name: product.name,
       priceCents: product.priceCents,
       quantity: 1,
@@ -105,8 +119,11 @@ export function changesFor(items: CartItem[], products: Product[]): string[] {
 
     if (item.unavailable) return [`${item.name} voltou a ficar disponível.`];
 
-    return current.priceCents !== item.priceCents
-      ? [`O preço de ${item.name} mudou.`]
+    if (current.priceCents !== item.priceCents)
+      return [`O preço de ${item.name} mudou.`];
+
+    return item.code !== current.code
+      ? [`A identificação de ${item.name} foi atualizada.`]
       : [];
   });
 }
@@ -123,6 +140,7 @@ export function acceptCatalog(
     return current
       ? {
           id: current.id,
+          code: current.code,
           name: current.name,
           priceCents: current.priceCents,
           quantity: item.quantity,

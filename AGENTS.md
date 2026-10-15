@@ -30,7 +30,12 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Responsividade e usabilidade devem ser boas em ambos, em retrato e paisagem.
 - Catálogo público por link, sem login; pode ser compartilhado com clientes.
 - Gerenciamento com login e conexão à internet.
-- MVP: nome, categoria, uma foto e um preço por produto.
+- MVP: código curto único, nome, categoria, uma foto e um preço por produto.
+- Código de exibição no formato `P001`, único e persistido nos dados, sem depender
+  da posição do produto na lista. Exibi-lo discretamente no card e no carrinho.
+  Não reutilizar o código de um produto oculto nem alterar códigos ao reordenar.
+  O identificador interno permanece separado do código público. No futuro Supabase,
+  impor unicidade no banco, com atribuição transacional no cadastro.
 - Cadastro, edição e ocultação reversível de produtos.
 - Pesquisa, categorias, fotos grandes e preços destacados.
 - Carrinho simples solicitado em 15/10/2026: agrupar produtos selecionados pelo

@@ -867,3 +867,13 @@ progress {
     padding: 0 8px;
   }
 }
+
+.product-code {
+  display: block;
+  color: #66758c;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  margin-top: 5px;
+  font-weight: 400;
+}

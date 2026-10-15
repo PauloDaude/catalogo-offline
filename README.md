@@ -11,6 +11,9 @@ com uso offline; se o armazenamento for negado, a interface avisa que ela ficar�
 somente na aba atual. Alterações de preço ou disponibilidade são sinalizadas e
 precisam ser aceitas antes de atualizar a seleção e seu total. Produtos que ficaram
 indisponíveis permanecem identificados e são excluídos do total após a revisão.
+O botão do carrinho fica fixo no canto inferior direito durante a rolagem.
+Cada produto possui um código curto único, como `P001`, visível no card, nos
+detalhes e no carrinho. Esses códigos vêm dos dados e não mudam ao reordenar a lista.
 
 Esta entrega implementa a **etapa 1**: dez produtos fictícios. Não contém painel
 administrativo, login, Supabase nem produtos reais. Não é o MVP completo de produção.
@@ -65,7 +68,8 @@ Internet nos aparelhos reais ainda precisam ser verificados.
 ## Dados de demonstração
 
 `public/demo/catalog.json` contém um snapshot público com revisão, data e dez
-produtos. Cada produto tem id, nome, categoria, preço em centavos e caminho de foto.
+produtos. Cada produto tem id interno, código público único (`code`, formato `P001`),
+nome, categoria, preço em centavos e caminho de foto.
 Só produtos ativos devem ser publicados nesse contrato. Alterações exigem incrementar
 a revisão; troca de foto exige **novo caminho**, sem sobrescrever a foto antiga.
 
@@ -75,6 +79,10 @@ reais antes do uso comercial. Avisos dos componentes em
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Não adicionar segredos ou informações administrativas ao JSON público.
+
+Quem já preparou uma versão anterior deve atualizar o aplicativo e o catálogo
+com internet para receber os códigos curtos. Seleções antigas são preservadas;
+quando necessário, o carrinho pede revisão para incorporar a identificação nova.
 
 ## Verificações
 
@@ -97,7 +105,7 @@ Resultados e roteiro para os aparelhos reais em
 
 ## Formatação
 
-O projeto usa Prettier local com versão fixada, duas posições de indentação,
+O projeto usa Prettier local com versão fixada, indentação de dois espaços,
 limite de 80 colunas e um atributo por linha em JSX multilinha:
 
 ```bash

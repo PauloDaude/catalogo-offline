@@ -88,3 +88,10 @@ test("total excessivo não perde precisão silenciosamente", () => {
     ]),
   ).toBeNull();
 });
+
+test("código curto é preservado no carrinho salvo e ao ocultar produto", () => {
+  const item = addItem([], { ...product, code: "P001" });
+  expect(item[0].code).toBe("P001");
+  expect(parseCart(JSON.stringify(item))[0].code).toBe("P001");
+  expect(acceptCatalog(item, [])[0].code).toBe("P001");
+});

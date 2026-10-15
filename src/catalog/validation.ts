@@ -16,6 +16,7 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
     throw new Error("Catálogo inválido");
 
   const ids = new Set<string>();
+  const codes = new Set<string>();
   const products = data.products.map((input: unknown) => {
     if (!input || typeof input !== "object")
       throw new Error("Produto inválido");
@@ -26,6 +27,9 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
       typeof p.id !== "string" ||
       !p.id.trim() ||
       ids.has(p.id) ||
+      typeof p.code !== "string" ||
+      !/^P\d{3}$/.test(p.code) ||
+      codes.has(p.code) ||
       typeof p.name !== "string" ||
       !p.name.trim() ||
       !Number.isSafeInteger(p.priceCents) ||
@@ -37,9 +41,11 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
       throw new Error("Produto inválido");
 
     ids.add(p.id);
+    codes.add(p.code);
 
     return {
       id: p.id,
+      code: p.code,
       name: p.name.trim(),
       priceCents: p.priceCents,
       category: p.category,
