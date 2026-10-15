@@ -69,3 +69,15 @@ Publicada em 15/10/2026 no mesmo projeto, preservando acesso público.
 O endereço sem parâmetro preserva o visual anterior. Dispositivos com a versão
 antiga do aplicativo em cache devem usar a ação **Reabrir atualizado** oferecida
 pelo aplicativo para receber a nova apresentação.
+
+## Versão 3 — carrossel e carrinho compacto
+
+Publicada em 15/10/2026 no mesmo endereço, com acesso público preservado.
+
+- Build do catálogo: `30e9961`.
+- Commit do repositório Sites: `36e6b303bedf02c85c509cfff135a2dc4c48eae5`.
+- Versão salva: `appgprj_6ad0df0dc2088191a7ed62dcf4a685cf~appgver_d609832e64d08191bb58de4dae4b008e`.
+- Deployment: `appgdep_6ad11d7a4a6081919c8eab652b6d162b`, status `succeeded`.
+- Hero removido da listagem, carrossel com foto de fundo, informações sobrepostas,
+  gesto para a direita avançando e carrinho azul/compacto nos dois visuais.
+- Link direto continua `?visualizacao=folhear`; sem parâmetro abre a listagem.

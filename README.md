@@ -24,7 +24,7 @@ O link funciona sem o computador de desenvolvimento ligado. É uma cópia da bui
 publicada; novos commits não atualizam o link automaticamente. Processo de atualização
 em [docs/deployment/sites-preview.md](docs/deployment/sites-preview.md).
 
-Prévia de uma categoria no formato de páginas: [folhear Cozinha](https://catalogo-paulo-demo.safereed9.chatgpt.site/?visualizacao=folhear).
+Prévia de uma categoria em carrossel: [folhear Cozinha](https://catalogo-paulo-demo.safereed9.chatgpt.site/?visualizacao=folhear).
 Também acessível pelo botão **Folhear catálogo**. Exibe um produto por vez com
 foto grande de fundo e informações sobrepostas. Arrastar para a direita avança;
 para a esquerda retorna. Há botões como alternativa e pesquisa em Cozinha.

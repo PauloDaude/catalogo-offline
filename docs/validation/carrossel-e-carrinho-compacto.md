@@ -34,3 +34,11 @@ corrigiram a interação; o teste de toque falhou antes e passou depois da corre
 O fundo usa cover e pode recortar a foto; detalhes mantêm a imagem inteira.
 Prévia segue limitada a Cozinha. Validação no tablet Samsung/celular reais e com
 o vendedor continua pendente. Fotos e preços atuais são fictícios.
+
+## Link público
+
+Versão 3 do Sites confirmada como `succeeded`. Acesso anônimo HTTP 200 em 360×800:
+arrasto real de toque para o segundo produto sem abrir modal, toque para detalhes,
+adição de Utensílios de cozinha, carrinho azul, total R$ 25,00 e lixeira sem texto
+visível verificados. Na primeira tentativa, a espera curta de 5 segundos terminou
+com os produtos ainda carregando; ao aguardar o carregamento, a conferência passou.
