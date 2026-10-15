@@ -56,3 +56,21 @@ filtros/pesquisa, páginas incompletas, seleção compartilhada e offline. Nove 
 JPEG verificam proporção e não sobreposição do preço/botão em 360, 1280 e 844×390.
 Capturas de cinco itens no desktop e dois no tablet foram inspecionadas.
 Build, lint e formatação passaram. Uso no hardware Android real segue pendente.
+
+## Abas da página inicial
+
+Página inicial abre Folhear catálogo por padrão. React Aria Tabs oferece duas
+abas: Folhear catálogo e Ver em cards, com ícones/rótulos, foco e setas de teclado.
+Query `visualizacao=cards` preserva acesso direto à listagem; `folhear` ao carrossel.
+A troca mantém o carrinho e anuncia a aba ativa. Testes existentes da listagem
+agora usam explicitamente seu parâmetro, sem depender do antigo padrão.
+
+Por solicitação do usuário, alterações posteriores ao acabamento inicial da dobra
+ficam locais até confirmação explícita para publicar. O link público não foi
+atualizado com sombra refinada, botão de adicionar, grade e abas.
+
+Validação final das abas: 79 testes unitários/componentes e 48 testes E2E passaram,
+com testes específicos em 320, 800 e 1280 px para aba padrão, seleção explícita,
+recarregamento do visual escolhido, troca por teclado e preservação do carrinho.
+Build, lint e formatação passaram. Build registra aviso de chunk acima de 500 kB
+(após incluir React Aria Tabs) e aviso existente de Workbox; não impedem a build.

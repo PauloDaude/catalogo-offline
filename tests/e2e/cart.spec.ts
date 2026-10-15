@@ -6,7 +6,7 @@ test("carrinho agrupa, altera quantidades e confirma limpeza", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await addToCart(page, "Tesoura multiuso");
   await addToCart(page, "Tesoura multiuso");
   await addToCart(page, "Garrafa térmica");
@@ -57,7 +57,7 @@ test("seleção persiste ao fechar e reabrir offline", async ({
   await context.setOffline(true);
   await page.close();
   const reopened = await context.newPage();
-  await reopened.goto("/");
+  await reopened.goto("/?visualizacao=cards");
   await reopened
     .getByRole("button", { name: /Abrir carrinho, 2 itens/ })
     .click();
@@ -78,7 +78,7 @@ test("seleção persiste ao fechar e reabrir offline", async ({
 });
 
 test("foto ampliada também adiciona ao carrinho", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await page.getByRole("button", { name: "Ver Tesoura multiuso" }).click();
   await page
     .getByRole("button", { name: "Adicionar ao carrinho", exact: true })
@@ -142,7 +142,7 @@ test("botão do carrinho permanece fixo no canto inferior direito durante rolage
 }) => {
   for (const width of [1280, 360]) {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto("/");
+    await page.goto("/?visualizacao=cards");
     await expect(page.locator(".product-card")).toHaveCount(10);
     const button = page.getByRole("button", { name: /Abrir carrinho/ });
     await expect(button).toHaveCSS("position", "fixed");
@@ -160,7 +160,7 @@ test("botão do carrinho permanece fixo no canto inferior direito durante rolage
 test("códigos curtos são únicos e aparecem no card e no carrinho", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await expect(page.locator(".product-card .product-code")).toHaveCount(10);
   const codes = await page
     .locator(".product-card .product-code")

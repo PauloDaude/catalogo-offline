@@ -1,9 +1,11 @@
-import { expect, test } from "vitest";
+import { beforeEach, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { CatalogPage } from "./CatalogPage";
 import { snapshotA } from "../test/fixtures";
+
+beforeEach(() => window.history.replaceState(null, "", "/?visualizacao=cards"));
 
 test("usuário encontra produto por nome e categoria", async () => {
   render(

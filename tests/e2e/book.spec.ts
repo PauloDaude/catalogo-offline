@@ -72,7 +72,7 @@ test("páginas reabrem offline e compartilham seleção com visual anterior", as
     .getByRole("button", { name: "Adicionar ao carrinho", exact: true })
     .click();
   await page.getByRole("button", { name: "Fechar", exact: true }).click();
-  await page.getByRole("button", { name: "Visual anterior" }).click();
+  await page.getByRole("tab", { name: "Ver em cards" }).click();
   await expect(page.locator(".product-card")).toHaveCount(10);
   await page.getByRole("button", { name: /Abrir carrinho, 1 item/ }).click();
   await expect(page.locator(".cart-grand-total")).toHaveText("R$ 48,00");

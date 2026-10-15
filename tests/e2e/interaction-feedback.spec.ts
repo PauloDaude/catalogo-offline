@@ -7,7 +7,7 @@ test("catálogo abre sem Hero e carrinho mantém controles junto ao item no celu
   page,
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await expect(
     page.getByRole("heading", { name: /Encontre o que/ }),
   ).toHaveCount(0);

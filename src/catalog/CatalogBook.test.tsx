@@ -29,8 +29,13 @@ test("demonstração folheia Cozinha sem perder a seleção ao comparar os visua
       images={new Map()}
     />,
   );
-  await user.click(screen.getByRole("button", { name: "Folhear catálogo" }));
-  expect(window.location.search).toBe("?visualizacao=folhear");
+  expect(screen.getByRole("tab", { name: "Folhear catálogo" })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+  expect(
+    screen.getByRole("tabpanel", { name: "Folhear catálogo" }),
+  ).toBeVisible();
   expect(screen.getByText("Produto 1 de 3")).toBeVisible();
   expect(
     screen.getByRole("button", { name: "Produto anterior" }),
@@ -51,8 +56,8 @@ test("demonstração folheia Cozinha sem perder a seleção ao comparar os visua
     }),
   );
   await user.click(screen.getByRole("button", { name: /^Fechar$/ }));
-  await user.click(screen.getByRole("button", { name: "Visual anterior" }));
-  expect(window.location.search).toBe("");
+  await user.click(screen.getByRole("tab", { name: "Ver em cards" }));
+  expect(window.location.search).toBe("?visualizacao=cards");
   expect(
     screen.getByRole("button", { name: /Abrir carrinho, 1 item/ }),
   ).toBeVisible();

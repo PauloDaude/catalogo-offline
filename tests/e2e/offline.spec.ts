@@ -23,7 +23,7 @@ test("reabre offline com dados, fotos, pesquisa e ampliação", async ({
   await context.setOffline(true);
   await page.close();
   const reopened = await context.newPage();
-  await reopened.goto("/");
+  await reopened.goto("/?visualizacao=cards");
   await decodeAll(reopened, 10);
   await expect(reopened.getByRole("status")).toContainText(
     "Os preços podem ter mudado",
@@ -51,7 +51,7 @@ test("reabrir navegador preserva catálogo offline no perfil", async () => {
       baseURL: "http://127.0.0.1:4173",
     });
     const page = await context.newPage();
-    await page.goto("/");
+    await page.goto("/?visualizacao=cards");
     await decodeAll(page, 10);
   } finally {
     await context.close();
@@ -63,7 +63,7 @@ test("shell sem catálogo preparado explica primeira abertura sem rede", async (
   page,
   context,
 }) => {
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await page.waitForFunction(() => !!navigator.serviceWorker.controller);
   await context.setOffline(true);
   await page.reload();

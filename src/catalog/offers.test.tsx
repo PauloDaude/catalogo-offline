@@ -5,7 +5,10 @@ import userEvent from "@testing-library/user-event";
 import { CatalogPage } from "./CatalogPage";
 import { snapshotA } from "../test/fixtures";
 
-beforeEach(() => localStorage.clear());
+beforeEach(() => {
+  localStorage.clear();
+  window.history.replaceState(null, "", "/?visualizacao=cards");
+});
 
 test("oferta aparece no card e nos detalhes; carrinho soma o preço atual", async () => {
   const user = userEvent.setup();

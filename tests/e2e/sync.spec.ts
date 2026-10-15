@@ -23,7 +23,7 @@ test("atualiza preço foto e ocultação em duas abas", async ({
 }) => {
   await prepare(page);
   const second = await context.newPage();
-  await second.goto("/");
+  await second.goto("/?visualizacao=cards");
   await expect(
     second.getByRole("button", { name: "Atualizar catálogo", exact: true }),
   ).toBeEnabled();

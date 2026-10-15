@@ -1,7 +1,7 @@
 import { expect, type Page } from "@playwright/test";
 
 export async function prepare(page: Page) {
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await expect(page.locator(".product-card")).toHaveCount(10);
   await page
     .getByRole("button", {

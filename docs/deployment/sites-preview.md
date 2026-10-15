@@ -95,3 +95,20 @@ Publicada em 15/10/2026 no mesmo endereço, com acesso público preservado.
 - Seis testes de proporção e clique na extensão lateral passaram em celular e
   desktop após inverter o lado; dez testes de carrossel/gestos também passaram.
 - Evidências completas em `docs/validation/carrossel-fotos-proporcionais.md`.
+
+## Versão 5 — dobra curva atrás da foto
+
+Última publicação concluída antes do pedido de interromper atualizações automáticas.
+
+- Build do catálogo: `adc9fa1`.
+- Commit do repositório Sites: `57b1e27034f2d049fa8a20242df348c1032d8efb`.
+- Versão salva: `appgprj_6ad0df0dc2088191a7ed62dcf4a685cf~appgver_88d5aeddf7388191bd00960ff1b7b01d`.
+- Deployment: `appgdep_6ad12bbba5588191a12e15679974f4ba`, status `succeeded`.
+
+## Publicação suspensa por decisão do usuário
+
+Em 15/10/2026 o usuário pediu para não publicar a cada mudança: aguardar confirmação
+explícita. Preview local em `http://127.0.0.1:4173/`. Sombra refinada, botão de adição
+direta, grade ajustável, gesto corrigido e abas estão no projeto local/GitHub e
+**não foram implantados** no link público. Arquivos preparados no checkout Sites
+não equivalem a publicação; fazer nova build e seguir o fluxo somente após pedido.

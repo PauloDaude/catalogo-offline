@@ -92,8 +92,11 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - A quantidade escolhida define os itens da página. Grade com até três colunas
   em telas grandes, duas intermediárias e uma no celular para manter legibilidade.
   Páginas finais mostram apenas os produtos restantes, sem duplicações.
-- Entrada pelo botão "Folhear catálogo" ou `?visualizacao=folhear`. O visual de
-  listagem permanece disponível em `/` e pelo botão "Visual anterior".
+- Página inicial abre **Folhear catálogo** por padrão, com abas React Aria para
+  alternar entre **Folhear catálogo** e **Ver em cards**. Não acrescentar terceira
+  aba sem necessidade. Carrinho compartilhado entre os visuais.
+- `?visualizacao=folhear` abre carrossel e `?visualizacao=cards` abre listagem.
+  A seleção da aba atualiza o parâmetro; a URL sem parâmetro abre carrossel.
 - Pedido mais recente corrige o sentido: arrastar da **direita para esquerda
   avança**; esquerda para direita retorna. Com vários itens, avançar o grupo.
   Manter botões como alternativa acessível e contador do intervalo de produtos.
@@ -254,5 +257,8 @@ Referências oficiais para consultar conforme necessário:
   esse `project_id`. Publicação estática em checkout separado `.sites-preview/`,
   ignorado no repositório principal. Processo em `docs/deployment/sites-preview.md`.
   O link representa a build publicada e não acompanha automaticamente a `main`.
+- **Decisão mais recente: não publicar automaticamente a cada alteração.** Manter
+  alterações e preview locais; atualizar o link online somente quando o usuário
+  confirmar/pedir publicação. Essa instrução substitui o padrão da skill Sites.
 - Não publicar, criar recursos externos ou presumir contas/configurações existentes
   apenas porque estão citados nos documentos de planejamento.

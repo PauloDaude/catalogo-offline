@@ -8,7 +8,7 @@ for (const [width, height] of [
 ]) {
   test(`catálogo legível e tocável em ${width}x${height}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
-    await page.goto("/");
+    await page.goto("/?visualizacao=cards");
     await expect(page.locator(".product-card")).toHaveCount(10);
     expect(
       await page.evaluate(
@@ -31,7 +31,7 @@ for (const [width, height] of [
 }
 
 test("foto ampliada fecha e devolve foco", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   const trigger = page.getByRole("button", { name: "Ver Tesoura multiuso" });
   await trigger.click();
   await expect(page.getByRole("dialog")).toBeVisible();
@@ -42,7 +42,7 @@ test("foto ampliada fecha e devolve foco", async ({ page }) => {
 
 test("API indisponível orienta sem tela vazia", async ({ page }) => {
   await page.route("**/demo/catalog.json", (route) => route.abort());
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await expect(page.getByRole("status")).toContainText(
     "Não foi possível abrir",
   );
@@ -55,7 +55,7 @@ test("IndexedDB negado permite consulta online", async ({ page }) => {
       throw new DOMException("Denied", "SecurityError");
     };
   });
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await expect(page.locator(".product-card")).toHaveCount(10);
   await expect(page.getByRole("status")).toContainText("armazenamento");
 });
@@ -77,7 +77,7 @@ test("texto não executa markup e aplicação só acessa origem local", async ({
     data.products[0].name = "<img src=x onerror=alert(1)>";
     await route.fulfill({ json: data });
   });
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   await expect(page.getByText("<img src=x onerror=alert(1)>")).toBeVisible();
   expect(external).toEqual([]);
 });
@@ -91,7 +91,7 @@ test("detalhes do produto cabem na tela sem rolagem interna", async ({
     [640, 360],
   ]) {
     await page.setViewportSize({ width, height });
-    await page.goto("/");
+    await page.goto("/?visualizacao=cards");
     await page
       .getByRole("button", { name: "Ver Panela para o dia a dia", exact: true })
       .click();
@@ -127,7 +127,7 @@ test("oferta permanece no catálogo offline e detalhes usam duas colunas em tela
   page,
   context,
 }) => {
-  await page.goto("/");
+  await page.goto("/?visualizacao=cards");
   const card = page.locator(".product-card").filter({
     has: page.getByRole("heading", { name: "Panela para o dia a dia" }),
   });
@@ -154,7 +154,7 @@ test("card inteiro abre detalhes e preços ficam alinhados entre ofertas e produ
 }) => {
   for (const width of [1280, 800, 360]) {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto("/");
+    await page.goto("/?visualizacao=cards");
     const cards = page.locator(".product-card");
     await expect(cards).toHaveCount(10);
     const first = cards.nth(0);
@@ -187,7 +187,7 @@ test("ofertas ficam sobre a foto e preços próximos ao nome sem reservar área 
 }) => {
   for (const width of [1280, 800, 360]) {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto("/");
+    await page.goto("/?visualizacao=cards");
     const cards = page.locator(".product-card");
     await expect(cards).toHaveCount(10);
     const offer = cards.nth(0);

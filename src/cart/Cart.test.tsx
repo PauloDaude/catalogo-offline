@@ -5,7 +5,10 @@ import userEvent from "@testing-library/user-event";
 import { CatalogPage } from "../catalog/CatalogPage";
 import { snapshotA } from "../test/fixtures";
 
-beforeEach(() => localStorage.clear());
+beforeEach(() => {
+  localStorage.clear();
+  window.history.replaceState(null, "", "/?visualizacao=cards");
+});
 
 const renderCatalog = () =>
   render(

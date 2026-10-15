@@ -14,7 +14,7 @@ for (const [width, height] of [
       page,
     }) => {
       await page.setViewportSize({ width, height });
-      await page.goto("/");
+      await page.goto("/?visualizacao=cards");
       const base64 = await page.evaluate(
         ([w, h]) => {
           const canvas = document.createElement("canvas");
@@ -34,7 +34,7 @@ for (const [width, height] of [
         }),
       );
       await page.reload();
-      await page.getByRole("button", { name: "Folhear catálogo" }).click();
+      await page.getByRole("tab", { name: "Folhear catálogo" }).click();
       const img = page.locator(".book-product-photo img");
       await img.evaluate((el: HTMLImageElement) => el.decode());
       await expect
