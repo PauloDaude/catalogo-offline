@@ -94,8 +94,12 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Arrastar com dedo ou mouse para a **direita avança**, conforme pedido explícito;
   esquerda retorna. Manter botões como alternativa acessível e contador do produto.
   Arrasto não deve abrir detalhes; toque/click simples e teclado devem abrir.
-- Imagem grande como fundo (`object-fit: cover`), com código, nome e preço
-  sobrepostos em painel legível. Foto inteira disponível nos detalhes.
+- Foto inteira preservando a proporção original (`object-fit: contain`), com
+  largura adaptada às imagens verticais, quadradas e horizontais; limitar altura
+  pelo viewport. Não voltar ao quadro largo fixo que recorta imagens verticais.
+- Código, nome e preço em faixa branca com detalhe azul saindo pela lateral
+  direita, sobrepondo parcialmente a borda inferior da foto. A faixa também abre
+  detalhes. Não cortar a faixa nem gerar rolagem horizontal no celular.
 - Usar os mesmos tokens de preço azul, selo azul OFERTA IMPERDÍVEL e percentual
   verde `#04a650` com texto branco da listagem. Carrinho flutuante também azul.
 - Pesquisa limitada a Cozinha nesta etapa. Reaproveitar dados, fotos e consulta

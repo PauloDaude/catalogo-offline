@@ -41,7 +41,7 @@ test("catálogo abre sem Hero e carrinho mantém controles junto ao item no celu
   await expect(page.getByText("Seu carrinho está vazio")).toBeVisible();
 });
 
-test("carrossel usa foto grande, informações sobrepostas e o carrinho azul", async ({
+test("carrossel usa foto proporcional, faixa sobreposta e o carrinho azul", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
@@ -49,9 +49,9 @@ test("carrossel usa foto grande, informações sobrepostas e o carrinho azul", a
   await expect(page.locator(".book-product")).toHaveCount(1);
   const photo = await page.locator(".book-product-photo").boundingBox();
   const caption = await page.locator(".book-product-caption").boundingBox();
-  expect(photo!.height).toBeGreaterThanOrEqual(320);
+  expect(photo!.height).toBeGreaterThanOrEqual(120);
   expect(caption!.y).toBeGreaterThanOrEqual(photo!.y);
-  expect(caption!.y + caption!.height).toBeLessThanOrEqual(
+  expect(caption!.y + caption!.height).toBeGreaterThan(
     photo!.y + photo!.height,
   );
   await expect(page.locator(".book-product .product-price")).toHaveCSS(

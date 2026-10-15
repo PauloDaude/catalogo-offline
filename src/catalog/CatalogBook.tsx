@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { ArrowLeft, ArrowRight, Search, MoveHorizontal } from "lucide-react";
 import { TextField } from "react-aria-components";
 
@@ -24,6 +24,7 @@ export function CatalogBook({
 }) {
   const [query, setQuery] = useState("");
   const [position, setPosition] = useState(0);
+  const [photo, setPhoto] = useState({ source: "", ratio: 1 });
   const filtered = filterProducts(products, query, "Cozinha");
   const index = Math.min(position, Math.max(0, filtered.length - 1));
   const product = filtered[index];
@@ -83,7 +84,12 @@ export function CatalogBook({
           <article
             key={product.id}
             className="book-product"
-            style={{ transform: `translateX(${swipe.offset}px)` }}
+            style={
+              {
+                "--photo-ratio": photo.source === image ? photo.ratio : 1,
+                transform: `translateX(${swipe.offset}px)`,
+              } as CSSProperties
+            }
           >
             <DialogTrigger>
               <Button
@@ -105,6 +111,16 @@ export function CatalogBook({
                   src={image}
                   alt={product.name}
                   draggable={false}
+                  onLoad={({ currentTarget }) => {
+                    const { naturalWidth, naturalHeight } = currentTarget;
+
+                    if (naturalWidth > 0 && naturalHeight > 0) {
+                      setPhoto({
+                        source: image,
+                        ratio: naturalWidth / naturalHeight,
+                      });
+                    }
+                  }}
                 />
               ) : (
                 <span className="image-placeholder">Foto indisponível</span>
@@ -117,7 +133,6 @@ export function CatalogBook({
               </div>
               <h2>{product.name}</h2>
               <ProductPrice product={product} />
-              <span className="book-details-hint">Toque para ver detalhes</span>
             </div>
           </article>
         </div>

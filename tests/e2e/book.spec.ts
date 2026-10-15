@@ -23,10 +23,10 @@ for (const [width, height, perPage, pages] of [
       ),
     ).toBe(true);
     for (const img of await page.locator(".book-product-photo img").all()) {
-      await expect(img).toHaveCSS("object-fit", "cover");
+      await expect(img).toHaveCSS("object-fit", "contain");
       await img.evaluate((element: HTMLImageElement) => element.decode());
       const box = await img.boundingBox();
-      expect(box!.height).toBeGreaterThanOrEqual(160);
+      expect(box!.height).toBeGreaterThanOrEqual(120);
     }
     const names: string[] = [];
     for (let i = 1; i <= pages; i++) {
