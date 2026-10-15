@@ -81,3 +81,17 @@ Publicada em 15/10/2026 no mesmo endereço, com acesso público preservado.
 - Hero removido da listagem, carrossel com foto de fundo, informações sobrepostas,
   gesto para a direita avançando e carrinho azul/compacto nos dois visuais.
 - Link direto continua `?visualizacao=folhear`; sem parâmetro abre a listagem.
+
+## Versão 4 — foto proporcional e faixa à esquerda
+
+Publicada em 15/10/2026 no mesmo endereço, com acesso público preservado.
+
+- Build do catálogo: `63b99dc`.
+- Commit do repositório Sites: `46201c594d7522a17ed414fdabd4c3c90f7a1942`.
+- Versão salva: `appgprj_6ad0df0dc2088191a7ed62dcf4a685cf~appgver_c5738945675481918ee1b075978a1edd`.
+- Deployment: `appgdep_6ad12ab59a4081919bed43302aa76d68`, status `succeeded`.
+- Fotos preservam a proporção original. Nome e preço em faixa saindo pela lateral
+  esquerda e sobrepondo a parte inferior da imagem, conforme último pedido.
+- Seis testes de proporção e clique na extensão lateral passaram em celular e
+  desktop após inverter o lado; dez testes de carrossel/gestos também passaram.
+- Evidências completas em `docs/validation/carrossel-fotos-proporcionais.md`.
