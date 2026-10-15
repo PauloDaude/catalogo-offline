@@ -11,10 +11,13 @@ Contexto e documentos:
 - `docs/contexto_catalogo_digital_vendedor.md`: contexto da conversa original.
 - `docs/superpowers/specs/2026-10-14-catalogo-mvp-design.md`: proposta detalhada de arquitetura.
 - `docs/superpowers/plans/2026-10-14-prototipo-catalogo-offline.md`: plano da etapa 1,
-  aguardando revisão e escolha do método de execução.
+  autorizado para execução direta; acompanhar checkboxes e resultados de validação.
 - Antes de implementar, conferir o status da especificação e a existência de um
-  plano de implementação. A conversa está na fase de planejamento; ainda não há
-  código do aplicativo; o plano do protótipo foi escrito, mas ainda não executado.
+  plano de implementação. O protótipo da etapa 1 foi implementado nesta sessão;
+  integração Supabase e painel administrativo ainda não existem.
+- `README.md`: comandos de instalação, desenvolvimento e preview de produção.
+- `docs/validation/prototipo-offline.md`: evidências automáticas e roteiro pendente
+  para tablet/celular reais e validação com o vendedor.
 
 ## Objetivo e escopo confirmado
 
