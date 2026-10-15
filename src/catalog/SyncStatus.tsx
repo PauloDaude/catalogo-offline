@@ -65,8 +65,8 @@ export function SyncStatus({
             ? "Carregando…"
             : "Salvando…"
           : saved
-            ? "Atualizar catálogo"
-            : "Salvar catálogo para usar sem internet"}
+            ? "Atualizar"
+            : "Salvar offline"}
       </Button>
     </section>
   );

@@ -5,7 +5,7 @@ export async function prepare(page: Page) {
   await expect(page.locator(".product-card")).toHaveCount(10);
   await page
     .getByRole("button", {
-      name: "Salvar catálogo para usar sem internet",
+      name: "Salvar offline",
       exact: true,
     })
     .click();

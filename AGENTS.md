@@ -101,7 +101,9 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   A seleção da aba atualiza o parâmetro; a URL sem parâmetro abre carrossel.
 - Pedido mais recente corrige o sentido: arrastar da **direita para esquerda
   avança**; esquerda para direita retorna.
-  Manter botões como alternativa acessível e contador do produto.
+  Manter botões inferiores e setas grandes clicáveis nas laterais da foto,
+  com fundo branco, alvo de 56 px no desktop e 48 px no celular. Sinalizar limites
+  e preservar foco de teclado ao navegar. Manter contador do produto.
   Arrasto não deve abrir detalhes; toque/click simples e teclado devem abrir.
 - Foto inteira preservando a proporção original (`object-fit: contain`), com
   largura adaptada às imagens verticais, quadradas e horizontais; na visualização
@@ -120,7 +122,10 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Pesquisa combina com a categoria escolhida, incluindo Todas. Reaproveitar
   dados, fotos e consulta offline. Seleção preservada ao alternar os visuais. Sem animação de folha dobrando.
 - Hero removido da listagem por pedido do usuário; abrir diretamente o catálogo,
-  mantendo o header. Preparação offline permanece disponível abaixo dos produtos.
+  mantendo o header. Preparação offline em card compacto fixo no canto inferior
+  esquerdo; texto pequeno e ações curtas (Salvar offline/Atualizar). No celular,
+  posicionar acima da faixa do carrinho para evitar sobreposição entre controles.
+  Mensagens de erro, progresso e confirmação continuam visíveis.
 - Avaliação de usabilidade com o vendedor continua pendente. As regras de cards
   da listagem acima descrevem o visual anterior preservado.
 - O PDF da empresa em `docs/` é apenas referência visual fornecida pelo usuário;
@@ -132,6 +137,8 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Definir o tom de azul usando tokens de tema e verificar contraste nos estados
   normal, foco, pressionado e desabilitado. O tom exato ainda não foi escolhido.
 - Não acrescentar tema escuro ou seletor de temas ao MVP sem necessidade acordada.
+- Foco da pesquisa: borda azul fina com sombra discreta; evitar outline grosso
+  combinado com ring. Preservar indicação de foco e acessibilidade por teclado.
 - O vendedor não é um usuário experiente: textos simples e ações explícitas.
 - Controles confortáveis para toque; referência de 48 × 48 CSS px para ações principais.
 - Não depender de hover, gestos ocultos ou ícones sem rótulos para ações essenciais.

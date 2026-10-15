@@ -25,7 +25,7 @@ test("atualiza preço foto e ocultação em duas abas", async ({
   const second = await context.newPage();
   await second.goto("/?visualizacao=cards");
   await expect(
-    second.getByRole("button", { name: "Atualizar catálogo", exact: true }),
+    second.getByRole("button", { name: "Atualizar", exact: true }),
   ).toBeEnabled();
   await context.route("**/demo/catalog.json", (route) =>
     route.fulfill({ json: updated }),
@@ -37,12 +37,8 @@ test("atualiza preço foto e ocultação em duas abas", async ({
     }),
   );
   await Promise.all([
-    page
-      .getByRole("button", { name: "Atualizar catálogo", exact: true })
-      .click(),
-    second
-      .getByRole("button", { name: "Atualizar catálogo", exact: true })
-      .click(),
+    page.getByRole("button", { name: "Atualizar", exact: true }).click(),
+    second.getByRole("button", { name: "Atualizar", exact: true }).click(),
   ]);
 
   for (const tab of [page, second]) {
@@ -63,9 +59,7 @@ test("foto corrompida impede atualização e preserva cópia offline", async ({
   await context.route("**/demo/photos/panela-v2.jpg", (route) =>
     route.fulfill({ body: "<html>error</html>", contentType: "image/jpeg" }),
   );
-  await page
-    .getByRole("button", { name: "Atualizar catálogo", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Atualizar", exact: true }).click();
   await expect(page.getByRole("status")).toContainText(
     "Não foi possível atualizar",
   );

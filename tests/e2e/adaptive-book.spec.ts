@@ -43,7 +43,9 @@ for (const [width, height] of [
           return Math.abs(box!.width / box!.height - photoWidth / photoHeight);
         })
         .toBeLessThan(0.01);
-      await page.locator(".book-product-caption").scrollIntoViewIfNeeded();
+      await page
+        .locator(".book-product-caption")
+        .evaluate((el) => el.scrollIntoView({ block: "center" }));
       const photo = (await img.boundingBox())!;
       const caption = (await page
         .locator(".book-product-caption")

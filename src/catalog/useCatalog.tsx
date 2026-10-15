@@ -193,7 +193,7 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
             progress: null,
             message: storageError
               ? "Catálogo online. O armazenamento deste navegador está indisponível."
-              : "Consulte online ou salve neste aparelho para usar sem internet.",
+              : "Disponível online.",
           });
       } catch {
         if (!disposed && !signal.aborted)

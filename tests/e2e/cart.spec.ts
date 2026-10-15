@@ -113,9 +113,7 @@ test("sincronização exige revisão antes de trocar preços e excluir indispon�
       );
     await route.fulfill({ json: snapshot });
   });
-  await page
-    .getByRole("button", { name: "Atualizar catálogo", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Atualizar", exact: true }).click();
   await expect(
     page.getByRole("button", { name: /Abrir carrinho/ }),
   ).toContainText("Revisar valores");

@@ -94,3 +94,23 @@ Cozinha preservada ao trocar de aba e então limpar para Todas; essa expectativa
 substitui o comportamento antigo de reiniciar filtros. Demais 47 testes E2E
 passaram na execução completa; fluxos de folhear, filtros e abas repetidos após
 corrigir a expectativa do teste offline.
+
+## Controles flutuantes, foco e setas laterais
+
+Card offline compacto fixo à esquerda: Disponível online, Salvar offline e
+Atualizar. Mantém progresso, confirmação e erros; no celular fica acima do carrinho
+para não sobrepor os controles entre si. Espaço inferior e scroll-padding reservados
+para permitir rolar o conteúdo acima dos controles. Pesquisa tem borda fina azul,
+sem combinar outline e ring grossos.
+
+Setas laterais brancas (56 px desktop, 48 px mobile) navegam sem abrir detalhes.
+No início/fim usam aria-disabled e guardas de ação; continuam focáveis para não
+perder foco ao alcançar o limite. O componente visual não é remontado a cada
+produto, preservando foco; proporção continua associada à URL da foto.
+
+Testes verificam posição fixa após rolagem, ausência de sobreposição entre aviso
+e carrinho, foco da pesquisa, setas/limites e navegação por Enter. Capturas desktop
+e mobile inspecionadas. Link online permanece sem atualização, conforme decisão.
+
+Resultado final: 79 testes unitários/componentes e 53 E2E passaram, incluindo
+preservação de foco das setas no último item. Build, lint e formatação passaram.

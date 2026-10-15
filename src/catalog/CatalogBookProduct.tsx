@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from "react";
-import { ShoppingCart, Plus } from "lucide-react";
+import { ShoppingCart, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
@@ -12,11 +12,19 @@ export function CatalogBookProduct({
   image,
   quantity,
   onAdd,
+  onPrevious,
+  onNext,
+  isFirst,
+  isLast,
 }: {
   product: Product;
   image?: string;
   quantity: number;
   onAdd: (product: Product) => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  isFirst: boolean;
+  isLast: boolean;
 }) {
   const [photo, setPhoto] = useState({ source: "", ratio: 1 });
 
@@ -44,6 +52,29 @@ export function CatalogBookProduct({
       </DialogTrigger>
 
       <div className="book-product-photo">
+        <Button
+          variant="outline"
+          className="book-side-arrow book-side-previous"
+          aria-label="Voltar produto"
+          aria-disabled={isFirst}
+          onPress={() => {
+            if (!isFirst) onPrevious();
+          }}
+        >
+          <ChevronLeft aria-hidden="true" />
+        </Button>
+        <Button
+          variant="outline"
+          className="book-side-arrow book-side-next"
+          aria-label="Avançar produto"
+          aria-disabled={isLast}
+          onPress={() => {
+            if (!isLast) onNext();
+          }}
+        >
+          <ChevronRight aria-hidden="true" />
+        </Button>
+
         {image ? (
           <img
             src={image}

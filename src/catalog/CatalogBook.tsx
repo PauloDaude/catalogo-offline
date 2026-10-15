@@ -60,11 +60,14 @@ export function CatalogBook({
             style={{ transform: `translateX(${swipe.offset}px)` }}
           >
             <CatalogBookProduct
-              key={product.id}
               product={product}
               image={images.get(product.imagePath)}
               quantity={quantityFor(product.id)}
               onAdd={onAdd}
+              onPrevious={() => go(-1)}
+              onNext={() => go(1)}
+              isFirst={index === 0}
+              isLast={index === products.length - 1}
             />
           </div>
         </div>
