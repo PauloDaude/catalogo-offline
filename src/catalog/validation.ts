@@ -34,6 +34,9 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
       !p.name.trim() ||
       !Number.isSafeInteger(p.priceCents) ||
       p.priceCents < 0 ||
+      (p.previousPriceCents !== undefined &&
+        (!Number.isSafeInteger(p.previousPriceCents) ||
+          p.previousPriceCents <= p.priceCents)) ||
       !categories.includes(p.category) ||
       typeof p.imagePath !== "string" ||
       !/^photos\/[a-zA-Z0-9_-]+\.jpg$/.test(p.imagePath)
@@ -48,6 +51,9 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
       code: p.code,
       name: p.name.trim(),
       priceCents: p.priceCents,
+      ...(p.previousPriceCents !== undefined && {
+        previousPriceCents: p.previousPriceCents,
+      }),
       category: p.category,
       imagePath: p.imagePath,
     };

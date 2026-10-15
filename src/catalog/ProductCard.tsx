@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import type { Product } from "./types";
 import { ProductDialog } from "./ProductDialog";
-import { price } from "./price";
+import { ProductPrice } from "./ProductPrice";
 
 import { Plus } from "lucide-react";
 
@@ -49,7 +49,7 @@ export function ProductCard({
           <span className="product-code">#{product.code ?? "—"}</span>
         </div>
         <h3>{product.name}</h3>
-        <p className="product-price">{price(product.priceCents)}</p>
+        <ProductPrice product={product} />
         <Button
           variant="outline"
           className="add-to-cart touch-button"

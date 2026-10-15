@@ -90,3 +90,33 @@ test("rejeita códigos curtos duplicados ou fora do padrão", () => {
     }),
   ).toThrow();
 });
+
+test("preserva preço anterior opcional para ofertas", () => {
+  const result = parseSnapshot({
+    ...snapshotA,
+    products: [{ ...snapshotA.products[0], previousPriceCents: 4000 }],
+  });
+
+  expect(result.products[0]).toHaveProperty("previousPriceCents", 4000);
+});
+
+test.each([
+  null,
+  "4000",
+  -1,
+  2500,
+  2000,
+  4000.5,
+  Infinity,
+  Number.MAX_SAFE_INTEGER + 1,
+])(
+  "rejeita preço anterior inválido ou sem desconto: %s",
+  (previousPriceCents) => {
+    expect(() =>
+      parseSnapshot({
+        ...snapshotA,
+        products: [{ ...snapshotA.products[0], previousPriceCents }],
+      }),
+    ).toThrow();
+  },
+);

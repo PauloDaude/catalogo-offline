@@ -1,6 +1,6 @@
 {
-  "revision": 2,
-  "updatedAt": "2026-10-15T12:00:00.000Z",
+  "revision": 3,
+  "updatedAt": "2026-10-15T14:00:00.000Z",
   "products": [
     {
       "id": "panela",
@@ -8,7 +8,8 @@
       "category": "Cozinha",
       "priceCents": 6500,
       "imagePath": "photos/panela.jpg",
-      "code": "P001"
+      "code": "P001",
+      "previousPriceCents": 10000
     },
     {
       "id": "utensilios",
@@ -24,7 +25,8 @@
       "category": "Pesca",
       "priceCents": 4500,
       "imagePath": "photos/pesca.jpg",
-      "code": "P003"
+      "code": "P003",
+      "previousPriceCents": 6000
     },
     {
       "id": "sombrinha",
@@ -40,7 +42,8 @@
       "category": "Iluminação",
       "priceCents": 3000,
       "imagePath": "photos/lanterna.jpg",
-      "code": "P005"
+      "code": "P005",
+      "previousPriceCents": 4000
     },
     {
       "id": "tesoura",
@@ -64,7 +67,8 @@
       "category": "Ferramentas",
       "priceCents": 8500,
       "imagePath": "photos/ferramentas.jpg",
-      "code": "P008"
+      "code": "P008",
+      "previousPriceCents": 11000
     },
     {
       "id": "acessorios",

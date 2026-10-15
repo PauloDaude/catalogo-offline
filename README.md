@@ -69,7 +69,11 @@ Internet nos aparelhos reais ainda precisam ser verificados.
 
 `public/demo/catalog.json` contém um snapshot público com revisão, data e dez
 produtos. Cada produto tem id interno, código público único (`code`, formato `P001`),
-nome, categoria, preço em centavos e caminho de foto.
+nome, categoria, preço em centavos e caminho de foto. O campo opcional
+`previousPriceCents` representa o preço anterior: precisa ser maior que `priceCents`.
+Quando informado, o card e os detalhes exibem oferta, preço riscado e percentual
+inteiro de desconto arredondado para baixo. O carrinho soma apenas `priceCents`.
+Há quatro ofertas fictícias de demonstração na revisão 3 do catálogo.
 Só produtos ativos devem ser publicados nesse contrato. Alterações exigem incrementar
 a revisão; troca de foto exige **novo caminho**, sem sobrescrever a foto antiga.
 

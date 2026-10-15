@@ -39,6 +39,16 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   impor unicidade no banco, com atribuição transacional no cadastro.
 - Cadastro, edição e ocultação reversível de produtos.
 - Pesquisa, categorias, fotos grandes e preços destacados.
+- Ofertas aprovadas: preço anterior opcional (`previousPriceCents`), inteiro em
+  centavos e maior que o atual. Exibir preço anterior riscado, preço atual e
+  percentual de desconto inteiro arredondado para baixo, no card e nos detalhes.
+  Produtos sem preço anterior não recebem destaque de oferta. O carrinho usa
+  somente o preço atual. Percentual em selo verde `#04a650` com texto branco.
+  Selo "OFERTA IMPERDÍVEL" em azul com texto branco e ícone de desconto, conforme
+  referências e preferências explícitas do usuário.
+- Detalhes em duas colunas nas telas maiores (foto à esquerda, informações e ações
+  à direita), adaptados ao celular e à paisagem com pouca altura. Evitar rolagem
+  desnecessária; manter categoria e código na mesma linha.
 - Carrinho simples solicitado em 15/10/2026: agrupar produtos selecionados pelo
   cliente, ajustar quantidades e somar o valor total, sem pagamento.
   Desenho aprovado: adicionar/remover, quantidades, subtotais e total, limpeza com

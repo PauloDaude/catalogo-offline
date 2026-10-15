@@ -13,6 +13,7 @@ export type Product = {
   code: string;
   name: string;
   priceCents: number;
+  previousPriceCents?: number;
   category: Category;
   imagePath: string;
 };

@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { prepare } from "./helpers";
 
 for (const [width, height] of [
   [360, 800],
@@ -109,6 +110,41 @@ test("detalhes do produto cabem na tela sem rolagem interna", async ({
     await expect(
       page.getByRole("button", { name: "Fechar", exact: true }),
     ).toBeInViewport({ ratio: 1 });
+    const addButton = page.getByRole("button", {
+      name: "Adicionar ao carrinho",
+      exact: true,
+    });
+    expect(
+      await addButton.evaluate(
+        (element) => element.scrollHeight <= element.clientHeight + 1,
+      ),
+    ).toBe(true);
     await page.getByRole("button", { name: "Fechar", exact: true }).click();
   }
+});
+
+test("oferta permanece no catálogo offline e detalhes usam duas colunas em telas maiores", async ({
+  page,
+  context,
+}) => {
+  await page.goto("/");
+  const card = page.locator(".product-card").filter({
+    has: page.getByRole("heading", { name: "Panela para o dia a dia" }),
+  });
+  await expect(card.locator("s")).toHaveText("R$ 100,00");
+  await expect(card.getByLabel("35% de desconto")).toBeVisible();
+  await prepare(page);
+  await context.setOffline(true);
+  await page.reload();
+  await expect(card.locator("s")).toHaveText("R$ 100,00");
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await card
+    .getByRole("button", { name: "Ver Panela para o dia a dia" })
+    .click();
+  await expect(
+    page.getByRole("dialog").getByLabel("35% de desconto"),
+  ).toBeVisible();
+  const photo = await page.locator(".product-detail-photo").boundingBox();
+  const info = await page.locator(".product-detail-info").boundingBox();
+  expect(photo!.x + photo!.width).toBeLessThan(info!.x);
 });
