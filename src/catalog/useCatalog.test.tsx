@@ -1,0 +1,17 @@
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+import { useCatalog } from './useCatalog';
+import { createCatalogStore, type CatalogStore } from './storage';
+import { snapshotA } from '../test/fixtures';
+import { installBrowserFakes, makeSource } from '../test/sync-fixtures';
+vi.mock('../pwa/register', () => ({ ensureOfflineShell: async () => {}, requestAppUpdate: async () => {} }));
+let store: CatalogStore;
+beforeEach(() => { installBrowserFakes(); Object.defineProperty(navigator, 'onLine', { configurable: true, value: true }); vi.stubGlobal('URL', Object.assign(URL, { createObjectURL: () => 'blob:test', revokeObjectURL: () => {} })); store = createCatalogStore(crypto.randomUUID()); });
+afterEach(() => store.close());
+test('primeira visita consulta sem baixar fotos automaticamente', async () => { const source = makeSource(snapshotA); source.getPhoto = async () => { throw new Error('bulk download on visit'); }; const { result } = renderHook(() => useCatalog(source, store)); await waitFor(() => expect(result.current.products).toHaveLength(10)); expect(result.current.saved).toBe(false); expect(await store.readActive()).toBeNull(); });
+test('pedido explícito salva todas as fotos', async () => { const { result } = renderHook(() => useCatalog(makeSourceStable, store)); await waitFor(() => expect(result.current.products).toHaveLength(10)); await act(() => result.current.prepareOffline()); expect(result.current.saved).toBe(true); expect((await store.readActive())?.photos.size).toBe(10); });
+const makeSourceStable = makeSource(snapshotA);
+test('sem rede e sem preparação apresenta orientação', async () => { Object.defineProperty(navigator, 'onLine', { configurable: true, value: false }); const { result } = renderHook(() => useCatalog(makeSourceStable, store)); await waitFor(() => expect(result.current.message).toMatch(/internet/i)); expect(result.current.products).toHaveLength(0); });
+test('armazenamento negado mantém catálogo online', async () => { store.readActive = async () => { throw new DOMException('Denied', 'SecurityError'); }; const { result } = renderHook(() => useCatalog(makeSourceStable, store)); await waitFor(() => expect(result.current.products).toHaveLength(10)); expect(result.current.message).toMatch(/armazenamento/i); });
+test('carregamento lento tem estado visível', async () => { let resolve!: (value: typeof snapshotA) => void; const source = makeSource(snapshotA); source.getSnapshot = () => new Promise(r => { resolve = r; }); const { result } = renderHook(() => useCatalog(source, store)); await waitFor(() => expect(resolve).toBeDefined()); expect(result.current.state).toBe('loading'); await act(async () => resolve(snapshotA)); expect(result.current.products).toHaveLength(10); });
+test('falha de atualização mantém cópia e aviso', async () => { const source = makeSource(snapshotA); const hook = renderHook(() => useCatalog(source, store)); await waitFor(() => expect(hook.result.current.products).toHaveLength(10)); await act(() => hook.result.current.prepareOffline()); hook.unmount(); const failing = makeSource(snapshotA); failing.getSnapshot = async () => { throw new Error('offline'); }; const { result } = renderHook(() => useCatalog(failing, store)); await waitFor(() => expect(result.current.message).toMatch(/Não foi possível atualizar/)); expect(result.current.products).toHaveLength(10); expect(result.current.saved).toBe(true); });
