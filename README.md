@@ -12,6 +12,8 @@ somente na aba atual. Alterações de preço ou disponibilidade são sinalizadas
 precisam ser aceitas antes de atualizar a seleção e seu total. Produtos que ficaram
 indisponíveis permanecem identificados e são excluídos do total após a revisão.
 O botão do carrinho fica fixo no canto inferior direito durante a rolagem.
+O carrinho exibe miniaturas das fotos do catálogo, inclusive offline após a preparação.
+Se uma foto estiver ausente ou falhar, exibe uma indicação no lugar.
 Para adicionar um produto, tocar em qualquer área do card e usar **Adicionar ao
 carrinho** nos detalhes. Os cards também abrem pelo teclado com Enter ou Espaço.
 Cada produto possui um código curto único, como `P001`, visível no card, nos

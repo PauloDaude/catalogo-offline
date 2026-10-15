@@ -19,6 +19,12 @@ test("carrinho agrupa, altera quantidades e confirma limpeza", async ({
   ).toBe(true);
   await trigger.click();
   await expect(page.locator(".cart-grand-total")).toHaveText("R$ 78,00");
+  await expect(page.locator(".cart-item img")).toHaveCount(2);
+  expect(
+    await page
+      .locator(".cart-dialog")
+      .evaluate((element) => element.scrollWidth <= element.clientWidth),
+  ).toBe(true);
   await page
     .getByRole("button", { name: "Diminuir quantidade de Tesoura multiuso" })
     .click();
@@ -56,6 +62,14 @@ test("seleção persiste ao fechar e reabrir offline", async ({
     .getByRole("button", { name: /Abrir carrinho, 2 itens/ })
     .click();
   await expect(reopened.locator(".cart-grand-total")).toHaveText("R$ 30,00");
+  const thumbnail = reopened
+    .getByRole("dialog")
+    .getByRole("img", { name: "Tesoura multiuso" });
+  await expect(thumbnail).toBeVisible();
+  await thumbnail.evaluate((image: HTMLImageElement) => image.decode());
+  expect(
+    await thumbnail.evaluate((image: HTMLImageElement) => image.naturalWidth),
+  ).toBeGreaterThan(0);
   await expect(reopened.getByRole("dialog").getByText("#P006")).toBeVisible();
   await reopened
     .getByRole("button", { name: "Aumentar quantidade de Tesoura multiuso" })

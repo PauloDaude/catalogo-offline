@@ -10,8 +10,15 @@ import {
 } from "@/components/ui/dialog";
 import { price } from "../catalog/price";
 import type { Cart } from "./useCart";
+import { CartThumbnail } from "./CartThumbnail";
 
-export function CartPanel({ cart }: { cart: Cart }) {
+export function CartPanel({
+  cart,
+  productImages,
+}: {
+  cart: Cart;
+  productImages: Map<string, string>;
+}) {
   const [open, setOpen] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
 
@@ -95,23 +102,29 @@ export function CartPanel({ cart }: { cart: Cart }) {
                   key={item.id}
                   className="cart-item"
                 >
-                  <div className="cart-item-info">
-                    <h3>{item.name}</h3>
-                    <span className="product-code">#{item.code ?? "—"}</span>
-                    <p>
-                      {item.unavailable
-                        ? "Indisponível — fora do total"
-                        : `${price(item.priceCents)} por unidade`}
-                    </p>
-                    <Button
-                      variant="ghost"
-                      className="cart-remove touch-button"
-                      aria-label={`Remover ${item.name}`}
-                      onPress={() => cart.remove(item.id)}
-                    >
-                      <Trash2 aria-hidden="true" />
-                      Remover
-                    </Button>
+                  <div className="cart-item-summary">
+                    <CartThumbnail
+                      src={productImages.get(item.id)}
+                      name={item.name}
+                    />
+                    <div className="cart-item-info">
+                      <h3>{item.name}</h3>
+                      <span className="product-code">#{item.code ?? "—"}</span>
+                      <p>
+                        {item.unavailable
+                          ? "Indisponível — fora do total"
+                          : `${price(item.priceCents)} por unidade`}
+                      </p>
+                      <Button
+                        variant="ghost"
+                        className="cart-remove touch-button"
+                        aria-label={`Remover ${item.name}`}
+                        onPress={() => cart.remove(item.id)}
+                      >
+                        <Trash2 aria-hidden="true" />
+                        Remover
+                      </Button>
+                    </div>
                   </div>
                   <div className="cart-item-actions">
                     <div

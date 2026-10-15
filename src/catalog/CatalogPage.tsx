@@ -28,6 +28,12 @@ export function CatalogPage({
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<Category | "Todas">("Todas");
   const filtered = filterProducts(products, query, category);
+  const productImages = new Map<string, string>();
+
+  for (const product of products) {
+    const image = images.get(product.imagePath);
+    if (image) productImages.set(product.id, image);
+  }
 
   return (
     <div className="catalog-shell">
@@ -46,7 +52,10 @@ export function CatalogPage({
             </span>
           </span>
         </a>
-        <CartPanel cart={cart} />
+        <CartPanel
+          cart={cart}
+          productImages={productImages}
+        />
       </header>
       <main id="main">
         <section className="intro">

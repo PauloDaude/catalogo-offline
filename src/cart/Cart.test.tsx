@@ -1,5 +1,5 @@
 import { beforeEach, expect, test, vi } from "vitest";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, within, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { CatalogPage } from "../catalog/CatalogPage";
@@ -125,5 +125,47 @@ test("carrinho carregando não trata produtos como removidos", async () => {
   expect(screen.queryByRole("alert")).not.toBeInTheDocument();
   expect(
     screen.getByText("R$ 25,00", { selector: ".cart-grand-total" }),
+  ).toBeVisible();
+});
+
+test("carrinho reutiliza a foto atual e mostra indicação se a imagem falhar", async () => {
+  const user = userEvent.setup();
+  const view = render(
+    <CatalogPage
+      products={snapshotA.products}
+      images={new Map([["photos/p0.jpg", "blob:foto-local"]])}
+    />,
+  );
+  await addProduct(user);
+  await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
+  const dialog = within(screen.getByRole("dialog"));
+  const thumbnail = dialog.getByRole("img", { name: "Tesoura de cozinha" });
+  expect(thumbnail).toHaveAttribute("src", "blob:foto-local");
+  fireEvent.error(thumbnail);
+  expect(dialog.getByRole("img", { name: "Foto indisponível" })).toBeVisible();
+
+  view.rerender(
+    <CatalogPage
+      products={snapshotA.products}
+      images={new Map([["photos/p0.jpg", "blob:foto-atualizada"]])}
+    />,
+  );
+  expect(
+    dialog.getByRole("img", { name: "Tesoura de cozinha" }),
+  ).toHaveAttribute("src", "blob:foto-atualizada");
+});
+
+test("produto sem foto continua identificado no carrinho", async () => {
+  const user = userEvent.setup();
+  renderCatalog();
+  await addProduct(user);
+  await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
+  const dialog = within(screen.getByRole("dialog"));
+  expect(dialog.getByRole("img", { name: "Foto indisponível" })).toBeVisible();
+  expect(
+    dialog.getByRole("heading", { name: "Tesoura de cozinha" }),
+  ).toBeVisible();
+  expect(
+    dialog.getByText("R$ 25,00", { selector: ".cart-grand-total" }),
   ).toBeVisible();
 });

@@ -48,3 +48,16 @@ Abas do mesmo navegador recebem notificações; ele não é um sistema de pedido
 Usar `npm run format` após mudanças e `npm run format:check` antes de finalizar.
 No futuro gerenciamento, atribuir códigos no banco com unicidade e sem reutilizar
 códigos de produtos ocultos; não gerar códigos pelo índice de renderização.
+
+## Miniaturas no carrinho — 15/10/2026
+
+- Miniatura de 72 px em telas maiores e 60 px no celular, com nome e código ao lado.
+- Fotos reutilizadas do catálogo ativo, incluindo os Blobs já preparados offline;
+  nenhuma URL temporária é persistida no localStorage da seleção.
+- Foto ausente ou com falha mostra ícone com rótulo acessível. Uma nova URL permite
+  carregar a foto atualizada. Item que saiu do catálogo continua identificado.
+- `npm test`: 75 testes passaram, incluindo imagem atual, ausência e falha de foto.
+- `npm run test:e2e`: 21 testes passaram; verificada decodificação da miniatura após
+  reabrir offline, sem overflow horizontal no carrinho em celular.
+- Build, lint, formatação e `git diff --check` aprovados. Capturas de desktop e
+  celular inspecionadas; validação em dispositivos Android reais segue pendente.

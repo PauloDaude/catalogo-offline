@@ -60,6 +60,9 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   exigem revisão explícita antes de atualizar a seleção e o total.
   Botão do carrinho fixo no canto inferior direito em celular, tablet e desktop,
   permanecendo visível durante a rolagem.
+  Cada item mostra uma miniatura da foto atual do catálogo, inclusive offline,
+  com indicação visual quando a foto não estiver disponível. Reutilizar as URLs
+  de imagem da sessão; não persistir Blob URLs no localStorage do carrinho.
 - Sem variações, checkout, pagamentos, pedidos enviados ao servidor ou controle de estoque.
 - Variações só serão consideradas depois da validação do MVP pelo vendedor.
 

@@ -943,7 +943,37 @@ progress {
   border-bottom: 1px solid #e2e8f0;
 }
 
+.cart-item-summary {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.cart-thumbnail {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #f1f5f9;
+}
+
+.cart-thumbnail-placeholder {
+  display: grid;
+  place-items: center;
+  color: #64748b;
+}
+
+.cart-thumbnail-placeholder svg {
+  width: 24px;
+  height: 24px;
+}
+
 .cart-item-info {
+  flex: 1;
   min-width: 0;
 }
 
@@ -1095,9 +1125,14 @@ progress {
     flex-wrap: wrap;
   }
 
-  .cart-item-info {
-    flex: 1;
-    min-width: 130px;
+  .cart-item-summary {
+    flex-basis: 100%;
+    gap: 12px;
+  }
+
+  .cart-thumbnail {
+    width: 60px;
+    height: 60px;
   }
 
   .cart-item-actions {
