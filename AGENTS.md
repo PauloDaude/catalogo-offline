@@ -81,6 +81,23 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Service Worker com Workbox para arquivos essenciais da aplicação.
 - Não trocar essas escolhas sem discutir uma necessidade concreta com o usuário.
 
+## Demonstração de catálogo para folhear
+
+- Após avaliação com o pai do usuário, foi aprovada uma demonstração de **uma
+  categoria (Cozinha)** com aparência de catálogo por páginas, sem gerar PDF.
+- Entrada pelo botão "Folhear catálogo" ou `?visualizacao=folhear`. O visual anterior
+  permanece disponível em `/` e pelo botão "Visual anterior", para comparação.
+- Nesta demonstração: dois produtos por página acima de 650 px; um por página em
+  telas menores. Anterior/Próxima explícitos, contador de página e índice de Cozinha.
+- Fotos inteiras com `object-fit: contain`, nome, código e preço simples. Promoção
+  discreta na página; detalhes e seleção reutilizam o fluxo existente.
+- Pesquisa limitada a Cozinha nesta etapa. Reaproveitar dados, fotos e consulta
+  offline. Seleção preservada ao alternar os visuais. Sem animação de folha dobrando.
+- Avaliação pendente com o vendedor antes de estender a apresentação às demais
+  categorias. As regras de cards acima descrevem o visual anterior preservado.
+- O PDF da empresa em `docs/` é apenas referência visual fornecida pelo usuário;
+  não foi importado para o catálogo nem incluído na publicação.
+
 ## Aparência e UX
 
 - **Tema claro (light), com azul como cor primária.**

@@ -24,6 +24,12 @@ O link funciona sem o computador de desenvolvimento ligado. É uma cópia da bui
 publicada; novos commits não atualizam o link automaticamente. Processo de atualização
 em [docs/deployment/sites-preview.md](docs/deployment/sites-preview.md).
 
+Prévia de uma categoria no formato de páginas: [folhear Cozinha](https://catalogo-paulo-demo.safereed9.chatgpt.site/?visualizacao=folhear).
+Também acessível pelo botão **Folhear catálogo**. Usa dois produtos por página no
+tablet/desktop e um no celular, fotos inteiras, pesquisa em Cozinha e navegação
+Anterior/Próxima. **Visual anterior** permite comparar sem perder a seleção.
+Esta experiência está em avaliação antes de ser estendida às demais categorias.
+
 Esta entrega implementa a **etapa 1**: dez produtos fictícios. Não contém painel
 administrativo, login, Supabase nem produtos reais. Não é o MVP completo de produção.
 
