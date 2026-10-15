@@ -4,11 +4,9 @@ import { TextField } from "react-aria-components";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DialogTrigger } from "@/components/ui/dialog";
-import type { Product } from "./types";
+import { categories, type Product, type Category } from "./types";
 import { filterProducts } from "./search";
-import { ProductPrice } from "./ProductPrice";
-import { ProductDialog } from "./ProductDialog";
+import { CatalogBookProduct } from "./CatalogBookProduct";
 import { useSwipeNavigation } from "./useSwipeNavigation";
 
 export function CatalogBook({
@@ -24,18 +22,20 @@ export function CatalogBook({
 }) {
   const [query, setQuery] = useState("");
   const [position, setPosition] = useState(0);
-  const [photo, setPhoto] = useState({ source: "", ratio: 1 });
-  const filtered = filterProducts(products, query, "Cozinha");
-  const index = Math.min(position, Math.max(0, filtered.length - 1));
-  const product = filtered[index];
-  const image = product ? images.get(product.imagePath) : undefined;
+  const [perPage, setPerPage] = useState(1);
+  const [category, setCategory] = useState<Category | "Todas">("Cozinha");
+  const filtered = filterProducts(products, query, category);
+  const pages = Math.ceil(filtered.length / perPage);
+  const index = Math.min(position, Math.max(0, pages - 1));
+  const start = index * perPage;
+  const visible = filtered.slice(start, start + perPage);
   const swipe = useSwipeNavigation(
     () => go(1),
     () => go(-1),
   );
 
   function go(delta: number) {
-    setPosition(Math.max(0, Math.min(index + delta, filtered.length - 1)));
+    setPosition(Math.max(0, Math.min(index + delta, pages - 1)));
   }
 
   function resetSearch(value: string) {
@@ -51,10 +51,10 @@ export function CatalogBook({
       <div className="book-toolbar">
         <div className="book-category-heading">
           <span className="book-section-number">CATÁLOGO PARA FOLHEAR</span>
-          <h1>Cozinha</h1>
+          <h1>{category === "Todas" ? "Todos os produtos" : category}</h1>
         </div>
         <TextField
-          aria-label="Pesquisar na categoria Cozinha"
+          aria-label={`Pesquisar em ${category === "Todas" ? "todas as categorias" : category}`}
           value={query}
           onChange={resetSearch}
           className="search-field"
@@ -62,85 +62,103 @@ export function CatalogBook({
           <Search aria-hidden="true" />
           <Input
             type="search"
-            placeholder="Pesquisar em Cozinha"
+            placeholder={
+              category === "Todas"
+                ? "Pesquisar produtos"
+                : `Pesquisar em ${category}`
+            }
             className="search-input"
           />
         </TextField>
       </div>
 
+      <div className="book-display-controls">
+        <span id="book-density-label">Produtos por tela</span>
+        <div
+          role="group"
+          aria-labelledby="book-density-label"
+          className="book-density-options"
+        >
+          {[1, 2, 3, 4, 5].map((count) => (
+            <Button
+              key={count}
+              variant={perPage === count ? "default" : "outline"}
+              className="touch-button"
+              aria-label={`Mostrar ${count} ${count === 1 ? "produto" : "produtos"} por tela`}
+              aria-pressed={perPage === count}
+              onPress={() => {
+                setPerPage(count);
+                setPosition(0);
+              }}
+            >
+              {count}
+            </Button>
+          ))}
+        </div>
+      </div>
+      <div
+        role="group"
+        aria-label="Categorias do catálogo para folhear"
+        className="book-category-options"
+      >
+        {(["Todas", ...categories] as const).map((value) => (
+          <Button
+            key={value}
+            variant={category === value ? "default" : "outline"}
+            className="touch-button"
+            aria-pressed={category === value}
+            onPress={() => {
+              setCategory(value);
+              setPosition(0);
+            }}
+          >
+            {value}
+          </Button>
+        ))}
+      </div>
+
       <p className="book-swipe-hint">
         <MoveHorizontal aria-hidden="true" />
-        Arraste para a direita para avançar. Toque para ver detalhes.
+        Arraste para a esquerda para avançar. Toque para ver detalhes.
       </p>
 
-      {product ? (
+      {visible.length > 0 ? (
         <div
           className="book-products book-viewport"
           role="region"
           aria-roledescription="carrossel"
-          aria-label="Produtos de Cozinha"
+          aria-label={
+            category === "Todas"
+              ? "Produtos de todas as categorias"
+              : `Produtos de ${category}`
+          }
           {...swipe.handlers}
         >
-          <article
-            key={product.id}
-            className="book-product"
+          <div
+            className={`book-grid${perPage > 1 ? " is-multiple" : ""}`}
             style={
               {
-                "--photo-ratio": photo.source === image ? photo.ratio : 1,
+                "--products-per-page": perPage,
                 transform: `translateX(${swipe.offset}px)`,
               } as CSSProperties
             }
           >
-            <DialogTrigger>
-              <Button
-                variant="ghost"
-                className="product-card-trigger"
-                aria-label={`Ver ${product.name}`}
-              />
-              <ProductDialog
+            {visible.map((product) => (
+              <CatalogBookProduct
+                key={product.id}
                 product={product}
-                image={image}
+                image={images.get(product.imagePath)}
                 quantity={quantityFor(product.id)}
-                onAdd={() => onAdd(product)}
+                onAdd={onAdd}
               />
-            </DialogTrigger>
-
-            <div className="book-product-photo">
-              {image ? (
-                <img
-                  src={image}
-                  alt={product.name}
-                  draggable={false}
-                  onLoad={({ currentTarget }) => {
-                    const { naturalWidth, naturalHeight } = currentTarget;
-
-                    if (naturalWidth > 0 && naturalHeight > 0) {
-                      setPhoto({
-                        source: image,
-                        ratio: naturalWidth / naturalHeight,
-                      });
-                    }
-                  }}
-                />
-              ) : (
-                <span className="image-placeholder">Foto indisponível</span>
-              )}
-            </div>
-            <div className="book-product-caption">
-              <div className="book-product-reference">
-                <span className="product-code">#{product.code}</span>
-                <span>Cozinha</span>
-              </div>
-              <h2>{product.name}</h2>
-              <ProductPrice product={product} />
-            </div>
-          </article>
+            ))}
+          </div>
         </div>
       ) : (
         <div className="empty-state book-empty">
           <Search aria-hidden="true" />
           <h2>Nenhum produto encontrado</h2>
-          <p>Tente outro nome nesta categoria.</p>
+          <p>Tente outro nome ou categoria.</p>
           <Button
             variant="outline"
             onPress={() => resetSearch("")}
@@ -158,7 +176,7 @@ export function CatalogBook({
           variant="outline"
           className="touch-button"
           aria-label="Produto anterior"
-          isDisabled={index === 0 || !product}
+          isDisabled={index === 0 || visible.length === 0}
           onPress={() => go(-1)}
         >
           <ArrowLeft aria-hidden="true" />
@@ -169,13 +187,15 @@ export function CatalogBook({
           aria-live="polite"
           aria-atomic="true"
         >
-          Produto {product ? index + 1 : 0} de {filtered.length}
+          {perPage === 1
+            ? `Produto ${visible.length ? start + 1 : 0} de ${filtered.length}`
+            : `Produtos ${visible.length ? start + 1 : 0}–${start + visible.length} de ${filtered.length}`}
         </span>
         <Button
           variant="outline"
           className="touch-button"
           aria-label="Próximo produto"
-          isDisabled={index >= filtered.length - 1 || !product}
+          isDisabled={index >= pages - 1 || visible.length === 0}
           onPress={() => go(1)}
         >
           Próximo

@@ -55,7 +55,7 @@ export function useSwipeNavigation(onNext: () => void, onPrevious: () => void) {
     if (start.dragging) {
       suppressClick.current = true;
       if (Math.abs(dx) >= 50 && Math.abs(dx) > Math.abs(dy) * 1.2) {
-        if (dx > 0) onNext();
+        if (dx < 0) onNext();
         else onPrevious();
       }
       if (event.currentTarget.hasPointerCapture(event.pointerId))

@@ -1193,6 +1193,68 @@ progress {
   flex-shrink: 0;
 }
 
+.book-display-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 16px;
+  color: #52627b;
+  font-size: 13px;
+}
+
+.book-density-options,
+.book-category-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.book-density-options .touch-button {
+  width: 48px;
+  padding: 0;
+}
+
+.book-category-options .touch-button {
+  padding: 0 14px;
+}
+
+.book-grid {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.book-grid.is-multiple {
+  --ribbon-overhang: 20px;
+  display: grid;
+  grid-template-columns: repeat(
+    min(var(--products-per-page), 3),
+    minmax(0, 1fr)
+  );
+  gap: 32px;
+  align-items: start;
+}
+
+.book-grid.is-multiple .book-product {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .book-grid.is-multiple {
+    grid-template-columns: repeat(
+      min(var(--products-per-page), 2),
+      minmax(0, 1fr)
+    );
+  }
+}
+
+@media (max-width: 650px) {
+  .book-grid.is-multiple {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .book-viewport {
   --ribbon-overhang: 36px;
   display: flex;
@@ -1306,6 +1368,39 @@ progress {
 
 .book-product-caption .product-price {
   font-size: 30px;
+}
+
+.book-product-purchase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.book-product-purchase .product-pricing {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.book-add-to-cart {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  gap: 2px;
+  padding: 0 6px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.book-add-to-cart svg {
+  width: 20px;
+  height: 20px;
+}
+
+.book-add-to-cart svg:last-child {
+  width: 16px;
+  height: 16px;
 }
 
 .book-pagination {

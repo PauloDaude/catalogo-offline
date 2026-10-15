@@ -69,7 +69,7 @@ test("carrossel usa foto proporcional, faixa sobreposta e o carrinho azul", asyn
   );
 });
 
-test("arrastar à direita avança, esquerda retorna e gesto não abre detalhes", async ({
+test("arrastar à esquerda avança, direita retorna e gesto não abre detalhes", async ({
   page,
   context,
 }) => {
@@ -96,10 +96,10 @@ test("arrastar à direita avança, esquerda retorna e gesto não abre detalhes",
       touchPoints: [],
     });
   }
-  await drag(60, 260);
+  await drag(260, 60);
   await expect(page.getByText("Produto 2 de 3")).toBeVisible();
   await expect(page.getByRole("dialog")).toHaveCount(0);
-  await drag(260, 60);
+  await drag(60, 260);
   await expect(page.getByText("Produto 1 de 3")).toBeVisible();
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await page
@@ -127,13 +127,38 @@ test("arrastar com mouse respeita limites e arrasto curto não abre modal", asyn
   await drag(30);
   await expect(page.getByText("Produto 1 de 3")).toBeVisible();
   await expect(page.getByRole("dialog")).toHaveCount(0);
-  await drag(-120);
+  await drag(120);
   await expect(page.getByText("Produto 1 de 3")).toBeVisible();
-  await drag(120);
-  await drag(120);
-  await drag(120);
+  await drag(-120);
+  await drag(-120);
+  await drag(-120);
   await expect(page.getByText("Produto 3 de 3")).toBeVisible();
   await expect(page.getByRole("dialog")).toHaveCount(0);
-  await drag(-120);
+  await drag(120);
   await expect(page.getByText("Produto 2 de 3")).toBeVisible();
+});
+
+test("botão de carrinho na faixa adiciona sem abrir detalhes e funciona por teclado", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto("/?visualizacao=folhear");
+  const add = page.getByRole("button", {
+    name: "Adicionar Panela para o dia a dia ao carrinho",
+  });
+  await add.click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: /Abrir carrinho, 1 item/ }),
+  ).toBeVisible();
+  await add.focus();
+  await page.keyboard.press("Enter");
+  await expect(
+    page.getByRole("button", { name: /Abrir carrinho, 2 itens/ }),
+  ).toBeVisible();
+  const box = (await add.boundingBox())!;
+  expect(box.height).toBeGreaterThanOrEqual(48);
+  expect(box.x + box.width).toBeLessThanOrEqual(360);
+  await page.getByRole("button", { name: /Abrir carrinho/ }).click();
+  await expect(page.locator(".cart-grand-total")).toHaveText("R$ 130,00");
 });

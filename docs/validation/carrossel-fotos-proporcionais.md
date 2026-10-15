@@ -35,3 +35,24 @@ os dez testes de proporção, extensão clicável e gestos passaram novamente.
 Refino solicitado: sombra interna na dobra, sombra projetada junto à lateral
 e transição suave de cinza azulado para branco na superfície do card, dando
 volume à curva. Build e captura visual verificadas após o ajuste de sombra.
+
+## Adição direta no modo de folhear
+
+Botão azul de carrinho e “+” na faixa, ao lado do preço, adiciona uma unidade
+sem abrir o modal. Rótulo acessível por produto, foco por teclado e alvo de 48 px.
+Teste unitário falhou antes da inclusão; 78 testes unitários/componentes passaram
+após a mudança. Dezessete testes E2E de fotos, folhear e interação passaram,
+incluindo adição por clique/Enter e total de R$ 130,00 para duas unidades.
+
+## Grade controlável e direção corrigida
+
+Pedido posterior inverte o gesto: da direita para a esquerda avança; o contrário
+retorna. Controle de 1–5 produtos por página e filtros de todas as categorias.
+Inicialmente Cozinha e um item; páginas agrupadas, última página sem duplicações.
+Três colunas grandes, duas no tablet e uma no celular preservam legibilidade.
+
+Testes: 79 unitários/componentes e 45 E2E passaram, incluindo quantidades 1–5,
+filtros/pesquisa, páginas incompletas, seleção compartilhada e offline. Nove casos
+JPEG verificam proporção e não sobreposição do preço/botão em 360, 1280 e 844×390.
+Capturas de cinco itens no desktop e dois no tablet foram inspecionadas.
+Build, lint e formatação passaram. Uso no hardware Android real segue pendente.

@@ -48,7 +48,7 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   referências e preferências explícitas do usuário. Conteúdo centralizado
   verticalmente, fonte de peso moderado e ícone simples de etiqueta.
 - Card inteiro clicável para abrir os detalhes, com suporte a teclado e foco visível.
-  Adicionar ao carrinho somente no modal de detalhes; sem botão de adicionar na
+  Na listagem, adicionar ao carrinho somente no modal de detalhes; sem botão na
   listagem. Nos cards, selo de oferta sobre a foto no canto superior esquerdo;
   preço atual próximo ao nome e alinhado entre produtos com e sem promoção.
   Percentual junto ao preço atual quando houver espaço e preço antigo menor abaixo.
@@ -86,30 +86,38 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 
 ## Demonstração de catálogo para folhear
 
-- Após avaliação com o pai do usuário, foi aprovada uma demonstração de **uma
-  categoria (Cozinha)**, sem gerar PDF. A primeira versão em páginas foi refinada
-  pelo usuário para um carrossel com um produto por vez em qualquer tela.
+- Demonstração sem PDF, inicialmente em Cozinha, refinada para carrossel e
+  depois para grade controlável de **1 a 5 produtos por página**. Começar com um
+  produto e Cozinha; disponibilizar todas as categorias e filtro Todas.
+- A quantidade escolhida define os itens da página. Grade com até três colunas
+  em telas grandes, duas intermediárias e uma no celular para manter legibilidade.
+  Páginas finais mostram apenas os produtos restantes, sem duplicações.
 - Entrada pelo botão "Folhear catálogo" ou `?visualizacao=folhear`. O visual de
   listagem permanece disponível em `/` e pelo botão "Visual anterior".
-- Arrastar com dedo ou mouse para a **direita avança**, conforme pedido explícito;
-  esquerda retorna. Manter botões como alternativa acessível e contador do produto.
+- Pedido mais recente corrige o sentido: arrastar da **direita para esquerda
+  avança**; esquerda para direita retorna. Com vários itens, avançar o grupo.
+  Manter botões como alternativa acessível e contador do intervalo de produtos.
   Arrasto não deve abrir detalhes; toque/click simples e teclado devem abrir.
 - Foto inteira preservando a proporção original (`object-fit: contain`), com
-  largura adaptada às imagens verticais, quadradas e horizontais; limitar altura
-  pelo viewport. Não voltar ao quadro largo fixo que recorta imagens verticais.
+  largura adaptada às imagens verticais, quadradas e horizontais; na visualização
+  individual limitar altura pelo viewport. Não voltar ao quadro largo fixo que recorta imagens verticais.
 - Código, nome e preço em faixa branca com detalhe azul saindo pela lateral
   esquerda, sobrepondo parcialmente a borda inferior da foto. A faixa também abre
   detalhes. Não cortar a faixa nem gerar rolagem horizontal no celular.
-- A dobra decorativa da faixa deve ficar atrás da foto, com contorno curvo;
-  nunca cobrir a imagem com o acabamento azul.
+- No modo de folhear, botão azul com ícones de carrinho e “+” ao lado do preço
+  adiciona diretamente uma unidade, sem abrir detalhes. Manter rótulo acessível,
+  alvo de toque de 48 px e navegação por teclado.
+- A dobra decorativa da faixa deve ficar atrás da foto, com contorno curvo,
+  sombra e transição suave na superfície para dar volume. Nunca cobrir a imagem
+  com o acabamento azul.
 - Usar os mesmos tokens de preço azul, selo azul OFERTA IMPERDÍVEL e percentual
   verde `#04a650` com texto branco da listagem. Carrinho flutuante também azul.
-- Pesquisa limitada a Cozinha nesta etapa. Reaproveitar dados, fotos e consulta
-  offline. Seleção preservada ao alternar os visuais. Sem animação de folha dobrando.
+- Pesquisa combina com a categoria escolhida, incluindo Todas. Reaproveitar
+  dados, fotos e consulta offline. Seleção preservada ao alternar os visuais. Sem animação de folha dobrando.
 - Hero removido da listagem por pedido do usuário; abrir diretamente o catálogo,
   mantendo o header. Preparação offline permanece disponível abaixo dos produtos.
-- Avaliação pendente com o vendedor antes de estender a apresentação às demais
-  categorias. As regras de cards acima descrevem a listagem preservada.
+- Avaliação de usabilidade com o vendedor continua pendente. As regras de cards
+  da listagem acima descrevem o visual anterior preservado.
 - O PDF da empresa em `docs/` é apenas referência visual fornecida pelo usuário;
   não foi importado para o catálogo nem incluído na publicação.
 

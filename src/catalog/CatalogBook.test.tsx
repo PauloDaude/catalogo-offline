@@ -80,3 +80,71 @@ test("link direto abre o catálogo de páginas e pesquisa volta à primeira pág
   await user.click(screen.getByRole("button", { name: "Limpar pesquisa" }));
   expect(screen.getByText("Produto 1 de 3")).toBeVisible();
 });
+
+test("faixa adiciona ao carrinho diretamente sem abrir detalhes", async () => {
+  window.history.replaceState(null, "", "/?visualizacao=folhear");
+  const user = userEvent.setup();
+  render(
+    <CatalogPage
+      products={products}
+      images={new Map()}
+    />,
+  );
+
+  const add = screen.getByRole("button", {
+    name: "Adicionar Panela ao carrinho",
+  });
+  await user.click(add);
+  await user.click(add);
+
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await user.click(
+    screen.getByRole("button", { name: /Abrir carrinho, 2 itens/ }),
+  );
+  expect(
+    screen.getByText("R$ 130,00", { selector: ".cart-grand-total" }),
+  ).toBeVisible();
+});
+
+test("grade permite escolher de um a cinco produtos e mantém páginas completas", async () => {
+  window.history.replaceState(null, "", "/?visualizacao=folhear");
+  const user = userEvent.setup();
+  const many = Array.from({ length: 11 }, (_, i) => ({
+    ...products[0],
+    id: `item-${i}`,
+    code: `P${i}`,
+    name: `Produto ${i}`,
+  }));
+  render(
+    <CatalogPage
+      products={many}
+      images={new Map()}
+    />,
+  );
+
+  for (const count of [2, 3, 4, 5, 1]) {
+    await user.click(
+      screen.getByRole("button", {
+        name: `Mostrar ${count} ${count === 1 ? "produto" : "produtos"} por tela`,
+      }),
+    );
+    expect(
+      screen.getAllByRole("button", { name: /^Ver Produto/ }),
+    ).toHaveLength(count);
+  }
+  await user.click(
+    screen.getByRole("button", { name: "Mostrar 5 produtos por tela" }),
+  );
+  await user.click(screen.getByRole("button", { name: "Próximo produto" }));
+  expect(screen.getByText("Produtos 6–10 de 11")).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Próximo produto" }));
+  expect(screen.getAllByRole("button", { name: /^Ver Produto/ })).toHaveLength(
+    1,
+  );
+  expect(screen.getByText("Produtos 11–11 de 11")).toBeVisible();
+  expect(
+    screen.getByRole("button", { name: "Próximo produto" }),
+  ).toBeDisabled();
+  await user.type(screen.getByRole("searchbox"), "Produto 0");
+  expect(screen.getByText("Produtos 1–1 de 1")).toBeVisible();
+});

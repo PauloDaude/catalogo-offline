@@ -1,6 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-for (const width of [360, 1280]) {
+for (const [width, height] of [
+  [360, 900],
+  [1280, 900],
+  [844, 390],
+]) {
   for (const [photoWidth, photoHeight] of [
     [600, 900],
     [800, 800],
@@ -9,7 +13,7 @@ for (const width of [360, 1280]) {
     test(`foto ${photoWidth}x${photoHeight} preserva proporção e faixa lateral em ${width}px`, async ({
       page,
     }) => {
-      await page.setViewportSize({ width, height: 900 });
+      await page.setViewportSize({ width, height });
       await page.goto("/");
       const base64 = await page.evaluate(
         ([w, h]) => {
@@ -39,6 +43,7 @@ for (const width of [360, 1280]) {
           return Math.abs(box!.width / box!.height - photoWidth / photoHeight);
         })
         .toBeLessThan(0.01);
+      await page.locator(".book-product-caption").scrollIntoViewIfNeeded();
       const photo = (await img.boundingBox())!;
       const caption = (await page
         .locator(".book-product-caption")
@@ -54,6 +59,14 @@ for (const width of [360, 1280]) {
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
+      ).toBe(true);
+      const add = (await page.locator(".book-add-to-cart").boundingBox())!;
+      const price = (await page
+        .locator(".book-product .product-price")
+        .boundingBox())!;
+      expect(
+        price.x + price.width <= add.x + 1 ||
+          price.y + price.height <= add.y + 1,
       ).toBe(true);
       await page.mouse.click(caption.x + 8, caption.y + caption.height / 2);
       await expect(page.getByRole("dialog")).toBeVisible();
