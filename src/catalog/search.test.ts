@@ -1,11 +1,14 @@
 import { expect, test } from "vitest";
+
 import { filterProducts } from "./search";
 import { snapshotA } from "../test/fixtures";
+
 test("pesquisa ignora caixa e espaços", () => {
   expect(
     filterProducts(snapshotA.products, "  TESOURA  ", "Todas").map((p) => p.id),
   ).toEqual(["p0"]);
 });
+
 test("pesquisa ignora acentos", () => {
   expect(
     filterProducts(
@@ -15,6 +18,7 @@ test("pesquisa ignora acentos", () => {
     ),
   ).toHaveLength(1);
 });
+
 test("categoria e pesquisa se combinam", () => {
   expect(
     filterProducts(snapshotA.products, "tesoura", "Iluminação"),

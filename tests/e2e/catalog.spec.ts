@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+
 for (const [width, height] of [
   [360, 800],
   [800, 1280],
@@ -13,18 +14,21 @@ for (const [width, height] of [
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
+
     for (const button of await page
       .locator(".category-button,.sync-button")
       .all()) {
       const box = await button.boundingBox();
       expect(box!.height).toBeGreaterThanOrEqual(48);
     }
+
     await page.getByRole("searchbox").fill("TESOURA");
     await expect(page.locator(".product-card")).toHaveCount(1);
     await page.getByRole("button", { name: /^Iluminação$/ }).click();
     await expect(page.getByText("Nenhum produto encontrado")).toBeVisible();
   });
 }
+
 test("foto ampliada fecha e devolve foco", async ({ page }) => {
   await page.goto("/");
   const trigger = page.getByRole("button", { name: "Ver Tesoura multiuso" });
@@ -34,6 +38,7 @@ test("foto ampliada fecha e devolve foco", async ({ page }) => {
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(trigger).toBeFocused();
 });
+
 test("API indisponível orienta sem tela vazia", async ({ page }) => {
   await page.route("**/demo/catalog.json", (route) => route.abort());
   await page.goto("/");
@@ -42,6 +47,7 @@ test("API indisponível orienta sem tela vazia", async ({ page }) => {
   );
   await expect(page.getByRole("searchbox")).toBeVisible();
 });
+
 test("IndexedDB negado permite consulta online", async ({ page }) => {
   await page.addInitScript(() => {
     indexedDB.open = () => {
@@ -52,6 +58,7 @@ test("IndexedDB negado permite consulta online", async ({ page }) => {
   await expect(page.locator(".product-card")).toHaveCount(10);
   await expect(page.getByRole("status")).toContainText("armazenamento");
 });
+
 test("texto não executa markup e aplicação só acessa origem local", async ({
   page,
 }) => {

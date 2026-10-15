@@ -1,24 +1,41 @@
 import { useState } from "react";
 import { Search, ShoppingBag } from "lucide-react";
 import { TextField } from "react-aria-components";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { categories, type Category, type Product } from "./types";
 import { filterProducts } from "./search";
 import { ProductCard } from "./ProductCard";
+import { useCart } from "../cart/useCart";
+import { CartPanel } from "../cart/CartPanel";
+
 export type CatalogPageProps = {
   products: Product[];
   images: Map<string, string>;
   children?: React.ReactNode;
+  catalogReady?: boolean;
 };
-export function CatalogPage({ products, images, children }: CatalogPageProps) {
+
+export function CatalogPage({
+  products,
+  images,
+  children,
+  catalogReady = true,
+}: CatalogPageProps) {
+  const cart = useCart(products, catalogReady);
+  const [announcement, setAnnouncement] = useState("");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<Category | "Todas">("Todas");
   const filtered = filterProducts(products, query, category);
+
   return (
     <div className="catalog-shell">
       <header className="site-header">
-        <a href={import.meta.env.BASE_URL} className="brand">
+        <a
+          href={import.meta.env.BASE_URL}
+          className="brand"
+        >
           <span className="brand-icon">
             <ShoppingBag aria-hidden="true" />
           </span>
@@ -29,7 +46,7 @@ export function CatalogPage({ products, images, children }: CatalogPageProps) {
             </span>
           </span>
         </a>
-        <span className="header-note">Escolha com calma.</span>
+        <CartPanel cart={cart} />
       </header>
       <main id="main">
         <section className="intro">
@@ -54,7 +71,16 @@ export function CatalogPage({ products, images, children }: CatalogPageProps) {
           </aside>
         </section>
         {children}
-        <section aria-label="Produtos" className="catalog-section">
+        <p
+          className="sr-only"
+          aria-live="polite"
+        >
+          {announcement}
+        </p>
+        <section
+          aria-label="Produtos"
+          className="catalog-section"
+        >
           <div className="catalog-toolbar">
             <h2>Explore os produtos</h2>
             <TextField
@@ -71,7 +97,10 @@ export function CatalogPage({ products, images, children }: CatalogPageProps) {
               />
             </TextField>
           </div>
-          <nav aria-label="Categorias" className="category-list">
+          <nav
+            aria-label="Categorias"
+            className="category-list"
+          >
             {(["Todas", ...categories] as const).map((c) => (
               <Button
                 key={c}
@@ -84,7 +113,10 @@ export function CatalogPage({ products, images, children }: CatalogPageProps) {
               </Button>
             ))}
           </nav>
-          <p className="result-count" aria-live="polite">
+          <p
+            className="result-count"
+            aria-live="polite"
+          >
             {filtered.length} {filtered.length === 1 ? "produto" : "produtos"}
           </p>
           {filtered.length ? (
@@ -94,6 +126,14 @@ export function CatalogPage({ products, images, children }: CatalogPageProps) {
                   key={product.id}
                   product={product}
                   image={images.get(product.imagePath)}
+                  quantity={
+                    cart.items.find((item) => item.id === product.id)
+                      ?.quantity ?? 0
+                  }
+                  onAdd={() => {
+                    cart.add(product);
+                    setAnnouncement(`${product.name} adicionado ao carrinho.`);
+                  }}
                 />
               ))}
             </div>

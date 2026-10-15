@@ -1,4 +1,5 @@
 import { expect, type Page } from "@playwright/test";
+
 export async function prepare(page: Page) {
   await page.goto("/");
   await expect(page.locator(".product-card")).toHaveCount(10);
@@ -12,8 +13,10 @@ export async function prepare(page: Page) {
     "Catálogo salvo para usar sem internet",
   );
 }
+
 export async function decodeAll(page: Page, count: number) {
   await expect(page.locator(".product-grid img")).toHaveCount(count);
+
   for (const img of await page.locator(".product-grid img").all()) {
     await img.scrollIntoViewIfNeeded();
     await expect

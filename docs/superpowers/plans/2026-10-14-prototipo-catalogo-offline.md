@@ -47,20 +47,20 @@ piloto. Nenhum produto real será cadastrado antes dos testes de segurança e ba
 
 ## Arquivos e responsabilidades
 
-| Arquivos | Responsabilidade |
-| --- | --- |
-| `package.json`, `package-lock.json`, `.gitignore`, `index.html`, `tsconfig*.json`, `vite.config.ts`, `eslint.config.js` | Build, lint, scripts e configurações |
-| `components.json`, `src/components/ui/{button,input,dialog}.tsx`, `src/lib/utils.ts`, `src/styles.css` | Componentes React Aria e tokens do tema |
-| `src/main.tsx`, `src/App.tsx` | Inicialização e composição da aplicação |
-| `src/catalog/{types,validation,search,source}.ts` | Contrato público, validação e fonte HTTP |
-| `public/demo/catalog.json`, `public/demo/photos/*.jpg`, `public/icons/*.png` | Dez produtos fictícios, fotos próprias/licenciadas e ícones |
-| `src/catalog/storage.ts` | Banco Dexie, preparação, ativação e leitura consistente |
-| `src/catalog/{image-download,sync,sync-lock}.ts` | Download validado e atualização exclusiva |
-| `src/catalog/{useCatalog,CatalogPage,ProductCard,ProductDialog,SyncStatus}.tsx` | Interação, apresentação e estados |
-| `src/pwa/{sw,register}.ts` | Precache, instalação e aviso de atualização do aplicativo |
-| `src/test/setup.ts`, `src/**/*.test.{ts,tsx}` | Testes de lógica, persistência e UX crítica |
-| `playwright.config.ts`, `tests/e2e/*.spec.ts` | Verificação da build de produção |
-| `README.md`, `docs/validation/prototipo-offline.md` | Execução, limites e resultados de validação |
+| Arquivos                                                                                                                | Responsabilidade                                            |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `package.json`, `package-lock.json`, `.gitignore`, `index.html`, `tsconfig*.json`, `vite.config.ts`, `eslint.config.js` | Build, lint, scripts e configurações                        |
+| `components.json`, `src/components/ui/{button,input,dialog}.tsx`, `src/lib/utils.ts`, `src/styles.css`                  | Componentes React Aria e tokens do tema                     |
+| `src/main.tsx`, `src/App.tsx`                                                                                           | Inicialização e composição da aplicação                     |
+| `src/catalog/{types,validation,search,source}.ts`                                                                       | Contrato público, validação e fonte HTTP                    |
+| `public/demo/catalog.json`, `public/demo/photos/*.jpg`, `public/icons/*.png`                                            | Dez produtos fictícios, fotos próprias/licenciadas e ícones |
+| `src/catalog/storage.ts`                                                                                                | Banco Dexie, preparação, ativação e leitura consistente     |
+| `src/catalog/{image-download,sync,sync-lock}.ts`                                                                        | Download validado e atualização exclusiva                   |
+| `src/catalog/{useCatalog,CatalogPage,ProductCard,ProductDialog,SyncStatus}.tsx`                                         | Interação, apresentação e estados                           |
+| `src/pwa/{sw,register}.ts`                                                                                              | Precache, instalação e aviso de atualização do aplicativo   |
+| `src/test/setup.ts`, `src/**/*.test.{ts,tsx}`                                                                           | Testes de lógica, persistência e UX crítica                 |
+| `playwright.config.ts`, `tests/e2e/*.spec.ts`                                                                           | Verificação da build de produção                            |
+| `README.md`, `docs/validation/prototipo-offline.md`                                                                     | Execução, limites e resultados de validação                 |
 
 Os nomes acima são caminhos a criar, não arquivos existentes. Usar npm e um único
 lockfile. No scaffold, confirmar requisitos de Node das versões oficiais vigentes;
@@ -71,20 +71,36 @@ fixar versões compatíveis no lockfile. Não instalar dependências por este pl
 Definir em `src/catalog/types.ts`:
 
 ```ts
-type Category = 'Cozinha' | 'Pesca' | 'Iluminação' | 'Ferramentas' | 'Outros';
-type Product = { id: string; name: string; priceCents: number;
-  category: Category; imagePath: string };
-type CatalogSnapshot = { revision: number; updatedAt: string; products: Product[] };
-type LocalCatalog = { snapshot: CatalogSnapshot; activatedAt: string;
-  checkedAt: string; photos: Map<string, Blob> };
+type Category = "Cozinha" | "Pesca" | "Iluminação" | "Ferramentas" | "Outros";
+type Product = {
+  id: string;
+  name: string;
+  priceCents: number;
+  category: Category;
+  imagePath: string;
+};
+type CatalogSnapshot = {
+  revision: number;
+  updatedAt: string;
+  products: Product[];
+};
+type LocalCatalog = {
+  snapshot: CatalogSnapshot;
+  activatedAt: string;
+  checkedAt: string;
+  photos: Map<string, Blob>;
+};
 type CatalogSource = {
   getSnapshot(signal?: AbortSignal): Promise<CatalogSnapshot>;
   getRevision(signal?: AbortSignal): Promise<number>;
   getPhoto(path: string, signal?: AbortSignal): Promise<Blob>;
 };
-type SyncProgress = { phase: 'checking' | 'downloading' | 'activating';
-  completed: number; total: number };
-type SyncResult = { status: 'updated' | 'unchanged'; revision: number };
+type SyncProgress = {
+  phase: "checking" | "downloading" | "activating";
+  completed: number;
+  total: number;
+};
+type SyncResult = { status: "updated" | "unchanged"; revision: number };
 ```
 
 Fotos têm caminhos imutáveis. Apenas produtos ativos entram no contrato público;

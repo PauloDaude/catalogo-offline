@@ -1,6 +1,8 @@
 import { Download, RefreshCw, WifiOff, CheckCircle2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import type { SyncProgress } from "./types";
+
 export function SyncStatus({
   saved,
   state,
@@ -15,8 +17,12 @@ export function SyncStatus({
   onPrepare: () => Promise<void>;
 }) {
   const busy = state === "loading" || state === "syncing";
+
   return (
-    <section aria-label="Disponibilidade do catálogo" className="sync-panel">
+    <section
+      aria-label="Disponibilidade do catálogo"
+      className="sync-panel"
+    >
       <div className="sync-text">
         {state === "error" ? (
           <WifiOff aria-hidden="true" />

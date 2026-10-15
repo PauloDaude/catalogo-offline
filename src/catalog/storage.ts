@@ -1,6 +1,9 @@
 import type { CatalogSnapshot, LocalCatalog } from "./types";
+
 import Dexie, { type Table } from "dexie";
+
 import { parseSnapshot } from "./validation";
+
 export type CatalogStore = {
   readActive(): Promise<LocalCatalog | null>;
   readPhoto(path: string): Promise<Blob | undefined>;
@@ -16,14 +19,18 @@ export type CatalogStore = {
   prune(): Promise<void>;
   close(): void;
 };
+
 type Row = {
   id: "active";
   snapshot: CatalogSnapshot;
   activatedAt: string;
   checkedAt: string;
 };
+
 type Photo = { path: string; blob: Blob };
+
 type StagedPhoto = Photo & { operationId: string };
+
 export function createCatalogStore(name: string): CatalogStore {
   const db = new Dexie(name);
   db.version(1).stores({
@@ -34,20 +41,27 @@ export function createCatalogStore(name: string): CatalogStore {
   const catalog: Table<Row, string> = db.table("catalog");
   const photos: Table<Photo, string> = db.table("photos");
   const staged: Table<StagedPhoto, [string, string]> = db.table("stagedPhotos");
+
   return {
     readActive: () =>
       db.transaction("r", catalog, photos, async () => {
         const row = await catalog.get("active");
+
         if (!row) return null;
+
         const result = new Map<string, Blob>();
+
         for (const p of row.snapshot.products) {
           const photo = await photos.get(p.imagePath);
+
           if (!photo)
             throw new Error(
               "Catálogo local incompleto. Prepare novamente com internet.",
             );
+
           result.set(p.imagePath, photo.blob);
         }
+
         return {
           snapshot: row.snapshot,
           checkedAt: row.checkedAt,
@@ -64,10 +78,14 @@ export function createCatalogStore(name: string): CatalogStore {
       await db.transaction("rw", catalog, photos, staged, async () => {
         for (const p of snapshot.products) {
           if (await photos.get(p.imagePath)) continue;
+
           const photo = await staged.get([operationId, p.imagePath]);
+
           if (!photo) throw new Error("Foto obrigatória ausente");
+
           await photos.put({ path: photo.path, blob: photo.blob });
         }
+
         await catalog.put({
           id: "active",
           snapshot,

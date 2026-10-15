@@ -1,10 +1,17 @@
 import { expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import { CatalogPage } from "./CatalogPage";
 import { snapshotA } from "../test/fixtures";
+
 test("usuário encontra produto por nome e categoria", async () => {
-  render(<CatalogPage products={snapshotA.products} images={new Map()} />);
+  render(
+    <CatalogPage
+      products={snapshotA.products}
+      images={new Map()}
+    />,
+  );
   const user = userEvent.setup();
   await user.type(screen.getByRole("searchbox"), "tesoura");
   expect(screen.getByText("Tesoura de cozinha")).toBeVisible();
@@ -12,6 +19,7 @@ test("usuário encontra produto por nome e categoria", async () => {
   await user.click(screen.getByRole("button", { name: /^Iluminação$/ }));
   expect(screen.getByText("Nenhum produto encontrado")).toBeVisible();
 });
+
 test("nome com markup aparece como texto", () => {
   render(
     <CatalogPage

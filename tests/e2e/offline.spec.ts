@@ -2,7 +2,9 @@ import { test, expect, chromium } from "@playwright/test";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+
 import { prepare, decodeAll } from "./helpers";
+
 test("reabre offline com dados, fotos, pesquisa e ampliação", async ({
   page,
   context,
@@ -10,9 +12,11 @@ test("reabre offline com dados, fotos, pesquisa e ampliação", async ({
   await prepare(page);
   const cached = await page.evaluate(async () => {
     const urls: string[] = [];
+
     for (const name of await caches.keys())
       for (const request of await (await caches.open(name)).keys())
         urls.push(request.url);
+
     return urls.filter((u) => u.includes("/demo/"));
   });
   expect(cached).toEqual([]);
@@ -32,11 +36,13 @@ test("reabre offline com dados, fotos, pesquisa e ampliação", async ({
     .click();
   await expect(reopened.getByRole("dialog")).toBeVisible();
 });
+
 test("reabrir navegador preserva catálogo offline no perfil", async () => {
   const profile = await mkdtemp(join(tmpdir(), "catalogo-profile-"));
   let context = await chromium.launchPersistentContext(profile, {
     baseURL: "http://127.0.0.1:4173",
   });
+
   try {
     await prepare(await context.newPage());
     await context.close();
@@ -52,6 +58,7 @@ test("reabrir navegador preserva catálogo offline no perfil", async () => {
     await rm(profile, { recursive: true, force: true });
   }
 });
+
 test("shell sem catálogo preparado explica primeira abertura sem rede", async ({
   page,
   context,

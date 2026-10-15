@@ -4,6 +4,14 @@ Protótipo de uma vitrine digital para apresentação de produtos no tablet e ce
 Interface em português, tema claro com azul, pesquisa, categorias e foto ampliada.
 Depois da preparação, produtos e fotos podem ser consultados sem conexão.
 
+Inclui carrinho de seleção: adicionar produtos, ajustar quantidades, remover,
+conferir subtotais/total e limpar com confirmação para outro atendimento. Não
+envolve pagamento nem envio de pedido. A seleção é salva neste navegador/aparelho,
+com uso offline; se o armazenamento for negado, a interface avisa que ela ficará
+somente na aba atual. Alterações de preço ou disponibilidade são sinalizadas e
+precisam ser aceitas antes de atualizar a seleção e seu total. Produtos que ficaram
+indisponíveis permanecem identificados e são excluídos do total após a revisão.
+
 Esta entrega implementa a **etapa 1**: dez produtos fictícios. Não contém painel
 administrativo, login, Supabase nem produtos reais. Não é o MVP completo de produção.
 
@@ -72,6 +80,7 @@ Não adicionar segredos ou informações administrativas ao JSON público.
 
 ```bash
 npm run test
+npm run format:check
 npm run lint
 npm run build
 npx playwright install chromium
@@ -85,6 +94,25 @@ avião no tablet ou avaliação de usabilidade pelo vendedor.
 
 Resultados e roteiro para os aparelhos reais em
 [docs/validation/prototipo-offline.md](docs/validation/prototipo-offline.md).
+
+## Formatação
+
+O projeto usa Prettier local com versão fixada, duas posições de indentação,
+limite de 80 colunas e um atributo por linha em JSX multilinha:
+
+```bash
+npm run format
+npm run format:check
+```
+
+O primeiro comando formata todos os arquivos compatíveis, incluindo TypeScript,
+TSX, CSS, JSON, HTML e Markdown. Dependências, builds, relatórios e configurações
+locais privadas ficam excluídos em `.prettierignore`.
+
+As configurações em `.vscode/` habilitam formatação ao salvar usando a extensão
+**Prettier – Code formatter** (`esbenp.prettier-vscode`), recomendada pelo projeto.
+Instale essa extensão na sua IDE se ainda não estiver disponível. Outras IDEs
+podem usar a mesma `.prettierrc.json` e `.editorconfig`.
 
 ## Segurança e próximos passos
 

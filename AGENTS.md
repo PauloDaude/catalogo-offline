@@ -33,7 +33,14 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - MVP: nome, categoria, uma foto e um preço por produto.
 - Cadastro, edição e ocultação reversível de produtos.
 - Pesquisa, categorias, fotos grandes e preços destacados.
-- Sem variações, carrinho, checkout, pagamentos, pedidos ou controle de estoque.
+- Carrinho simples solicitado em 15/10/2026: agrupar produtos selecionados pelo
+  cliente, ajustar quantidades e somar o valor total, sem pagamento.
+  Desenho aprovado: adicionar/remover, quantidades, subtotais e total, limpeza com
+  confirmação, persistência local e uso offline. Mudanças de preço/disponibilidade
+  exigem revisão explícita antes de atualizar a seleção e o total.
+  Botão do carrinho fixo no canto inferior direito em celular, tablet e desktop,
+  permanecendo visível durante a rolagem.
+- Sem variações, checkout, pagamentos, pedidos enviados ao servidor ou controle de estoque.
 - Variações só serão consideradas depois da validação do MVP pelo vendedor.
 
 ## Stack definida
@@ -156,6 +163,12 @@ Referências oficiais para consultar conforme necessário:
 
 ## Processo de trabalho
 
+- Prettier instalado localmente com versão fixada, configuração em `.prettierrc.json`.
+  Usar `npm run format` para formatar todos os arquivos compatíveis e
+  `npm run format:check` para verificar. Não deixar código compactado/minificado
+  nos fontes. Separar imports, tipos, funções e blocos lógicos com linhas em branco;
+  o Prettier preserva essas separações. `.editorconfig` e `.vscode/` alinham formatação ao salvar na IDE;
+  no VS Code/Cursor é necessária a extensão recomendada Prettier.
 - Repositório autorizado: `https://github.com/PauloDaude/catalogo-offline.git`.
   O usuário autorizou vincular a pasta e fazer commits na `main` por enquanto.
   Não exigir branch/worktree para este fluxo. Preservar histórico remoto; sem force push.

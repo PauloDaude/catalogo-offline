@@ -1,4 +1,5 @@
 let registration: Promise<ServiceWorkerRegistration> | undefined;
+
 export function registerAppShell() {
   if (
     !("serviceWorker" in navigator) ||
@@ -6,6 +7,7 @@ export function registerAppShell() {
     import.meta.env.DEV
   )
     return;
+
   if (!registration) {
     registration = navigator.serviceWorker
       .register(`${import.meta.env.BASE_URL}sw.js`)
@@ -18,20 +20,25 @@ export function registerAppShell() {
         reg.addEventListener("updatefound", () =>
           reg.installing?.addEventListener("statechange", notify),
         );
+
         return reg;
       });
     registration.catch(() => {
       registration = undefined;
     });
   }
+
   return registration;
 }
+
 export async function ensureOfflineShell(): Promise<void> {
   const pending = registerAppShell();
+
   if (!pending)
     throw new Error(
       "A preparação offline exige acesso seguro e a versão de produção.",
     );
+
   await pending;
   await Promise.race([
     navigator.serviceWorker.ready,
@@ -43,7 +50,9 @@ export async function ensureOfflineShell(): Promise<void> {
       ),
     ),
   ]);
+
   if (navigator.serviceWorker.controller) return;
+
   await new Promise<void>((resolve, reject) => {
     const timer = setTimeout(() => {
       navigator.serviceWorker.removeEventListener(
@@ -61,12 +70,16 @@ export async function ensureOfflineShell(): Promise<void> {
       resolve();
     };
     navigator.serviceWorker.addEventListener("controllerchange", controlled);
+
     if (navigator.serviceWorker.controller) controlled();
   });
 }
+
 export async function requestAppUpdate(): Promise<void> {
   const reg = await registration;
+
   if (!reg?.waiting) return;
+
   navigator.serviceWorker.addEventListener(
     "controllerchange",
     () => window.location.reload(),

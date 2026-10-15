@@ -1,4 +1,5 @@
 import type { CatalogSnapshot } from "../catalog/types";
+
 export const snapshotA: CatalogSnapshot = {
   revision: 1,
   updatedAt: "2026-10-14T12:00:00.000Z",
@@ -10,6 +11,7 @@ export const snapshotA: CatalogSnapshot = {
     imagePath: `photos/p${i}.jpg`,
   })),
 };
+
 export const snapshotB: CatalogSnapshot = {
   revision: 2,
   updatedAt: "2026-10-14T13:00:00.000Z",

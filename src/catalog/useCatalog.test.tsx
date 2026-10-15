@@ -1,14 +1,18 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
+
 import { useCatalog } from "./useCatalog";
 import { createCatalogStore, type CatalogStore } from "./storage";
 import { snapshotA, snapshotB } from "../test/fixtures";
 import { installBrowserFakes, makeSource, jpeg } from "../test/sync-fixtures";
+
 vi.mock("../pwa/register", () => ({
   ensureOfflineShell: async () => {},
   requestAppUpdate: async () => {},
 }));
+
 let store: CatalogStore;
+
 beforeEach(() => {
   installBrowserFakes();
   Object.defineProperty(navigator, "onLine", {
@@ -24,7 +28,9 @@ beforeEach(() => {
   );
   store = createCatalogStore(crypto.randomUUID());
 });
+
 afterEach(() => store.close());
+
 test("primeira visita consulta sem baixar fotos automaticamente", async () => {
   const source = makeSource(snapshotA);
   source.getPhoto = async () => {
@@ -35,6 +41,7 @@ test("primeira visita consulta sem baixar fotos automaticamente", async () => {
   expect(result.current.saved).toBe(false);
   expect(await store.readActive()).toBeNull();
 });
+
 test("pedido explícito salva todas as fotos", async () => {
   const { result } = renderHook(() => useCatalog(makeSourceStable, store));
   await waitFor(() => expect(result.current.products).toHaveLength(10));
@@ -42,7 +49,9 @@ test("pedido explícito salva todas as fotos", async () => {
   expect(result.current.saved).toBe(true);
   expect((await store.readActive())?.photos.size).toBe(10);
 });
+
 const makeSourceStable = makeSource(snapshotA);
+
 test("sem rede e sem preparação apresenta orientação", async () => {
   Object.defineProperty(navigator, "onLine", {
     configurable: true,
@@ -52,6 +61,7 @@ test("sem rede e sem preparação apresenta orientação", async () => {
   await waitFor(() => expect(result.current.message).toMatch(/internet/i));
   expect(result.current.products).toHaveLength(0);
 });
+
 test("armazenamento negado mantém catálogo online", async () => {
   store.readActive = async () => {
     throw new DOMException("Denied", "SecurityError");
@@ -60,6 +70,7 @@ test("armazenamento negado mantém catálogo online", async () => {
   await waitFor(() => expect(result.current.products).toHaveLength(10));
   expect(result.current.message).toMatch(/armazenamento/i);
 });
+
 test("carregamento lento tem estado visível", async () => {
   let resolve!: (value: typeof snapshotA) => void;
   const source = makeSource(snapshotA);
@@ -73,6 +84,7 @@ test("carregamento lento tem estado visível", async () => {
   await act(async () => resolve(snapshotA));
   expect(result.current.products).toHaveLength(10);
 });
+
 test("falha de atualização mantém cópia e aviso", async () => {
   const source = makeSource(snapshotA);
   const hook = renderHook(() => useCatalog(source, store));
@@ -112,6 +124,7 @@ test("notificação de outra aba preserva sincronização local pendente", async
   let entered = false;
   source.getPhoto = () => {
     entered = true;
+
     return new Promise<Blob>((resolve) => {
       release = resolve;
     });
@@ -122,6 +135,7 @@ test("notificação de outra aba preserva sincronização local pendente", async
   });
   await waitFor(() => expect(entered).toBe(true));
   const publisher = new BroadcastChannel("catalog-updates");
+
   try {
     publisher.postMessage("updated");
     await waitFor(() => expect(result.current.products).toHaveLength(9));
@@ -134,6 +148,7 @@ test("notificação de outra aba preserva sincronização local pendente", async
     });
     publisher.close();
   }
+
   expect(result.current.products[0].priceCents).toBe(3500);
   expect(result.current.state).toBe("saved");
 });

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.git/
+.superpowers/
+.agents/
+.codex/
+.aws/
+.env
+.env.*

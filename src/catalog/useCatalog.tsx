@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import type {
   CatalogSource,
   CatalogSnapshot,
@@ -8,6 +9,7 @@ import type {
 import type { CatalogStore } from "./storage";
 import { syncCatalog } from "./sync";
 import { ensureOfflineShell } from "../pwa/register";
+
 type View = {
   snapshot?: CatalogSnapshot;
   local?: LocalCatalog;
@@ -16,13 +18,16 @@ type View = {
   message: string;
   progress: SyncProgress | null;
 };
+
 const formatDate = (date: string) =>
   new Intl.DateTimeFormat("pt-BR", {
     dateStyle: "short",
     timeStyle: "short",
   }).format(new Date(date));
+
 const offlineMessage = (local: LocalCatalog) =>
   `Sem internet — catálogo salvo em ${formatDate(local.activatedAt)}. Os preços podem ter mudado.`;
+
 export function useCatalog(source: CatalogSource, store: CatalogStore) {
   const [view, setView] = useState<View>({
     saved: false,
@@ -53,6 +58,7 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
   const update = useCallback(
     async (controller: AbortController, explicit: boolean) => {
       const signal = controller.signal;
+
       try {
         setView((v) => ({
           ...v,
@@ -60,11 +66,13 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
           progress: null,
           message: "Preparando o catálogo… Mantenha esta tela aberta.",
         }));
+
         if (explicit) {
           await ensureOfflineShell();
           signal.throwIfAborted();
           await navigator.storage?.persist?.().catch(() => false);
         }
+
         await syncCatalog(source, store, {
           now: () => new Date().toISOString(),
           signal,
@@ -74,12 +82,14 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
         });
         signal.throwIfAborted();
         const local = await store.readActive();
+
         if (local && !signal.aborted) {
           applyLocal(local, explicit);
           channel.current?.postMessage("updated");
         }
       } catch (error) {
         if (signal.aborted) return;
+
         const name =
           error && typeof error === "object" && "name" in error
             ? String(error.name)
@@ -105,24 +115,32 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
   );
   const prepareOffline = useCallback(async () => {
     if (current.current) return;
+
     const controller = new AbortController();
     current.current = controller;
     await update(controller, true);
   }, [update]);
+
   useEffect(() => {
     const urls: string[] = [];
     const map = new Map<string, string>();
+
     for (const p of view.snapshot?.products ?? []) {
       const blob = view.local?.photos.get(p.imagePath);
       const url = blob
         ? URL.createObjectURL(blob)
         : `${import.meta.env.BASE_URL}demo/${p.imagePath}`;
+
       if (blob) urls.push(url);
+
       map.set(p.imagePath, url);
     }
+
     setImages(map);
+
     return () => urls.forEach((url) => URL.revokeObjectURL(url));
   }, [view.snapshot, view.local]);
+
   useEffect(() => {
     let disposed = false;
     const initial = new AbortController();
@@ -131,13 +149,17 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
       const signal = controller.signal;
       let local: LocalCatalog | null = null;
       let storageError = false;
+
       try {
         local = await store.readActive();
       } catch {
         storageError = true;
       }
+
       if (disposed || signal.aborted) return;
+
       if (local) applyLocal(local);
+
       if (!navigator.onLine) {
         if (!local)
           setView((v) => ({
@@ -146,16 +168,23 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
             message:
               "Conecte-se à internet para abrir e salvar o catálogo neste aparelho.",
           }));
+
         if (current.current === controller) current.current = null;
+
         return;
       }
+
       lastCheck.current = Date.now();
+
       if (local) {
         await update(controller, false);
+
         return;
       }
+
       try {
         const snapshot = await source.getSnapshot(signal);
+
         if (!disposed && !signal.aborted)
           setView({
             snapshot,
@@ -187,6 +216,7 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
         document.visibilityState === "hidden"
       )
         return;
+
       lastCheck.current = Date.now();
       const controller = new AbortController();
       current.current = controller;
@@ -207,12 +237,14 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
         ? new BroadcastChannel("catalog-updates")
         : null;
     channel.current = bc;
+
     if (bc)
       bc.onmessage = () => {
         void store
           .readActive()
           .then((local) => {
             if (!local || disposed) return;
+
             if (current.current) {
               // A completed revision from another tab is usable, but does not
               // complete this tab's own request or permit reload during it.
@@ -228,6 +260,7 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
           })
           .catch(() => {});
       };
+
     return () => {
       disposed = true;
       initial.abort();
@@ -237,9 +270,11 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
       window.removeEventListener("offline", offline);
       document.removeEventListener("visibilitychange", recheck);
       bc?.close();
+
       if (channel.current === bc) channel.current = null;
     };
   }, [source, store, update, applyLocal]);
+
   return {
     ...view,
     products: view.snapshot?.products ?? [],

@@ -33,11 +33,11 @@ As decisões abaixo são propostas para revisão, não requisitos já aprovados.
 
 ## 2. Alternativas e recomendação
 
-| Abordagem | Benefício | Custo ou limitação |
-| --- | --- | --- |
-| PWA com Supabase e fotos em IndexedDB | Mesmo link no celular e tablet; dados e fotos podem ser ativados em uma transação local | Precisa testar armazenamento e sincronização no Android real |
-| PWA com dados em IndexedDB e fotos em Cache Storage | Cache de imagens acessível pelo Service Worker | Ativação envolve dois armazenamentos; recuperação fica mais complexa |
-| Aplicativo Android nativo ou com empacotamento | Mais integração com o dispositivo | Acrescenta distribuição e manutenção; ainda requer uma experiência web para clientes |
+| Abordagem                                           | Benefício                                                                               | Custo ou limitação                                                                   |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| PWA com Supabase e fotos em IndexedDB               | Mesmo link no celular e tablet; dados e fotos podem ser ativados em uma transação local | Precisa testar armazenamento e sincronização no Android real                         |
+| PWA com dados em IndexedDB e fotos em Cache Storage | Cache de imagens acessível pelo Service Worker                                          | Ativação envolve dois armazenamentos; recuperação fica mais complexa                 |
+| Aplicativo Android nativo ou com empacotamento      | Mais integração com o dispositivo                                                       | Acrescenta distribuição e manutenção; ainda requer uma experiência web para clientes |
 
 Recomendação: primeira abordagem. Workbox guarda o aplicativo; Dexie guarda
 as versões do catálogo e os arquivos das fotos. Não usar cache automático de
@@ -86,16 +86,16 @@ foco, teclado, toque e mensagens. A biblioteca não substitui a validação da U
 
 ## 4. Responsabilidades técnicas
 
-| Parte | Responsabilidade |
-| --- | --- |
-| React + TypeScript | Telas e estados de catálogo, formulário e sincronização |
-| Vite | Desenvolvimento e build estático |
-| shadcn/ui + React Aria + Tailwind | Componentes e apresentação responsiva |
-| Supabase Auth | Sessão do administrador |
-| Supabase Postgres | Fonte oficial dos produtos e revisão do catálogo |
-| Supabase Storage | Fotos otimizadas com caminhos imutáveis |
-| Dexie + IndexedDB | Catálogo local, fotos como Blob e estado de sincronização |
-| Workbox + Service Worker | Arquivos essenciais para abrir a aplicação offline |
+| Parte                             | Responsabilidade                                          |
+| --------------------------------- | --------------------------------------------------------- |
+| React + TypeScript                | Telas e estados de catálogo, formulário e sincronização   |
+| Vite                              | Desenvolvimento e build estático                          |
+| shadcn/ui + React Aria + Tailwind | Componentes e apresentação responsiva                     |
+| Supabase Auth                     | Sessão do administrador                                   |
+| Supabase Postgres                 | Fonte oficial dos produtos e revisão do catálogo          |
+| Supabase Storage                  | Fotos otimizadas com caminhos imutáveis                   |
+| Dexie + IndexedDB                 | Catálogo local, fotos como Blob e estado de sincronização |
+| Workbox + Service Worker          | Arquivos essenciais para abrir a aplicação offline        |
 
 Manter módulos distintos para catálogo, gerenciamento, acesso remoto,
 persistência local e sincronização. O protótipo usa uma fonte fictícia através

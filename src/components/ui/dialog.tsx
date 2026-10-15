@@ -1,5 +1,7 @@
 import * as React from "react";
+
 import { cn } from "@/lib/utils";
+
 import {
   Dialog as DialogPrimitive,
   DialogTrigger as DialogTriggerPrimitive,
@@ -12,10 +14,16 @@ import {
 } from "react-aria-components";
 
 import { Button } from "@/components/ui/button";
+
 import { XIcon } from "lucide-react";
 
 function DialogTrigger({ ...props }: DialogTriggerPrimitiveProps) {
-  return <DialogTriggerPrimitive data-slot="dialog-trigger" {...props} />;
+  return (
+    <DialogTriggerPrimitive
+      data-slot="dialog-trigger"
+      {...props}
+    />
+  );
 }
 
 function DialogClose({
@@ -71,7 +79,10 @@ function Dialog({
     showCloseButton?: boolean;
   }) {
   return (
-    <DialogOverlay isDismissable={isDismissable} {...props}>
+    <DialogOverlay
+      isDismissable={isDismissable}
+      {...props}
+    >
       <ModalPrimitive
         data-slot="dialog-content"
         className={cn(

@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+
 import { prepare, decodeAll } from "./helpers";
+
 const original = JSON.parse(await readFile("public/demo/catalog.json", "utf8"));
+
 const updated = {
   ...original,
   revision: 2,
@@ -13,6 +16,7 @@ const updated = {
         : p,
     ),
 };
+
 test("atualiza preço foto e ocultação em duas abas", async ({
   page,
   context,
@@ -40,12 +44,14 @@ test("atualiza preço foto e ocultação em duas abas", async ({
       .getByRole("button", { name: "Atualizar catálogo", exact: true })
       .click(),
   ]);
+
   for (const tab of [page, second]) {
     await expect(tab.locator(".product-card")).toHaveCount(9);
     await expect(tab.getByText("R$ 69,00", { exact: true })).toBeVisible();
     await decodeAll(tab, 9);
   }
 });
+
 test("foto corrompida impede atualização e preserva cópia offline", async ({
   page,
   context,

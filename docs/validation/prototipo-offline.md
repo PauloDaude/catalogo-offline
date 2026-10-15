@@ -4,15 +4,15 @@ Entrega da etapa 1, com dados fictícios. Data de referência: 14/10/2026.
 
 ## Evidências verificadas nesta sessão
 
-| Verificação | Resultado |
-| --- | --- |
-| `npm run test` | 42 testes passaram |
-| `npm run lint` | Sem erros |
-| `npm run build` | TypeScript, frontend e Service Worker compilados |
-| `npm run test:e2e` | 12 testes passaram no Chromium |
-| Auditoria de dependências | Sem vulnerabilidades conhecidas após remover o CLI de geração |
-| Dependências Radix | Não instaladas |
-| Requests externos no fluxo inicial | Nenhum no caso automatizado |
+| Verificação                        | Resultado                                                     |
+| ---------------------------------- | ------------------------------------------------------------- |
+| `npm run test`                     | 42 testes passaram                                            |
+| `npm run lint`                     | Sem erros                                                     |
+| `npm run build`                    | TypeScript, frontend e Service Worker compilados              |
+| `npm run test:e2e`                 | 12 testes passaram no Chromium                                |
+| Auditoria de dependências          | Sem vulnerabilidades conhecidas após remover o CLI de geração |
+| Dependências Radix                 | Não instaladas                                                |
+| Requests externos no fluxo inicial | Nenhum no caso automatizado                                   |
 
 O build emite um aviso de depreciação `inlineDynamicImports` originado pelo
 vite-plugin-pwa ao compilar o Service Worker. A compilação termina com sucesso.
@@ -52,10 +52,10 @@ ou com o próprio vendedor. Não considerar este protótipo validado para uso em
 
 Preencher ao testar:
 
-| Aparelho | Modelo | Android | Navegador/versão | Web Locks | Resultado |
-| --- | --- | --- | --- | --- | --- |
-| Tablet Samsung | Não informado | Não informado | Não informado | Pendente | Pendente |
-| Celular | Não informado | Não informado | Não informado | Pendente | Pendente |
+| Aparelho       | Modelo        | Android       | Navegador/versão | Web Locks | Resultado |
+| -------------- | ------------- | ------------- | ---------------- | --------- | --------- |
+| Tablet Samsung | Não informado | Não informado | Não informado    | Pendente  | Pendente  |
+| Celular        | Não informado | Não informado | Não informado    | Pendente  | Pendente  |
 
 - [ ] Abrir em HTTPS ou localhost via depuração USB.
 - [ ] Salvar o catálogo e aguardar a confirmação das dez fotos.

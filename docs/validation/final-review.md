@@ -15,7 +15,7 @@ adiados. Esta revisão não valida o Supabase, que ainda não foi implementado.
 2. Uma mensagem do BroadcastChannel podia mudar o estado para concluído enquanto
    a operação local continuava. Agora a revisão de outra aba é incorporada mantendo
    estado, mensagem e progresso da operação local. O teste `notificação de outra aba
-   preserva sincronização local pendente` primeiro recebeu `saved` quando esperava
+preserva sincronização local pendente` primeiro recebeu `saved` quando esperava
    `syncing`; depois passou, incluindo conclusão da revisão posterior. A suíte
    completa passou com 42 testes.
 
