@@ -25,3 +25,9 @@ experimentar uma etiqueta de nome/preço saindo da lateral, como na referência.
   gestos de toque/mouse, seleção compartilhada e reabertura offline.
 - Build, lint e formatação verificados. Avaliação com o vendedor e aparelhos
   Android reais continua pendente.
+
+## Acabamento da dobra
+
+Após revisão visual do usuário, a dobra foi movida para trás da foto, com
+contorno curvo e gradiente azul discreto. Capturas desktop/celular inspecionadas;
+os dez testes de proporção, extensão clicável e gestos passaram novamente.

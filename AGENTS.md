@@ -100,6 +100,8 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Código, nome e preço em faixa branca com detalhe azul saindo pela lateral
   esquerda, sobrepondo parcialmente a borda inferior da foto. A faixa também abre
   detalhes. Não cortar a faixa nem gerar rolagem horizontal no celular.
+- A dobra decorativa da faixa deve ficar atrás da foto, com contorno curvo;
+  nunca cobrir a imagem com o acabamento azul.
 - Usar os mesmos tokens de preço azul, selo azul OFERTA IMPERDÍVEL e percentual
   verde `#04a650` com texto branco da listagem. Carrinho flutuante também azul.
 - Pesquisa limitada a Cozinha nesta etapa. Reaproveitar dados, fotos e consulta
