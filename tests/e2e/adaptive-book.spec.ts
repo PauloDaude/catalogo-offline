@@ -43,9 +43,8 @@ for (const width of [360, 1280]) {
       const caption = (await page
         .locator(".book-product-caption")
         .boundingBox())!;
-      expect(caption.x + caption.width).toBeGreaterThan(
-        photo.x + photo.width + 10,
-      );
+      expect(caption.x).toBeLessThan(photo.x - 10);
+      expect(caption.x).toBeGreaterThanOrEqual(0);
       expect(caption.x + caption.width).toBeLessThanOrEqual(width);
       expect(caption.y).toBeLessThan(photo.y + photo.height);
       expect(caption.y + caption.height).toBeGreaterThan(
@@ -56,10 +55,7 @@ for (const width of [360, 1280]) {
           () => document.documentElement.scrollWidth <= innerWidth,
         ),
       ).toBe(true);
-      await page.mouse.click(
-        caption.x + caption.width - 8,
-        caption.y + caption.height / 2,
-      );
+      await page.mouse.click(caption.x + 8, caption.y + caption.height / 2);
       await expect(page.getByRole("dialog")).toBeVisible();
     });
   }

@@ -1213,6 +1213,7 @@ progress {
 }
 
 .book-product .product-card-trigger {
+  left: calc(-1 * var(--ribbon-overhang));
   width: calc(100% + var(--ribbon-overhang));
   cursor: grab;
 }
@@ -1249,12 +1250,12 @@ progress {
 
 .book-product-caption {
   position: relative;
-  left: var(--ribbon-overhang);
+  left: calc(-1 * var(--ribbon-overhang));
   width: min(380px, 100%);
-  margin: -80px 0 0 auto;
+  margin: -80px auto 0 0;
   padding: 18px 22px;
   border-left: 5px solid var(--primary);
-  border-radius: 12px 0 12px 12px;
+  border-radius: 0 12px 12px 12px;
   background: #fff;
   box-shadow: 0 8px 24px #172b4d24;
   pointer-events: none;
@@ -1263,9 +1264,9 @@ progress {
 .book-product-caption::before {
   content: "";
   position: absolute;
-  right: 0;
+  left: 0;
   top: -16px;
-  border-left: var(--ribbon-overhang) solid #183a9c;
+  border-right: var(--ribbon-overhang) solid #183a9c;
   border-top: 16px solid transparent;
 }
 
@@ -1360,7 +1361,7 @@ progress {
 
   .book-viewport {
     --ribbon-overhang: 24px;
-    padding: 8px 32px 24px 8px;
+    padding: 8px 8px 24px 32px;
   }
 
   .book-product-caption {

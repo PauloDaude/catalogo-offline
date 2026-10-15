@@ -98,7 +98,7 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   largura adaptada às imagens verticais, quadradas e horizontais; limitar altura
   pelo viewport. Não voltar ao quadro largo fixo que recorta imagens verticais.
 - Código, nome e preço em faixa branca com detalhe azul saindo pela lateral
-  direita, sobrepondo parcialmente a borda inferior da foto. A faixa também abre
+  esquerda, sobrepondo parcialmente a borda inferior da foto. A faixa também abre
   detalhes. Não cortar a faixa nem gerar rolagem horizontal no celular.
 - Usar os mesmos tokens de preço azul, selo azul OFERTA IMPERDÍVEL e percentual
   verde `#04a650` com texto branco da listagem. Carrinho flutuante também azul.
