@@ -15,7 +15,21 @@ for (const width of [360, 1280]) {
       name: "Avançar produto",
       exact: true,
     });
+    await page
+      .locator(".book-product-photo img")
+      .evaluate((el: HTMLImageElement) => el.decode());
     await expect(previous).toBeDisabled();
+    const photo = (await page.locator(".book-product-photo").boundingBox())!;
+    for (const [arrow, edge] of [
+      [previous, photo.x],
+      [next, photo.x + photo.width],
+    ] as const) {
+      const box = (await arrow.boundingBox())!;
+      expect(Math.abs(box.x + box.width / 2 - edge)).toBeLessThan(1);
+      expect(
+        Math.abs(box.y + box.height / 2 - photo.y - photo.height / 2),
+      ).toBeLessThan(1);
+    }
     for (const arrow of [previous, next]) {
       const box = (await arrow.boundingBox())!;
       expect(box.width).toBeGreaterThanOrEqual(48);

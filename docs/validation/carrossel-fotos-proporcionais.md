@@ -114,3 +114,18 @@ e mobile inspecionadas. Link online permanece sem atualização, conforme decis�
 
 Resultado final: 79 testes unitários/componentes e 53 E2E passaram, incluindo
 preservação de foco das setas no último item. Build, lint e formatação passaram.
+
+## Etiqueta branca e setas sobre as bordas
+
+Após nova avaliação, o usuário escolheu etiqueta branca sobreposta com sombra
+suave. Removida a dobra azul, a borda lateral azul e o gradiente que simulava
+curva; mantidos sobreposição à esquerda, códigos, ofertas, preço e adição direta.
+
+Setas no celular agora ficam com o centro exatamente na borda lateral da foto,
+metade para fora, como no desktop. Padding lateral reserva espaço para não cortar
+botões. Teste de geometria falhou antes da correção com desvio de 24 px e passou
+depois. Continuam no meio vertical da foto e mantêm foco/limites de navegação.
+
+Build, lint e formatação passaram. Os 16 testes E2E de geometria, proporções,
+setas, gestos e adição ao carrinho passaram após o acabamento branco. Captura de
+Garrafa térmica em celular inspecionada. Nenhuma publicação online realizada.

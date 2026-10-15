@@ -102,21 +102,23 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Pedido mais recente corrige o sentido: arrastar da **direita para esquerda
   avança**; esquerda para direita retorna.
   Manter botões inferiores e setas grandes clicáveis nas laterais da foto,
-  com fundo branco, alvo de 56 px no desktop e 48 px no celular. Sinalizar limites
+  com fundo branco, alvo de 56 px no desktop e 48 px no celular. O centro de cada
+  botão deve coincidir com a borda lateral da foto, metade para fora, também no
+  celular; reservar espaço lateral para não cortar os botões. Sinalizar limites
   e preservar foco de teclado ao navegar. Manter contador do produto.
   Arrasto não deve abrir detalhes; toque/click simples e teclado devem abrir.
 - Foto inteira preservando a proporção original (`object-fit: contain`), com
   largura adaptada às imagens verticais, quadradas e horizontais; na visualização
   individual limitar altura pelo viewport. Não voltar ao quadro largo fixo que recorta imagens verticais.
-- Código, nome e preço em faixa branca com detalhe azul saindo pela lateral
-  esquerda, sobrepondo parcialmente a borda inferior da foto. A faixa também abre
+- Código, nome e preço em etiqueta branca saindo pela lateral esquerda,
+  sobrepondo parcialmente a borda inferior da foto. A etiqueta também abre
   detalhes. Não cortar a faixa nem gerar rolagem horizontal no celular.
 - No modo de folhear, botão azul com ícones de carrinho e “+” ao lado do preço
   adiciona diretamente uma unidade, sem abrir detalhes. Manter rótulo acessível,
   alvo de toque de 48 px e navegação por teclado.
-- A dobra decorativa da faixa deve ficar atrás da foto, com contorno curvo,
-  sombra e transição suave na superfície para dar volume. Nunca cobrir a imagem
-  com o acabamento azul.
+- Escolha mais recente do usuário: etiqueta branca sobreposta com cantos
+  arredondados e sombra suave. Remover a dobra azul, a borda azul lateral e o
+  gradiente que simulava papel curvo; não reintroduzir esse efeito sem pedido.
 - Usar os mesmos tokens de preço azul, selo azul OFERTA IMPERDÍVEL e percentual
   verde `#04a650` com texto branco da listagem. Carrinho flutuante também azul.
 - Pesquisa combina com a categoria escolhida, incluindo Todas. Reaproveitar
