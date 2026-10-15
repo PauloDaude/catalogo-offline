@@ -52,3 +52,20 @@ O código TypeScript original continua no repositório GitHub do projeto.
 - A build e os fluxos offline foram verificados localmente antes da publicação;
   não foi repetido o roteiro completo de modo avião no domínio hospedado nem em
   dispositivos Android reais.
+
+## Versão 2 — demonstração para folhear
+
+Publicada em 15/10/2026 no mesmo projeto, preservando acesso público.
+
+- [Abrir Cozinha por páginas](https://catalogo-paulo-demo.safereed9.chatgpt.site/?visualizacao=folhear).
+- Build do catálogo: `48909c4`.
+- Commit do repositório Sites: `7ea5640362a8fcd94c2505669b423f5983249230`.
+- Versão salva: `appgprj_6ad0df0dc2088191a7ed62dcf4a685cf~appgver_86b3abfabb88819193e38859b6723fbf`.
+- Deployment: `appgdep_6ad0e9587e588191a2a8128e476c796a`, status `succeeded`.
+- Acesso anônimo HTTP 200, paginação, seleção de Garrafa térmica com total de
+  R$ 48,00 e reabertura offline com decodificação das fotos verificados no domínio
+  público, em viewport de 800×1280.
+
+O endereço sem parâmetro preserva o visual anterior. Dispositivos com a versão
+antiga do aplicativo em cache devem usar a ação **Reabrir atualizado** oferecida
+pelo aplicativo para receber a nova apresentação.

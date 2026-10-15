@@ -42,3 +42,10 @@ casos "páginas reabrem offline e compartilham seleção com visual anterior" e
 "carrinho agrupa, altera quantidades e confirma limpeza". A execução final usou
 `npm run test:e2e -- --output=/tmp/catalog-book-verified-results`, em diretório
 isolado, e os 28 casos passaram sem esses erros.
+
+## Conferência do link público
+
+A versão 2 do Sites foi publicada e testada em contexto novo, sem login, em
+800×1280: HTTP 200, navegação até a última página, adição de Garrafa térmica à
+seleção com total de R$ 48,00, preparação e reabertura offline com fotos
+decodificadas. O PDF de referência não integra os arquivos publicados.
