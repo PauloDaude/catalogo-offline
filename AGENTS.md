@@ -32,7 +32,8 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Gerenciamento com login e conexão à internet.
 - MVP: código curto único, nome, categoria, uma foto e um preço por produto.
 - Código de exibição no formato `P001`, único e persistido nos dados, sem depender
-  da posição do produto na lista. Exibi-lo discretamente no card e no carrinho.
+  da posição do produto na lista. Exibi-lo como `#P001`, sem o texto "Código";
+  no card, à direita da categoria na mesma linha, e também no carrinho.
   Não reutilizar o código de um produto oculto nem alterar códigos ao reordenar.
   O identificador interno permanece separado do código público. No futuro Supabase,
   impor unicidade no banco, com atribuição transacional no cadastro.

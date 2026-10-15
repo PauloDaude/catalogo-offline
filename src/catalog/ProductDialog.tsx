@@ -20,7 +20,7 @@ export function ProductDialog({
       className="product-dialog"
     >
       <DialogTitle>{product.name}</DialogTitle>
-      <p className="product-code">Código {product.code ?? "—"}</p>
+      <p className="product-code">#{product.code ?? "—"}</p>
       {image && (
         <img
           src={image}

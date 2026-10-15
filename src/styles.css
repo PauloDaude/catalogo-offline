@@ -868,6 +868,18 @@ progress {
   }
 }
 
+.product-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.product-meta .product-code {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
 .product-code {
   display: block;
   color: #66758c;
