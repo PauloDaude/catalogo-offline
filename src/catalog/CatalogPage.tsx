@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, ShoppingBag, BookOpen, LayoutGrid } from "lucide-react";
+import { Search, BookOpen, LayoutGrid } from "lucide-react";
 import { TextField, Tabs, TabList, Tab, TabPanel } from "react-aria-components";
 
 import { Button } from "@/components/ui/button";
@@ -63,15 +63,13 @@ export function CatalogPage({
           href={import.meta.env.BASE_URL}
           className="brand"
         >
-          <span className="brand-icon">
-            <ShoppingBag aria-hidden="true" />
-          </span>
-          <span>
-            Catálogo
-            <span className="brand-subtitle">
-              Produtos para o seu dia a dia
-            </span>
-          </span>
+          <img
+            className="brand-logo"
+            src={`${import.meta.env.BASE_URL}logos/logo-cirandinha.png`}
+            alt="Cirandinha Variedades"
+            width={1825}
+            height={365}
+          />
         </a>
         <CartPanel
           cart={cart}

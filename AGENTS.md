@@ -38,6 +38,11 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   O identificador interno permanece separado do código público. No futuro Supabase,
   impor unicidade no banco, com atribuição transacional no cadastro.
 - Cadastro, edição e ocultação reversível de produtos.
+- Próxima etapa solicitada: painel simples para trocar imagens e alterar nome,
+  preço, desconto e categorias dos produtos, incluindo gerenciar categorias.
+  Isso substitui a proposta inicial de categorias fixas para o painel; integração
+  Supabase e gerenciamento ainda pendentes. Logo aplicada no header; próxima
+  etapa funcional é definir e implementar o painel.
 - Pesquisa, categorias, fotos grandes e preços destacados.
 - Ofertas aprovadas: preço anterior opcional (`previousPriceCents`), inteiro em
   centavos e maior que o atual. Exibir preço anterior riscado, preço atual e
@@ -137,6 +142,9 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 ## Aparência e UX
 
 - **Tema claro (light), com azul como cor primária.**
+- Header usa a logo fornecida em `public/logos/logo-cirandinha.png`, Cirandinha
+  Variedades, substituindo ícone/nome genéricos. Preservar proporção, transparência
+  e leitura em celular/tablet; incluir o arquivo no app shell offline.
 - Definir o tom de azul usando tokens de tema e verificar contraste nos estados
   normal, foco, pressionado e desabilitado. O tom exato ainda não foi escolhido.
 - Não acrescentar tema escuro ou seletor de temas ao MVP sem necessidade acordada.

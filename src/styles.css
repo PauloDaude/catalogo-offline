@@ -145,30 +145,16 @@ button {
 }
 
 .brand {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  text-decoration: none;
-  font-weight: 750;
-  font-size: 23px;
-  color: #172b4d;
-}
-
-.brand-icon {
-  display: grid;
-  place-items: center;
-  background: #1d4ed8;
-  color: white;
-  padding: 12px;
-  border-radius: 14px;
-}
-
-.brand-subtitle {
   display: block;
-  font-size: 12px;
-  color: #52627b;
-  font-weight: 450;
-  margin-top: 2px;
+  max-width: 100%;
+  text-decoration: none;
+}
+
+.brand-logo {
+  display: block;
+  width: 280px;
+  max-width: 100%;
+  height: auto;
 }
 
 .header-note {
@@ -662,8 +648,8 @@ footer {
     display: none;
   }
 
-  .brand {
-    font-size: 21px;
+  .brand-logo {
+    width: 240px;
   }
 
   h1 {
@@ -1510,20 +1496,6 @@ progress {
 }
 
 @media (max-width: 650px) {
-  .site-header .brand-subtitle {
-    display: none;
-  }
-
-  .site-header .brand {
-    gap: 10px;
-    font-size: 19px;
-  }
-
-  .site-header .brand-icon {
-    padding: 9px;
-    border-radius: 10px;
-  }
-
   .catalog-view-button {
     font-size: 11px;
     padding: 0 10px;
