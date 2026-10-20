@@ -73,6 +73,11 @@ async function denied(promise, label) {
   assert.ok(error, label);
 }
 try {
+  const settings = await (
+    await fetch(`${url}/auth/v1/settings`, { headers: { apikey: key } })
+  ).json();
+  assert.equal(settings.disable_signup, true, "cadastro público bloqueado");
+  assert.equal(settings.external.email, true, "login por email ativo");
   assert.equal(
     (
       await user.auth.signInWithPassword({
