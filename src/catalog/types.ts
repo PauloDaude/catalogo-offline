@@ -6,7 +6,7 @@ export const categories = [
   "Outros",
 ] as const;
 
-export type Category = (typeof categories)[number];
+export type Category = string;
 
 export type Product = {
   id: string;
@@ -34,6 +34,7 @@ export type LocalCatalog = {
 export type CatalogSource = {
   getSnapshot(signal?: AbortSignal): Promise<CatalogSnapshot>;
   getRevision(signal?: AbortSignal): Promise<number>;
+  photoUrl?(path: string): string;
   getPhoto(path: string, signal?: AbortSignal): Promise<Blob>;
 };
 

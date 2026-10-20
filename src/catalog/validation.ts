@@ -1,4 +1,4 @@
-import { categories, type CatalogSnapshot, type Product } from "./types";
+import { type CatalogSnapshot, type Product } from "./types";
 
 export function parseSnapshot(input: unknown): CatalogSnapshot {
   if (!input || typeof input !== "object") throw new Error("Catálogo inválido");
@@ -28,7 +28,7 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
       !p.id.trim() ||
       ids.has(p.id) ||
       typeof p.code !== "string" ||
-      !/^P\d{3}$/.test(p.code) ||
+      !/^P\d{3,12}$/.test(p.code) ||
       codes.has(p.code) ||
       typeof p.name !== "string" ||
       !p.name.trim() ||
@@ -37,9 +37,11 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
       (p.previousPriceCents !== undefined &&
         (!Number.isSafeInteger(p.previousPriceCents) ||
           p.previousPriceCents <= p.priceCents)) ||
-      !categories.includes(p.category) ||
+      typeof p.category !== "string" ||
+      !p.category.trim() ||
+      p.category.length > 80 ||
       typeof p.imagePath !== "string" ||
-      !/^photos\/[a-zA-Z0-9_-]+\.jpg$/.test(p.imagePath)
+      !isImagePath(p.imagePath)
     )
       throw new Error("Produto inválido");
 
@@ -65,3 +67,11 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
     products,
   };
 }
+
+export const isRemoteImagePath = (path: string) =>
+  /^products\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.jpg$/.test(
+    path,
+  );
+
+export const isImagePath = (path: string) =>
+  /^photos\/[a-zA-Z0-9_-]+\.jpg$/.test(path) || isRemoteImagePath(path);

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { createSupabaseSource } from "./catalog/supabase-source";
+import { createPublicSupabaseClient } from "./lib/supabase";
+
 import { createHttpSource } from "./catalog/source";
 import { CatalogPage } from "./catalog/CatalogPage";
 import { useCatalog } from "./catalog/useCatalog";
@@ -8,7 +11,10 @@ import { SyncStatus } from "./catalog/SyncStatus";
 import { Button } from "./components/ui/button";
 import { registerAppShell, requestAppUpdate } from "./pwa/register";
 
-const source = createHttpSource(import.meta.env.BASE_URL);
+const source =
+  import.meta.env.VITE_CATALOG_SOURCE === "supabase"
+    ? createSupabaseSource(createPublicSupabaseClient())
+    : createHttpSource(import.meta.env.BASE_URL);
 
 const store = createCatalogStore("catalogo-offline");
 

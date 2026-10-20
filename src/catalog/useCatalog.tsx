@@ -129,7 +129,8 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
       const blob = view.local?.photos.get(p.imagePath);
       const url = blob
         ? URL.createObjectURL(blob)
-        : `${import.meta.env.BASE_URL}demo/${p.imagePath}`;
+        : (source.photoUrl?.(p.imagePath) ??
+          `${import.meta.env.BASE_URL}demo/${p.imagePath}`);
 
       if (blob) urls.push(url);
 

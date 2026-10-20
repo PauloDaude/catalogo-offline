@@ -10,13 +10,13 @@ const normalize = (value: string) =>
 export function filterProducts(
   products: Product[],
   query: string,
-  category: Category | "Todas",
+  category: Category | null,
 ): Product[] {
   const needle = normalize(query);
 
   return products.filter(
     (p) =>
-      (category === "Todas" || p.category === category) &&
+      (category === null || p.category === category) &&
       normalize(p.name).includes(needle),
   );
 }

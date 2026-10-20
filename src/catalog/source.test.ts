@@ -18,7 +18,7 @@ test.each([-1, 1.5, Infinity])("rejeita preço inválido %s", (priceCents) => {
   ).toThrow();
 });
 
-test("rejeita ids duplicados e categoria desconhecida", () => {
+test("rejeita ids duplicados e categoria vazia", () => {
   expect(() =>
     parseSnapshot({
       ...snapshotA,
@@ -28,7 +28,7 @@ test("rejeita ids duplicados e categoria desconhecida", () => {
   expect(() =>
     parseSnapshot({
       ...snapshotA,
-      products: [{ ...snapshotA.products[0], category: "X" }],
+      products: [{ ...snapshotA.products[0], category: "" }],
     }),
   ).toThrow();
 });

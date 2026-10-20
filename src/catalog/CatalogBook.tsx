@@ -16,7 +16,7 @@ export function CatalogBook({
 }: {
   products: Product[];
   images: Map<string, string>;
-  category: Category | "Todas";
+  category: Category | null;
   onClearFilters: () => void;
   quantityFor: (id: string) => number;
   onAdd: (product: Product) => void;
@@ -49,7 +49,7 @@ export function CatalogBook({
           role="region"
           aria-roledescription="carrossel"
           aria-label={
-            category === "Todas"
+            category === null
               ? "Produtos de todas as categorias"
               : `Produtos de ${category}`
           }

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, BookOpen, LayoutGrid } from "lucide-react";
 import { TextField, Tabs, TabList, Tab, TabPanel } from "react-aria-components";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { categories, type Category, type Product } from "./types";
+import { type Category, type Product } from "./types";
 import { filterProducts } from "./search";
 import { ProductCard } from "./ProductCard";
 import { useCart } from "../cart/useCart";
@@ -32,7 +32,11 @@ export function CatalogPage({
   );
   const [announcement, setAnnouncement] = useState("");
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<Category | "Todas">("Todas");
+  const [category, setCategory] = useState<Category | null>(null);
+  useEffect(() => {
+    if (category !== null && !products.some((p) => p.category === category))
+      setCategory(null);
+  }, [products, category]);
   const filtered = filterProducts(products, query, category);
   const productImages = new Map<string, string>();
 
@@ -127,15 +131,23 @@ export function CatalogPage({
             aria-label="Categorias"
             className="category-list"
           >
-            {(["Todas", ...categories] as const).map((c) => (
+            {[
+              { name: "Todas", value: null },
+              ...Array.from(new Set(products.map((p) => p.category)))
+                .sort((a, b) => a.localeCompare(b, "pt-BR"))
+                .map((name) => ({
+                  name: name === "Todas" ? "Todas (categoria)" : name,
+                  value: name,
+                })),
+            ].map((c) => (
               <Button
-                key={c}
-                variant={category === c ? "default" : "outline"}
-                aria-pressed={category === c}
-                onPress={() => setCategory(c)}
+                key={c.value === null ? "all" : `category:${c.value}`}
+                variant={category === c.value ? "default" : "outline"}
+                aria-pressed={category === c.value}
+                onPress={() => setCategory(c.value)}
                 className="category-button"
               >
-                {c}
+                {c.name}
               </Button>
             ))}
           </nav>
@@ -156,7 +168,7 @@ export function CatalogPage({
               category={category}
               onClearFilters={() => {
                 setQuery("");
-                setCategory("Todas");
+                setCategory(null);
               }}
               images={images}
               quantityFor={(id) =>
@@ -197,7 +209,7 @@ export function CatalogPage({
                     variant="outline"
                     onPress={() => {
                       setQuery("");
-                      setCategory("Todas");
+                      setCategory(null);
                     }}
                   >
                     Limpar filtros

@@ -59,3 +59,26 @@ test("pesquisa e categoria são compartilhadas entre folhear e grade", async () 
   expect(screen.getByRole("searchbox")).toHaveValue("Lanterna 1");
   expect(screen.queryByText("Produtos por tela")).not.toBeInTheDocument();
 });
+
+test("renomear a categoria selecionada não deixa filtro invisível ativo", async () => {
+  const product = { ...snapshotA.products[0], category: "Original" };
+  const { rerender } = render(
+    <CatalogPage
+      products={[product]}
+      images={new Map()}
+    />,
+  );
+  await userEvent.click(
+    screen.getByRole("button", { name: "Original" }),
+  );
+  rerender(
+    <CatalogPage
+      products={[{ ...product, category: "Renomeada" }]}
+      images={new Map()}
+    />,
+  );
+  expect(
+    screen.getByRole("button", { name: "Todas" }),
+  ).toHaveAttribute("aria-pressed", "true");
+  expect(screen.getByText(product.name)).toBeVisible();
+});
