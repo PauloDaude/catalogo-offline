@@ -55,6 +55,7 @@ export function Categories({
         }}
       >
         <TextField
+          isDisabled={busy}
           isRequired
           maxLength={80}
           value={name}
@@ -76,6 +77,7 @@ export function Categories({
           <Button
             variant="outline"
             className="touch-button"
+            isDisabled={busy}
             onPress={() => {
               setEditing(undefined);
               setName("");

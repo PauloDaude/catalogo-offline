@@ -36,3 +36,21 @@ test("oferta inválida impede salvar e preserva nome digitado", async () => {
   expect(save).not.toHaveBeenCalled();
   expect(screen.getByLabelText("Nome do produto")).toHaveValue("Panela");
 });
+
+test("campos ficam bloqueados enquanto o salvamento está em andamento", async () => {
+  const user = userEvent.setup();
+  render(
+    <ProductForm
+      product={original}
+      categories={[{ id: "c", name: "Cozinha", active: true }]}
+      onSave={() => new Promise(() => {})}
+      onCancel={() => {}}
+      photoUrl={() => ""}
+    />,
+  );
+  await user.click(screen.getByRole("button", { name: "Salvar produto" }));
+  expect(screen.getByLabelText("Nome do produto")).toBeDisabled();
+  expect(screen.getByLabelText("Preço atual (R$)")).toBeDisabled();
+  expect(screen.getByRole("combobox")).toBeDisabled();
+  expect(screen.getByRole("checkbox")).toBeDisabled();
+});

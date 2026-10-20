@@ -9,11 +9,9 @@ test("snapshot validado e fotos limitadas ao bucket comercial", async () => {
     products: [],
   };
   const client = {
-    rpc: vi
-      .fn()
-      .mockReturnValue({
-        abortSignal: () => Promise.resolve({ data: snapshot, error: null }),
-      }),
+    rpc: vi.fn().mockReturnValue({
+      abortSignal: () => Promise.resolve({ data: snapshot, error: null }),
+    }),
     storage: {
       from: () => ({
         getPublicUrl: (path: string) => ({

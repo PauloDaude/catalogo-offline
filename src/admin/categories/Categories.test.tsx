@@ -20,3 +20,18 @@ test("mostra produtos que impedem arquivar sem enviar a alteração", async () =
   expect(await screen.findByText(/Panela/)).toBeInTheDocument();
   expect(archive).not.toHaveBeenCalled();
 });
+
+test("não aceita edição do nome durante o envio da categoria", async () => {
+  const user = userEvent.setup();
+  render(
+    <Categories
+      categories={[]}
+      products={[]}
+      api={{ saveCategory: () => new Promise(() => {}) } as unknown as AdminApi}
+      onChanged={async () => {}}
+    />,
+  );
+  await user.type(screen.getByLabelText("Nome da categoria"), "Nova categoria");
+  await user.click(screen.getByRole("button", { name: "Criar categoria" }));
+  expect(screen.getByLabelText("Nome da categoria")).toBeDisabled();
+});

@@ -68,17 +68,16 @@ test("renomear a categoria selecionada não deixa filtro invisível ativo", asyn
       images={new Map()}
     />,
   );
-  await userEvent.click(
-    screen.getByRole("button", { name: "Original" }),
-  );
+  await userEvent.click(screen.getByRole("button", { name: "Original" }));
   rerender(
     <CatalogPage
       products={[{ ...product, category: "Renomeada" }]}
       images={new Map()}
     />,
   );
-  expect(
-    screen.getByRole("button", { name: "Todas" }),
-  ).toHaveAttribute("aria-pressed", "true");
+  expect(screen.getByRole("button", { name: "Todas" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
   expect(screen.getByText(product.name)).toBeVisible();
 });

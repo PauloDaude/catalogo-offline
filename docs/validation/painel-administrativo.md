@@ -21,10 +21,12 @@
 - API HTTP real local: visitante, comum e administrador. Leitura pública/ocultos,
   autopromoção, criação/edição, conflito, snapshot, upload JPEG válido, MIME/tamanho/
   caminho indevidos e sobrescrita recusados; remoção comum não apaga os bytes.
+  DELETE definitivo negado inclusive ao administrador; RPCs de gestão negadas
+  ao usuário comum e edição de produto público não autorizada recusada.
 - Cadastros paralelos geram códigos distintos; corrida entre arquivar e reexibir
   não permite estado ativo em categoria arquivada.
 - `supabase db lint`: sem erros de schema.
-- Unitários/componentes: **91/91**. Build TypeScript/Vite e lint aprovados.
+- Unitários/componentes: **96/96**. Build TypeScript/Vite e lint aprovados.
 - Navegador administrativo com backend local real: criar categoria/produto, oferta,
   trocar foto, editar, ocultar/reexibir, bloquear arquivamento e logout nos tamanhos
   320×720, 360×800, 800×1100, 1280×900, 800×360; conflito conserva os campos.
@@ -60,3 +62,38 @@ que o projeto real já possui essas proteções.
 7. Repetir em retrato/paisagem com teclado virtual. Registrar dificuldades do vendedor.
 
 Resultados no hardware real e usabilidade pelo vendedor continuam pendentes.
+
+## Revisão independente
+
+Revisão estática única com contexto novo identificou três problemas relevantes,
+corrigidos com testes que falharam antes da alteração e passaram depois:
+
+- IndexedDB separado por fonte e origem do projeto: números de revisão iguais
+  entre demo e Supabase não reaproveitam produtos de outra fonte. A cópia anterior
+  permanece no banco local original; trocar de fonte exige nova preparação.
+- Confirmação de saída no próprio `onPress`, inclusive teclado; cancelar preserva
+  formulário e sessão. Navegação SPA e Voltar também pedem confirmação.
+- Campos de produto e categoria ficam bloqueados enquanto o envio está em andamento,
+  evitando que uma alteração posterior ao envio seja descartada no sucesso.
+
+Melhoria menor adiada: se uma categoria for salva e somente o recarregamento da
+lista falhar, a mensagem ainda é genérica de falha ao salvar. O dado salvo permanece
+no servidor; atualizar a lista confirma o resultado.
+
+## Decisões de execução e seus limites
+
+- Saída JPEG limitada a 500 KB para continuar compatível com a validação offline;
+  pode exigir mais compressão em fotos complexas.
+- Validação em Docker local porque não há conexão administrativa remota; aplicar
+  SQL e verificar o projeto real continuam necessários antes do piloto.
+- Testes de contrato e UI preparados enquanto as imagens Docker baixavam; etapas
+  compartilham intervalos de commits, com verificação conjunta ao final.
+- Recuperação depende de sessão Auth válida, sem depender de observar novamente o
+  evento PASSWORD_RECOVERY; o SDK pode concluí-lo antes da montagem da tela.
+  Quem já tem sessão também consegue trocar sua própria senha nessa URL.
+- Cópias IndexedDB isoladas por fonte/origem; mudar de fonte/projeto exige salvar
+  offline novamente e a cópia anterior continua ocupando armazenamento local.
+- Remoto e hardware não foram julgados pela revisão; permanecem pendentes.
+  Logo, PDF e lockfile pnpm do usuário foram preservados fora dos commits, portanto
+  a alteração prévia da logo continua local. A revisão foi estática; a execução
+  dos testes foi conferida separadamente pelo implementador, com os limites acima.

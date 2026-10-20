@@ -116,3 +116,15 @@ export function createCatalogStore(name: string): CatalogStore {
     close: () => db.close(),
   };
 }
+
+export function createPublicCatalogStore(
+  source: "demo" | "supabase",
+  url?: string,
+): CatalogStore {
+  // Keep legacy demo copies intact. Revisions are meaningful only within a source.
+  const name =
+    source === "demo"
+      ? "catalogo-offline"
+      : `catalogo-offline:supabase:${new URL(url!).origin}`;
+  return createCatalogStore(name);
+}

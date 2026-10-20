@@ -284,6 +284,8 @@ Referências oficiais para consultar conforme necessário:
 - Migrations em `supabase/migrations/`; RLS/grants/Storage versionados. Fonte
   `VITE_CATALOG_SOURCE=demo|supabase`, demo por padrão até validar backend remoto.
   Cliente público separado da sessão administrativa. Não ativar remoto implicitamente.
+  IndexedDB separado por fonte/origem Supabase; preservar o nome legado da demo.
+  Nunca comparar revisões de fontes diferentes como se fossem o mesmo catálogo.
 - Setup remoto em `docs/deployment/supabase.md`; evidências locais e pendências
   em `docs/validation/painel-administrativo.md`. Não confundir local com produção.
 - Em 15/10/2026, o usuário autorizou publicar uma demonstração compartilhável no

@@ -75,6 +75,8 @@ Reinicie `npm run dev` ou gere nova build com `npm run build` e `npm run preview
 Acesse `/admin`, entre e cadastre os produtos reais. No catálogo público, use
 **Salvar offline/Atualizar** para preparar a nova revisão neste aparelho.
 Salvar no servidor não atualiza automaticamente uma cópia offline já preparada.
+A cópia da demonstração é separada da cópia de cada projeto Supabase: ao trocar
+fonte/projeto, prepare outra cópia. A anterior não é apagada automaticamente.
 O cliente público não compartilha a sessão administrativa, mesmo com admin logado.
 
 ## 5. Verificar antes do uso real

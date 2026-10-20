@@ -188,9 +188,34 @@ try {
     12,
     "códigos concorrentes únicos",
   );
+  await denied(user.rpc("save_product", args), "RPC de gestão negada ao comum");
+  await denied(
+    user.rpc("archive_category", { p_id: category.id, p_active: false }),
+    "RPC de categoria negada ao comum",
+  );
   const save = await admin.rpc("save_product", args);
   assert.equal(save.error, null);
   product = save.data;
+  for (const client of [anon, user, admin])
+    await denied(
+      client.from("products").delete().eq("id", product.id),
+      "exclusão definitiva não é concedida pela aplicação",
+    );
+  await denied(
+    anon.from("products").update({ name: "Indevido" }).eq("id", product.id),
+    "visitante não edita",
+  );
+  assert.deepEqual(
+    (
+      await user
+        .from("products")
+        .update({ name: "Indevido" })
+        .eq("id", product.id)
+        .select()
+    ).data,
+    [],
+    "comum não altera produto público",
+  );
   const snapshot = await anon.rpc("read_catalog_snapshot");
   assert.equal(snapshot.error, null);
   assert.ok(snapshot.data.products.some((p) => p.id === product.id));

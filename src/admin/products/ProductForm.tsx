@@ -179,6 +179,7 @@ export function ProductForm({
         </div>
         <div className="product-form-fields">
           <TextField
+            isDisabled={busy}
             isRequired
             maxLength={160}
             value={name}
@@ -193,6 +194,7 @@ export function ProductForm({
           <label className="admin-field">
             Categoria
             <select
+              disabled={busy}
               required
               value={category}
               onChange={(e) => {
@@ -215,6 +217,7 @@ export function ProductForm({
             </select>
           </label>
           <TextField
+            isDisabled={busy}
             isRequired
             value={price}
             onChange={(v) => {
@@ -229,6 +232,7 @@ export function ProductForm({
             />
           </TextField>
           <Checkbox
+            isDisabled={busy}
             isSelected={offer}
             onChange={(v) => {
               setOffer(v);
@@ -247,6 +251,7 @@ export function ProductForm({
           {offer && (
             <>
               <TextField
+                isDisabled={busy}
                 isRequired
                 value={previous}
                 onChange={(v) => {

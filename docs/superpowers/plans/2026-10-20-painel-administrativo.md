@@ -4,7 +4,7 @@
 
 **Situação em 20/10/2026:** tarefas 1–6 implementadas e verificadas localmente.
 Tarefa 7 depende de acesso administrativo remoto; instruções prontas. Tarefa 8
-em revisão final. Nenhuma publicação online realizada.
+concluída localmente, com piloto no aparelho real pendente. Nenhuma publicação online realizada.
 
 **Objetivo:** o vendedor gerencia produtos/fotos/preços/ofertas e categorias com
 login restrito; o público mantém catálogo e seleção offline.
@@ -158,12 +158,12 @@ login restrito; o público mantém catálogo e seleção offline.
 
 ## Task 8: Encerramento e piloto
 
-- [ ] `npm test`, `npm run build`, `npm run lint` e formatação dos arquivos alterados.
-- [ ] E2E público/offline e administrativo nos viewports 320/360/800/1280 e paisagem.
-- [ ] Revisão independente de segurança e código; corrigir problemas relevantes.
-- [ ] Atualizar AGENTS/README e relatório com implementado vs. testes pendentes no
+- [x] `npm test`, `npm run build`, `npm run lint` e formatação dos arquivos alterados.
+- [x] E2E público/offline e administrativo nos viewports 320/360/800/1280 e paisagem.
+- [x] Revisão independente de segurança e código; corrigir problemas relevantes.
+- [x] Atualizar AGENTS/README e relatório com implementado vs. testes pendentes no
       Supabase real e Android real. Registrar commits na main.
-- [ ] Não publicar no Sites nem ativar dados reais em produção sem pedido explícito.
+- [x] Não publicar no Sites nem ativar dados reais em produção sem pedido explícito.
 - [ ] Roteiro com vendedor: criar produto, mudar preço/foto, criar categoria e localizar
       item sem ajuda contínua. Resultado decide próximos refinamentos.
 

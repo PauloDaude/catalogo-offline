@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Session, SupabaseClient } from "@supabase/supabase-js";
 import { Link, useLocation, useNavigate, useBlocker } from "react-router-dom";
 
 import { getSupabaseClient } from "../lib/supabase";
 import { Button } from "../components/ui/button";
-import { UnsavedContext } from "./unsaved";
+import { UnsavedContext, useUnsaved, useIsUnsaved } from "./unsaved";
 import { Management } from "./Management";
 import { AuthScreen } from "./auth/AuthScreen";
 
@@ -21,7 +21,12 @@ export default function AdminApp() {
   });
 
   const [dirty, setDirty] = useState(false);
-  const blocker = useBlocker(dirty);
+  const dirtyRef = useRef(false);
+  const updateDirty = useCallback((value: boolean) => {
+    dirtyRef.current = value;
+    setDirty(value);
+  }, []);
+  const blocker = useBlocker(() => dirtyRef.current);
   useEffect(() => {
     if (blocker.state !== "blocked") return;
     if (window.confirm("Descartar as alterações que ainda não foram salvas?"))
@@ -30,23 +35,8 @@ export default function AdminApp() {
   }, [blocker]);
 
   return (
-    <UnsavedContext.Provider value={setDirty}>
-      <main
-        className="admin-shell"
-        onClickCapture={(event) => {
-          const target = event.target as HTMLElement;
-          if (
-            dirty &&
-            target.closest("button")?.textContent === "Sair" &&
-            !window.confirm(
-              "Descartar as alterações que ainda não foram salvas?",
-            )
-          ) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-        }}
-      >
+    <UnsavedContext.Provider value={{ dirty, setDirty: updateDirty }}>
+      <main className="admin-shell">
         <header className="admin-header">
           <Link to="/">
             <img
@@ -68,6 +58,8 @@ export default function AdminApp() {
 }
 
 function AdminSession({ client }: { client: SupabaseClient }) {
+  const dirty = useIsUnsaved();
+  const setDirty = useUnsaved();
   const [session, setSession] = useState<Session | null>(null);
   const [access, setAccess] = useState<
     "loading" | "login" | "denied" | "allowed"
@@ -172,7 +164,16 @@ function AdminSession({ client }: { client: SupabaseClient }) {
           variant="outline"
           className="touch-button"
           onPress={async () => {
+            if (
+              dirty &&
+              !window.confirm(
+                "Descartar as alterações que ainda não foram salvas?",
+              )
+            )
+              return;
+            setDirty(false);
             const { error } = await client.auth.signOut();
+            if (error) setDirty(dirty);
             if (error)
               setWarning(
                 "Não foi possível sair. Confira sua conexão e tente novamente.",

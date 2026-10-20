@@ -6,7 +6,7 @@ import { createPublicSupabaseClient } from "./lib/supabase";
 import { createHttpSource } from "./catalog/source";
 import { CatalogPage } from "./catalog/CatalogPage";
 import { useCatalog } from "./catalog/useCatalog";
-import { createCatalogStore } from "./catalog/storage";
+import { createPublicCatalogStore } from "./catalog/storage";
 import { SyncStatus } from "./catalog/SyncStatus";
 import { Button } from "./components/ui/button";
 import { registerAppShell, requestAppUpdate } from "./pwa/register";
@@ -16,7 +16,10 @@ const source =
     ? createSupabaseSource(createPublicSupabaseClient())
     : createHttpSource(import.meta.env.BASE_URL);
 
-const store = createCatalogStore("catalogo-offline");
+const store = createPublicCatalogStore(
+  import.meta.env.VITE_CATALOG_SOURCE === "supabase" ? "supabase" : "demo",
+  import.meta.env.VITE_SUPABASE_URL,
+);
 
 export default function App() {
   const catalog = useCatalog(source, store);
