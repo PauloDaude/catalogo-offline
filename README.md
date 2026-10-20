@@ -61,6 +61,22 @@ Cada aparelho precisa de sua própria preparação. Para testar no Android, usar
 ou depuração USB com encaminhamento para localhost. Um endereço HTTP da rede local
 não fornece o contexto seguro necessário ao Service Worker e Web Locks.
 
+## Configuração inicial do Supabase
+
+As variáveis locais usam o prefixo do Vite, não `NEXT_PUBLIC_`:
+
+```dotenv
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_your_key
+```
+
+Copiar `.env.example` para `.env.local` e preencher URL e chave publishable do
+projeto. `.env.local` é ignorado pelo Git. Nunca usar chave secret/service_role
+ou senha do banco em variáveis `VITE_*`. Reiniciar o Vite após alterar o arquivo.
+
+Essa configuração prepara a próxima etapa: o catálogo ainda usa a fonte de
+demonstração; painel, schema, políticas e integração Supabase permanecem pendentes.
+
 ## Comportamento offline
 
 - Visitantes novos consultam online e carregam fotos sob demanda.

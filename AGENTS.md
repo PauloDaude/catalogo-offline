@@ -43,6 +43,10 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   Isso substitui a proposta inicial de categorias fixas para o painel; integração
   Supabase e gerenciamento ainda pendentes. Logo aplicada no header; próxima
   etapa funcional é definir e implementar o painel.
+- Projeto Supabase já criado pelo usuário. URL e chave publishable configuradas
+  localmente em `.env.local` usando prefixo `VITE_`, não `NEXT_PUBLIC_`.
+  `.env.example` contém apenas placeholders. O catálogo ainda usa dados de
+  demonstração; não confundir configuração de ambiente com integração concluída.
 - Pesquisa, categorias, fotos grandes e preços destacados.
 - Ofertas aprovadas: preço anterior opcional (`previousPriceCents`), inteiro em
   centavos e maior que o atual. Exibir preço anterior riscado, preço atual e
