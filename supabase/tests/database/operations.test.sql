@@ -1,0 +1,18 @@
+begin;
+select plan(7);
+insert into auth.users(id) values ('00000000-0000-0000-0000-000000000001');
+insert into public.catalog_admins values ('00000000-0000-0000-0000-000000000001');
+set local role authenticated;
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000001',true);
+select public.save_product(null,null,'Produto',(select id from public.categories limit 1),10000,15000,'products/00000000-0000-0000-0000-000000000003.jpg',true);
+select is((select version from public.products limit 1),1::bigint,'versão inicial');
+select throws_ok($$select public.save_product((select id from public.products limit 1),0,'Outro',(select category_id from public.products limit 1),10000,null,'products/00000000-0000-0000-0000-000000000003.jpg',true)$$,'40001',null,'conflito não sobrescreve');
+select throws_ok($$update public.categories set active=false where id=(select category_id from public.products limit 1)$$,'23514',null,'categoria com ativo não arquiva');
+update public.products set active=false;
+update public.categories set active=false where id=(select category_id from public.products limit 1);
+select throws_ok($$update public.products set active=true$$,'23514',null,'categoria arquivada não reexibe');
+select throws_ok($$update public.products set code='P999'$$,'23514',null,'código imutável');
+select lives_ok($$insert into storage.objects(bucket_id,name) values ('product-photos','products/00000000-0000-0000-0000-000000000009.jpg')$$,'admin insere caminho permitido');
+select throws_ok($$insert into storage.objects(bucket_id,name) values ('product-photos','bad/file.svg')$$,'42501',null,'caminho indevido negado');
+select * from finish();
+rollback;
