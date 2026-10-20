@@ -1,7 +1,10 @@
 # Plano — painel administrativo e integração Supabase
 
-> Status: plano para revisão do usuário. Execução direta preservada da conversa;
-> não iniciado. A especificação foi aprovada em 20/10/2026. Primária #143B84.
+> Status: aprovado pelo usuário; execução direta iniciada em 20/10/2026. A especificação foi aprovada em 20/10/2026. Primária #143B84.
+
+**Situação em 20/10/2026:** tarefas 1–6 implementadas e verificadas localmente.
+Tarefa 7 depende de acesso administrativo remoto; instruções prontas. Tarefa 8
+em revisão final. Nenhuma publicação online realizada.
 
 **Objetivo:** o vendedor gerencia produtos/fotos/preços/ofertas e categorias com
 login restrito; o público mantém catálogo e seleção offline.
@@ -40,104 +43,104 @@ login restrito; o público mantém catálogo e seleção offline.
 - `docs/deployment/supabase.md`, `docs/validation/painel-administrativo.md`:
   aplicação, provisionamento, verificação, restauração e limitações.
 
-## 1. Modelo, autorização e revisão
+## Task 1: Modelo, autorização e revisão
 
-- [ ] Escrever testes SQL: visitante não lê ocultos/admins; usuário comum não escreve;
+- [x] Escrever testes SQL: visitante não lê ocultos/admins; usuário comum não escreve;
       autorizado gerencia; ninguém se promove; preço inválido é recusado; código
       atribuído permanece único em cadastros concorrentes; alteração incrementa revisão.
-- [ ] Confirmar falha inicial em banco vazio.
-- [ ] Criar migration com categories/products/catalog_state/catalog_admins, sequência
+- [x] Confirmar falha inicial em banco vazio.
+- [x] Criar migration com categories/products/catalog_state/catalog_admins, sequência
       de códigos, limites de nome/preço e FK. Usar preços inteiros e preço anterior
       opcional maior que o atual. Controle de versão de edição por registro.
-- [ ] Implementar helper mínimo de autorização em schema privado, se necessário,
+- [x] Implementar helper mínimo de autorização em schema privado, se necessário,
       com search_path fixo e permissões revisadas. Nenhum bypass genérico exposto.
-- [ ] Incluir RLS/grants mínimos na mesma migration. Visitante e autenticado comum
+- [x] Incluir RLS/grants mínimos na mesma migration. Visitante e autenticado comum
       leem somente público; escrita exclusiva de administrador explicitamente autorizado.
-- [ ] Triggers atualizam a revisão na transação de mudanças públicas, inclusive categorias.
-- [ ] Criar RPC `read_catalog_snapshot()` SECURITY INVOKER retornando revisão/data e
+- [x] Triggers atualizam a revisão na transação de mudanças públicas, inclusive categorias.
+- [x] Criar RPC `read_catalog_snapshot()` SECURITY INVOKER retornando revisão/data e
       produtos ativos com categoria ativa, no contrato existente. Grants EXECUTE explícitos.
-- [ ] Rodar `supabase db reset` e `supabase test db`; repetir teste concorrente de códigos.
+- [x] Rodar `supabase db reset` e `supabase test db`; repetir teste concorrente de códigos.
       Salvar migration e testes em commit após sucesso.
 
-## 2. Fotos e operações transacionais de gestão
+## Task 2: Fotos e operações transacionais de gestão
 
-- [ ] Testar Storage com visitante, usuário comum e admin: leitura comercial permitida,
+- [x] Testar Storage com visitante, usuário comum e admin: leitura comercial permitida,
       upload/alteração/remoção indevidos negados; rejeitar MIME não JPEG, tamanho e
       caminhos fora do prefixo permitido. Validar também upload autorizado.
-- [ ] Criar migration de bucket/políticas, sem bucket de backup público. Limite de
+- [x] Criar migration de bucket/políticas, sem bucket de backup público. Limite de
       upload 5 MiB; frontend envia JPEG otimizado, preferencialmente até 1 MiB.
-- [ ] Adicionar RPCs SECURITY INVOKER para salvar produto com versão esperada e
+- [x] Adicionar RPCs SECURITY INVOKER para salvar produto com versão esperada e
       arquivar categoria. Comparar versão na mesma transação; conflito não sobrescreve.
-- [ ] Arquivar categoria com produtos ativos deve falhar; reexibir produto exige
+- [x] Arquivar categoria com produtos ativos deve falhar; reexibir produto exige
       categoria ativa. Constraint/trava protege contra corridas entre essas operações.
-- [ ] Atualização de imagem usa caminho novo e mantém antiga. Erro limpa somente o
+- [x] Atualização de imagem usa caminho novo e mantém antiga. Erro limpa somente o
       upload novo conhecido, sem apagar fotos de terceiros/snapshots anteriores.
-- [ ] Rodar testes de banco/Storage, incluindo conflitos e caminhos autorizados; commit.
+- [x] Rodar testes de banco/Storage, incluindo conflitos e caminhos autorizados; commit.
 
-## 3. Cliente e fonte pública remota
+## Task 3: Cliente e fonte pública remota
 
-- [ ] Verificar documentação oficial e instalar cliente Supabase; preservar lockfile npm.
-- [ ] Testar configuração ausente/inválida, sem aceitar secret/service_role no frontend.
-- [ ] Implementar `getSupabaseClient()` e seleção `VITE_CATALOG_SOURCE=demo|supabase`,
+- [x] Verificar documentação oficial e instalar cliente Supabase; preservar lockfile npm.
+- [x] Testar configuração ausente/inválida, sem aceitar secret/service_role no frontend.
+- [x] Implementar `getSupabaseClient()` e seleção `VITE_CATALOG_SOURCE=demo|supabase`,
       com demo como padrão explícito. Variáveis reais continuam em .env.local.
-- [ ] Implementar `createSupabaseSource(client): CatalogSource`: snapshot pela RPC,
+- [x] Implementar `createSupabaseSource(client): CatalogSource`: snapshot pela RPC,
       revisão consistente, fotos JPEG com timeout/validação e caminhos restritos ao bucket.
-- [ ] Generalizar Category para nome validado; derivar categorias públicas dos produtos
+- [x] Generalizar Category para nome validado; derivar categorias públicas dos produtos
       recebidos, preservando ordem amigável e omitindo categorias sem produtos públicos.
-- [ ] Atualizar parsers/testes: aceitar nomes novos e snapshots antigos, rejeitar campos
+- [x] Atualizar parsers/testes: aceitar nomes novos e snapshots antigos, rejeitar campos
       inválidos e manter snapshot anterior se atualização falhar. Não relaxar validação
       de caminhos de imagens ou permitir fetch a origem arbitrária.
-- [ ] Ajustar construção de URLs públicas e resolução de Blobs para as duas fontes.
+- [x] Ajustar construção de URLs públicas e resolução de Blobs para as duas fontes.
       Snapshot remoto nunca inclui produtos ocultos ou respostas administrativas.
-- [ ] Testar fonte remota simulada, nova categoria, renomeação e rollback offline;
+- [x] Testar fonte remota simulada, nova categoria, renomeação e rollback offline;
       `npm test` e testes offline existentes verdes; commit.
 
-## 4. Login, autorização e rotas administrativas
+## Task 4: Login, autorização e rotas administrativas
 
-- [ ] Testar visitante redirecionado ao login, usuário comum sem acesso, admin autorizado,
+- [x] Testar visitante redirecionado ao login, usuário comum sem acesso, admin autorizado,
       recuperação de senha e logout sem dados administrativos remanescentes.
-- [ ] Implementar rotas `/admin`, `/admin/entrar`, `/admin/recuperar-senha`, com código
+- [x] Implementar rotas `/admin`, `/admin/entrar`, `/admin/recuperar-senha`, com código
       administrativo carregado separadamente do catálogo público. Usar React Router
       para navegação e conexão com React Aria, verificando API oficial ao instalar.
-- [ ] Implementar formulários React Aria de email/senha e recuperação, com mensagens
+- [x] Implementar formulários React Aria de email/senha e recuperação, com mensagens
       simples e sem log de JWT/senha. Nenhum formulário público de cadastro.
-- [ ] Verificar vínculo administrativo pela API/RLS. Bloqueio de rota serve à UX;
+- [x] Verificar vínculo administrativo pela API/RLS. Bloqueio de rota serve à UX;
       permissões no banco/Storage continuam sendo a barreira de autorização.
-- [ ] Logout limpa estado administrativo e sessão; não apagar catálogo público salvo.
-- [ ] Sem rede, desabilitar envio e orientar retorno ao catálogo. Não cachear respostas
+- [x] Logout limpa estado administrativo e sessão; não apagar catálogo público salvo.
+- [x] Sem rede, desabilitar envio e orientar retorno ao catálogo. Não cachear respostas
       administrativas no Workbox/IndexedDB público; preservar denylist de `/admin`.
-- [ ] Rodar testes de autenticação/componentes e E2E de acesso; commit.
+- [x] Rodar testes de autenticação/componentes e E2E de acesso; commit.
 
-## 5. Produtos e imagens com formulário simples
+## Task 5: Produtos e imagens com formulário simples
 
-- [ ] Testar entrada monetária brasileira, campos obrigatórios e ofertas: 65,00 e
+- [x] Testar entrada monetária brasileira, campos obrigatórios e ofertas: 65,00 e
       100,00 produzem 6500/10000 centavos e 35%; preço anterior inválido bloqueia envio.
-- [ ] Implementar parse/format de preços sem conversão imprecisa para centavos.
-- [ ] Implementar processamento de foto com limite de resolução 1600 px no maior lado,
+- [x] Implementar parse/format de preços sem conversão imprecisa para centavos.
+- [x] Implementar processamento de foto com limite de resolução 1600 px no maior lado,
       preservando proporção; saída JPEG. Prévia e seletor substituem o arquivo anterior.
       Rejeitar arquivo inválido; tratar orientação da câmera na decodificação.
-- [ ] Criar lista com miniatura/nome/código/preço/categoria, pesquisa e filtro de ocultos.
-- [ ] Criar formulário foto/nome/categoria/preço e opção de oferta com preço anterior;
+- [x] Criar lista com miniatura/nome/código/preço/categoria, pesquisa e filtro de ocultos.
+- [x] Criar formulário foto/nome/categoria/preço e opção de oferta com preço anterior;
       desconto calculado. Ações Adicionar produto, Salvar produto, Ocultar/Reexibir.
-- [ ] Salvar com versão esperada, sem cliques duplicados. Em conflito, manter alterações
+- [x] Salvar com versão esperada, sem cliques duplicados. Em conflito, manter alterações
       locais e oferecer recarregar os dados; em falha de envio, preservar formulário.
-- [ ] Confirmar saída com alterações não salvas. Mensagens de sucesso persistentes e
+- [x] Confirmar saída com alterações não salvas. Mensagens de sucesso persistentes e
       erros junto ao campo, com rótulos e alvos de 48 px. Tema claro azul #143B84.
-- [ ] Testar troca de imagem, conflito, falha de upload, ocultar/reexibir e uso em
+- [x] Testar troca de imagem, conflito, falha de upload, ocultar/reexibir e uso em
       celular/tablet. Conferir alteração visível no catálogo e no carrinho após revisão.
-- [ ] Rodar testes correspondentes e checks; commit.
+- [x] Rodar testes correspondentes e checks; commit.
 
-## 6. Gerenciamento de categorias
+## Task 6: Gerenciamento de categorias
 
-- [ ] Testar criar/renomear, nome duplicado, arquivar com produtos ativos e reativar.
-- [ ] Implementar lista e formulário curto, com Arquivar/Reativar e lista de produtos
+- [x] Testar criar/renomear, nome duplicado, arquivar com produtos ativos e reativar.
+- [x] Implementar lista e formulário curto, com Arquivar/Reativar e lista de produtos
       que impedem arquivamento. Não oferecer exclusão definitiva ou perda de vínculos.
-- [ ] Produtos ocultos mantêm categoria. Ao reexibir, explicar necessidade de categoria
+- [x] Produtos ocultos mantêm categoria. Ao reexibir, explicar necessidade de categoria
       ativa e permitir escolher uma ou reativar a existente.
-- [ ] Verificar renomeação nos filtros públicos após sincronização, incluindo offline.
-- [ ] Rodar testes de UI e API/constraints correspondentes; commit.
+- [x] Verificar renomeação nos filtros públicos após sincronização, incluindo offline.
+- [x] Rodar testes de UI e API/constraints correspondentes; commit.
 
-## 7. Aplicação e verificação no projeto real
+## Task 7: Aplicação e verificação no projeto real
 
 - [ ] Documentar/aplicar migrations na ordem, sem correções exclusivas no Dashboard.
       Criar somente categorias iniciais; não importar produtos fictícios automaticamente.
@@ -153,7 +156,7 @@ login restrito; o público mantém catálogo e seleção offline.
 - [ ] Se não houver acesso/ferramentas necessários para validar, registrar bloqueio
       concreto e não declarar o backend pronto só porque testes simulados passaram.
 
-## 8. Encerramento e piloto
+## Task 8: Encerramento e piloto
 
 - [ ] `npm test`, `npm run build`, `npm run lint` e formatação dos arquivos alterados.
 - [ ] E2E público/offline e administrativo nos viewports 320/360/800/1280 e paisagem.

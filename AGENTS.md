@@ -14,7 +14,8 @@ Contexto e documentos:
   autorizado para execução direta; acompanhar checkboxes e resultados de validação.
 - Antes de implementar, conferir o status da especificação e a existência de um
   plano de implementação. O protótipo da etapa 1 foi implementado nesta sessão;
-  integração Supabase e painel administrativo ainda não existem.
+  integração Supabase e painel administrativo implementados em 20/10/2026, com
+  validação local. Aplicação e validação no projeto remoto ainda pendentes.
 - `README.md`: comandos de instalação, desenvolvimento e preview de produção.
 - `docs/validation/prototipo-offline.md`: evidências automáticas e roteiro pendente
   para tablet/celular reais e validação com o vendedor.
@@ -41,8 +42,8 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Próxima etapa solicitada: painel simples para trocar imagens e alterar nome,
   preço, desconto e categorias dos produtos, incluindo gerenciar categorias.
   Isso substitui a proposta inicial de categorias fixas para o painel; integração
-  Supabase e gerenciamento ainda pendentes. Logo aplicada no header; próxima
-  etapa funcional é definir e implementar o painel.
+  Supabase e gerenciamento implementados e validados localmente em 20/10/2026.
+  Aplicação das migrations e autorização da conta no projeto real ainda pendentes.
 - Projeto Supabase já criado pelo usuário. URL e chave publishable configuradas
   localmente em `.env.local` usando prefixo `VITE_`, não `NEXT_PUBLIC_`.
   `.env.example` contém apenas placeholders. O catálogo ainda usa dados de
@@ -275,8 +276,16 @@ Referências oficiais para consultar conforme necessário:
   depois integração do painel e Supabase; por fim entrega piloto.
 - Testes relevantes: consistência da sincronização, falhas de download, permissões,
   upload e fluxos essenciais. Testar também modo avião no hardware real.
-- Categorias fixas, login por email/senha e detalhes de exportação/restauração estão
-  descritos na especificação; conferir sua aprovação antes de tratá-los como definitivos.
+- Especificação do painel aprovada em 20/10/2026:
+  `docs/superpowers/specs/2026-10-20-painel-administrativo-design.md`.
+  Categorias agora gerenciáveis; substitui proposta anterior de categorias fixas.
+  Plano `docs/superpowers/plans/2026-10-20-painel-administrativo.md` aprovado para
+  execução direta. Login email/senha, autorização por UUID, sem cadastro público.
+- Migrations em `supabase/migrations/`; RLS/grants/Storage versionados. Fonte
+  `VITE_CATALOG_SOURCE=demo|supabase`, demo por padrão até validar backend remoto.
+  Cliente público separado da sessão administrativa. Não ativar remoto implicitamente.
+- Setup remoto em `docs/deployment/supabase.md`; evidências locais e pendências
+  em `docs/validation/painel-administrativo.md`. Não confundir local com produção.
 - Em 15/10/2026, o usuário autorizou publicar uma demonstração compartilhável no
   Sites para mostrar ao pai. Projeto vinculado em `.openai/hosting.json`; reutilizar
   esse `project_id`. Publicação estática em checkout separado `.sites-preview/`,

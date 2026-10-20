@@ -74,8 +74,9 @@ Copiar `.env.example` para `.env.local` e preencher URL e chave publishable do
 projeto. `.env.local` é ignorado pelo Git. Nunca usar chave secret/service_role
 ou senha do banco em variáveis `VITE_*`. Reiniciar o Vite após alterar o arquivo.
 
-Essa configuração prepara a próxima etapa: o catálogo ainda usa a fonte de
-demonstração; painel, schema, políticas e integração Supabase permanecem pendentes.
+O catálogo usa a fonte `demo` por padrão. O painel está implementado; aplicar e
+verificar as migrations remotas antes de ativar `VITE_CATALOG_SOURCE=supabase`.
+Consulte [o passo a passo de ativação](docs/deployment/supabase.md).
 
 ## Comportamento offline
 
@@ -161,10 +162,13 @@ podem usar a mesma `.prettierrc.json` e `.editorconfig`.
 
 ## Segurança e próximos passos
 
-Esta etapa não se conecta ao Supabase e não demonstra segurança de um backend.
-Regras obrigatórias de Auth, RLS, grants, Storage e testes de acesso estão no
-[AGENTS.md](AGENTS.md). A etapa 2 só deve cadastrar produtos reais depois de
-validar essas permissões e a exportação/restauração.
+O painel `/admin` e a integração Supabase estão implementados e testados localmente.
+A demonstração continua sendo a fonte padrão. A ativação remota exige aplicar as
+migrations, criar a conta e autorizar seu UUID: siga
+[docs/deployment/supabase.md](docs/deployment/supabase.md).
+Resultados e pendências em
+[docs/validation/painel-administrativo.md](docs/validation/painel-administrativo.md).
+Não usar dados reais antes de validar permissões e restauração no projeto remoto.
 
 Os componentes shadcn são incorporados ao código com base **React Aria**; o CLI
 não é dependência do aplicativo. Para adicionar componentes, usar o CLI oficial

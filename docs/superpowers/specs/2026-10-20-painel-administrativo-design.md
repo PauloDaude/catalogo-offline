@@ -1,7 +1,8 @@
 # Painel administrativo e Supabase
 
 Data: 20/10/2026.
-Status: aprovada pelo usuário em 20/10/2026; implementação pendente.
+Status: aprovada pelo usuário em 20/10/2026; implementada e validada localmente.
+Aplicação/validação no projeto remoto pendentes; ver relatório de validação.
 Continua a arquitetura do MVP de 14/10, substituindo sua proposta de categorias
 fixas. Stack e regras de segurança do AGENTS.md permanecem obrigatórias.
 
@@ -20,7 +21,8 @@ consulta offline após preparação. Gerenciamento exige internet e login autori
 
 ## Situação atual e limites de acesso
 
-- Protótipo público e offline implementado; painel e backend ainda inexistentes.
+- Na aprovação: protótipo público/offline implementado, painel/backend ainda
+  inexistentes. Situação atual em `docs/validation/painel-administrativo.md`.
 - Logo Cirandinha já aplicada no header.
 - Projeto Supabase criado pelo usuário; URL/chave publishable estão em .env.local,
   ignorado pelo Git. Exemplo versionado usa placeholders.
