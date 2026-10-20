@@ -15,3 +15,11 @@ atualizados. Hover #2c0f69 e pressionado #250b59, com texto branco.
 
 Especificação administrativa aprovada; plano escrito para revisão antes de iniciar
 banco/Storage/painel. Não confundir a alteração visual com implementação do backend.
+
+## Escolha posterior — azul #143B84
+
+O usuário rejeitou o roxo e definiu #143B84. Tokens, estados, fundos suaves,
+preços, foco, botões e metadados HTML/PWA agora usam o azul. Hover #10306a,
+pressionado #0d2757; contraste com branco de 10,56:1, 12,70:1 e 14,53:1.
+O verde de ofertas foi preservado. Build e lint passaram; nove testes E2E de
+interação e controles flutuantes passaram. Sem publicação online.

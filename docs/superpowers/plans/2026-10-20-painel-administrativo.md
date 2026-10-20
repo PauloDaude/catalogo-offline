@@ -1,7 +1,7 @@
 # Plano — painel administrativo e integração Supabase
 
 > Status: plano para revisão do usuário. Execução direta preservada da conversa;
-> não iniciado. A especificação foi aprovada em 20/10/2026. Primária #371383.
+> não iniciado. A especificação foi aprovada em 20/10/2026. Primária #143B84.
 
 **Objetivo:** o vendedor gerencia produtos/fotos/preços/ofertas e categorias com
 login restrito; o público mantém catálogo e seleção offline.
@@ -122,7 +122,7 @@ login restrito; o público mantém catálogo e seleção offline.
 - [ ] Salvar com versão esperada, sem cliques duplicados. Em conflito, manter alterações
       locais e oferecer recarregar os dados; em falha de envio, preservar formulário.
 - [ ] Confirmar saída com alterações não salvas. Mensagens de sucesso persistentes e
-      erros junto ao campo, com rótulos e alvos de 48 px. Tema claro roxo #371383.
+      erros junto ao campo, com rótulos e alvos de 48 px. Tema claro azul #143B84.
 - [ ] Testar troca de imagem, conflito, falha de upload, ocultar/reexibir e uso em
       celular/tablet. Conferir alteração visível no catálogo e no carrinho após revisão.
 - [ ] Rodar testes correspondentes e checks; commit.

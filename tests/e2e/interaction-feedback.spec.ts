@@ -41,7 +41,7 @@ test("catálogo abre sem Hero e carrinho mantém controles junto ao item no celu
   await expect(page.getByText("Seu carrinho está vazio")).toBeVisible();
 });
 
-test("carrossel usa foto proporcional, faixa sobreposta e o carrinho roxo", async ({
+test("carrossel usa foto proporcional, faixa sobreposta e o carrinho azul", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
@@ -57,7 +57,7 @@ test("carrossel usa foto proporcional, faixa sobreposta e o carrinho roxo", asyn
   );
   await expect(page.locator(".book-product .product-price")).toHaveCSS(
     "color",
-    "rgb(55, 19, 131)",
+    "rgb(20, 59, 132)",
   );
   await expect(page.locator(".book-product .discount-badge")).toHaveCSS(
     "background-color",
@@ -66,7 +66,7 @@ test("carrossel usa foto proporcional, faixa sobreposta e o carrinho roxo", asyn
   await expect(page.locator(".book-product .offer-label")).toBeVisible();
   await expect(page.getByRole("button", { name: /Abrir carrinho/ })).toHaveCSS(
     "background-color",
-    "rgb(55, 19, 131)",
+    "rgb(20, 59, 132)",
   );
 });
 

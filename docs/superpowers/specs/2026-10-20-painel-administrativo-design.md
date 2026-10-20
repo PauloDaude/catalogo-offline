@@ -7,7 +7,7 @@ fixas. Stack e regras de segurança do AGENTS.md permanecem obrigatórias.
 
 ## Identidade visual aprovada
 
-Tema claro; primária roxa #371383, conforme a logo Cirandinha. Preços, botões,
+Tema claro; primária azul #143B84, por escolha do usuário. Preços, botões,
 abas, foco e destaques seguem o token primário. Verde #04a650 com texto branco
 permanece exclusivo do selo de percentual de desconto.
 

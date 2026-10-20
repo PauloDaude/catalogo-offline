@@ -24,7 +24,7 @@ export default defineConfig({
         name: "Catálogo",
         short_name: "Catálogo",
         display: "standalone",
-        theme_color: "#371383",
+        theme_color: "#143B84",
         background_color: "#f7f9fc",
         icons: [
           { src: "icons/icon-192.png", sizes: "192x192", type: "image/png" },
