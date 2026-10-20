@@ -1,6 +1,31 @@
 import { test, expect } from "@playwright/test";
 import { createClient } from "@supabase/supabase-js";
 import path from "node:path";
+async function choose(
+  page: import("@playwright/test").Page,
+  label: string,
+  option: string,
+) {
+  await page
+    .locator(".admin-select")
+    .getByRole("button", { name: new RegExp(`${label}$`) })
+    .click();
+  await page.getByRole("option", { name: option, exact: true }).click();
+}
+async function hide(page: import("@playwright/test").Page, name: string) {
+  await page
+    .getByRole("button", { name: `Ocultar ${name}`, exact: true })
+    .click();
+  await expect(
+    page.getByRole("dialog", { name: "Ocultar produto?" }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Ocultar produto", exact: true })
+    .click();
+  await expect(
+    page.getByText("Produto ocultado no servidor", { exact: true }),
+  ).toBeVisible();
+}
 const email = process.env.TEST_ADMIN_EMAIL!,
   password = process.env.TEST_PASSWORD!,
   prefix = process.env.TEST_PREFIX!;
@@ -16,12 +41,14 @@ test("visitante, conta sem autorização e logout", async ({ page }) => {
   await page.getByLabel("Senha", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
   await expect(
-    page.getByText("Esta conta não tem acesso ao painel.", { exact: false }),
+    page.getByText("Esta conta não tem acesso ao painel,", { exact: false }),
   ).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Adicionar produto" }),
   ).toHaveCount(0);
-  await page.getByRole("button", { name: "Sair", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Sair da conta", exact: true })
+    .click();
   await expect(
     page.getByRole("heading", { name: "Entrar no painel" }),
   ).toBeVisible();
@@ -76,15 +103,22 @@ for (const viewport of [
     await page.getByLabel("Senha", { exact: true }).fill(password);
     await page.getByRole("button", { name: "Entrar", exact: true }).click();
     await page.getByRole("button", { name: "Categorias", exact: true }).click();
+    await expect(
+      page.locator("header").getByRole("button", { name: "Sair da conta" }),
+    ).toBeVisible();
+    await page
+      .getByRole("button", { name: "Criar categoria", exact: true })
+      .click();
     await page.getByLabel("Nome da categoria", { exact: true }).fill(category);
-    await page.getByRole("button", { name: "Criar categoria" }).click();
-    await expect(page.getByText("Categoria salva no servidor.")).toBeVisible();
+    await page
+      .getByRole("dialog", { name: "Criar categoria" })
+      .getByRole("button", { name: "Criar categoria", exact: true })
+      .click();
+    await expect(page.getByText("Categoria salva no servidor")).toBeVisible();
     await page.getByRole("button", { name: "Produtos", exact: true }).click();
     await page.getByRole("button", { name: "Adicionar produto" }).click();
     await page.getByLabel("Nome do produto").fill("Produto especial");
-    await page
-      .getByRole("combobox", { name: "Categoria", exact: true })
-      .selectOption({ label: category });
+    await choose(page, "Categoria", category);
     await page.getByLabel("Preço atual (R$)").fill("65,00");
     await page.getByText("Produto em oferta", { exact: true }).click();
     await expect(
@@ -93,7 +127,7 @@ for (const viewport of [
     await page.getByLabel("Preço anterior (R$)").fill("100,00");
     await expect(page.getByText("35% de desconto")).toBeVisible();
     await page
-      .getByLabel("Foto do produto", { exact: true })
+      .locator("input[type=file]")
       .setInputFiles(path.resolve("public/demo/photos/panela.jpg"));
     await expect(
       page.getByRole("img", { name: "Prévia da foto do produto" }),
@@ -103,11 +137,9 @@ for (const viewport of [
     ).toBeEnabled();
     await page.getByRole("button", { name: "Salvar produto" }).click();
     await expect(
-      page.getByText("Produto salvo no servidor.", { exact: false }),
+      page.getByText("Produto salvo no servidor", { exact: false }),
     ).toBeVisible();
-    await page
-      .getByRole("combobox", { name: "Categoria", exact: true })
-      .selectOption({ label: category });
+    await choose(page, "Categoria", category);
     await expect(
       page.getByText("Produto especial", { exact: true }),
     ).toBeVisible();
@@ -120,7 +152,7 @@ for (const viewport of [
     await page.getByLabel("Nome do produto").fill("Nome atualizado");
     await page.getByLabel("Preço atual (R$)").fill("70,00");
     await page
-      .getByLabel("Trocar foto", { exact: true })
+      .locator("input[type=file]")
       .setInputFiles(path.resolve("public/demo/photos/garrafa.jpg"));
     await expect(
       page.getByRole("button", { name: "Salvar produto" }),
@@ -137,13 +169,8 @@ for (const viewport of [
       page.getByText("Mova ou oculte estes produtos antes de arquivar:"),
     ).toBeVisible();
     await page.getByRole("button", { name: "Produtos", exact: true }).click();
-    await page
-      .getByRole("button", { name: "Ocultar Nome atualizado", exact: true })
-      .click();
-    await expect(page.getByText("Produto ocultado no servidor.")).toBeVisible();
-    await page
-      .getByRole("combobox", { name: "Mostrar", exact: true })
-      .selectOption("hidden");
+    await hide(page, "Nome atualizado");
+    await choose(page, "Mostrar", "Ocultos");
     await expect(
       page.getByText("Nome atualizado", { exact: true }),
     ).toBeVisible();
@@ -154,42 +181,74 @@ for (const viewport of [
       })
       .click();
     await expect(page.getByText("Produto visível no catálogo.")).toBeVisible();
-    await page
-      .getByRole("combobox", { name: "Mostrar", exact: true })
-      .selectOption("active");
-    await page
-      .getByRole("button", { name: "Ocultar Nome atualizado", exact: true })
-      .click();
-    await expect(page.getByText("Produto ocultado no servidor.")).toBeVisible();
+    await choose(page, "Mostrar", "Visíveis");
+    await hide(page, "Nome atualizado");
     await page.getByRole("button", { name: "Categorias", exact: true }).click();
     await page
       .getByRole("button", { name: `Renomear ${category}`, exact: true })
       .click();
     const renamed = `${category} nova`;
-    await page
-      .getByLabel("Novo nome da categoria", { exact: true })
-      .fill(renamed);
+    await page.getByLabel("Nome da categoria", { exact: true }).fill(renamed);
     await page
       .getByRole("button", { name: "Salvar nome", exact: true })
       .click();
-    await expect(page.getByText("Categoria salva no servidor.")).toBeVisible();
+    await expect(page.getByText("Categoria salva no servidor")).toBeVisible();
     await page
       .getByRole("button", { name: `Arquivar ${renamed}`, exact: true })
       .click();
     await expect(
-      page.getByText("Categoria arquivada.", { exact: true }),
+      page.getByText("Categoria arquivada", { exact: true }),
     ).toBeVisible();
+    await page
+      .getByRole("button", { name: `Remover ${renamed}`, exact: true })
+      .click();
+    await expect(
+      page.getByRole("dialog", { name: "Categoria com produtos vinculados" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Entendi", exact: true }).click();
     await page
       .getByRole("button", { name: `Reativar ${renamed}`, exact: true })
       .click();
     await expect(
-      page.getByText("Categoria reativada.", { exact: true }),
+      page.getByText("Categoria reativada", { exact: true }),
     ).toBeVisible();
+    if (viewport.width === 320) {
+      const empty = `Vazia ${prefix}`;
+      await page
+        .getByRole("button", { name: "Criar categoria", exact: true })
+        .click();
+      await page.getByLabel("Nome da categoria", { exact: true }).fill(empty);
+      await page
+        .getByRole("dialog", { name: "Criar categoria" })
+        .getByRole("button", { name: "Criar categoria", exact: true })
+        .click();
+      await expect(page.getByText(empty, { exact: true })).toBeVisible();
+      await page
+        .getByRole("button", { name: `Arquivar ${empty}`, exact: true })
+        .click();
+      await page
+        .getByRole("button", { name: `Remover ${empty}`, exact: true })
+        .click();
+      await expect(
+        page.getByRole("dialog", { name: "Remover categoria?" }),
+      ).toBeVisible();
+      await page.getByRole("button", { name: "Cancelar", exact: true }).click();
+      await expect(page.getByText(empty, { exact: true })).toBeVisible();
+      await page
+        .getByRole("button", { name: `Remover ${empty}`, exact: true })
+        .click();
+      await page
+        .getByRole("button", { name: "Remover categoria", exact: true })
+        .click();
+      await expect(page.getByText(empty, { exact: true })).toHaveCount(0);
+    }
     await page.screenshot({
       path: `.superpowers/sdd/2026-10-20-painel-administrativo/admin-${viewport.width}x${viewport.height}.png`,
       fullPage: true,
     });
-    await page.getByRole("button", { name: "Sair", exact: true }).click();
+    await page
+      .getByRole("button", { name: "Sair da conta", exact: true })
+      .click();
     await expect(
       page.getByRole("heading", { name: "Entrar no painel" }),
     ).toBeVisible();
@@ -317,4 +376,78 @@ test("fonte Supabase pública salva fotos e categorias novas para reabrir offlin
     .toBe(true);
   await context.setOffline(false);
   await client.auth.signOut();
+});
+
+test("erro de login tem destaque vermelho e mensagem acessível", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto("/admin");
+  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel("Senha", { exact: true }).fill("senha-incorreta");
+  await page.getByRole("button", { name: "Entrar", exact: true }).click();
+  const alert = page.getByRole("alert");
+  await expect(alert).toContainText(
+    "Não foi possível entrar, confira o email, a senha e sua conexão",
+  );
+  await expect(alert).toHaveCSS("color", "rgb(161, 25, 37)");
+  await page.screenshot({
+    path: ".superpowers/admin-ui/login-error.png",
+    fullPage: true,
+  });
+});
+
+test("arrastar imagem mostra prévia e remover exige escolher outra foto", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/admin");
+  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel("Senha", { exact: true }).fill(password);
+  await page.getByRole("button", { name: "Entrar", exact: true }).click();
+  await page.getByRole("button", { name: "Adicionar produto" }).click();
+  await page.getByLabel("Nome do produto").fill("Produto para testar foto");
+  await page.getByLabel("Preço atual (R$)").fill("65,00");
+  const bytes = (await import("node:fs"))
+    .readFileSync(path.resolve("public/demo/photos/panela.jpg"))
+    .toString("base64");
+  const transfer = await page.evaluateHandle((base64) => {
+    const data = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+    const transfer = new DataTransfer();
+    transfer.items.add(new File([data], "foto.jpg", { type: "image/jpeg" }));
+    transfer.effectAllowed = "all";
+    // Synthetic Files have no filesystem entry in Chromium, unlike a native
+    // file-manager drag. Supply that metadata so React Aria reads the File.
+    Object.defineProperty(DataTransferItem.prototype, "webkitGetAsEntry", {
+      configurable: true,
+      value: function () {
+        return this.kind === "file"
+          ? { isFile: true, isDirectory: false }
+          : null;
+      },
+    });
+    return transfer;
+  }, bytes);
+  const zone = page.locator(".photo-dropzone");
+  await zone.dispatchEvent("dragenter", { dataTransfer: transfer });
+  await zone.dispatchEvent("dragover", { dataTransfer: transfer });
+  await zone.dispatchEvent("drop", { dataTransfer: transfer });
+  await expect(
+    page.getByRole("img", { name: "Prévia da foto do produto" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Trocar imagem" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: ".superpowers/admin-ui/product-photo.png",
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "Remover imagem" }).click();
+  await expect(
+    page.getByRole("img", { name: "Prévia da foto do produto" }),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "Salvar produto" }).click();
+  await expect(page.getByRole("alert")).toContainText(
+    "Escolha uma foto para o produto",
+  );
 });

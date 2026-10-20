@@ -3,6 +3,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { Link } from "react-router-dom";
 import { Form, TextField, Label, Input } from "react-aria-components";
 
+import { CircleAlert } from "lucide-react";
 import { Button } from "../../components/ui/button";
 
 export function AuthScreen({
@@ -13,6 +14,7 @@ export function AuthScreen({
   recovery?: boolean;
 }) {
   const [message, setMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
   const [busy, setBusy] = useState(false);
   const [reset, setReset] = useState(false);
 
@@ -25,20 +27,19 @@ export function AuthScreen({
             ? "Recuperar senha"
             : "Entrar no painel"}
       </h1>
-      <p>
-        Gerencie os produtos da Cirandinha. É preciso estar conectado à
-        internet.
-      </p>
+      <p>Gerencie os produtos da Cirandinha com conexão à internet</p>
       <Form
         onSubmit={async (event) => {
           event.preventDefault();
           if (busy) return;
           if (!navigator.onLine) {
-            setMessage("Conecte-se à internet para continuar.");
+            setHasError(true);
+            setMessage("Conecte-se à internet para continuar");
             return;
           }
           setBusy(true);
           setMessage("");
+          setHasError(false);
           const fields = new FormData(event.currentTarget);
           try {
             const email = String(fields.get("email") ?? "").trim();
@@ -53,16 +54,17 @@ export function AuthScreen({
             if (result.error) throw result.error;
             setMessage(
               recovery
-                ? "Senha atualizada. Você já pode usar o painel."
+                ? "Senha atualizada, você já pode usar o painel"
                 : reset
                   ? "Se este email tiver uma conta, você receberá um link para recuperar a senha."
-                  : "Acesso confirmado.",
+                  : "Acesso confirmado",
             );
           } catch {
+            setHasError(true);
             setMessage(
               recovery
-                ? "Não foi possível atualizar a senha. Solicite um novo link de recuperação."
-                : "Não foi possível entrar. Confira os dados e sua conexão.",
+                ? "Não foi possível atualizar a senha, solicite um novo link de recuperação"
+                : "Não foi possível entrar, confira o email, a senha e sua conexão",
             );
           } finally {
             setBusy(false);
@@ -108,7 +110,15 @@ export function AuthScreen({
                 : "Entrar"}
         </Button>
       </Form>
-      {message && <p role="status">{message}</p>}
+      {message && (
+        <div
+          role={hasError ? "alert" : "status"}
+          className={hasError ? "admin-error admin-auth-error" : "admin-notice"}
+        >
+          {hasError && <CircleAlert aria-hidden="true" />}
+          <span>{message}</span>
+        </div>
+      )}
       {!recovery && (
         <Button
           variant="ghost"

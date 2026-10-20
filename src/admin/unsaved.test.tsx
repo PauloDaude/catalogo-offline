@@ -58,7 +58,7 @@ for (const activation of ["pointer", "keyboard"]) {
     );
     render(<RouterProvider router={router} />);
     await userEvent.type(await screen.findByLabelText("Nome"), "Minha edição");
-    const logout = screen.getByRole("button", { name: "Sair" });
+    const logout = screen.getByRole("button", { name: "Sair da conta" });
     if (activation === "keyboard") {
       logout.focus();
       await userEvent.keyboard(" ");

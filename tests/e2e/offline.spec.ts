@@ -40,7 +40,7 @@ test("reabre offline com dados, fotos, pesquisa e ampliação", async ({
 test("reabrir navegador preserva catálogo offline no perfil", async () => {
   const profile = await mkdtemp(join(tmpdir(), "catalogo-profile-"));
   let context = await chromium.launchPersistentContext(profile, {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: test.info().project.use.baseURL,
   });
 
   try {
@@ -48,7 +48,7 @@ test("reabrir navegador preserva catálogo offline no perfil", async () => {
     await context.close();
     context = await chromium.launchPersistentContext(profile, {
       offline: true,
-      baseURL: "http://127.0.0.1:4173",
+      baseURL: test.info().project.use.baseURL,
     });
     const page = await context.newPage();
     await page.goto("/?visualizacao=cards");

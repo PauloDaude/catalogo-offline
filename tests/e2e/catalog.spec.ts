@@ -64,11 +64,9 @@ test("texto não executa markup e aplicação só acessa origem local", async ({
   page,
 }) => {
   const external: string[] = [];
+  const origin = new URL(String(test.info().project.use.baseURL)).origin;
   page.on("request", (req) => {
-    if (
-      !req.url().startsWith("http://127.0.0.1:4173") &&
-      !req.url().startsWith("blob:")
-    )
+    if (new URL(req.url()).origin !== origin && !req.url().startsWith("blob:"))
       external.push(req.url());
   });
   await page.route("**/demo/catalog.json", async (route) => {

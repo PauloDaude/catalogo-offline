@@ -6,6 +6,8 @@ import type { AdminProduct, AdminCategory, ProductValues } from "../types";
 import { AdminError, explainError } from "../api";
 import { parseMoney, formatMoneyInput } from "./money";
 import { useUnsaved } from "../unsaved";
+import { PhotoPicker } from "./PhotoPicker";
+import { SelectField } from "../SelectField";
 import { optimizePhoto } from "./photo";
 
 export function ProductForm({
@@ -36,6 +38,7 @@ export function ProductForm({
   const [offer, setOffer] = useState(product?.previous_price_cents != null);
   const [photo, setPhoto] = useState<Blob>();
   const [preview, setPreview] = useState("");
+  const [removed, setRemoved] = useState(false);
   const [busy, setBusy] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState("");
@@ -109,7 +112,7 @@ export function ProductForm({
               throw new Error(
                 "O preço anterior deve ser maior que o preço atual.",
               );
-            if (!product && !photo)
+            if (!photo && (!product || removed))
               throw new Error("Escolha uma foto para o produto.");
             setBusy(true);
             await onSave(
@@ -139,44 +142,37 @@ export function ProductForm({
           }
         }}
       >
-        <div className="photo-field">
-          {(preview || product) && (
-            <img
-              className="admin-photo-preview"
-              src={preview || photoUrl(product!.image_path)}
-              alt="Prévia da foto do produto"
-            />
-          )}
-          <label htmlFor="product-photo">
-            {product ? "Trocar foto" : "Foto do produto"}
-          </label>
-          <input
-            id="product-photo"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            disabled={busy || processing}
-            onChange={async (e) => {
-              const file = e.target.files?.[0];
-              if (!file) return;
-              setProcessing(true);
-              setError("");
-              try {
-                setPhoto(await optimizePhoto(file));
-                setDirty(true);
-              } catch (err) {
-                setError(err instanceof Error ? err.message : "Foto inválida.");
-              } finally {
-                setProcessing(false);
-                e.target.value = "";
-              }
-            }}
-          />
-          <small>
-            Escolha da galeria ou tire uma foto. Ela será preparada para o
-            catálogo.
-          </small>
-          {processing && <p role="status">Preparando foto…</p>}
-        </div>
+        <PhotoPicker
+          image={
+            preview ||
+            (!removed && product ? photoUrl(product.image_path) : undefined)
+          }
+          isDisabled={busy || processing}
+          isProcessing={processing}
+          onSelect={async (file) => {
+            setProcessing(true);
+            setError("");
+            try {
+              setPhoto(await optimizePhoto(file));
+              setRemoved(false);
+              setDirty(true);
+            } catch (err) {
+              setError(
+                err instanceof Error
+                  ? err.message
+                  : "Não foi possível abrir a imagem",
+              );
+            } finally {
+              setProcessing(false);
+            }
+          }}
+          onRemove={() => {
+            setPhoto(undefined);
+            setPreview("");
+            setRemoved(true);
+            setDirty(true);
+          }}
+        />
         <div className="product-form-fields">
           <TextField
             isDisabled={busy}
@@ -191,31 +187,22 @@ export function ProductForm({
             <Label>Nome do produto</Label>
             <Input />
           </TextField>
-          <label className="admin-field">
-            Categoria
-            <select
-              disabled={busy}
-              required
-              value={category}
-              onChange={(e) => {
-                setCategory(e.target.value);
-                setDirty(true);
-              }}
-            >
-              <option value="">Escolha uma categoria</option>
-              {categories
-                .filter((c) => c.active || c.id === category)
-                .map((c) => (
-                  <option
-                    key={c.id}
-                    value={c.id}
-                  >
-                    {c.name}
-                    {!c.active ? " (arquivada)" : ""}
-                  </option>
-                ))}
-            </select>
-          </label>
+          <SelectField
+            label="Categoria"
+            value={category}
+            onChange={(value) => {
+              setCategory(value);
+              setDirty(true);
+            }}
+            isDisabled={busy}
+            isRequired
+            options={categories
+              .filter((c) => c.active || c.id === category)
+              .map((c) => ({
+                id: c.id,
+                name: `${c.name}${c.active ? "" : " (arquivada)"}`,
+              }))}
+          />
           <TextField
             isDisabled={busy}
             isRequired

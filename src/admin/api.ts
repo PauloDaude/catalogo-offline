@@ -11,7 +11,7 @@ export class AdminError extends Error {
 
 export function explainError(error: unknown): string {
   if (error instanceof AdminError) return error.message;
-  return "Não foi possível salvar. Confira sua conexão e tente novamente.";
+  return "Não foi possível salvar, confira sua conexão e tente novamente";
 }
 
 function check(error: { code?: string; message?: string } | null) {
@@ -19,14 +19,19 @@ function check(error: { code?: string; message?: string } | null) {
   if (error.code === "40001")
     throw new AdminError(
       "conflict",
-      "Este produto foi alterado em outro lugar. Suas alterações continuam aqui. Recarregue os dados para comparar antes de salvar.",
+      "Este produto foi alterado em outro lugar\nSuas alterações continuam aqui, recarregue os dados para comparar antes de salvar",
+    );
+  if (error.code === "23503")
+    throw new AdminError(
+      "linked",
+      "Esta categoria ainda tem produtos vinculados, mova-os antes de remover",
     );
   if (error.code === "23505")
     throw new AdminError("duplicate", "Já existe uma categoria com esse nome.");
   if (error.code === "23514")
     throw new AdminError(
       "invalid",
-      "Confira os campos. A oferta precisa de preço anterior maior, e produtos visíveis precisam de categoria ativa. Para arquivar, mova ou oculte os produtos da categoria.",
+      "A oferta precisa de preço anterior maior e produtos visíveis precisam de categoria ativa\nPara arquivar, mova ou oculte os produtos da categoria",
     );
   if (error.code === "42501")
     throw new AdminError(
@@ -35,7 +40,7 @@ function check(error: { code?: string; message?: string } | null) {
     );
   throw new AdminError(
     "network",
-    "Não foi possível salvar. Confira sua conexão e tente novamente.",
+    "Não foi possível salvar, confira sua conexão e tente novamente",
   );
 }
 
@@ -103,6 +108,10 @@ export function createAdminApi(client: SupabaseClient) {
         ? client.from("categories").update({ name: name.trim() }).eq("id", id)
         : client.from("categories").insert({ name: name.trim() });
       const { error } = await query;
+      check(error);
+    },
+    async removeCategory(id: string) {
+      const { error } = await client.rpc("remove_category", { p_id: id });
       check(error);
     },
     async setCategoryActive(id: string, active: boolean) {

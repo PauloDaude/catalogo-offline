@@ -51,6 +51,30 @@ test("campos ficam bloqueados enquanto o salvamento está em andamento", async (
   await user.click(screen.getByRole("button", { name: "Salvar produto" }));
   expect(screen.getByLabelText("Nome do produto")).toBeDisabled();
   expect(screen.getByLabelText("Preço atual (R$)")).toBeDisabled();
-  expect(screen.getByRole("combobox")).toBeDisabled();
+  expect(screen.getByRole("button", { name: /Categoria/ })).toBeDisabled();
   expect(screen.getByRole("checkbox")).toBeDisabled();
+});
+
+test("remover imagem deixa área para escolher outra e impede salvar sem foto", async () => {
+  const user = userEvent.setup(),
+    save = vi.fn();
+  render(
+    <ProductForm
+      product={original}
+      categories={[{ id: "c", name: "Cozinha", active: true }]}
+      onSave={save}
+      onCancel={() => {}}
+      photoUrl={() => "image.jpg"}
+    />,
+  );
+  await user.click(screen.getByRole("button", { name: "Remover imagem" }));
+  expect(
+    screen.queryByRole("img", { name: "Prévia da foto do produto" }),
+  ).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Escolher imagem" })).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Salvar produto" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent(
+    "Escolha uma foto para o produto",
+  );
+  expect(save).not.toHaveBeenCalled();
 });

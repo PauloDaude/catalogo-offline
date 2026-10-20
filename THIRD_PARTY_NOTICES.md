@@ -35,3 +35,8 @@ Imagens ilustrativas do Unsplash. Fontes e licença em `docs/demo-images.md`.
 ## Dependências
 
 As demais bibliotecas mantêm suas licenças nos respectivos pacotes npm.
+
+O Select foi adaptado do registro oficial `aria-vega` do shadcn/ui, consultado em
+20/10/2026: https://ui.shadcn.com/r/styles/aria-vega/select.json
+Foram ajustados os imports locais, os ícones Lucide e os tamanhos de toque,
+sem incorporar a busca opcional do Select ou dependências Radix

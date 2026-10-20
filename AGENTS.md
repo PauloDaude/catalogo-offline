@@ -306,3 +306,20 @@ Referências oficiais para consultar conforme necessário:
 - Identidade solicitada para toda a aplicação e o painel: primária #143B84.
 - Próximo artefato: plano executável do painel; método de execução direta já
   escolhido pelo usuário. Banco remoto permanece inalterado até aplicação segura.
+
+## Refinamentos do painel aprovados — 20/10/2026
+
+- Selects do painel usam shadcn aria-vega/React Aria, sem Radix ou select nativo
+- Sair da conta fica no header, preservando a confirmação de alterações não salvas
+- Foto usa arrastar e soltar ou seletor acessível, com prévia, Trocar imagem e
+  Remover imagem; salvar produto continua exigindo uma foto
+- Criar/renomear categoria em modal; arquivar é reversível, depois aparece Remover
+- Nova decisão substitui a proibição anterior de excluir categorias: remoção
+  definitiva só de categoria arquivada sem nenhum produto vinculado, inclusive
+  oculto, com confirmação e proteção no banco; nunca apagar produtos em cascata
+- Ocultar produto exige modal de confirmação; Mostrar inicia em Todos
+- Erro de login com texto vermelho, ícone e role=alert; separar erros de sucesso
+- Textos curtos da interface evitam frases seguidas separadas por pontos, preferir
+  reformulação, vírgula quando adequada ou quebra de linha entre as frases
+- Nova migration `202610200003_remove_category.sql` deve ser aplicada no projeto
+  remoto para habilitar a remoção; instruções em `docs/deployment/categorias-remocao.md`

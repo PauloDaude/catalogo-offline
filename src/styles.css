@@ -1780,3 +1780,208 @@ progress {
     margin: 24px auto;
   }
 }
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.admin-auth-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid #f7b3bc;
+  color: #a11925;
+  background: #fff1f2;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.admin-auth-error svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.admin-auth > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-left: 8px;
+}
+.admin-error {
+  white-space: pre-line;
+}
+.admin-select {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+.admin-select [data-slot="select-trigger"] {
+  min-height: 48px;
+  background: white;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+.admin-select [data-slot="select-trigger"]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+[data-slot="select-content"] {
+  max-height: min(320px, var(--available-height));
+  max-width: calc(100vw - 24px);
+  z-index: 60;
+  background: white;
+  border-radius: 10px;
+}
+[data-slot="select-item"] {
+  min-height: 48px;
+  padding: 10px 36px 10px 12px;
+}
+[data-slot="select-item"] > span:first-child {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+[data-slot="select-item"][data-selected] {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+[data-slot="select-item"][data-focused] {
+  background: var(--primary-soft);
+}
+.photo-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 280px;
+  border: 2px dashed var(--primary-border);
+  background: var(--primary-soft);
+  border-radius: 14px;
+  padding: 24px 16px;
+  text-align: center;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+.photo-dropzone [slot="label"] {
+  font-weight: 600;
+}
+.photo-dropzone p {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  margin: 0;
+}
+.photo-dropzone[data-drop-target] {
+  background: #dbe8fb;
+  border-color: var(--primary);
+}
+.photo-dropzone[data-focus-visible] {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.photo-dropzone[data-disabled] {
+  opacity: 0.65;
+}
+.photo-upload-icon {
+  width: 56px;
+  height: 56px;
+  color: var(--primary);
+  padding: 12px;
+  border-radius: 14px;
+  background: white;
+}
+.photo-dropzone.has-image {
+  padding: 12px;
+  background: white;
+}
+.photo-dropzone .admin-photo-preview {
+  height: 240px;
+  background: var(--primary-soft);
+}
+.photo-picker-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.photo-picker-actions button {
+  gap: 8px;
+}
+.admin-dialog {
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+}
+.admin-dialog form {
+  display: grid;
+  gap: 20px;
+}
+.admin-dialog .react-aria-TextField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.admin-dialog input {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 1rem;
+}
+.admin-dialog input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.admin-dialog-body {
+  display: grid;
+  gap: 12px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.admin-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.admin-dialog-actions button {
+  min-width: 100px;
+}
+.admin-archived {
+  justify-self: start;
+  background: var(--primary-soft);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+.category-linked-products {
+  max-height: 240px;
+  overflow-y: auto;
+  padding-left: 20px;
+}
+@media (max-width: 600px) {
+  .admin-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .photo-dropzone {
+    min-height: 230px;
+  }
+  .photo-dropzone .admin-photo-preview {
+    height: 200px;
+  }
+  .admin-dialog-actions button {
+    flex: 1;
+  }
+  .admin-category-row .admin-actions {
+    gap: 8px;
+  }
+}

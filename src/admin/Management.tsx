@@ -7,6 +7,8 @@ import { price } from "../catalog/price";
 import { createAdminApi, explainError } from "./api";
 import type { AdminCategory, AdminProduct } from "./types";
 import { ProductForm } from "./products/ProductForm";
+import { SelectField } from "./SelectField";
+import { ConfirmDialog } from "./ConfirmDialog";
 import { Categories } from "./categories/Categories";
 
 export function Management({ client }: { client: SupabaseClient }) {
@@ -22,8 +24,10 @@ export function Management({ client }: { client: SupabaseClient }) {
   const [editing, setEditing] = useState<AdminProduct | null | undefined>();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
-  const [visibility, setVisibility] = useState("active");
+  const [visibility, setVisibility] = useState("all");
   const [busy, setBusy] = useState(false);
+  const [hideTarget, setHideTarget] = useState<AdminProduct | null>(null);
+  const [hideError, setHideError] = useState("");
   const refresh = useCallback(async () => {
     const result = await api.list();
     setData(result);
@@ -38,7 +42,7 @@ export function Management({ client }: { client: SupabaseClient }) {
       .catch(() => {
         if (alive)
           setError(
-            "Não foi possível carregar. Confira sua conexão ou a configuração do banco.",
+            "Não foi possível carregar, confira sua conexão ou a configuração do banco",
           );
       })
       .finally(() => {
@@ -48,6 +52,10 @@ export function Management({ client }: { client: SupabaseClient }) {
       alive = false;
     };
   }, [api]);
+  useEffect(() => {
+    if (category && !data.categories.some((c) => c.id === category))
+      setCategory("");
+  }, [category, data.categories]);
   const normalize = (s: string) =>
     s
       .normalize("NFD")
@@ -76,7 +84,7 @@ export function Management({ client }: { client: SupabaseClient }) {
           await api.saveProduct(values, editing, photo);
           setEditing(undefined);
           setMessage(
-            "Produto salvo no servidor. Atualize a cópia offline para ver as mudanças neste aparelho.",
+            "Produto salvo no servidor, atualize a cópia offline para ver as mudanças neste aparelho",
           );
           await refresh().catch(() =>
             setError(
@@ -89,6 +97,47 @@ export function Management({ client }: { client: SupabaseClient }) {
 
   return (
     <>
+      {hideTarget && (
+        <ConfirmDialog
+          isOpen
+          title="Ocultar produto?"
+          confirmLabel="Ocultar produto"
+          busy={busy}
+          error={hideError}
+          onCancel={() => setHideTarget(null)}
+          onConfirm={async () => {
+            if (busy) return;
+            if (!navigator.onLine) {
+              setHideError("Conecte-se à internet para ocultar o produto");
+              return;
+            }
+            setBusy(true);
+            setHideError("");
+            try {
+              await api.saveProduct(
+                { ...hideTarget, active: false },
+                hideTarget,
+              );
+              setHideTarget(null);
+              setMessage("Produto ocultado no servidor");
+              await refresh().catch(() =>
+                setError(
+                  "O produto foi ocultado, mas não foi possível atualizar a lista",
+                ),
+              );
+            } catch (err) {
+              setHideError(explainError(err));
+            } finally {
+              setBusy(false);
+            }
+          }}
+        >
+          <p>
+            Ocultar <strong>{hideTarget.name}</strong> do catálogo?
+          </p>
+          <p>Você poderá mostrar o produto novamente quando quiser</p>
+        </ConfirmDialog>
+      )}
       <nav
         className="admin-tabs"
         aria-label="Gerenciamento"
@@ -130,7 +179,7 @@ export function Management({ client }: { client: SupabaseClient }) {
                 await refresh();
                 setError("");
               } catch {
-                setError("Não foi possível carregar. Tente novamente.");
+                setError("Não foi possível carregar, tente novamente");
               }
             }}
           >
@@ -171,34 +220,27 @@ export function Management({ client }: { client: SupabaseClient }) {
                 placeholder="Nome ou código"
               />
             </TextField>
-            <label className="admin-field">
-              Categoria
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="">Todas</option>
-                {data.categories.map((c) => (
-                  <option
-                    key={c.id}
-                    value={c.id}
-                  >
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="admin-field">
-              Mostrar
-              <select
-                value={visibility}
-                onChange={(e) => setVisibility(e.target.value)}
-              >
-                <option value="active">Visíveis</option>
-                <option value="hidden">Ocultos</option>
-                <option value="all">Todos</option>
-              </select>
-            </label>
+            <SelectField
+              label="Categoria"
+              value={category || "all-categories"}
+              onChange={(value) =>
+                setCategory(value === "all-categories" ? "" : value)
+              }
+              options={[
+                { id: "all-categories", name: "Todas" },
+                ...data.categories.map((c) => ({ id: c.id, name: c.name })),
+              ]}
+            />
+            <SelectField
+              label="Mostrar"
+              value={visibility}
+              onChange={setVisibility}
+              options={[
+                { id: "all", name: "Todos" },
+                { id: "active", name: "Visíveis" },
+                { id: "hidden", name: "Ocultos" },
+              ]}
+            />
           </div>
           <p>{products.length} produtos</p>
           <ul className="admin-list">
@@ -242,6 +284,11 @@ export function Management({ client }: { client: SupabaseClient }) {
                     aria-label={`${p.active ? "Ocultar" : "Mostrar novamente"} ${p.name}`}
                     isDisabled={busy}
                     onPress={async () => {
+                      if (p.active) {
+                        setHideError("");
+                        setHideTarget(p);
+                        return;
+                      }
                       if (!navigator.onLine) {
                         setError(
                           "Conecte-se à internet para alterar produtos.",
@@ -283,7 +330,8 @@ export function Management({ client }: { client: SupabaseClient }) {
           </ul>
           {!products.length && (
             <p>
-              Nenhum produto encontrado. Use Adicionar produto para começar.
+              Use Adicionar produto para cadastrar seu primeiro item ou ajuste
+              os filtros para encontrar um produto
             </p>
           )}
         </section>

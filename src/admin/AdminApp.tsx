@@ -1,3 +1,4 @@
+import type * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Session, SupabaseClient } from "@supabase/supabase-js";
 import { Link, useLocation, useNavigate, useBlocker } from "react-router-dom";
@@ -37,20 +38,13 @@ export default function AdminApp() {
   return (
     <UnsavedContext.Provider value={{ dirty, setDirty: updateDirty }}>
       <main className="admin-shell">
-        <header className="admin-header">
-          <Link to="/">
-            <img
-              src={`${import.meta.env.BASE_URL}logos/logo-cirandinha.png`}
-              alt="Cirandinha Variedades"
-              className="brand-logo"
-            />
-          </Link>
-          <Link to="/">Ver catálogo</Link>
-        </header>
         {client.value ? (
           <AdminSession client={client.value} />
         ) : (
-          <p role="alert">{client.error}</p>
+          <>
+            <AdminHeader />
+            <p role="alert">{client.error}</p>
+          </>
         )}
       </main>
     </UnsavedContext.Provider>
@@ -137,57 +131,69 @@ function AdminSession({ client }: { client: SupabaseClient }) {
       navigate("/admin", { replace: true });
   }, [access, location.pathname, navigate]);
 
-  if (access === "loading") return <p role="status">Conferindo acesso…</p>;
-  if (location.pathname === "/admin/recuperar-senha")
-    return session ? (
-      <AuthScreen
-        client={client}
-        recovery
-      />
-    ) : (
-      <section className="admin-surface">
-        <p>Abra o link enviado ao seu email para definir a senha.</p>
-        <Link to="/admin/entrar">Voltar ao login</Link>
-      </section>
-    );
-  if (access === "login") return <AuthScreen client={client} />;
+  const logout = session ? (
+    <Button
+      variant="outline"
+      className="touch-button"
+      onPress={async () => {
+        if (
+          dirty &&
+          !window.confirm("Descartar as alterações que ainda não foram salvas?")
+        )
+          return;
+        setDirty(false);
+        try {
+          const { error } = await client.auth.signOut();
+          if (error) throw error;
+          setSession(null);
+          setAccess("login");
+          navigate("/admin/entrar", { replace: true });
+        } catch {
+          setDirty(dirty);
+          setWarning(
+            "Não foi possível sair, confira sua conexão e tente novamente",
+          );
+        }
+      }}
+    >
+      Sair da conta
+    </Button>
+  ) : null;
+  const layout = (content: React.ReactNode) => (
+    <>
+      <AdminHeader>{logout}</AdminHeader>
+      {content}
+    </>
+  );
 
-  return (
+  if (access === "loading")
+    return layout(<p role="status">Conferindo acesso…</p>);
+  if (location.pathname === "/admin/recuperar-senha")
+    return layout(
+      session ? (
+        <AuthScreen
+          client={client}
+          recovery
+        />
+      ) : (
+        <section className="admin-surface">
+          <p>Abra o link enviado ao seu email para definir a senha</p>
+          <Link to="/admin/entrar">Voltar ao login</Link>
+        </section>
+      ),
+    );
+  if (access === "login") return layout(<AuthScreen client={client} />);
+
+  return layout(
     <section key={session?.user.id}>
-      <div className="admin-session">
-        <p>
-          {access === "denied"
-            ? "Esta conta não tem acesso ao painel. Peça autorização ao responsável."
-            : "Painel de gerenciamento"}
-        </p>
-        <Button
-          variant="outline"
-          className="touch-button"
-          onPress={async () => {
-            if (
-              dirty &&
-              !window.confirm(
-                "Descartar as alterações que ainda não foram salvas?",
-              )
-            )
-              return;
-            setDirty(false);
-            const { error } = await client.auth.signOut();
-            if (error) setDirty(dirty);
-            if (error)
-              setWarning(
-                "Não foi possível sair. Confira sua conexão e tente novamente.",
-              );
-            if (!error) {
-              setSession(null);
-              setAccess("login");
-              navigate("/admin/entrar", { replace: true });
-            }
-          }}
+      {access === "denied" && (
+        <p
+          role="alert"
+          className="admin-error"
         >
-          Sair
-        </Button>
-      </div>
+          Esta conta não tem acesso ao painel, peça autorização ao responsável
+        </p>
+      )}
       {warning && (
         <p
           role="alert"
@@ -197,6 +203,24 @@ function AdminSession({ client }: { client: SupabaseClient }) {
         </p>
       )}
       {access === "allowed" && <Management client={client} />}
-    </section>
+    </section>,
+  );
+}
+
+function AdminHeader({ children }: { children?: React.ReactNode }) {
+  return (
+    <header className="admin-header">
+      <Link to="/">
+        <img
+          src={`${import.meta.env.BASE_URL}logos/logo-cirandinha.png`}
+          alt="Cirandinha Variedades"
+          className="brand-logo"
+        />
+      </Link>
+      <div className="admin-header-actions">
+        <Link to="/">Ver catálogo</Link>
+        {children}
+      </div>
+    </header>
   );
 }
