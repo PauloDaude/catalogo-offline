@@ -32,6 +32,8 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-pressed: var(--primary-pressed);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -54,8 +56,13 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #1d4ed8;
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: #371383;
+  --primary-hover: #2c0f69;
+  --primary-pressed: #250b59;
+  --primary-soft: #f1ecfa;
+  --primary-border: #d8cbed;
+  --primary-shadow: #37138324;
+  --primary-foreground: #ffffff;
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -65,7 +72,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: #1d4ed8;
+  --ring: var(--primary);
   --offer: #04a650;
   --offer-foreground: #ffffff;
   --chart-1: oklch(0.87 0 0);
@@ -126,7 +133,7 @@ button {
   touch-action: manipulation;
 }
 :focus-visible {
-  outline: 3px solid #1d4ed8;
+  outline: 3px solid var(--primary);
   outline-offset: 3px;
 }
 
@@ -218,7 +225,7 @@ h2 {
 .search-input:focus-visible {
   border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 0 1px #1d4ed824;
+  box-shadow: 0 0 0 1px var(--primary-shadow);
 }
 
 .category-list {
@@ -340,7 +347,7 @@ h2 {
 
 .product-price {
   font-size: 24px;
-  color: #1d4ed8;
+  color: var(--primary);
   font-weight: 750;
   margin: 0;
 }
@@ -723,8 +730,8 @@ footer {
   gap: 12px;
   width: min(360px, calc(100vw - 32px));
   padding: 12px;
-  border: 1px solid #d9e5ff;
-  background: #f1f5ff;
+  border: 1px solid var(--primary-border);
+  background: var(--primary-soft);
   border-radius: 12px;
   box-shadow: 0 4px 20px #172b4d1f;
 }
@@ -741,7 +748,7 @@ footer {
 
 .sync-text > svg {
   flex-shrink: 0;
-  color: #1d4ed8;
+  color: var(--primary);
   width: 18px;
   height: 18px;
 }
@@ -759,7 +766,7 @@ footer {
 
 progress {
   width: 100%;
-  accent-color: #1d4ed8;
+  accent-color: var(--primary);
 }
 
 .app-update {
@@ -799,9 +806,9 @@ progress {
     bottom: calc(100% + 8px);
     width: min(300px, calc(100vw - 32px));
     padding: 12px;
-    border: 1px solid #d9e5ff;
+    border: 1px solid var(--primary-border);
     border-radius: 12px;
-    background: #f1f5ff;
+    background: var(--primary-soft);
     box-shadow: 0 4px 20px #172b4d1f;
   }
 
@@ -993,7 +1000,7 @@ progress {
 }
 
 .cart-item-actions > strong {
-  color: #1d4ed8;
+  color: var(--primary);
   font-size: 16px;
 }
 
@@ -1010,7 +1017,7 @@ progress {
 }
 
 .cart-grand-total {
-  color: #1d4ed8;
+  color: var(--primary);
   font-size: 28px;
   font-weight: 750;
 }
@@ -1049,7 +1056,7 @@ progress {
 .cart-empty > svg {
   width: 42px;
   height: 42px;
-  color: #1d4ed8;
+  color: var(--primary);
   margin: 0 auto 20px;
 }
 
@@ -1208,9 +1215,9 @@ progress {
   max-width: 100%;
   gap: 4px;
   padding: 4px;
-  border: 1px solid #d4dff2;
+  border: 1px solid var(--primary-border);
   border-radius: 14px;
-  background: #edf1f8;
+  background: var(--primary-soft);
 }
 
 .catalog-view-tab {
@@ -1236,7 +1243,7 @@ progress {
 .catalog-view-tab[data-selected] {
   color: #fff;
   background: var(--primary);
-  box-shadow: 0 2px 6px #1d4ed824;
+  box-shadow: 0 2px 6px var(--primary-shadow);
 }
 
 .catalog-view-tab[data-focus-visible],

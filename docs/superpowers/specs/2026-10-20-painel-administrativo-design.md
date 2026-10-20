@@ -1,9 +1,15 @@
 # Painel administrativo e Supabase
 
 Data: 20/10/2026.
-Status: proposta para revisão do usuário; ainda não implementada.
+Status: aprovada pelo usuário em 20/10/2026; implementação pendente.
 Continua a arquitetura do MVP de 14/10, substituindo sua proposta de categorias
 fixas. Stack e regras de segurança do AGENTS.md permanecem obrigatórias.
+
+## Identidade visual aprovada
+
+Tema claro; primária roxa #371383, conforme a logo Cirandinha. Preços, botões,
+abas, foco e destaques seguem o token primário. Verde #04a650 com texto branco
+permanece exclusivo do selo de percentual de desconto.
 
 ## Objetivo
 
@@ -26,7 +32,7 @@ consulta offline após preparação. Gerenciamento exige internet e login autori
   pelo Dashboard, ou usaremos conexão administrativa autorizada quando disponível.
   Não solicitar senha, chave secret/service_role ou token administrativo no chat.
 
-## Fluxo proposto
+## Fluxo aprovado
 
 ### Entrada e acesso
 

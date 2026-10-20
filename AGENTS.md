@@ -53,7 +53,7 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   percentual de desconto inteiro arredondado para baixo, no card e nos detalhes.
   Produtos sem preço anterior não recebem destaque de oferta. O carrinho usa
   somente o preço atual. Percentual em selo verde `#04a650` com texto branco.
-  Selo "OFERTA IMPERDÍVEL" em azul com texto branco e ícone de desconto, conforme
+  Selo "OFERTA IMPERDÍVEL" em roxo com texto branco e ícone de desconto, conforme
   referências e preferências explícitas do usuário. Conteúdo centralizado
   verticalmente, fonte de peso moderado e ícone simples de etiqueta.
 - Card inteiro clicável para abrir os detalhes, com suporte a teclado e foco visível.
@@ -72,7 +72,7 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   confirmação, persistência local e uso offline. Mudanças de preço/disponibilidade
   exigem revisão explícita antes de atualizar a seleção e o total.
   Botão do carrinho fixo no canto inferior direito em celular, tablet e desktop,
-  permanecendo visível durante a rolagem. Usar fundo azul em ambos os visuais.
+  permanecendo visível durante a rolagem. Usar fundo roxo em ambos os visuais.
   No carrinho mobile, quantidade -/+ junto ao item, sem deslocar os controles para
   uma linha isolada abaixo. Remoção por botão de ícone de lixeira ao lado do nome,
   com rótulo acessível e alvo de toque de 48 px; não exibir botão textual Remover.
@@ -122,14 +122,14 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 - Código, nome e preço em etiqueta branca saindo pela lateral esquerda,
   sobrepondo parcialmente a borda inferior da foto. A etiqueta também abre
   detalhes. Não cortar a faixa nem gerar rolagem horizontal no celular.
-- No modo de folhear, botão azul com ícones de carrinho e “+” ao lado do preço
+- No modo de folhear, botão roxo com ícones de carrinho e “+” ao lado do preço
   adiciona diretamente uma unidade, sem abrir detalhes. Manter rótulo acessível,
   alvo de toque de 48 px e navegação por teclado.
 - Escolha mais recente do usuário: etiqueta branca sobreposta com cantos
   arredondados e sombra suave. Remover a dobra azul, a borda azul lateral e o
   gradiente que simulava papel curvo; não reintroduzir esse efeito sem pedido.
-- Usar os mesmos tokens de preço azul, selo azul OFERTA IMPERDÍVEL e percentual
-  verde `#04a650` com texto branco da listagem. Carrinho flutuante também azul.
+- Usar os mesmos tokens de preço roxo, selo roxo OFERTA IMPERDÍVEL e percentual
+  verde `#04a650` com texto branco da listagem. Carrinho flutuante também roxo.
 - Pesquisa combina com a categoria escolhida, incluindo Todas. Reaproveitar
   dados, fotos e consulta offline. Seleção preservada ao alternar os visuais. Sem animação de folha dobrando.
 - Hero removido da listagem por pedido do usuário; abrir diretamente o catálogo,
@@ -145,14 +145,15 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
 
 ## Aparência e UX
 
-- **Tema claro (light), com azul como cor primária.**
+- **Tema claro (light), com roxo `#371383` como cor primária, conforme a logo.**
 - Header usa a logo fornecida em `public/logos/logo-cirandinha.png`, Cirandinha
   Variedades, substituindo ícone/nome genéricos. Preservar proporção, transparência
   e leitura em celular/tablet; incluir o arquivo no app shell offline.
-- Definir o tom de azul usando tokens de tema e verificar contraste nos estados
-  normal, foco, pressionado e desabilitado. O tom exato ainda não foi escolhido.
+- Usar tokens de tema para o roxo primário: normal #371383, hover #2c0f69 e
+  pressionado #250b59, com texto branco. Verificar contraste e foco; preservar o
+  verde #04a650 das ofertas. Não retornar à primária azul anterior.
 - Não acrescentar tema escuro ou seletor de temas ao MVP sem necessidade acordada.
-- Foco da pesquisa: borda azul fina com sombra discreta; evitar outline grosso
+- Foco da pesquisa: borda roxa fina com sombra discreta; evitar outline grosso
   combinado com ring. Preservar indicação de foco e acessibilidade por teclado.
 - O vendedor não é um usuário experiente: textos simples e ações explícitas.
 - Controles confortáveis para toque; referência de 48 × 48 CSS px para ações principais.
@@ -286,3 +287,11 @@ Referências oficiais para consultar conforme necessário:
   confirmar/pedir publicação. Essa instrução substitui o padrão da skill Sites.
 - Não publicar, criar recursos externos ou presumir contas/configurações existentes
   apenas porque estão citados nos documentos de planejamento.
+
+## Etapa administrativa — 20/10/2026
+
+- Usuário revisou e aprovou a especificação
+  `docs/superpowers/specs/2026-10-20-painel-administrativo-design.md`.
+- Identidade solicitada para toda a aplicação e o painel: primária #371383.
+- Próximo artefato: plano executável do painel; método de execução direta já
+  escolhido pelo usuário. Banco remoto permanece inalterado até aplicação segura.

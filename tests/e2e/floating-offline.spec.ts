@@ -37,7 +37,7 @@ for (const width of [320, 360, 800, 1280]) {
     );
     await expect(page.getByRole("searchbox")).toHaveCSS(
       "border-color",
-      "rgb(29, 78, 216)",
+      "rgb(55, 19, 131)",
     );
   });
 }

@@ -1,7 +1,7 @@
 # Catálogo offline
 
 Protótipo de uma vitrine digital para apresentação de produtos no tablet e celular.
-Interface em português, tema claro com azul, pesquisa, categorias e foto ampliada.
+Interface em português, tema claro com roxo Cirandinha (`#371383`), pesquisa, categorias e foto ampliada.
 Depois da preparação, produtos e fotos podem ser consultados sem conexão.
 
 Inclui carrinho de seleção: adicionar produtos, ajustar quantidades, remover,
