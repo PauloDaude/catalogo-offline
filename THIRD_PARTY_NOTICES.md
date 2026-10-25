@@ -45,5 +45,6 @@ sem incorporar a busca opcional do Select ou dependências Radix
 
 - pdf-lib e @pdf-lib/fontkit: MIT, bibliotecas para geração local de documentos
 - Noto Sans: SIL Open Font License 1.1, Google Fonts / Noto project
-  Fonte: https://github.com/google/fonts/tree/main/ofl/notosans
+  Fonte estática: https://github.com/notofonts/noto-fonts/tree/main/hinted/ttf/NotoSans
+  Licença: https://github.com/google/fonts/tree/main/ofl/notosans
   Licença incluída em public/fonts/OFL-NotoSans.txt

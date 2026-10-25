@@ -137,6 +137,19 @@ export async function generateOrderPdf(
     const clean = cleanText(value, font);
     text(clean, edge - font.widthOfTextAtSize(clean, size), at, size, color);
   };
+  const money = (
+    value: string,
+    edge: number,
+    at: number,
+    availableWidth: number,
+  ) => {
+    const clean = cleanText(value, font);
+    const size = Math.min(
+      8.5,
+      availableWidth / font.widthOfTextAtSize(clean, 1),
+    );
+    right(clean, edge, at, size);
+  };
   const drawImage = (
     image: PDFImage,
     x: number,
@@ -205,19 +218,9 @@ export async function generateOrderPdf(
   }
   heading();
   tableHeader();
+  const pageRowTop = y;
   for (const [index, item] of order.items.entries()) {
     const lines = wrap(item.name, 218, 9, font);
-    const rowHeight = Math.max(66, lines.length * 13 + 30);
-    if (y - rowHeight < 70) nextPage(true);
-    const bottom = y - rowHeight;
-    if (index % 2 === 0)
-      page.drawRectangle({
-        x: margin,
-        y: bottom,
-        width: width - 2 * margin,
-        height: rowHeight,
-        color: pale,
-      });
     const url = images.get(item.id);
     const bytes = url ? await thumbnail(url) : null;
     let embedded: PDFImage | undefined;
@@ -228,19 +231,60 @@ export async function generateOrderPdf(
         /* Text remains usable when photo is invalid. */
       }
     }
-    if (embedded)
-      drawImage(embedded, margin + 5, bottom + (rowHeight - 48) / 2, 48, 48);
-    else text("Sem foto", margin + 6, bottom + rowHeight / 2 - 3, 7, muted);
-    let lineY = y - 19;
-    for (const line of lines) {
-      text(line, margin + 62, lineY);
-      lineY -= 13;
+    const fullHeight = Math.max(66, lines.length * 13 + 30);
+    if (fullHeight <= pageRowTop - 70 && fullHeight > y - 70) nextPage(true);
+    let offset = 0;
+    while (offset < lines.length) {
+      // A single unusually long name can occupy several pages. Keep each text
+      // line whole, and show the photo and monetary amounts only once.
+      if (y < 136) nextPage(true);
+      const capacity = Math.max(1, Math.floor((y - 70 - 30) / 13));
+      const segment = lines.slice(offset, offset + capacity);
+      const rowHeight = Math.max(66, segment.length * 13 + 30);
+      const bottom = y - rowHeight;
+      if (index % 2 === 0)
+        page.drawRectangle({
+          x: margin,
+          y: bottom,
+          width: width - 2 * margin,
+          height: rowHeight,
+          color: pale,
+        });
+      if (offset === 0) {
+        if (embedded)
+          drawImage(
+            embedded,
+            margin + 5,
+            bottom + (rowHeight - 48) / 2,
+            48,
+            48,
+          );
+        else text("Sem foto", margin + 6, bottom + rowHeight / 2 - 3, 7, muted);
+        right(String(item.quantity), 368, y - 23);
+        money(price(item.priceCents), 450, y - 23, 72);
+        money(
+          price(item.subtotalCents),
+          width - margin - 10,
+          y - 23,
+          width - margin - 10 - 460,
+        );
+      }
+      let lineY = y - 19;
+      for (const line of segment) {
+        text(line, margin + 62, lineY);
+        lineY -= 13;
+      }
+      text(
+        `${item.code ? "#" + item.code : "—"}${offset ? " · continuação" : ""}`,
+        margin + 62,
+        lineY - 3,
+        8,
+        muted,
+      );
+      y = bottom;
+      offset += segment.length;
+      if (offset < lines.length) nextPage(true);
     }
-    text(item.code ? `#${item.code}` : "—", margin + 62, lineY - 3, 8, muted);
-    right(String(item.quantity), 368, y - 23);
-    right(price(item.priceCents), 450, y - 23, 8.5);
-    right(price(item.subtotalCents), width - margin - 10, y - 23, 8.5);
-    y = bottom;
   }
   if (y < 140) nextPage(false);
   y -= 18;
