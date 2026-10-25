@@ -1,0 +1,244 @@
+import { test, expect, type Page } from "@playwright/test";
+import { readFile, mkdir } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
+import { PDFDocument } from "pdf-lib";
+import { addToCart, prepare } from "./helpers";
+
+const output = ".superpowers/sdd/2026-10-24-pedido-pdf/browser";
+async function orderForm(page: Page) {
+  await page.getByRole("button", { name: /Abrir carrinho/ }).click();
+  await page
+    .getByRole("button", { name: "Gerar pedido em PDF", exact: true })
+    .click();
+  await page
+    .getByLabel("Nome do cliente", { exact: true })
+    .fill("João da Conceição");
+  await page
+    .getByLabel("Observações (opcional)")
+    .fill("Entregar à tarde, confirmar com o cliente");
+  await page.getByRole("button", { name: "Gerar PDF", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Pedido pronto" }),
+  ).toBeVisible({ timeout: 20000 });
+}
+async function download(page: Page, name: string) {
+  const promise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Baixar PDF", exact: true }).click();
+  const file = await promise;
+  expect(file.suggestedFilename()).toMatch(
+    /^pedido-cirandinha-\d{4}-\d{2}-\d{2}-\d{6}\.pdf$/,
+  );
+  await mkdir(output, { recursive: true });
+  const path = `${output}/${name}.pdf`;
+  await file.saveAs(path);
+  return path;
+}
+for (const viewport of [
+  { width: 320, height: 720 },
+  { width: 800, height: 1100 },
+  { width: 800, height: 360 },
+]) {
+  test(`pedido baixa PDF sem Web Share em ${viewport.width}x${viewport.height}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.addInitScript(() =>
+      Object.defineProperty(navigator, "canShare", {
+        value: () => false,
+        configurable: true,
+      }),
+    );
+    await page.goto("/?visualizacao=cards");
+    await addToCart(page, "Panela para o dia a dia");
+    await orderForm(page);
+    await expect(page.getByText("Baixe o PDF para compartilhar")).toBeVisible();
+    const modal = page.locator(".cart-dialog");
+    expect(
+      await modal.evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
+    ).toBe(true);
+    await page.screenshot({
+      path: `/tmp/cirandinha-order-${viewport.width}x${viewport.height}.png`,
+    });
+    const path = await download(
+      page,
+      `pedido-${viewport.width}x${viewport.height}`,
+    );
+    const text = execFileSync("pdftotext", ["-layout", path, "-"], {
+      encoding: "utf8",
+    });
+    expect(text).toContain("João da Conceição");
+    expect(text).toContain("Antônio Marcos Daúde");
+    expect(text).toContain("R$ 65,00");
+    expect(text).toContain("#P001");
+    expect(text).not.toContain("Sem foto");
+    expect(text).toContain("Entregar à tarde");
+    await page.getByRole("button", { name: "Voltar ao carrinho" }).click();
+    await expect(page.locator(".cart-grand-total")).toHaveText("R$ 65,00");
+  });
+}
+test("arquivo pronto é compartilhado e cancelamento não gera erro", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "canShare", {
+      value: () => true,
+      configurable: true,
+    });
+    Object.defineProperty(navigator, "share", {
+      value: async (data: ShareData) => {
+        const file = data.files![0];
+        document.documentElement.dataset.shared = `${file.type}:${file.size}:${navigator.userActivation.isActive}`;
+        throw new DOMException("Cancelado", "AbortError");
+      },
+      configurable: true,
+    });
+  });
+  await page.goto("/?visualizacao=cards");
+  await addToCart(page, "Panela para o dia a dia");
+  await orderForm(page);
+  await expect(
+    page.getByRole("button", { name: "Compartilhar PDF" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-shared",
+    /^application\/pdf:\d+:true$/,
+  );
+  await expect(page.locator(".order-error")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Baixar PDF" })).toBeEnabled();
+});
+test("gera PDF após fechar e reabrir offline sem carregar gerador antes", async ({
+  page,
+  context,
+}) => {
+  await prepare(page);
+  await addToCart(page, "Panela para o dia a dia");
+  await page.close();
+  const second = await context.newPage();
+  await context.setOffline(true);
+  await second.goto("/?visualizacao=cards");
+  await orderForm(second);
+  const path = await download(second, "pedido-offline");
+  expect(
+    execFileSync("pdftotext", [path, "-"], { encoding: "utf8" }),
+  ).toContain("Panela para o dia a dia");
+});
+test("pedido com 100 produtos, nomes longos e imagens ausentes pagina corretamente", async ({
+  page,
+}) => {
+  const original = JSON.parse(
+    await readFile("public/demo/catalog.json", "utf8"),
+  );
+  const products = Array.from({ length: 100 }, (_, i) => ({
+    ...original.products[0],
+    id: `test-${i}`,
+    code: `P${String(i + 1).padStart(3, "0")}`,
+    name:
+      `Produto ${i} ` + "Descrição longa com acentuação e detalhes ".repeat(3),
+  }));
+  await page.route("**/demo/catalog.json", (r) =>
+    r.fulfill({ json: { ...original, products } }),
+  );
+  await page.route("**/demo/photos/*", (r) => r.abort());
+  await page.addInitScript(
+    (items) =>
+      localStorage.setItem("catalogo-selection-v1", JSON.stringify(items)),
+    products.map((p) => ({
+      id: p.id,
+      code: p.code,
+      name: p.name,
+      priceCents: p.priceCents,
+      quantity: 1,
+    })),
+  );
+  await page.goto("/?visualizacao=cards");
+  await expect(page.locator(".product-card")).toHaveCount(100);
+  await orderForm(page);
+  const path = await download(page, "pedido-100");
+  const doc = await PDFDocument.load(await readFile(path));
+  expect(doc.getPageCount()).toBeGreaterThan(2);
+  const text = execFileSync("pdftotext", ["-layout", path, "-"], {
+    encoding: "utf8",
+  });
+  expect(text).toContain("#P100");
+  expect(text).toContain("Sem foto");
+  expect(text).toContain("6.500,00");
+});
+
+test("foto corrompida não impede gerar valores e texto do pedido", async ({
+  page,
+}) => {
+  await page.route("**/demo/photos/*", (route) =>
+    route.fulfill({ body: "imagem inválida", contentType: "image/jpeg" }),
+  );
+  await page.goto("/?visualizacao=cards");
+  await addToCart(page, "Panela para o dia a dia");
+  await orderForm(page);
+  const path = await download(page, "pedido-foto-corrompida");
+  const text = execFileSync("pdftotext", [path, "-"], { encoding: "utf8" });
+  expect(text).toContain("Sem foto");
+  expect(text).toContain("65,00");
+});
+
+test.describe("mudanças em outra aba", () => {
+  test.use({ serviceWorkers: "block" });
+  test("invalida geração pendente e arquivo pronto", async ({
+    page,
+    context,
+  }) => {
+    let release!: () => void;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    let requested = false;
+    await page.route("**/fonts/order-noto-sans.ttf", async (route) => {
+      requested = true;
+      await gate;
+      await route.continue();
+    });
+    await page.goto("/?visualizacao=cards");
+    await addToCart(page, "Panela para o dia a dia");
+    const second = await context.newPage();
+    await second.goto("/");
+    await page.getByRole("button", { name: /Abrir carrinho/ }).click();
+    await page
+      .getByRole("button", { name: "Gerar pedido em PDF", exact: true })
+      .click();
+    await page
+      .getByLabel("Nome do cliente", { exact: true })
+      .fill("Cliente teste");
+    await page.getByRole("button", { name: "Gerar PDF", exact: true }).click();
+    try {
+      await expect.poll(() => requested).toBe(true);
+      await second.evaluate(() => {
+        const items = JSON.parse(
+          localStorage.getItem("catalogo-selection-v1")!,
+        );
+        items[0].quantity = 2;
+        localStorage.setItem("catalogo-selection-v1", JSON.stringify(items));
+      });
+      await expect(page.getByRole("alert")).toContainText("seleção mudou");
+    } finally {
+      release();
+    }
+    await expect(
+      page.getByRole("button", { name: "Gerar PDF", exact: true }),
+    ).toBeEnabled();
+    await page.getByRole("button", { name: "Gerar PDF", exact: true }).click();
+    await expect(
+      page.getByRole("heading", { name: "Pedido pronto" }),
+    ).toBeVisible();
+    await expect(page.locator(".order-total")).toHaveText("R$ 130,00");
+    await second.evaluate(() => {
+      const items = JSON.parse(localStorage.getItem("catalogo-selection-v1")!);
+      items[0].quantity = 3;
+      localStorage.setItem("catalogo-selection-v1", JSON.stringify(items));
+    });
+    await expect(
+      page.getByRole("heading", { name: "Pedido pronto" }),
+    ).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Baixar PDF" })).toHaveCount(
+      0,
+    );
+  });
+});

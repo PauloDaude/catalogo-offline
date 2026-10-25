@@ -323,3 +323,34 @@ Referências oficiais para consultar conforme necessário:
   reformulação, vírgula quando adequada ou quebra de linha entre as frases
 - Nova migration `202610200003_remove_category.sql` deve ser aplicada no projeto
   remoto para habilitar a remoção; instruções em `docs/deployment/categorias-remocao.md`
+
+## Próxima entrega planejada — pedido PDF — 24/10/2026
+
+- Abordagem aprovada: gerar arquivo PDF diretamente do carrinho, com cliente,
+  data, fotos, códigos, quantidades, preços, subtotais, total e observações opcionais
+- Usar logo Cirandinha e vendedor fixo Antônio Marcos Daúde
+- Após gerar, modal oferece Compartilhar PDF pelo sistema e Baixar PDF como alternativa
+- Sem histórico ou armazenamento do PDF no servidor nesta etapa
+- Design e plano escritos em docs/superpowers/{specs,plans}/2026-10-24-pedido-pdf*,
+  aprovados pelo usuário para execução direta em 24/10/2026
+- Acesso ao painel pelo catálogo e paginação administrativa continuam solicitados,
+  em planejamento separado, sem alterar o carregamento completo do catálogo offline
+- Domínio pretendido cirandinha.daude.dev, hospedagem Cloudflare gratuita ainda
+  apenas proposta, sem autorização de publicação/configuração nesta etapa
+- Usuário relata CRUD, políticas e migration 003 funcionando no remoto; confirmação
+  relatada pelo usuário não substitui auditoria independente de API
+- Security Advisor remoto reportou 2 avisos da função public.rls_auto_enable() e
+  proteção contra senha vazada desativada; revisão da função ainda pendente
+- Plano gratuito sem backup gerenciado, rotina própria de banco e fotos pendente
+
+## Pedido PDF implementado localmente — 24/10/2026
+
+- Carrinho → Gerar pedido em PDF → nome do cliente/observações → arquivo pronto
+- Compartilhar PDF usa menu nativo quando suportado, Baixar PDF é alternativa
+- Preservar o carrinho ao gerar/baixar/compartilhar; sem histórico ou upload de PDFs
+- Cliente, observações e arquivo em memória, sem persistir dados do cliente
+- Alterações relevantes no carrinho invalidam geração/resultado, exigindo nova geração
+- PDF local com logo, vendedor Antônio Marcos Daúde, fotos, códigos e totais;
+  fonte estática Noto Sans e gerador precacheados para uso offline após preparação
+- Evidências e roteiro de aparelhos reais em docs/validation/pedido-pdf.md
+- Compartilhamento WhatsApp e desempenho no tablet real ainda pendentes
