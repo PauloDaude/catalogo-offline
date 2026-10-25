@@ -116,6 +116,10 @@ export async function generateOrderPdf(
     await asset(`${base}fonts/order-noto-sans.ttf`),
     { subset: true },
   );
+  const bold = await doc.embedFont(
+    await asset(`${base}fonts/order-noto-sans-bold.ttf`),
+    { subset: true },
+  );
   const logo = await doc.embedPng(
     await asset(`${base}logos/logo-cirandinha.png`),
   );
@@ -204,11 +208,19 @@ export async function generateOrderPdf(
       height: 25,
       color: blue,
     });
-    text("FOTO", margin + 9, y - 16, 7.5, rgb(1, 1, 1));
-    text("PRODUTO / CÓDIGO", margin + 62, y - 16, 7.5, rgb(1, 1, 1));
-    right("QTD.", 368, y - 16, 7.5, rgb(1, 1, 1));
-    right("UNITÁRIO", 450, y - 16, 7.5, rgb(1, 1, 1));
-    right("SUBTOTAL", width - margin - 10, y - 16, 7.5, rgb(1, 1, 1));
+    const label = (value: string, edge: number, alignRight = false) =>
+      page.drawText(value, {
+        x: alignRight ? edge - bold.widthOfTextAtSize(value, 7.5) : edge,
+        y: y - 16,
+        font: bold,
+        size: 7.5,
+        color: rgb(1, 1, 1),
+      });
+    label("FOTO", margin + 9);
+    label("PRODUTO / CÓDIGO", margin + 62);
+    label("QTD.", 368, true);
+    label("UNITÁRIO", 450, true);
+    label("SUBTOTAL", width - margin - 10, true);
     y -= 25;
   }
   function nextPage(withTable: boolean) {

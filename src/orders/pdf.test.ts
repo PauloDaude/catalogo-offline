@@ -137,3 +137,30 @@ test("cliente, produto e observações nos limites continuam legíveis e paginad
     draw.mockRestore();
   }
 });
+
+test("cabeçalhos da tabela usam fonte em negrito", async () => {
+  const draw = vi.spyOn(PDFPage.prototype, "drawText");
+  try {
+    const order = createOrderSnapshot({
+      customerName: "Cliente",
+      notes: "",
+      pendingChanges: false,
+      catalogReady: true,
+      now: new Date(),
+      items: [{ id: "1", name: "Produto", priceCents: 100, quantity: 1 }],
+    });
+    await generateOrderPdf(order, new Map());
+    for (const label of [
+      "FOTO",
+      "PRODUTO / CÓDIGO",
+      "QTD.",
+      "UNITÁRIO",
+      "SUBTOTAL",
+    ]) {
+      const call = draw.mock.calls.find(([value]) => value === label);
+      expect(call?.[1]?.font?.name).toMatch(/Bold/);
+    }
+  } finally {
+    draw.mockRestore();
+  }
+});

@@ -48,3 +48,10 @@ sem incorporar a busca opcional do Select ou dependências Radix
   Fonte estática: https://github.com/notofonts/noto-fonts/tree/main/hinted/ttf/NotoSans
   Licença: https://github.com/google/fonts/tree/main/ofl/notosans
   Licença incluída em public/fonts/OFL-NotoSans.txt
+
+## Prévia local de pedidos
+
+- PDF.js / pdfjs-dist, Mozilla Foundation, Apache License 2.0
+  https://github.com/mozilla/pdf.js
+- Noto Sans Bold: SIL Open Font License 1.1, mesma licença da fonte regular
+  https://github.com/notofonts/noto-fonts/tree/main/hinted/ttf/NotoSans
