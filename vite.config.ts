@@ -17,7 +17,7 @@ export default defineConfig({
       injectRegister: false,
       registerType: "prompt",
       injectManifest: {
-        globPatterns: ["**/*.{js,css,html,woff2,png}"],
+        globPatterns: ["**/*.{js,css,html,woff2,png,ttf}"],
         globIgnores: ["demo/**"],
       },
       manifest: {

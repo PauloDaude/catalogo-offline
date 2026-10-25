@@ -40,3 +40,10 @@ O Select foi adaptado do registro oficial `aria-vega` do shadcn/ui, consultado e
 20/10/2026: https://ui.shadcn.com/r/styles/aria-vega/select.json
 Foram ajustados os imports locais, os ícones Lucide e os tamanhos de toque,
 sem incorporar a busca opcional do Select ou dependências Radix
+
+## Geração de pedidos PDF
+
+- pdf-lib e @pdf-lib/fontkit: MIT, bibliotecas para geração local de documentos
+- Noto Sans: SIL Open Font License 1.1, Google Fonts / Noto project
+  Fonte: https://github.com/google/fonts/tree/main/ofl/notosans
+  Licença incluída em public/fonts/OFL-NotoSans.txt
