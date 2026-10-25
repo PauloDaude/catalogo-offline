@@ -1827,9 +1827,9 @@ progress {
   border-radius: 10px;
 }
 .admin-select [data-slot="select-trigger"]:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-  box-shadow: none;
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-soft);
 }
 [data-slot="select-content"] {
   max-height: min(320px, var(--available-height));
@@ -1851,8 +1851,13 @@ progress {
   color: var(--primary);
   background: var(--primary-soft);
 }
+[data-slot="select-list"]:focus-visible,
+[data-slot="select-item"]:focus-visible {
+  outline: none;
+}
 [data-slot="select-item"][data-focused] {
   background: var(--primary-soft);
+  box-shadow: inset 3px 0 var(--primary);
 }
 .photo-dropzone {
   display: flex;
@@ -1983,5 +1988,99 @@ progress {
   }
   .admin-category-row .admin-actions {
     gap: 8px;
+  }
+}
+
+.order-flow,
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.order-form .react-aria-TextField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.order-form input,
+.order-form textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  background: white;
+  font: inherit;
+  min-height: 48px;
+}
+.order-form textarea {
+  resize: vertical;
+}
+.order-form input:focus-visible,
+.order-form textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.order-form [data-slot="field-error"],
+.order-form .react-aria-FieldError,
+.order-error {
+  color: #b42318;
+}
+.order-error {
+  background: #fff1f0;
+  border: 1px solid #f7b5af;
+  border-radius: 10px;
+  padding: 12px;
+}
+.order-ready-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--primary-border);
+  background: var(--primary-soft);
+  border-radius: 14px;
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+}
+.order-ready-card > svg {
+  color: var(--primary);
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.order-ready-card > div {
+  flex: 1;
+  min-width: 140px;
+}
+.order-ready-card p,
+.order-seller {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+.order-total {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+.order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.order-actions > button {
+  flex: 1;
+}
+.order-back {
+  align-self: flex-start;
+}
+@media (max-width: 480px) {
+  .order-actions {
+    flex-direction: column;
+  }
+  .order-ready-card {
+    padding: 14px;
+  }
+  .order-back {
+    width: 100%;
   }
 }

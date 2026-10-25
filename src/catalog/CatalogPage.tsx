@@ -77,6 +77,7 @@ export function CatalogPage({
         </a>
         <CartPanel
           cart={cart}
+          catalogReady={catalogReady}
           productImages={productImages}
         />
       </header>

@@ -172,3 +172,24 @@ test("produto sem foto continua identificado no carrinho", async () => {
     dialog.getByText("R$ 25,00", { selector: ".cart-grand-total" }),
   ).toBeVisible();
 });
+
+test("abre pedido e volta ao carrinho sem perder itens ou foco", async () => {
+  const user = userEvent.setup();
+  renderCatalog();
+  await addProduct(user);
+  await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
+  await user.click(screen.getByRole("button", { name: "Gerar pedido em PDF" }));
+  expect(screen.getByRole("heading", { name: "Pedido em PDF" })).toBeVisible();
+  expect(screen.getAllByRole("dialog")).toHaveLength(1);
+  await user.type(screen.getByLabelText("Nome do cliente"), "João");
+  await user.click(screen.getByRole("button", { name: "Voltar ao carrinho" }));
+  expect(
+    screen.getByText("R$ 25,00", { selector: ".cart-grand-total" }),
+  ).toBeVisible();
+  await new Promise((resolve) => requestAnimationFrame(resolve));
+  expect(
+    screen.getByRole("button", { name: "Gerar pedido em PDF" }),
+  ).toHaveFocus();
+  await user.click(screen.getByRole("button", { name: "Gerar pedido em PDF" }));
+  expect(screen.getByLabelText("Nome do cliente")).toHaveValue("");
+});
