@@ -14,6 +14,11 @@ Referência visual lida: `/home/paulo/Downloads/Pedido_112007097-1.pdf`, duas p�
 A4 paisagem com identificação, tabela de produtos com fotos e total. A referência
 não será copiada para public/ nem publicada, nem seus dados comerciais reutilizados.
 
+## Fluxo original
+
+A política de descarte ao fechar abaixo foi substituída pelos refinamentos aprovados
+em `2026-10-24-pedido-refinamentos-design.md`, que mantêm a sessão em memória.
+
 ## Fluxo proposto para aprovação
 
 1. Carrinho com itens apresenta **Gerar pedido em PDF**

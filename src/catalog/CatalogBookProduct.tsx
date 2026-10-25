@@ -1,10 +1,11 @@
 import { useState, type CSSProperties } from "react";
-import { ShoppingCart, Plus, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import type { Product } from "./types";
 import { ProductPrice } from "./ProductPrice";
+import { AddToCartButton } from "../cart/AddToCartButton";
 import { ProductDialog } from "./ProductDialog";
 
 export function CatalogBookProduct({
@@ -103,14 +104,13 @@ export function CatalogBookProduct({
         <h2>{product.name}</h2>
         <div className="book-product-purchase">
           <ProductPrice product={product} />
-          <Button
-            className="book-add-to-cart touch-button"
-            aria-label={`Adicionar ${product.name} ao carrinho`}
-            onPress={() => onAdd(product)}
-          >
-            <ShoppingCart aria-hidden="true" />
-            <Plus aria-hidden="true" />
-          </Button>
+          <AddToCartButton
+            key={product.id}
+            productName={product.name}
+            quantity={quantity}
+            onAdd={() => onAdd(product)}
+            compact
+          />
         </div>
       </div>
     </article>

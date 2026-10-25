@@ -20,6 +20,9 @@ async function orderForm(page: Page) {
   await expect(
     page.getByRole("heading", { name: "Pedido pronto" }),
   ).toBeVisible({ timeout: 20000 });
+  await expect(
+    page.getByAltText("Prévia do topo da primeira página do pedido PDF"),
+  ).toBeVisible();
 }
 async function download(page: Page, name: string) {
   const promise = page.waitForEvent("download");
@@ -51,11 +54,18 @@ for (const viewport of [
     await page.goto("/?visualizacao=cards");
     await addToCart(page, "Panela para o dia a dia");
     await orderForm(page);
-    await expect(page.getByText("Baixe o PDF para compartilhar")).toBeVisible();
+    await expect(
+      page.getByText(/Compartilhamento de PDF indisponível/),
+    ).toBeVisible();
     const modal = page.locator(".cart-dialog");
     expect(
       await modal.evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
     ).toBe(true);
+    const meta = await page.locator(".order-document-meta > div").boundingBox();
+    const amount = await page
+      .locator(".order-document-meta .order-total")
+      .boundingBox();
+    expect(meta!.x + meta!.width).toBeLessThanOrEqual(amount!.x + 1);
     await page.screenshot({
       path: `/tmp/cirandinha-order-${viewport.width}x${viewport.height}.png`,
     });
@@ -241,4 +251,83 @@ test.describe("mudanças em outra aba", () => {
       0,
     );
   });
+});
+
+test("prévia recortada, PDF em memória, botões vermelhos e WhatsApp em texto", async ({
+  page,
+}) => {
+  await page.goto("/?visualizacao=cards");
+  await addToCart(page, "Panela para o dia a dia");
+  await orderForm(page);
+  await expect(
+    page.getByAltText("Prévia do topo da primeira página do pedido PDF"),
+  ).toBeVisible();
+  const crop = page.locator(".order-pdf-preview");
+  expect(
+    await crop.evaluate((el) => {
+      const img = el.querySelector("img")!;
+      return img.getBoundingClientRect().height > el.clientHeight;
+    }),
+  ).toBe(true);
+  await expect(page.getByRole("button", { name: "Baixar PDF" })).toHaveCSS(
+    "background-color",
+    "rgb(235, 16, 0)",
+  );
+  const first = await download(page, "pedido-cache-primeiro");
+  const link = page.getByRole("link", { name: "Enviar pedido pelo WhatsApp" });
+  const url = new URL((await link.getAttribute("href"))!);
+  expect(url.pathname).toBe("/556296146244");
+  expect(url.searchParams.get("text")).toContain("João da Conceição");
+  expect(url.searchParams.get("text")).toContain("65,00");
+  expect(url.searchParams.get("text")).not.toContain("blob:");
+  await page.getByRole("button", { name: "Voltar ao carrinho" }).click();
+  await page.getByRole("button", { name: "Fechar", exact: true }).click();
+  await page.getByRole("button", { name: /Abrir carrinho/ }).click();
+  await expect(
+    page.getByRole("button", { name: "Ver pedido em PDF" }),
+  ).toHaveCSS("background-color", "rgb(235, 16, 0)");
+  await page.getByRole("button", { name: "Ver pedido em PDF" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Pedido pronto" }),
+  ).toBeVisible();
+  expect(await readFile(await download(page, "pedido-cache-segundo"))).toEqual(
+    await readFile(first),
+  );
+  await page.getByRole("button", { name: "Editar dados do pedido" }).click();
+  await expect(page.getByLabel("Nome do cliente", { exact: true })).toHaveValue(
+    "João da Conceição",
+  );
+  await expect(page.getByLabel("Observações (opcional)")).toHaveValue(
+    "Entregar à tarde, confirmar com o cliente",
+  );
+});
+
+test("adicionar mostra +1 e contador real, inclusive após diminuir no carrinho", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const add = page.getByRole("button", {
+    name: "Adicionar Panela para o dia a dia ao carrinho",
+    exact: true,
+  });
+  await add.click();
+  await expect(page.locator(".cart-add-pulse")).toHaveText("+1");
+  await expect(page.getByLabel("1 no carrinho", { exact: true })).toBeVisible();
+  await add.click();
+  await expect(page.getByLabel("2 no carrinho", { exact: true })).toBeVisible();
+  await expect(add.locator("svg.lucide-plus")).toHaveCSS("width", "16px");
+  await page.getByRole("button", { name: /Abrir carrinho/ }).click();
+  await page
+    .getByRole("button", {
+      name: "Diminuir quantidade de Panela para o dia a dia",
+    })
+    .click();
+  await page.getByRole("button", { name: "Fechar", exact: true }).click();
+  await expect(page.getByLabel("1 no carrinho", { exact: true })).toBeVisible();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await add.click();
+  await expect(page.locator(".cart-add-pulse").last()).toHaveCSS(
+    "animation-name",
+    "cart-add-still",
+  );
 });

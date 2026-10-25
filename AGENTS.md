@@ -354,3 +354,18 @@ Referências oficiais para consultar conforme necessário:
   fonte estática Noto Sans e gerador precacheados para uso offline após preparação
 - Evidências e roteiro de aparelhos reais em docs/validation/pedido-pdf.md
 - Compartilhamento WhatsApp e desempenho no tablet real ainda pendentes
+
+## Refinamentos do pedido aprovados e implementados — 24/10/2026
+
+- Substitui a decisão de descartar PDF/dados ao fechar o fluxo: manter nome,
+  observações, PDF e prévia na memória do carrinho até recarregar ou limpar seleção
+- Alterações de seleção/fotos invalidam PDF/prévia, preservando dados para regenerar
+- Prévia real de primeira página por PDF.js local, recortada em altura, nome abaixo
+  e total ao lado; worker e fonte Noto Sans Bold incluídos no precache offline
+- Gerar/baixar usam vermelho #EB1000 com texto branco e ícone de documento PDF
+- Compartilhar direto depende do navegador, botão visível desabilitado quando
+  indisponível, com download e alternativa WhatsApp em texto
+- Link WhatsApp solicitado para 556296146244, exatamente informado, sem acrescentar9
+- Animação +1 e contador real no carrossel e detalhes, respeitando reduced motion
+- Nenhuma mensagem enviada pelo agente, abrir texto no app requer confirmação humana
+- Evidências e limitações em docs/validation/pedido-refinamentos.md

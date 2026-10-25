@@ -1,6 +1,5 @@
 import { Dialog, DialogTitle, DialogClose } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { AddToCartButton } from "../cart/AddToCartButton";
 
 import type { Product } from "./types";
 import { ProductPrice } from "./ProductPrice";
@@ -46,15 +45,13 @@ export function ProductDialog({
           <ProductPrice product={product} />
 
           <div className="product-dialog-actions">
-            <Button
-              className="touch-button"
-              isDisabled={quantity >= 999}
-              onPress={onAdd}
-            >
-              <ShoppingCart aria-hidden="true" />
-              Adicionar ao carrinho
-              {quantity > 0 ? ` (${quantity} na seleção)` : ""}
-            </Button>
+            <AddToCartButton
+              key={product.id}
+              productName={product.name}
+              quantity={quantity}
+              onAdd={onAdd}
+            />
+
             <DialogClose className="touch-button">Fechar</DialogClose>
           </div>
         </div>
