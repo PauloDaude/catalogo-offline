@@ -7,42 +7,38 @@ import {
   TextArea,
   FieldError,
 } from "react-aria-components";
-import { FileCheck2, Download, Share2, ArrowLeft } from "lucide-react";
+import { Share2, ArrowLeft, MessageCircle } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { DialogTitle } from "../components/ui/dialog";
 import type { Cart } from "../cart/useCart";
 import { price } from "../catalog/price";
-import {
-  createOrderSnapshot,
-  orderSelectionKey,
-  type OrderSnapshot,
-} from "./model";
+import { createOrderSnapshot } from "./model";
 import { canShareOrder, downloadOrder, shareOrder } from "./share";
 
-type ReadyOrder = { file: File; order: OrderSnapshot; key: string };
+import type { OrderSession } from "./useOrderSession";
+import { PdfIcon } from "./PdfIcon";
+import { OrderPreview } from "./OrderPreview";
+import { orderWhatsAppUrl } from "./whatsapp";
 export function OrderDialog({
   cart,
   catalogReady,
   productImages,
   onBack,
+  session,
 }: {
   cart: Cart;
   catalogReady: boolean;
   productImages: Map<string, string>;
   onBack: () => void;
+  session: OrderSession;
 }) {
-  const [customerName, setCustomerName] = useState("");
-  const [notes, setNotes] = useState("");
-  const [ready, setReady] = useState<ReadyOrder | null>(null);
+  const { customerName, setCustomerName, notes, setNotes, ready, setReady } =
+    session;
   const [generating, setGenerating] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const currentKey = JSON.stringify([
-    catalogReady,
-    orderSelectionKey(cart.items, cart.changes.length > 0),
-    cart.items.map((item) => productImages.get(item.id)),
-  ]);
+  const currentKey = session.key;
   const latestKey = useRef(currentKey);
   latestKey.current = currentKey;
   const generation = useRef(0);
@@ -98,54 +94,50 @@ export function OrderDialog({
       </div>
       {validReady ? (
         <>
-          <div className="order-ready-card">
-            <FileCheck2 aria-hidden="true" />
-            <div>
-              <strong>{validReady.order.customerName}</strong>
-              <p>Vendedor: {validReady.order.sellerName}</p>
-              <p>
-                {validReady.order.items.length}{" "}
-                {validReady.order.items.length === 1 ? "produto" : "produtos"}
-              </p>
+          <div className="order-document">
+            <OrderPreview preview={validReady.preview} />
+            <div className="order-document-meta">
+              <div>
+                <strong title={validReady.file.name}>
+                  {validReady.file.name}
+                </strong>
+                <span>{validReady.order.customerName}</span>
+              </div>
+              <strong className="order-total">
+                {price(validReady.order.totalCents)}
+              </strong>
             </div>
-            <strong className="order-total">
-              {price(validReady.order.totalCents)}
-            </strong>
           </div>
           <p>O PDF está pronto, o carrinho continua salvo neste aparelho</p>
           <div className="order-actions">
-            {canShareOrder(validReady.file) ? (
-              <Button
-                className="touch-button"
-                ref={readyAction}
-                isDisabled={sharing}
-                onPress={() => {
-                  setSharing(true);
-                  setError("");
-                  setNotice("");
-                  void shareOrder(validReady.file)
-                    .then((result) => {
-                      if (result === "shared")
-                        setNotice("PDF encaminhado ao aplicativo escolhido");
-                    })
-                    .catch(() =>
-                      setError(
-                        "Não foi possível compartilhar, tente novamente ou baixe o PDF",
-                      ),
-                    )
-                    .finally(() => setSharing(false));
-                }}
-              >
-                <Share2 aria-hidden="true" />
-                {sharing ? "Aguarde…" : "Compartilhar PDF"}
-              </Button>
-            ) : (
-              <p>Baixe o PDF para compartilhar</p>
-            )}
             <Button
-              variant="outline"
-              ref={canShareOrder(validReady.file) ? undefined : readyAction}
               className="touch-button"
+              ref={readyAction}
+              isDisabled={sharing || !canShareOrder(validReady.file)}
+              onPress={() => {
+                setSharing(true);
+                setError("");
+                setNotice("");
+                void shareOrder(validReady.file)
+                  .then((result) => {
+                    if (result === "shared")
+                      setNotice("PDF encaminhado ao aplicativo escolhido");
+                  })
+                  .catch(() =>
+                    setError(
+                      "Não foi possível compartilhar, tente novamente ou baixe o PDF",
+                    ),
+                  )
+                  .finally(() => setSharing(false));
+              }}
+            >
+              <Share2 aria-hidden="true" />
+              {sharing ? "Aguarde…" : "Compartilhar PDF"}
+            </Button>
+
+            <Button
+              ref={canShareOrder(validReady.file) ? undefined : readyAction}
+              className="touch-button order-pdf-button"
               isDisabled={sharing}
               onPress={() => {
                 try {
@@ -156,10 +148,36 @@ export function OrderDialog({
                 }
               }}
             >
-              <Download aria-hidden="true" />
+              <PdfIcon />
               Baixar PDF
             </Button>
           </div>
+          {!canShareOrder(validReady.file) && (
+            <p className="order-share-help">
+              Compartilhamento de PDF indisponível neste navegador, baixe o
+              arquivo ou envie o pedido em texto pelo WhatsApp
+            </p>
+          )}
+          <a
+            className="order-whatsapp touch-button"
+            href={orderWhatsAppUrl(validReady.order)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MessageCircle aria-hidden="true" />
+            Enviar pedido pelo WhatsApp
+          </a>
+          <Button
+            variant="ghost"
+            className="touch-button"
+            onPress={() => {
+              setReady(null);
+              setError("");
+              setNotice("");
+            }}
+          >
+            Editar dados do pedido
+          </Button>
         </>
       ) : (
         <Form
@@ -188,8 +206,17 @@ export function OrderDialog({
               const images = new Map(productImages);
               const { generateOrderPdf } = await import("./pdf");
               const file = await generateOrderPdf(order, images);
+              let preview: Blob | null = null;
+              if (request !== generation.current || key !== latestKey.current)
+                return;
+              try {
+                const { renderOrderPreview } = await import("./preview");
+                preview = await renderOrderPreview(file);
+              } catch {
+                /* Sharing remains available even if preview rendering fails. */
+              }
               if (request === generation.current && key === latestKey.current)
-                setReady({ file, order, key });
+                setReady({ file, preview, order, key });
             } catch (cause) {
               if (request === generation.current)
                 setError(
@@ -233,9 +260,10 @@ export function OrderDialog({
           {blocked && <p className="cart-warning">{blocked}</p>}
           <Button
             type="submit"
-            className="touch-button"
+            className="touch-button order-pdf-button"
             isDisabled={generating || !!blocked}
           >
+            <PdfIcon />
             {generating ? "Gerando…" : "Gerar PDF"}
           </Button>
           {generating && (

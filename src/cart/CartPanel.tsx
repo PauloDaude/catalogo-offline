@@ -11,6 +11,8 @@ import {
 import { price } from "../catalog/price";
 import type { Cart } from "./useCart";
 import { OrderDialog } from "../orders/OrderDialog";
+import { useOrderSession } from "../orders/useOrderSession";
+import { PdfIcon } from "../orders/PdfIcon";
 import { CartThumbnail } from "./CartThumbnail";
 
 export function CartPanel({
@@ -22,6 +24,7 @@ export function CartPanel({
   cart: Cart;
   productImages: Map<string, string>;
 }) {
+  const orderSession = useOrderSession(cart, catalogReady, productImages);
   const [ordering, setOrdering] = useState(false);
   const orderButton = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -59,6 +62,7 @@ export function CartPanel({
         {ordering ? (
           <OrderDialog
             cart={cart}
+            session={orderSession}
             catalogReady={catalogReady}
             productImages={productImages}
             onBack={() => {
@@ -212,7 +216,7 @@ export function CartPanel({
                 </p>
                 <Button
                   ref={orderButton}
-                  className="touch-button"
+                  className="touch-button order-pdf-button"
                   isDisabled={
                     pending ||
                     !catalogReady ||
@@ -221,7 +225,10 @@ export function CartPanel({
                   }
                   onPress={() => setOrdering(true)}
                 >
-                  Gerar pedido em PDF
+                  <PdfIcon />
+                  {orderSession.ready
+                    ? "Ver pedido em PDF"
+                    : "Gerar pedido em PDF"}
                 </Button>
                 {confirmClear ? (
                   <div

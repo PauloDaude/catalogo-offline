@@ -8,9 +8,33 @@ import {
 import userEvent from "@testing-library/user-event";
 import { beforeEach, expect, test, vi } from "vitest";
 import type { Cart } from "../cart/useCart";
-import { OrderDialog } from "./OrderDialog";
+import { OrderDialog as OrderDialogContent } from "./OrderDialog";
+import { useOrderSession } from "./useOrderSession";
+function OrderDialog(
+  props: Omit<Parameters<typeof OrderDialogContent>[0], "session">,
+) {
+  const session = useOrderSession(
+    props.cart,
+    props.catalogReady,
+    props.productImages,
+  );
+  return (
+    <OrderDialogContent
+      {...props}
+      session={session}
+    />
+  );
+}
 import { generateOrderPdf } from "./pdf";
 import { canShareOrder, shareOrder, downloadOrder } from "./share";
+vi.mock("./preview", () => ({
+  renderOrderPreview: vi.fn(
+    async () => new Blob(["preview"], { type: "image/png" }),
+  ),
+}));
+vi.mock("./OrderPreview", () => ({
+  OrderPreview: () => <div>Prévia do pedido</div>,
+}));
 vi.mock("./pdf", () => ({ generateOrderPdf: vi.fn() }));
 vi.mock("./share", () => ({
   canShareOrder: vi.fn(() => true),
@@ -68,9 +92,13 @@ test("sem Web Share preserva download", async () => {
   vi.mocked(canShareOrder).mockReturnValue(false);
   render(<OrderDialog {...props} />);
   await generate();
-  expect(screen.getByText("Baixe o PDF para compartilhar")).toBeVisible();
+  expect(
+    screen.getByText(/Compartilhamento de PDF indisponível/),
+  ).toBeVisible();
   expect(screen.getByRole("button", { name: "Baixar PDF" })).toHaveFocus();
-  expect(screen.queryByRole("button", { name: "Compartilhar PDF" })).toBeNull();
+  expect(
+    screen.getByRole("button", { name: "Compartilhar PDF" }),
+  ).toBeDisabled();
   expect(screen.getByRole("button", { name: "Baixar PDF" })).toBeEnabled();
 });
 test("mudança de seleção invalida arquivo pronto", async () => {

@@ -3,6 +3,17 @@ import { render, screen, within, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { CatalogPage } from "../catalog/CatalogPage";
+import { generateOrderPdf } from "../orders/pdf";
+vi.mock("../orders/pdf", () => ({
+  generateOrderPdf: vi.fn(
+    async () => new File(["pdf"], "pedido.pdf", { type: "application/pdf" }),
+  ),
+}));
+vi.mock("../orders/preview", () => ({
+  renderOrderPreview: vi.fn(async () => {
+    throw new Error("Sem preview no teste");
+  }),
+}));
 import { snapshotA } from "../test/fixtures";
 
 beforeEach(() => {
@@ -191,5 +202,35 @@ test("abre pedido e volta ao carrinho sem perder itens ou foco", async () => {
     screen.getByRole("button", { name: "Gerar pedido em PDF" }),
   ).toHaveFocus();
   await user.click(screen.getByRole("button", { name: "Gerar pedido em PDF" }));
-  expect(screen.getByLabelText("Nome do cliente")).toHaveValue("");
+  expect(screen.getByLabelText("Nome do cliente")).toHaveValue("João");
+});
+
+test("reabrir o mesmo carrinho reutiliza PDF, nome e observações sem gerar novamente", async () => {
+  const user = userEvent.setup();
+  renderCatalog();
+  await addProduct(user);
+  await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
+  await user.click(screen.getByRole("button", { name: "Gerar pedido em PDF" }));
+  await user.type(screen.getByLabelText("Nome do cliente"), "Maria");
+  await user.type(
+    screen.getByLabelText("Observações (opcional)"),
+    "Entregar amanhã",
+  );
+  const before = vi.mocked(generateOrderPdf).mock.calls.length;
+  await user.click(screen.getByRole("button", { name: "Gerar PDF" }));
+  await screen.findByRole("heading", { name: "Pedido pronto" });
+  await user.click(screen.getByRole("button", { name: "Voltar ao carrinho" }));
+  await user.click(screen.getByRole("button", { name: "Fechar" }));
+  await user.click(screen.getByRole("button", { name: /Abrir carrinho/ }));
+  await user.click(screen.getByRole("button", { name: "Ver pedido em PDF" }));
+  expect(screen.getByRole("heading", { name: "Pedido pronto" })).toBeVisible();
+  expect(vi.mocked(generateOrderPdf).mock.calls.length).toBe(before + 1);
+  await user.click(
+    screen.getByRole("button", { name: "Editar dados do pedido" }),
+  );
+  expect(screen.getByLabelText("Nome do cliente")).toHaveValue("Maria");
+  expect(screen.getByLabelText("Nome do cliente")).toHaveFocus();
+  expect(screen.getByLabelText("Observações (opcional)")).toHaveValue(
+    "Entregar amanhã",
+  );
 });
