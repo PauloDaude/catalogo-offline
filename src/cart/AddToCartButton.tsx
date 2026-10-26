@@ -25,7 +25,9 @@ export function AddToCartButton({
       <Button
         className={`touch-button cart-add-button${compact ? " book-add-to-cart" : ""}`}
         aria-label={
-          compact ? `Adicionar ${productName} ao carrinho` : undefined
+          compact
+            ? `Adicionar ${productName} ao carrinho`
+            : "Adicionar ao carrinho"
         }
         aria-description={`${quantity} na seleção`}
         isDisabled={quantity >= 999}
@@ -41,12 +43,9 @@ export function AddToCartButton({
             aria-hidden="true"
           />
         ) : (
-          <>
-            Adicionar ao carrinho
-            {quantity > 0 ? ` (${quantity} na seleção)` : ""}
-          </>
+          "Adicionar"
         )}
-        {compact && quantity > 0 && (
+        {quantity > 0 && (
           <span
             className="cart-product-count"
             aria-label={`${quantity} no carrinho`}

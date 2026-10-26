@@ -85,7 +85,7 @@ test("foto ampliada também adiciona ao carrinho", async ({ page }) => {
     .click();
   await expect(
     page.getByRole("button", {
-      name: "Adicionar ao carrinho (1 na seleção)",
+      name: "Adicionar ao carrinho",
       exact: true,
     }),
   ).toBeVisible();

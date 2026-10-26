@@ -44,3 +44,19 @@ test("mostra +1 ao adicionar, contador acompanha quantidade e limite impede cliq
   );
   expect(screen.getByRole("button")).toBeDisabled();
 });
+
+test("botão do modal tem texto Adicionar e contador no mesmo selo do carrossel", () => {
+  render(
+    <AddToCartButton
+      productName="Panela"
+      quantity={4}
+      onAdd={() => {}}
+    />,
+  );
+  const button = screen.getByRole("button", { name: "Adicionar ao carrinho" });
+  expect(button).toHaveTextContent(/^Adicionar4$/);
+  expect(screen.getByLabelText("4 no carrinho")).toHaveClass(
+    "cart-product-count",
+  );
+  expect(button).not.toHaveTextContent("na seleção");
+});

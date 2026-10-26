@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Download, RefreshCw, WifiOff, CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -16,38 +17,54 @@ export function SyncStatus({
   progress: SyncProgress | null;
   onPrepare: () => Promise<void>;
 }) {
+  const transient =
+    saved &&
+    state === "saved" &&
+    (message === "Catálogo salvo para usar sem internet" ||
+      message.startsWith("Catálogo atualizado"));
+  const [dismissed, setDismissed] = useState(false);
+  useEffect(() => {
+    setDismissed(false);
+    if (!transient) return;
+    const timer = setTimeout(() => setDismissed(true), 5000);
+    return () => clearTimeout(timer);
+  }, [transient, state, message]);
+  const showMessage = !transient || !dismissed;
   const busy = state === "loading" || state === "syncing";
 
   return (
     <section
       aria-label="Disponibilidade do catálogo"
       className="sync-panel"
+      data-toast-hidden={!showMessage}
       data-compact={state === "online" && message === "Disponível online."}
     >
-      <div className="sync-text">
-        {state === "error" ? (
-          <WifiOff aria-hidden="true" />
-        ) : saved ? (
-          <CheckCircle2 aria-hidden="true" />
-        ) : (
-          <Download aria-hidden="true" />
-        )}
-        <div>
-          <p role="status">{message}</p>
-          {progress?.phase === "downloading" && (
-            <>
-              <progress
-                value={progress.completed}
-                max={progress.total}
-                aria-label="Fotos salvas"
-              />
-              <p className="sync-detail">
-                {progress.completed} de {progress.total} fotos
-              </p>
-            </>
+      {showMessage && (
+        <div className="sync-text">
+          {state === "error" ? (
+            <WifiOff aria-hidden="true" />
+          ) : saved ? (
+            <CheckCircle2 aria-hidden="true" />
+          ) : (
+            <Download aria-hidden="true" />
           )}
+          <div>
+            <p role="status">{message}</p>
+            {progress?.phase === "downloading" && (
+              <>
+                <progress
+                  value={progress.completed}
+                  max={progress.total}
+                  aria-label="Fotos salvas"
+                />
+                <p className="sync-detail">
+                  {progress.completed} de {progress.total} fotos
+                </p>
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      )}
       <Button
         className="touch-button sync-button"
         variant={saved ? "outline" : "default"}

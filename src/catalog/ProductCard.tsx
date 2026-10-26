@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 
 import type { Product } from "./types";
+import { AddToCartButton } from "../cart/AddToCartButton";
 import { ProductDialog } from "./ProductDialog";
 import { OfferLabel, ProductPrice } from "./ProductPrice";
 
@@ -53,10 +54,19 @@ export function ProductCard({
           <span className="product-code">#{product.code ?? "—"}</span>
         </div>
         <h3>{product.name}</h3>
-        <ProductPrice
-          product={product}
-          showOfferLabel={false}
-        />
+        <div className="product-card-purchase">
+          <ProductPrice
+            product={product}
+            showOfferLabel={false}
+          />
+          <AddToCartButton
+            key={product.id}
+            productName={product.name}
+            quantity={quantity}
+            onAdd={onAdd}
+            compact
+          />
+        </div>
       </div>
     </article>
   );

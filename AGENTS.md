@@ -58,8 +58,9 @@ baixo custo, facilidade de manutenção pelo vendedor e consulta offline confiá
   referências e preferências explícitas do usuário. Conteúdo centralizado
   verticalmente, fonte de peso moderado e ícone simples de etiqueta.
 - Card inteiro clicável para abrir os detalhes, com suporte a teclado e foco visível.
-  Na listagem, adicionar ao carrinho somente no modal de detalhes; sem botão na
-  listagem. Nos cards, selo de oferta sobre a foto no canto superior esquerdo;
+  Na listagem, adicionar ao carrinho também por botão compacto com carrinho e +,
+  contador no canto superior direito, sem abrir detalhes; o restante do card abre
+  o modal. Nos cards, selo de oferta sobre a foto no canto superior esquerdo;
   preço atual próximo ao nome e alinhado entre produtos com e sem promoção.
   Percentual junto ao preço atual quando houver espaço e preço antigo menor abaixo.
   Não reservar linhas vazias para o selo e o preço anterior dos produtos sem oferta.
@@ -369,3 +370,12 @@ Referências oficiais para consultar conforme necessário:
 - Animação +1 e contador real no carrossel e detalhes, respeitando reduced motion
 - Nenhuma mensagem enviada pelo agente, abrir texto no app requer confirmação humana
 - Evidências e limitações em docs/validation/pedido-refinamentos.md
+
+## Ajustes rápidos aprovados — 26/10/2026
+
+- Confirmações de catálogo salvo/atualizado somem após 5 segundos, mantendo Atualizar
+- Erros, progresso e avisos de consulta offline não somem automaticamente
+- Botão do modal mostra apenas ícone de carrinho e Adicionar, contador superior direito
+- Pedido mais recente substitui a restrição de adição somente no modal: grade também
+  tem botão compacto carrinho/+ com contador e feedback +1, sem abrir detalhes ao adicionar
+- Restante do card mantém abertura de detalhes, inclusive por teclado, limite999 preservado

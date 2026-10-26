@@ -158,7 +158,7 @@ test("card inteiro abre detalhes e preços ficam alinhados entre ofertas e produ
     const first = cards.nth(0);
     const second = cards.nth(1);
     await expect(first.getByRole("button", { name: /Adicionar/ })).toHaveCount(
-      0,
+      1,
     );
     const priceA = await first.locator(".product-price").boundingBox();
     const priceB = await second.locator(".product-price").boundingBox();

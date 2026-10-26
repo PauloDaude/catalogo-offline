@@ -80,7 +80,7 @@ test("percentual não arredonda o desconto para cima", () => {
   expect(screen.getByText("18% OFF")).toBeVisible();
 });
 
-test("card oferece uma única ação de detalhes e adição fica no modal", async () => {
+test("card mantém detalhes por teclado junto da adição direta na grade", async () => {
   const user = userEvent.setup();
   render(
     <CatalogPage
@@ -90,10 +90,8 @@ test("card oferece uma única ação de detalhes e adição fica no modal", asyn
   );
 
   const card = within(screen.getByRole("article"));
-  expect(card.getAllByRole("button")).toHaveLength(1);
-  expect(
-    card.queryByRole("button", { name: /Adicionar/ }),
-  ).not.toBeInTheDocument();
+  expect(card.getAllByRole("button")).toHaveLength(2);
+  expect(card.getByRole("button", { name: /Adicionar/ })).toBeVisible();
   const trigger = card.getByRole("button", { name: "Ver Tesoura de cozinha" });
   trigger.focus();
   await user.keyboard("{Enter}");

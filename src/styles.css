@@ -2273,3 +2273,26 @@ progress {
     height: 190px;
   }
 }
+
+@media (min-width: 651px) {
+  .sync-panel[data-toast-hidden="true"] {
+    width: auto;
+  }
+}
+
+.product-card-purchase {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: space-between;
+  gap: 12px;
+}
+.product-card-purchase > .product-pricing {
+  flex: 1 1 140px;
+  min-width: 0;
+}
+.product-card-purchase > .cart-add-feedback {
+  z-index: 2;
+  margin-left: auto;
+}
