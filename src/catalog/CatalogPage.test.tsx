@@ -81,3 +81,16 @@ test("renomear a categoria selecionada não deixa filtro invisível ativo", asyn
   );
   expect(screen.getByText(product.name)).toBeVisible();
 });
+
+test("header oferece acesso explícito ao painel", () => {
+  render(
+    <CatalogPage
+      products={snapshotA.products}
+      images={new Map()}
+    />,
+  );
+  expect(screen.getByRole("link", { name: "Acessar painel" })).toHaveAttribute(
+    "href",
+    "/admin",
+  );
+});

@@ -1,24 +1,19 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { TextField, Label, Input } from "react-aria-components";
 
 import { Button } from "../components/ui/button";
 import { price } from "../catalog/price";
 import { createAdminApi, explainError } from "./api";
-import type { AdminCategory, AdminProduct } from "./types";
+import type { AdminProduct } from "./types";
 import { ProductForm } from "./products/ProductForm";
 import { SelectField } from "./SelectField";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { useManagementData } from "./useManagementData";
 import { Categories } from "./categories/Categories";
 
 export function Management({ client }: { client: SupabaseClient }) {
   const api = useMemo(() => createAdminApi(client), [client]);
-  const [data, setData] = useState<{
-    products: AdminProduct[];
-    categories: AdminCategory[];
-  }>({ products: [], categories: [] });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [tab, setTab] = useState<"products" | "categories">("products");
   const [editing, setEditing] = useState<AdminProduct | null | undefined>();
@@ -28,45 +23,21 @@ export function Management({ client }: { client: SupabaseClient }) {
   const [busy, setBusy] = useState(false);
   const [hideTarget, setHideTarget] = useState<AdminProduct | null>(null);
   const [hideError, setHideError] = useState("");
-  const refresh = useCallback(async () => {
-    const result = await api.list();
-    setData(result);
-  }, [api]);
+  const [page, setPage] = useState(1);
+  const { data, initialized, refresh, error, setError, loading } =
+    useManagementData(api, { page, query, category, visibility }, setPage);
   useEffect(() => {
-    let alive = true;
-    void api
-      .list()
-      .then((result) => {
-        if (alive) setData(result);
-      })
-      .catch(() => {
-        if (alive)
-          setError(
-            "Não foi possível carregar, confira sua conexão ou a configuração do banco",
-          );
-      })
-      .finally(() => {
-        if (alive) setLoading(false);
-      });
-    return () => {
-      alive = false;
-    };
-  }, [api]);
-  useEffect(() => {
-    if (category && !data.categories.some((c) => c.id === category))
+    if (
+      category &&
+      initialized &&
+      !data.categories.some((c) => c.id === category)
+    ) {
       setCategory("");
-  }, [category, data.categories]);
-  const normalize = (s: string) =>
-    s
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLocaleLowerCase("pt-BR");
-  const products = data.products.filter(
-    (p) =>
-      (!category || p.category_id === category) &&
-      (visibility === "all" || p.active === (visibility === "active")) &&
-      normalize(`${p.name} ${p.code}`).includes(normalize(query)),
-  );
+      setPage(1);
+    }
+  }, [category, data.categories, initialized]);
+  const products = data.products;
+  const pages = Math.max(1, Math.ceil(data.total / 20));
 
   if (editing !== undefined)
     return (
@@ -86,11 +57,13 @@ export function Management({ client }: { client: SupabaseClient }) {
           setMessage(
             "Produto salvo no servidor, atualize a cópia offline para ver as mudanças neste aparelho",
           );
-          await refresh().catch(() =>
-            setError(
-              "O produto foi salvo, mas não foi possível atualizar a lista.",
-            ),
-          );
+          if (editing === null && page !== 1) setPage(1);
+          else
+            await refresh().catch(() =>
+              setError(
+                "O produto foi salvo, mas não foi possível atualizar a lista",
+              ),
+            );
         }}
       />
     );
@@ -187,11 +160,9 @@ export function Management({ client }: { client: SupabaseClient }) {
           </Button>
         </div>
       )}
-      {loading ? (
-        <p role="status">Carregando produtos…</p>
-      ) : tab === "categories" ? (
+      {tab === "categories" ? (
         <Categories
-          {...data}
+          categories={data.categories}
           api={api}
           onChanged={refresh}
         />
@@ -212,7 +183,10 @@ export function Management({ client }: { client: SupabaseClient }) {
           <div className="admin-filters">
             <TextField
               value={query}
-              onChange={setQuery}
+              onChange={(value) => {
+                setQuery(value);
+                setPage(1);
+              }}
             >
               <Label>Pesquisar produtos</Label>
               <Input
@@ -223,9 +197,10 @@ export function Management({ client }: { client: SupabaseClient }) {
             <SelectField
               label="Categoria"
               value={category || "all-categories"}
-              onChange={(value) =>
-                setCategory(value === "all-categories" ? "" : value)
-              }
+              onChange={(value) => {
+                setCategory(value === "all-categories" ? "" : value);
+                setPage(1);
+              }}
               options={[
                 { id: "all-categories", name: "Todas" },
                 ...data.categories.map((c) => ({ id: c.id, name: c.name })),
@@ -234,7 +209,10 @@ export function Management({ client }: { client: SupabaseClient }) {
             <SelectField
               label="Mostrar"
               value={visibility}
-              onChange={setVisibility}
+              onChange={(value) => {
+                setVisibility(value);
+                setPage(1);
+              }}
               options={[
                 { id: "all", name: "Todos" },
                 { id: "active", name: "Visíveis" },
@@ -242,98 +220,146 @@ export function Management({ client }: { client: SupabaseClient }) {
               ]}
             />
           </div>
-          <p>{products.length} produtos</p>
-          <ul className="admin-list">
-            {products.map((p) => (
-              <li
-                key={p.id}
-                className="admin-product-row"
-              >
-                <img
-                  src={api.photoUrl(p.image_path)}
-                  alt=""
-                  loading="lazy"
-                />
-                <div className="admin-product-info">
-                  <strong>{p.name}</strong>
-                  <small>
-                    #{p.code} ·{" "}
-                    {data.categories.find((c) => c.id === p.category_id)?.name}
-                  </small>
-                  <span>
-                    {price(p.price_cents)}
-                    {p.previous_price_cents && (
-                      <del>{price(p.previous_price_cents)}</del>
-                    )}
-                  </span>
-                  {!p.active && <small>Oculto no catálogo</small>}
-                </div>
-                <div className="admin-actions">
-                  <Button
-                    variant="outline"
-                    className="touch-button"
-                    aria-label={`Editar ${p.name}`}
-                    onPress={() => setEditing(p)}
-                    isDisabled={busy}
-                  >
-                    Editar
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="touch-button"
-                    aria-label={`${p.active ? "Ocultar" : "Mostrar novamente"} ${p.name}`}
-                    isDisabled={busy}
-                    onPress={async () => {
-                      if (p.active) {
-                        setHideError("");
-                        setHideTarget(p);
-                        return;
-                      }
-                      if (!navigator.onLine) {
-                        setError(
-                          "Conecte-se à internet para alterar produtos.",
-                        );
-                        return;
-                      }
-                      if (
-                        !p.active &&
-                        !data.categories.find((c) => c.id === p.category_id)
-                          ?.active
-                      ) {
-                        setError(
-                          "Reative a categoria ou edite o produto para escolher uma categoria ativa antes de mostrar novamente.",
-                        );
-                        return;
-                      }
-                      setBusy(true);
-                      setError("");
-                      try {
-                        await api.saveProduct({ ...p, active: !p.active }, p);
-                        await refresh();
-                        setMessage(
-                          p.active
-                            ? "Produto ocultado no servidor."
-                            : "Produto visível no catálogo.",
-                        );
-                      } catch (err) {
-                        setError(explainError(err));
-                      } finally {
-                        setBusy(false);
-                      }
-                    }}
-                  >
-                    {p.active ? "Ocultar" : "Mostrar novamente"}
-                  </Button>
-                </div>
-              </li>
-            ))}
-          </ul>
-          {!products.length && (
-            <p>
-              Use Adicionar produto para cadastrar seu primeiro item ou ajuste
-              os filtros para encontrar um produto
-            </p>
+          {loading ? (
+            <p role="status">Carregando produtos…</p>
+          ) : (
+            !error && (
+              <>
+                <p role="status">
+                  {data.total
+                    ? `${(page - 1) * 20 + 1}–${Math.min(page * 20, data.total)} de ${data.total} produtos`
+                    : "0 produtos"}
+                </p>
+                <ul className="admin-list">
+                  {products.map((p) => (
+                    <li
+                      key={p.id}
+                      className="admin-product-row"
+                    >
+                      <img
+                        src={api.photoUrl(p.image_path)}
+                        alt=""
+                        loading="lazy"
+                      />
+                      <div className="admin-product-info">
+                        <strong>{p.name}</strong>
+                        <small>
+                          #{p.code} ·{" "}
+                          {
+                            data.categories.find((c) => c.id === p.category_id)
+                              ?.name
+                          }
+                        </small>
+                        <span>
+                          {price(p.price_cents)}
+                          {p.previous_price_cents && (
+                            <del>{price(p.previous_price_cents)}</del>
+                          )}
+                        </span>
+                        {!p.active && <small>Oculto no catálogo</small>}
+                      </div>
+                      <div className="admin-actions">
+                        <Button
+                          variant="outline"
+                          className="touch-button"
+                          aria-label={`Editar ${p.name}`}
+                          onPress={() => setEditing(p)}
+                          isDisabled={busy}
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="touch-button"
+                          aria-label={`${p.active ? "Ocultar" : "Mostrar novamente"} ${p.name}`}
+                          isDisabled={busy}
+                          onPress={async () => {
+                            if (p.active) {
+                              setHideError("");
+                              setHideTarget(p);
+                              return;
+                            }
+                            if (!navigator.onLine) {
+                              setError(
+                                "Conecte-se à internet para alterar produtos.",
+                              );
+                              return;
+                            }
+                            if (
+                              !p.active &&
+                              !data.categories.find(
+                                (c) => c.id === p.category_id,
+                              )?.active
+                            ) {
+                              setError(
+                                "Reative a categoria ou edite o produto para escolher uma categoria ativa antes de mostrar novamente.",
+                              );
+                              return;
+                            }
+                            setBusy(true);
+                            setError("");
+                            try {
+                              await api.saveProduct(
+                                { ...p, active: !p.active },
+                                p,
+                              );
+                              await refresh();
+                              setMessage(
+                                p.active
+                                  ? "Produto ocultado no servidor."
+                                  : "Produto visível no catálogo.",
+                              );
+                            } catch (err) {
+                              setError(explainError(err));
+                            } finally {
+                              setBusy(false);
+                            }
+                          }}
+                        >
+                          {p.active ? "Ocultar" : "Mostrar novamente"}
+                        </Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                {!products.length && (
+                  <p>
+                    Use Adicionar produto para cadastrar seu primeiro item ou
+                    ajuste os filtros para encontrar um produto
+                  </p>
+                )}
+              </>
+            )
           )}
+          <nav
+            className="admin-pagination"
+            aria-label="Paginação dos produtos"
+          >
+            <Button
+              variant="outline"
+              className="touch-button"
+              aria-disabled={page === 1 || busy || loading}
+              onPress={() => {
+                if (page > 1 && !busy && !loading) setPage(page - 1);
+              }}
+            >
+              Anterior
+            </Button>
+            <span>
+              Página {page} de {pages}
+            </span>
+            <Button
+              variant="outline"
+              className="touch-button"
+              aria-disabled={page >= pages || busy || loading}
+              onPress={() => {
+                if (page < pages && !busy && !loading) setPage(page + 1);
+              }}
+            >
+              Próxima
+            </Button>
+          </nav>
         </section>
       )}
     </>

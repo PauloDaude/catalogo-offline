@@ -379,3 +379,16 @@ Referências oficiais para consultar conforme necessário:
 - Pedido mais recente substitui a restrição de adição somente no modal: grade também
   tem botão compacto carrinho/+ com contador e feedback +1, sem abrir detalhes ao adicionar
 - Restante do card mantém abertura de detalhes, inclusive por teclado, limite999 preservado
+
+## Acesso ao painel e paginação aprovados — 27/10/2026
+
+- Link Acessar painel no header público, reutilizando autenticação e rota /admin
+- Produtos administrativos em páginas de 20 no Supabase, filtros globais por nome/
+  código, categoria e Mostrar (Todos por padrão), busca sem distinção de acentos
+- Filtros reiniciam na página 1, edição mantém página, cadastro volta à primeira
+- Categorias consultam vínculos independentemente da página, incluindo ocultos
+- Nova migration 202610270004_admin_pagination.sql, com RPCs SECURITY INVOKER,
+  autorização explícita e grants mínimos, aplicada somente no ambiente local
+- Aplicação remota pendente, instruções em docs/deployment/paginacao-painel.md
+- Catálogo público e preparação offline continuam completos, sem paginação pública
+- Design e plano de 27/10 aprovados para execução direta, sem publicação online

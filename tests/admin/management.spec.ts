@@ -451,3 +451,109 @@ test("arrastar imagem mostra prévia e remover exige escolher outra foto", async
     "Escolha uma foto para o produto",
   );
 });
+
+test("paginação global, busca e edição com 105 produtos", async ({ page }) => {
+  const client = createClient(
+    process.env.VITE_SUPABASE_URL!,
+    process.env.VITE_SUPABASE_PUBLISHABLE_KEY!,
+    { auth: { persistSession: false, autoRefreshToken: false } },
+  );
+  await client.auth.signInWithPassword({ email, password });
+  const category = await client
+    .from("categories")
+    .insert({ name: `Paginacao ${prefix}` })
+    .select()
+    .single();
+  expect(category.error).toBeNull();
+  const imagePath = `products/${crypto.randomUUID()}.jpg`;
+  const bytes = (await import("node:fs")).readFileSync(
+    path.resolve("public/demo/photos/panela.jpg"),
+  );
+  expect(
+    (
+      await client.storage
+        .from("product-photos")
+        .upload(imagePath, bytes, { contentType: "image/jpeg" })
+    ).error,
+  ).toBeNull();
+  const insert = await client.from("products").insert(
+    Array.from({ length: 105 }, (_, i) => ({
+      name: `Produto paginado ${String(i + 1).padStart(3, "0")}`,
+      category_id: category.data.id,
+      price_cents: 100,
+      image_path: imagePath,
+      active: true,
+    })),
+  );
+  expect(insert.error).toBeNull();
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto("/");
+  await page.getByRole("link", { name: "Acessar painel" }).click();
+  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel("Senha", { exact: true }).fill(password);
+  await page.getByRole("button", { name: "Entrar", exact: true }).click();
+  await choose(page, "Categoria", `Paginacao ${prefix}`);
+  await expect(page.locator(".admin-product-row")).toHaveCount(20);
+  await expect(
+    page.getByText("1–20 de 105 produtos", { exact: true }),
+  ).toBeVisible();
+  const next = page.getByRole("button", { name: "Próxima", exact: true });
+  await next.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByText("Página 2 de 6")).toBeVisible();
+  await expect(next).toBeFocused();
+  const editing = await page
+    .locator(".admin-product-info strong")
+    .first()
+    .innerText();
+  await page
+    .getByRole("button", { name: `Editar ${editing}`, exact: true })
+    .click();
+  await page.getByLabel("Preço atual (R$)").fill("2,00");
+  await page.getByRole("button", { name: "Salvar produto" }).click();
+  await expect(page.getByText("Página 2 de 6")).toBeVisible();
+  await page.getByRole("searchbox").fill("Produto paginado 105");
+  await expect(page.locator(".admin-product-row")).toHaveCount(1);
+  await expect(page.getByText("Página 1 de 1")).toBeVisible();
+  await page.getByRole("searchbox").fill("");
+  await expect(page.getByText("Página 1 de 6")).toBeVisible();
+  for (let i = 0; i < 5; i++) {
+    await page.getByRole("button", { name: "Próxima", exact: true }).click();
+    await expect(page.getByText(`Página ${i + 2} de 6`)).toBeVisible();
+  }
+  await expect(page.locator(".admin-product-row")).toHaveCount(5);
+  await expect(
+    page.getByRole("button", { name: "Próxima", exact: true }),
+  ).toBeDisabled();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: "/tmp/catalogo-admin-pagination-mobile.png",
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 800, height: 1100 });
+  await page.screenshot({
+    path: "/tmp/catalogo-admin-pagination-tablet.png",
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "Adicionar produto" }).click();
+  await page.getByLabel("Nome do produto").fill("Produto recém-cadastrado");
+  await choose(page, "Categoria", `Paginacao ${prefix}`);
+  await page.getByLabel("Preço atual (R$)").fill("3,00");
+  await page
+    .locator("input[type=file]")
+    .setInputFiles(path.resolve("public/demo/photos/panela.jpg"));
+  await page.getByRole("button", { name: "Salvar produto" }).click();
+  await expect(page.getByText("Página 1 de 6")).toBeVisible();
+  await expect(
+    page.getByText("1–20 de 106 produtos", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Produto recém-cadastrado", { exact: true }),
+  ).toBeVisible();
+  await client.storage.from("product-photos").remove([imagePath]);
+  await client.auth.signOut();
+});

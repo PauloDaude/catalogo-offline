@@ -1,5 +1,11 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { AdminCategory, AdminProduct, ProductValues } from "./types";
+import type {
+  AdminCategory,
+  AdminProduct,
+  ProductValues,
+  ProductQuery,
+  CategoryProduct,
+} from "./types";
 
 export class AdminError extends Error {
   code: string;
@@ -46,20 +52,31 @@ function check(error: { code?: string; message?: string } | null) {
 
 export function createAdminApi(client: SupabaseClient) {
   return {
-    async list() {
-      const [products, categories] = await Promise.all([
-        client
-          .from("products")
-          .select("*")
-          .order("created_at", { ascending: false }),
-        client.from("categories").select("id,name,active").order("name"),
-      ]);
-      check(products.error);
-      check(categories.error);
-      return {
-        products: products.data as AdminProduct[],
-        categories: categories.data as AdminCategory[],
-      };
+    async listProducts(query: ProductQuery) {
+      const { data, error } = await client.rpc("list_admin_products", {
+        p_page: query.page,
+        p_query: query.query,
+        p_category: query.category || null,
+        p_visibility: query.visibility,
+      });
+      check(error);
+      return data as { products: AdminProduct[]; total: number };
+    },
+    async listCategories() {
+      const { data, error } = await client
+        .from("categories")
+        .select("id,name,active")
+        .order("name");
+      check(error);
+      return data as AdminCategory[];
+    },
+    async listCategoryProducts(category: string, activeOnly: boolean) {
+      const { data, error } = await client.rpc("list_admin_category_products", {
+        p_category: category,
+        p_active_only: activeOnly,
+      });
+      check(error);
+      return data as CategoryProduct[];
     },
     photoUrl(path: string) {
       return client.storage.from("product-photos").getPublicUrl(path).data

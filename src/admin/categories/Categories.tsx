@@ -6,17 +6,15 @@ import { Button } from "../../components/ui/button";
 import { Dialog, DialogTitle } from "../../components/ui/dialog";
 import { ConfirmDialog } from "../ConfirmDialog";
 import { explainError, type AdminApi } from "../api";
-import type { AdminCategory, AdminProduct } from "../types";
+import type { AdminCategory, CategoryProduct } from "../types";
 
 type Editor = { id?: string; name: string };
 export function Categories({
   categories,
-  products,
   api,
   onChanged,
 }: {
   categories: AdminCategory[];
-  products: AdminProduct[];
   api: AdminApi;
   onChanged: () => Promise<void>;
 }) {
@@ -26,11 +24,9 @@ export function Categories({
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [dialogError, setDialogError] = useState("");
-  const [blocking, setBlocking] = useState<AdminProduct[]>([]);
+  const [blocking, setBlocking] = useState<CategoryProduct[]>([]);
   const [removing, setRemoving] = useState<AdminCategory | null>(null);
-  const linked = removing
-    ? products.filter((p) => p.category_id === removing.id)
-    : [];
+  const [linked, setLinked] = useState<CategoryProduct[]>([]);
   const openEditor = (category?: AdminCategory) => {
     setBlocking([]);
     setError("");
@@ -114,17 +110,17 @@ export function Categories({
                 onPress={async () => {
                   setError("");
                   setMessage("");
-                  const active = products.filter(
-                    (p) => p.category_id === c.id && p.active,
-                  );
-                  setBlocking(c.active ? active : []);
-                  if (c.active && active.length) return;
                   if (!navigator.onLine) {
                     setError("Conecte-se à internet para continuar");
                     return;
                   }
                   setBusy(true);
                   try {
+                    const active = c.active
+                      ? await api.listCategoryProducts(c.id, true)
+                      : [];
+                    setBlocking(active);
+                    if (active.length) return;
                     await api.setCategoryActive(c.id, !c.active);
                     await refresh(
                       c.active ? "Categoria arquivada" : "Categoria reativada",
@@ -149,9 +145,26 @@ export function Categories({
                   className="touch-button"
                   aria-label={`Remover ${c.name}`}
                   isDisabled={busy}
-                  onPress={() => {
-                    setRemoving(c);
-                    setDialogError("");
+                  onPress={async () => {
+                    if (!navigator.onLine) {
+                      setError("Conecte-se à internet para continuar");
+                      return;
+                    }
+                    setBusy(true);
+                    setError("");
+                    try {
+                      const products = await api.listCategoryProducts(
+                        c.id,
+                        false,
+                      );
+                      setLinked(products);
+                      setRemoving(c);
+                      setDialogError("");
+                    } catch (err) {
+                      setError(explainError(err));
+                    } finally {
+                      setBusy(false);
+                    }
                   }}
                 >
                   <Trash2 aria-hidden="true" />

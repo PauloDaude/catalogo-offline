@@ -11,3 +11,11 @@ export type AdminProduct = {
   version: number;
 };
 export type ProductValues = Omit<AdminProduct, "id" | "code" | "version">;
+
+export type ProductQuery = {
+  page: number;
+  query: string;
+  category: string;
+  visibility: string;
+};
+export type CategoryProduct = Pick<AdminProduct, "id" | "name" | "active">;

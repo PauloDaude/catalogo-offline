@@ -1,0 +1,47 @@
+import { expect, test, vi } from "vitest";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { createAdminApi } from "./api";
+
+test("pagina no servidor com filtros parametrizados e total mesmo sem itens", async () => {
+  const rpc = vi
+    .fn()
+    .mockResolvedValue({ data: { products: [], total: 105 }, error: null });
+  const api = createAdminApi({ rpc } as unknown as SupabaseClient);
+  expect(
+    await api.listProducts({
+      page: 7,
+      query: "açúcar, (%)",
+      category: "c",
+      visibility: "hidden",
+    }),
+  ).toEqual({ products: [], total: 105 });
+  expect(rpc).toHaveBeenCalledWith("list_admin_products", {
+    p_page: 7,
+    p_query: "açúcar, (%)",
+    p_category: "c",
+    p_visibility: "hidden",
+  });
+});
+
+test("vínculos de categorias não são truncados pelo limite PostgREST", async () => {
+  const rpc = vi.fn().mockResolvedValue({
+    data: Array.from({ length: 1025 }, (_, id) => ({ id: String(id) })),
+    error: null,
+  });
+  const api = createAdminApi({ rpc } as unknown as SupabaseClient);
+  expect(await api.listCategoryProducts("c", false)).toHaveLength(1025);
+  expect(rpc).toHaveBeenCalledWith("list_admin_category_products", {
+    p_category: "c",
+    p_active_only: false,
+  });
+});
+
+test("falha da consulta não se transforma em lista vazia", async () => {
+  const rpc = vi
+    .fn()
+    .mockResolvedValue({ data: null, error: { code: "42501" } });
+  const api = createAdminApi({ rpc } as unknown as SupabaseClient);
+  await expect(
+    api.listProducts({ page: 1, query: "", category: "", visibility: "all" }),
+  ).rejects.toMatchObject({ code: "denied" });
+});

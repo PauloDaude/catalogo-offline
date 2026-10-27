@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Search, BookOpen, LayoutGrid } from "lucide-react";
+import { Search, BookOpen, LayoutGrid, Settings } from "lucide-react";
 import { TextField, Tabs, TabList, Tab, TabPanel } from "react-aria-components";
 
 import { Button } from "@/components/ui/button";
@@ -74,6 +74,13 @@ export function CatalogPage({
             width={1825}
             height={365}
           />
+        </a>
+        <a
+          href="/admin"
+          className="admin-entry"
+        >
+          <Settings aria-hidden="true" />
+          Acessar painel
         </a>
         <CartPanel
           cart={cart}
