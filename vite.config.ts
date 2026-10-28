@@ -7,6 +7,19 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vite.dev/config/
 
 export default defineConfig({
+  server: {
+    fs: {
+      deny: [
+        ".env",
+        ".env.*",
+        "*.{crt,pem,key,p12,pfx,cer,der}",
+        ".npmrc",
+        ".yarnrc.yml",
+        "**/.git/**",
+        "**/backups/**",
+      ],
+    },
+  },
   plugins: [
     react(),
     tailwindcss(),

@@ -179,3 +179,27 @@ para `@/lib/utils`.
 O desenvolvimento está autorizado na `main`. Planejamento e histórico de decisões
 em `docs/superpowers/`. Não publicar o protótipo nem configurar recursos externos
 sem a autorização correspondente.
+
+## Backup local do catálogo
+
+A exportação roda no seu computador e lê banco e fotos diretamente do Supabase,
+independentemente da hospedagem do site. Configure credenciais administrativas
+somente em `.env.backup`, conforme o [guia de backup](docs/deployment/backup-local.md).
+
+```bash
+npm run backup:catalog -- --check
+npm run backup:catalog
+npm run backup:verify -- backups/NOME_DA_PASTA
+```
+
+As cópias ficam em `backups/`, fora do Git e da publicação, com permissões locais
+restritas e sem criptografia nesta primeira etapa. Arquivos `.incomplete` não são
+backups concluídos. Mantenha uma segunda cópia criptografada fora do computador.
+
+```bash
+npm run test:backup
+npm run test:backup:restore
+```
+
+O segundo comando de teste aceita apenas Supabase local e cria/limpa destinos
+fictícios de recuperação, sem usar credenciais de `.env.backup` ou alterar o remoto.

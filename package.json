@@ -11,7 +11,11 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "backup:catalog": "node scripts/backup/catalog-backup.mjs",
+    "backup:verify": "node scripts/backup/verify.mjs",
+    "test:backup": "node scripts/backup/backup.test.mjs",
+    "test:backup:restore": "node scripts/backup/test-restore-local.mjs"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

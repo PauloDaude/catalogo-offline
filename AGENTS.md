@@ -399,3 +399,17 @@ Referências oficiais para consultar conforme necessário:
   a min(44dvh, 460px), incluindo iPad mini em retrato e paisagem
 - Preservar proporção e foto inteira, ajustando a largura junto com a altura
 - Manter etiqueta e setas alinhadas à foto, sem alterar dimensões da grade/modal
+
+## Backup local implementado — 28/10/2026
+
+- npm run backup:catalog, modo --check e backup:verify, execução manual no PC
+- Credenciais administrativas exclusivamente em .env.backup, ignorado e sem VITE_
+- Pasta backups/ datada e privada, ignorada e bloqueada no Vite; falhas permanecem
+  .incomplete, sem apagar cópias anteriores e sem publicar qualquer artefato
+- Dump com Auth, grants, sequência e extensões, fotos de product-photos e manifesto
+  de hashes; inventário SQL não depende do limite de mil linhas da API
+- Ensaio fictício local restaurou banco, autorização/RLS, RPC de busca e 93 fotos
+- Primeira exportação real ainda depende da configuração local pelo usuário
+- Guia em docs/deployment/backup-local.md, evidências em docs/validation/backup-local.md
+- Sem criptografia ou segunda cópia automática nesta etapa; orientar proteção antes
+  de copiar para destino externo. Não restaurar automaticamente projeto remoto

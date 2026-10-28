@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!.env.backup.example
 .aws/
 .codex/
 .agents/
@@ -18,3 +19,6 @@ test-results/
 
 # Cópia local de publicação no Sites
 .sites-preview/
+
+# Backups administrativos locais, nunca publicar
+backups/
