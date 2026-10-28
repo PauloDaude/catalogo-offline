@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { ShoppingCart, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 
@@ -11,25 +13,36 @@ export function ProductCard({
   image,
   onAdd,
   quantity = 0,
+  images,
+  quantityFor,
 }: {
   product: Product;
   image?: string;
-  onAdd: () => void;
+  onAdd: (product?: Product) => void;
   quantity?: number;
+  images?: Map<string, string>;
+  quantityFor?: (id: string) => number;
 }) {
+  const [open, setOpen] = useState(false);
   return (
     <article className="product-card">
-      <DialogTrigger>
+      <DialogTrigger
+        isOpen={open}
+        onOpenChange={setOpen}
+      >
         <Button
           variant="ghost"
           aria-label={`Ver ${product.name}`}
           className="product-card-trigger"
         />
         <ProductDialog
+          key={product.id}
           product={product}
           image={image}
           onAdd={onAdd}
           quantity={quantity}
+          images={images}
+          quantityFor={quantityFor}
         />
       </DialogTrigger>
 
@@ -59,13 +72,27 @@ export function ProductCard({
             product={product}
             showOfferLabel={false}
           />
-          <AddToCartButton
-            key={product.id}
-            productName={product.name}
-            quantity={quantity}
-            onAdd={onAdd}
-            compact
-          />
+          {product.hasVariants ? (
+            <Button
+              className="touch-button book-add-to-cart"
+              aria-label={`Escolher opções de ${product.name}`}
+              onPress={() => setOpen(true)}
+            >
+              <ShoppingCart aria-hidden="true" />
+              <Plus aria-hidden="true" />
+              {quantity > 0 && (
+                <span className="cart-product-count">{quantity}</span>
+              )}
+            </Button>
+          ) : (
+            <AddToCartButton
+              key={product.id}
+              productName={product.name}
+              quantity={quantity}
+              onAdd={onAdd}
+              compact
+            />
+          )}
         </div>
       </div>
     </article>

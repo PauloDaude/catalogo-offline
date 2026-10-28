@@ -1,0 +1,62 @@
+{
+  "versao": 1,
+  "escopo": "Somente cinco famílias do piloto, demais registros aguardam agrupamento e revisão",
+  "total_registros_origem": 85,
+  "familias": [
+    {
+      "chave_importacao": "piloto-variantes-v1:canivete",
+      "nome": "Canivete inox automático",
+      "origens": ["WA0594-01"],
+      "tem_variantes": false,
+      "opcoes": []
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:processador",
+      "nome": "Processador de alimentos",
+      "tem_variantes": true,
+      "opcoes": [
+        {
+          "rotulo": "500 ml",
+          "origens": ["WA0627-01"]
+        },
+        {
+          "rotulo": "900 ml",
+          "origens": ["WA0598-01"]
+        }
+      ]
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:pano",
+      "nome": "Pano de prato",
+      "origens": ["WA0608-01"],
+      "tem_variantes": false,
+      "opcoes": []
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:coador",
+      "nome": "Coador para café",
+      "tem_variantes": true,
+      "opcoes": [
+        {
+          "rotulo": "Grande",
+          "origens": ["WA0615-01"]
+        },
+        {
+          "rotulo": "Médio",
+          "origens": ["WA0615-02"]
+        },
+        {
+          "rotulo": "Pequeno",
+          "origens": ["WA0615-03"]
+        }
+      ]
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:funil",
+      "nome": "Funil flexível",
+      "origens": ["WA0653-01"],
+      "tem_variantes": false,
+      "opcoes": []
+    }
+  ]
+}

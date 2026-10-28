@@ -1,3 +1,4 @@
+import { saleLabel } from "./variants";
 import type { Product } from "./types";
 import { price } from "./price";
 import { Tag } from "lucide-react";
@@ -18,6 +19,20 @@ export function ProductPrice({
   product: Product;
   showOfferLabel?: boolean;
 }) {
+  if (product.hasVariants) {
+    const options = product.variants || [],
+      different = new Set(options.map((v) => v.priceCents)).size > 1;
+    return (
+      <div className="product-pricing">
+        {options.some((v) => v.previousPriceCents !== undefined) && (
+          <span className="offer-label">Opções em oferta</span>
+        )}
+        {different && <span className="price-from">A partir de</span>}
+        <p className="product-price">{price(product.priceCents)}</p>
+        <p className="variant-summary">{options.length} opções</p>
+      </div>
+    );
+  }
   const { priceCents, previousPriceCents } = product;
   const hasOffer =
     Number.isSafeInteger(previousPriceCents) &&
@@ -54,6 +69,9 @@ export function ProductPrice({
           </span>
         )}
       </div>
+      {product.sale?.kind === "box" && (
+        <p className="sale-unit">{saleLabel(product.sale)}</p>
+      )}
     </div>
   );
 }

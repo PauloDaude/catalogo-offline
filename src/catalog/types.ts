@@ -8,6 +8,20 @@ export const categories = [
 
 export type Category = string;
 
+export type Sale = {
+  kind: "unit" | "box";
+  packCount: number;
+  unitsPerPack: number;
+};
+export type Variant = {
+  id: string;
+  code: string;
+  label: string;
+  priceCents: number;
+  previousPriceCents?: number;
+  imagePath?: string;
+  sale?: Sale;
+};
 export type Product = {
   id: string;
   code: string;
@@ -16,9 +30,16 @@ export type Product = {
   previousPriceCents?: number;
   category: Category;
   imagePath: string;
+  hasVariants?: boolean;
+  variantAttribute?: string;
+  variants?: Variant[];
+  sale?: Sale;
+  parentId?: string;
+  variantLabel?: string;
 };
 
 export type CatalogSnapshot = {
+  schemaVersion?: 2;
   revision: number;
   updatedAt: string;
   products: Product[];

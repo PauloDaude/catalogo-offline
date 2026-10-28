@@ -1,0 +1,162 @@
+{
+  "formato": "cirandinha-piloto-variantes",
+  "versao": 1,
+  "status": "plano_aprovado_ensaio_local_validado_envio_remoto_pendente",
+  "produtos_principais": 5,
+  "itens_vendaveis": 8,
+  "publicar_automaticamente": false,
+  "pre_condicoes": [
+    "Feature implementada e testes locais aprovados",
+    "Migration005 aplicada pelo usuário no projeto correto",
+    "Backup real gerado e conferido",
+    "Sessão administrativa autorizada configurada localmente",
+    "Importador idempotente validado em dry-run e ambiente local"
+  ],
+  "produtos": [
+    {
+      "chave_importacao": "piloto-variantes-v1:canivete",
+      "nome": "Canivete inox automático",
+      "categoria": "Ferramentas",
+      "ativo": false,
+      "tem_variantes": false,
+      "imagem": "imagens/IMG-20261002-WA0594.jpg",
+      "preco_centavos": 2691,
+      "preco_anterior_centavos": 2990,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade"
+      },
+      "origens": ["WA0594-01"],
+      "oferta_exclusiva_de_teste": true,
+      "observacao": "Desconto demonstrativo de 10% em produto oculto, preço comercial original mantido no JSON principal em 2990 centavos"
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:processador",
+      "nome": "Processador de alimentos",
+      "categoria": "Cozinha",
+      "ativo": false,
+      "tem_variantes": true,
+      "caracteristica": "Capacidade",
+      "imagem": "imagens/IMG-20261002-WA0627.jpg",
+      "variantes": [
+        {
+          "chave_opcao": "WA0627-01",
+          "rotulo": "500 ml",
+          "preco_centavos": 1490,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens/IMG-20261002-WA0627.jpg",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade"
+          },
+          "origens": ["WA0627-01"]
+        },
+        {
+          "chave_opcao": "WA0598-01",
+          "rotulo": "900 ml",
+          "preco_centavos": 2190,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens/IMG-20261002-WA0598.jpg",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade"
+          },
+          "origens": ["WA0598-01"]
+        }
+      ]
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:pano",
+      "nome": "Pano de prato",
+      "categoria": "Cozinha",
+      "ativo": false,
+      "tem_variantes": false,
+      "imagem": "imagens/IMG-20261002-WA0608.jpg",
+      "preco_centavos": 4890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades"
+      },
+      "origens": ["WA0608-01"]
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:coador",
+      "nome": "Coador para café",
+      "categoria": "Cozinha",
+      "ativo": false,
+      "tem_variantes": true,
+      "caracteristica": "Tamanho",
+      "imagem": "imagens/IMG-20261002-WA0615.jpg",
+      "variantes": [
+        {
+          "chave_opcao": "WA0615-01",
+          "rotulo": "Grande",
+          "preco_centavos": 3180,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens/IMG-20261002-WA0615.jpg",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades"
+          },
+          "origens": ["WA0615-01"]
+        },
+        {
+          "chave_opcao": "WA0615-02",
+          "rotulo": "Médio",
+          "preco_centavos": 3060,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens/IMG-20261002-WA0615.jpg",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades"
+          },
+          "origens": ["WA0615-02"]
+        },
+        {
+          "chave_opcao": "WA0615-03",
+          "rotulo": "Pequeno",
+          "preco_centavos": 2940,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens/IMG-20261002-WA0615.jpg",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades"
+          },
+          "origens": ["WA0615-03"]
+        }
+      ]
+    },
+    {
+      "chave_importacao": "piloto-variantes-v1:funil",
+      "nome": "Funil flexível",
+      "categoria": "Cozinha",
+      "ativo": false,
+      "tem_variantes": false,
+      "imagem": "imagens/IMG-20261002-WA0653.jpg",
+      "preco_centavos": 890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade"
+      },
+      "origens": ["WA0653-01"]
+    }
+  ]
+}

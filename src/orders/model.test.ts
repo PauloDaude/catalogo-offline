@@ -51,3 +51,32 @@ test("key detecta mudanças sem depender da referência do array", () => {
     );
   }
 });
+
+test("pedido preserva opção e caixa sem multiplicar conteúdo da caixa", () => {
+  const order = createOrderSnapshot({
+    customerName: "Cliente",
+    notes: "",
+    now: new Date("2026-10-28T12:00:00Z"),
+    pendingChanges: false,
+    catalogReady: true,
+    items: [
+      {
+        id: "v1",
+        code: "P1000-V01",
+        name: "Coador — Grande — Caixa com 12 unidades",
+        quantity: 2,
+        priceCents: 3180,
+      },
+      {
+        id: "v2",
+        code: "P1000-V02",
+        name: "Coador — Médio — Caixa com 12 unidades",
+        quantity: 1,
+        priceCents: 3060,
+      },
+    ],
+  });
+  expect(order.totalCents).toBe(9420);
+  expect(order.items[0].name).toContain("Caixa com 12 unidades");
+  expect(order.items[0].code).toBe("P1000-V01");
+});

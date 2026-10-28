@@ -1,16 +1,22 @@
-import type { Product } from "../catalog/types";
+import { parseSale } from "../catalog/validation";
+import type { Product, Sale } from "../catalog/types";
 
 export type CartItem = Pick<Product, "id" | "name" | "priceCents"> & {
   code?: string;
   quantity: number;
+  parentId?: string;
+  variantLabel?: string;
+  sale?: Sale;
   unavailable?: boolean;
 };
 
-export const CART_KEY = "catalogo-selection-v1";
+export const CART_KEY = "catalogo-selection-v2";
+export const LEGACY_CART_KEY = "catalogo-selection-v1";
 
 export function parseCart(raw: string | null): CartItem[] {
   try {
-    const value: unknown = JSON.parse(raw ?? "[]");
+    let value: any = JSON.parse(raw ?? "[]");
+    if (value?.schemaVersion === 2) value = value.items;
 
     if (!Array.isArray(value) || value.length > 500) return [];
 
@@ -34,7 +40,8 @@ export function parseCart(raw: string | null): CartItem[] {
         (row.unavailable !== undefined &&
           typeof row.unavailable !== "boolean") ||
         (row.code !== undefined &&
-          (typeof row.code !== "string" || !/^P\d{3}$/.test(row.code)))
+          (typeof row.code !== "string" ||
+            !/^P\d{3,12}(?:-V\d{2,12})?$/.test(row.code)))
       )
         return [];
 
@@ -44,6 +51,13 @@ export function parseCart(raw: string | null): CartItem[] {
         name: row.name,
         priceCents: row.priceCents,
         quantity: row.quantity,
+        ...(row.parentId === undefined
+          ? {}
+          : { parentId: String(row.parentId) }),
+        ...(row.variantLabel === undefined
+          ? {}
+          : { variantLabel: String(row.variantLabel) }),
+        ...(row.sale === undefined ? {} : { sale: parseSale(row.sale) }),
         ...(row.code === undefined ? {} : { code: row.code }),
         ...(row.unavailable === undefined
           ? {}
@@ -58,6 +72,7 @@ export function parseCart(raw: string | null): CartItem[] {
 }
 
 export function addItem(items: CartItem[], product: Product): CartItem[] {
+  if (product.hasVariants) return items;
   const found = items.find((item) => item.id === product.id);
 
   if (found)
@@ -79,6 +94,9 @@ export function addItem(items: CartItem[], product: Product): CartItem[] {
       name: product.name,
       priceCents: product.priceCents,
       quantity: 1,
+      ...(product.parentId ? { parentId: product.parentId } : {}),
+      ...(product.variantLabel ? { variantLabel: product.variantLabel } : {}),
+      ...(product.sale ? { sale: product.sale } : {}),
     },
   ];
 }
@@ -122,6 +140,16 @@ export function changesFor(items: CartItem[], products: Product[]): string[] {
     if (current.priceCents !== item.priceCents)
       return [`O preço de ${item.name} mudou.`];
 
+    if (
+      current.name !== item.name ||
+      JSON.stringify(
+        current.sale || { kind: "unit", packCount: 1, unitsPerPack: 1 },
+      ) !==
+        JSON.stringify(
+          item.sale || { kind: "unit", packCount: 1, unitsPerPack: 1 },
+        )
+    )
+      return [`A opção ou unidade de venda de ${item.name} mudou.`];
     return item.code !== current.code
       ? [`A identificação de ${item.name} foi atualizada.`]
       : [];
@@ -145,6 +173,11 @@ export function acceptCatalog(
           priceCents: current.priceCents,
           quantity: item.quantity,
           unavailable: false,
+          ...(current.parentId ? { parentId: current.parentId } : {}),
+          ...(current.variantLabel
+            ? { variantLabel: current.variantLabel }
+            : {}),
+          ...(current.sale ? { sale: current.sale } : {}),
         }
       : { ...item, unavailable: true };
   });

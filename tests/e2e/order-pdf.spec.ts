@@ -143,8 +143,9 @@ test("pedido com 100 produtos, nomes longos e imagens ausentes pagina corretamen
     ...original.products[0],
     id: `test-${i}`,
     code: `P${String(i + 1).padStart(3, "0")}`,
-    name:
-      `Produto ${i} ` + "Descrição longa com acentuação e detalhes ".repeat(3),
+    name: (
+      `Produto ${i} ` + "Descrição longa com acentuação e detalhes ".repeat(3)
+    ).trim(),
   }));
   await page.route("**/demo/catalog.json", (r) =>
     r.fulfill({ json: { ...original, products } }),
@@ -152,7 +153,7 @@ test("pedido com 100 produtos, nomes longos e imagens ausentes pagina corretamen
   await page.route("**/demo/photos/*", (r) => r.abort());
   await page.addInitScript(
     (items) =>
-      localStorage.setItem("catalogo-selection-v1", JSON.stringify(items)),
+      localStorage.setItem("catalogo-selection-v2", JSON.stringify(items)),
     products.map((p) => ({
       id: p.id,
       code: p.code,
@@ -222,10 +223,13 @@ test.describe("mudanças em outra aba", () => {
       await expect.poll(() => requested).toBe(true);
       await second.evaluate(() => {
         const items = JSON.parse(
-          localStorage.getItem("catalogo-selection-v1")!,
-        );
+          localStorage.getItem("catalogo-selection-v2")!,
+        ).items;
         items[0].quantity = 2;
-        localStorage.setItem("catalogo-selection-v1", JSON.stringify(items));
+        localStorage.setItem(
+          "catalogo-selection-v2",
+          JSON.stringify({ schemaVersion: 2, items }),
+        );
       });
       await expect(page.getByRole("alert")).toContainText("seleção mudou");
     } finally {
@@ -240,9 +244,14 @@ test.describe("mudanças em outra aba", () => {
     ).toBeVisible();
     await expect(page.locator(".order-total")).toHaveText("R$ 130,00");
     await second.evaluate(() => {
-      const items = JSON.parse(localStorage.getItem("catalogo-selection-v1")!);
+      const items = JSON.parse(
+        localStorage.getItem("catalogo-selection-v2")!,
+      ).items;
       items[0].quantity = 3;
-      localStorage.setItem("catalogo-selection-v1", JSON.stringify(items));
+      localStorage.setItem(
+        "catalogo-selection-v2",
+        JSON.stringify({ schemaVersion: 2, items }),
+      );
     });
     await expect(
       page.getByRole("heading", { name: "Pedido pronto" }),

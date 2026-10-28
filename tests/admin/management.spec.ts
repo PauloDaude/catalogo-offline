@@ -554,6 +554,5 @@ test("paginação global, busca e edição com 105 produtos", async ({ page }) =
   await expect(
     page.getByText("Produto recém-cadastrado", { exact: true }),
   ).toBeVisible();
-  await client.storage.from("product-photos").remove([imagePath]);
   await client.auth.signOut();
 });

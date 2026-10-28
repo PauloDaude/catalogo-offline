@@ -14,7 +14,7 @@ export function createSupabaseSource(client: SupabaseClient): CatalogSource {
   const getSnapshot = async (signal?: AbortSignal) => {
     const timeout = AbortSignal.timeout(30_000);
     const { data, error } = await client
-      .rpc("read_catalog_snapshot")
+      .rpc("read_catalog_snapshot_v2")
       .abortSignal(signal ? AbortSignal.any([signal, timeout]) : timeout);
 
     if (error)

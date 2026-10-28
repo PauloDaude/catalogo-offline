@@ -7,11 +7,13 @@ export function AddToCartButton({
   quantity,
   onAdd,
   compact = false,
+  isDisabled = false,
 }: {
   productName: string;
   quantity: number;
   onAdd: () => void;
   compact?: boolean;
+  isDisabled?: boolean;
 }) {
   const [pulses, setPulses] = useState<number[]>([]);
   const sequence = useRef(0);
@@ -30,7 +32,7 @@ export function AddToCartButton({
             : "Adicionar ao carrinho"
         }
         aria-description={`${quantity} na seleção`}
-        isDisabled={quantity >= 999}
+        isDisabled={isDisabled || quantity >= 999}
         onPress={() => {
           onAdd();
           setPulses((current) => [...current.slice(-4), ++sequence.current]);

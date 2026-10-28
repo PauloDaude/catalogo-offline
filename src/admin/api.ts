@@ -53,7 +53,7 @@ function check(error: { code?: string; message?: string } | null) {
 export function createAdminApi(client: SupabaseClient) {
   return {
     async listProducts(query: ProductQuery) {
-      const { data, error } = await client.rpc("list_admin_products", {
+      const { data, error } = await client.rpc("list_admin_products_v2", {
         p_page: query.page,
         p_query: query.query,
         p_category: query.category || null,
@@ -87,35 +87,48 @@ export function createAdminApi(client: SupabaseClient) {
       original: AdminProduct | null,
       photo?: Blob,
     ) {
-      let uploaded: string | undefined;
-      if (photo) {
+      const uploaded: string[] = [];
+      async function upload(blob: Blob) {
         const path = `products/${crypto.randomUUID()}.jpg`;
         const { error } = await client.storage
           .from("product-photos")
-          .upload(path, photo, { contentType: "image/jpeg", upsert: false });
+          .upload(path, blob, { contentType: "image/jpeg", upsert: false });
         check(error);
-        uploaded = path;
+        uploaded.push(path);
+        return path;
       }
       try {
-        const { data, error } = await client.rpc("save_product", {
-          p_id: original?.id ?? null,
-          p_expected_version: original?.version ?? null,
-          p_name: values.name,
-          p_category_id: values.category_id,
-          p_price_cents: values.price_cents,
-          p_previous_price_cents: values.previous_price_cents,
-          p_image_path: uploaded ?? values.image_path,
-          p_active: values.active,
+        const image_path = photo ? await upload(photo) : values.image_path;
+        const variants = [];
+        for (const row of values.variants || []) {
+          const { photo: variantPhoto, ...fields } = row;
+          variants.push({
+            ...fields,
+            image_path: variantPhoto
+              ? await upload(variantPhoto)
+              : row.image_path,
+          });
+        }
+        const { data, error } = await client.rpc("save_product_v2", {
+          p_payload: {
+            ...values,
+            image_path,
+            variants,
+            id: original?.id ?? null,
+            expected_version: original?.version ?? null,
+          },
         });
         check(error);
         return data as AdminProduct;
       } catch (error) {
-        // Only a definite server rejection permits cleanup. Network failures may
-        // have committed, so retain that image rather than break a saved product.
-        if (uploaded && error instanceof AdminError && error.code !== "network")
+        if (
+          uploaded.length &&
+          error instanceof AdminError &&
+          error.code !== "network"
+        )
           await client.storage
             .from("product-photos")
-            .remove([uploaded])
+            .remove(uploaded)
             .catch(() => {});
         throw error;
       }

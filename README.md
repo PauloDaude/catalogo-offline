@@ -203,3 +203,22 @@ npm run test:backup:restore
 
 O segundo comando de teste aceita apenas Supabase local e cria/limpa destinos
 fictícios de recuperação, sem usar credenciais de `.env.backup` ou alterar o remoto.
+
+## Variantes, caixas e importação piloto
+
+Produtos com opções têm preço, oferta e foto por variante, seleção explícita no
+catálogo e linhas separadas no carrinho/PDF. Caixas usam o valor total por venda
+
+Antes de usar a nova build contra o Supabase, aplique a migration 005 pelo
+[guia de variantes](docs/deployment/variantes.md). A importação dos cinco produtos
+ocultos exige backup V2 conferido e configuração privada, conforme o
+[guia de importação](docs/deployment/importacao-produtos.md)
+
+```bash
+npm run import:catalog -- --dry-run
+npm run import:catalog -- --pilot
+```
+
+A simulação não escreve, o piloto usa exclusivamente o manifesto aprovado e não
+ativa produtos nem publica o frontend. Evidências em
+[docs/validation/variantes.md](docs/validation/variantes.md)

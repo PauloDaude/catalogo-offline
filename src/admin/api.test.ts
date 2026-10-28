@@ -15,7 +15,7 @@ test("pagina no servidor com filtros parametrizados e total mesmo sem itens", as
       visibility: "hidden",
     }),
   ).toEqual({ products: [], total: 105 });
-  expect(rpc).toHaveBeenCalledWith("list_admin_products", {
+  expect(rpc).toHaveBeenCalledWith("list_admin_products_v2", {
     p_page: 7,
     p_query: "açúcar, (%)",
     p_category: "c",

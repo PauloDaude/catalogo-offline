@@ -146,7 +146,7 @@ export function CartPanel({
                         <p>
                           {item.unavailable
                             ? "Indisponível — fora do total"
-                            : `${price(item.priceCents)} por unidade`}
+                            : `${price(item.priceCents)} por ${item.sale?.kind === "box" ? "caixa" : "unidade"}`}
                         </p>
                       </div>
                       <div className="cart-item-actions">

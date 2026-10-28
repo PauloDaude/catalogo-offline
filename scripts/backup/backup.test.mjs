@@ -236,3 +236,31 @@ test("dump inclui extensões necessárias e rejeita nomes inválidos", async () 
   assert.ok(args.includes("--schema=auth"));
   assert.throws(() => dumpArguments([{ name: "*", schema: "extensions" }]));
 });
+
+test("backup V2 verifica foto exclusiva de variante e aceita pacotes V1", async () => {
+  const root = await temp(),
+    meta = metadata();
+  meta.catalog.variantSchema = true;
+  meta.catalog.variants = [
+    {
+      id: "variant",
+      product_id: "p",
+      image_path: photo,
+      label: "Grande",
+      price_cents: 3180,
+    },
+  ];
+  const result = await createBackup(config(root), deps(meta));
+  const manifest = await verifyBackup(result.path);
+  assert.equal(manifest.version, 2);
+  assert.equal(manifest.summary.variants, 1);
+  const changed = deps(meta);
+  let calls = 0;
+  changed.database.readMetadata = async () => {
+    const m = structuredClone(meta);
+    if (calls++ > 0) m.catalog.variants[0].label = "Pequeno";
+    return m;
+  };
+  await assert.rejects(createBackup(config(root), changed), /alterado/);
+  await rm(root, { recursive: true, force: true });
+});

@@ -63,7 +63,7 @@ export async function verifyBackup(folder, { allowIncomplete = false } = {}) {
     );
     if (
       manifest.format !== "cirandinha-backup" ||
-      manifest.version !== 1 ||
+      ![1, 2].includes(manifest.version) ||
       manifest.complete !== true ||
       !Array.isArray(manifest.files)
     )
@@ -95,9 +95,9 @@ export async function verifyBackup(folder, { allowIncomplete = false } = {}) {
       if (!actual.has(`photos/${object.name}`))
         throw new BackupError("Foto ausente no backup");
     }
-    for (const product of meta.catalog.products)
-      if (!actual.has(`photos/${photoPath(product.image_path)}`))
-        throw new BackupError("Foto de produto ausente no backup");
+    for (const name of photoReferences(meta))
+      if (!actual.has(`photos/${name}`))
+        throw new BackupError("Foto de produto/opção ausente no backup");
     if (
       manifest.summary.products !== meta.catalog.products.length ||
       manifest.summary.photos !== meta.objects.length
@@ -111,4 +111,16 @@ export async function verifyBackup(folder, { allowIncomplete = false } = {}) {
           "Não foi possível verificar o backup, confira a pasta e os arquivos",
         );
   }
+}
+
+export function photoReferences(meta) {
+  const parents = new Map(meta.catalog.products.map((p) => [p.id, p]));
+  return [
+    ...meta.catalog.products.map((p) => photoPath(p.image_path)),
+    ...(meta.catalog.variants || []).map((v) => {
+      if (!parents.has(v.product_id))
+        throw new BackupError("Opção sem produto no backup");
+      return photoPath(v.image_path || parents.get(v.product_id).image_path);
+    }),
+  ];
 }

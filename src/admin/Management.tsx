@@ -251,7 +251,9 @@ export function Management({ client }: { client: SupabaseClient }) {
                           }
                         </small>
                         <span>
-                          {price(p.price_cents)}
+                          {p.has_variants
+                            ? `${p.variants?.filter((v) => v.active).length || 0} opções`
+                            : price(p.price_cents ?? 0)}
                           {p.previous_price_cents && (
                             <del>{price(p.previous_price_cents)}</del>
                           )}

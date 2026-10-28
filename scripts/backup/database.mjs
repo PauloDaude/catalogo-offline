@@ -107,8 +107,10 @@ export async function runTool(config, tool, args, { input = "", file } = {}) {
   return output;
 }
 
-const metadataSql = `select jsonb_build_object(
+const metadataSql = (hasVariants = false) => `select jsonb_build_object(
  'catalog',jsonb_build_object(
+ 'variantSchema',${hasVariants},
+ 'variants',${hasVariants ? "coalesce((select jsonb_agg(to_jsonb(v) order by v.id) from public.product_variants v),'[]'::jsonb)" : "'[]'::jsonb"},
  'products',coalesce((select jsonb_agg(to_jsonb(p) order by p.id) from public.products p),'[]'::jsonb),
  'categories',coalesce((select jsonb_agg(to_jsonb(c) order by c.id) from public.categories c),'[]'::jsonb),
  'admins',coalesce((select jsonb_agg(to_jsonb(a) order by a.user_id) from public.catalog_admins a),'[]'::jsonb),
@@ -161,11 +163,17 @@ export function createDatabase(config) {
       return { client, rolesClient, server };
     },
     readMetadata: async () => {
+      const variants = await runTool(
+        config,
+        "psql",
+        ["-X", "-qAt", "-v", "ON_ERROR_STOP=1"],
+        { input: "select to_regclass('public.product_variants') is not null;" },
+      );
       const text = await runTool(
         config,
         "psql",
         ["-X", "-qAt", "-v", "ON_ERROR_STOP=1"],
-        { input: metadataSql },
+        { input: metadataSql(variants === "t") },
       );
       try {
         return JSON.parse(text);

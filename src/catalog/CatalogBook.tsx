@@ -63,6 +63,8 @@ export function CatalogBook({
               product={product}
               image={images.get(product.imagePath)}
               quantity={quantityFor(product.id)}
+              images={images}
+              quantityFor={quantityFor}
               onAdd={onAdd}
               onPrevious={() => go(-1)}
               onNext={() => go(1)}

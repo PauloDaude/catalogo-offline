@@ -2376,3 +2376,50 @@ progress {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.sale-unit,
+.variant-summary,
+.price-from {
+  font-size: 13px;
+  color: #52627b;
+  margin: 4px 0;
+}
+.variant-editor {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+.variant-editor-row {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fafbfe;
+}
+.variant-editor-row h3 {
+  margin: 0;
+  font-size: 17px;
+}
+.sale-fields {
+  display: grid;
+  gap: 12px;
+}
+.variant-editor .admin-photo-preview {
+  max-height: 160px;
+  object-fit: contain;
+}
+.product-detail-info .admin-select {
+  margin: 12px 0;
+}
+
+.category-button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 650px) {
+  .product-dialog:has(.admin-select) .product-detail-photo {
+    height: min(26dvh, 260px);
+  }
+}

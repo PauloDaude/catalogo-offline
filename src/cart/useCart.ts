@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { sellableProducts } from "../catalog/variants";
+import { readCartStorage, serializeCart } from "./legacy-migration";
 import type { Product } from "../catalog/types";
 import {
   CART_KEY,
@@ -13,12 +15,10 @@ import {
 } from "./model";
 
 export function useCart(products: Product[], catalogReady: boolean) {
+  const choices = sellableProducts(products);
   const [data, setData] = useState(() => {
     try {
-      return {
-        items: parseCart(localStorage.getItem(CART_KEY)),
-        persistent: true,
-      };
+      return readCartStorage();
     } catch {
       return { items: [] as CartItem[], persistent: false };
     }
@@ -62,7 +62,7 @@ export function useCart(products: Product[], catalogReady: boolean) {
     const next = { items: fn(base), persistent: true };
 
     try {
-      localStorage.setItem(CART_KEY, JSON.stringify(next.items));
+      localStorage.setItem(CART_KEY, serializeCart(next.items));
     } catch {
       next.persistent = false;
     }
@@ -75,7 +75,7 @@ export function useCart(products: Product[], catalogReady: boolean) {
     ...data,
     count: data.items.reduce((sum, item) => sum + item.quantity, 0),
     totalCents: cartTotal(data.items),
-    changes: catalogReady ? changesFor(data.items, products) : [],
+    changes: catalogReady ? changesFor(data.items, choices) : [],
     add: (product: Product) => mutate((items) => addItem(items, product)),
     quantity: (id: string, quantity: number) =>
       mutate((items) => setQuantity(items, id, quantity)),
@@ -83,7 +83,7 @@ export function useCart(products: Product[], catalogReady: boolean) {
       mutate((items) => items.filter((item) => item.id !== id)),
     clear: () => mutate(() => []),
     acceptChanges: () => {
-      if (catalogReady) mutate((items) => acceptCatalog(items, products));
+      if (catalogReady) mutate((items) => acceptCatalog(items, choices));
     },
   };
 }

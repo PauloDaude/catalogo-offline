@@ -1,3 +1,4 @@
+import { ShoppingCart, Plus } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -17,6 +18,8 @@ export function CatalogBookProduct({
   onNext,
   isFirst,
   isLast,
+  images,
+  quantityFor,
 }: {
   product: Product;
   image?: string;
@@ -26,7 +29,10 @@ export function CatalogBookProduct({
   onNext: () => void;
   isFirst: boolean;
   isLast: boolean;
+  images?: Map<string, string>;
+  quantityFor?: (id: string) => number;
 }) {
+  const [open, setOpen] = useState(false);
   const [photo, setPhoto] = useState({ source: "", ratio: 1 });
 
   return (
@@ -38,17 +44,23 @@ export function CatalogBookProduct({
         } as CSSProperties
       }
     >
-      <DialogTrigger>
+      <DialogTrigger
+        isOpen={open}
+        onOpenChange={setOpen}
+      >
         <Button
           variant="ghost"
           className="product-card-trigger"
           aria-label={`Ver ${product.name}`}
         />
         <ProductDialog
+          key={product.id}
           product={product}
           image={image}
           quantity={quantity}
-          onAdd={() => onAdd(product)}
+          onAdd={(selected) => onAdd(selected || product)}
+          images={images}
+          quantityFor={quantityFor}
         />
       </DialogTrigger>
 
@@ -104,13 +116,27 @@ export function CatalogBookProduct({
         <h2>{product.name}</h2>
         <div className="book-product-purchase">
           <ProductPrice product={product} />
-          <AddToCartButton
-            key={product.id}
-            productName={product.name}
-            quantity={quantity}
-            onAdd={() => onAdd(product)}
-            compact
-          />
+          {product.hasVariants ? (
+            <Button
+              className="touch-button book-add-to-cart"
+              aria-label={`Escolher opções de ${product.name}`}
+              onPress={() => setOpen(true)}
+            >
+              <ShoppingCart aria-hidden="true" />
+              <Plus aria-hidden="true" />
+              {quantity > 0 && (
+                <span className="cart-product-count">{quantity}</span>
+              )}
+            </Button>
+          ) : (
+            <AddToCartButton
+              key={product.id}
+              productName={product.name}
+              quantity={quantity}
+              onAdd={() => onAdd(product)}
+              compact
+            />
+          )}
         </div>
       </div>
     </article>

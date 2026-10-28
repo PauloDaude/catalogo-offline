@@ -1,3 +1,11 @@
+import { parseSale } from "../../catalog/validation";
+import { ConfirmDialog } from "../ConfirmDialog";
+import { SaleFields, type SaleDraft } from "./SaleFields";
+import {
+  VariantEditor,
+  variantDraft,
+  type VariantDraft,
+} from "./VariantEditor";
 import { useEffect, useState } from "react";
 import { Form, TextField, Label, Input, Checkbox } from "react-aria-components";
 
@@ -28,7 +36,7 @@ export function ProductForm({
     product?.category_id ?? categories.find((c) => c.active)?.id ?? "",
   );
   const [price, setPrice] = useState(
-    product ? formatMoneyInput(product.price_cents) : "",
+    product?.price_cents != null ? formatMoneyInput(product.price_cents) : "",
   );
   const [previous, setPrevious] = useState(
     product?.previous_price_cents
@@ -36,6 +44,23 @@ export function ProductForm({
       : "",
   );
   const [offer, setOffer] = useState(product?.previous_price_cents != null);
+  const [hasVariants, setHasVariants] = useState(
+    product?.has_variants || false,
+  );
+  const [attribute, setAttribute] = useState(product?.variant_attribute || "");
+  const [rows, setRows] = useState<VariantDraft[]>(
+    product?.variants?.length
+      ? product.variants.map(variantDraft)
+      : [variantDraft(), variantDraft()],
+  );
+  const [sale, setSale] = useState<SaleDraft>({
+    sale_kind: product?.sale_kind || "unit",
+    pack_count: product?.pack_count || 1,
+    units_per_pack: product?.units_per_pack || 1,
+  });
+  const [active, setActive] = useState(product?.active ?? true);
+  const [switchMode, setSwitchMode] = useState<boolean | null>(null);
+  const [variantProcessing, setVariantProcessing] = useState(false);
   const [photo, setPhoto] = useState<Blob>();
   const [preview, setPreview] = useState("");
   const [removed, setRemoved] = useState(false);
@@ -95,20 +120,74 @@ export function ProductForm({
           Cancelar
         </Button>
       </div>
+      {switchMode !== null && (
+        <ConfirmDialog
+          isOpen
+          title="Alterar tipo de produto?"
+          confirmLabel="Alterar tipo"
+          busy={false}
+          error=""
+          onCancel={() => setSwitchMode(null)}
+          onConfirm={() => {
+            setHasVariants(switchMode);
+            setSwitchMode(null);
+            setDirty(true);
+          }}
+        >
+          <p>
+            Seleções antigas precisarão ser revisadas quando o produto passar a
+            exigir outra opção ou unidade de venda
+          </p>
+        </ConfirmDialog>
+      )}
+      {!active && <p className="admin-notice">O produto será salvo oculto</p>}
       <Form
         className="product-form"
         onSubmit={async (e) => {
           e.preventDefault();
-          if (busy || processing || conflict) return;
+          if (busy || processing || variantProcessing || conflict) return;
           setError("");
           try {
             if (!navigator.onLine)
               throw new Error("Conecte-se à internet para salvar.");
             if (!name.trim() || !category)
               throw new Error("Informe o nome e escolha uma categoria.");
-            const cents = parseMoney(price),
-              old = offer ? parseMoney(previous) : null;
-            if (old !== null && old <= cents)
+            const cents = hasVariants ? null : parseMoney(price),
+              old = !hasVariants && offer ? parseMoney(previous) : null;
+            if (hasVariants && !attribute.trim())
+              throw new Error("Informe a característica das opções");
+            const checkSale = (s: SaleDraft) =>
+              parseSale({
+                kind: s.sale_kind,
+                packCount: s.pack_count,
+                unitsPerPack: s.units_per_pack,
+              });
+            if (!hasVariants) checkSale(sale);
+            const variants = hasVariants
+              ? rows.map((r) => {
+                  checkSale(r);
+                  const current = parseMoney(r.price),
+                    before = r.offer ? parseMoney(r.previous) : null;
+                  if (!r.label.trim() || (before !== null && before <= current))
+                    throw new Error(
+                      "Confira o nome, preço e oferta das opções",
+                    );
+                  return {
+                    id: r.id,
+                    version: r.version,
+                    label: r.label.trim(),
+                    price_cents: current,
+                    previous_price_cents: before,
+                    image_path: r.image_path,
+                    photo: r.photo,
+                    active: r.active,
+                    sale_kind: r.sale_kind,
+                    pack_count: r.pack_count,
+                    units_per_pack: r.units_per_pack,
+                  };
+                })
+              : undefined;
+            if (old !== null && cents !== null && old <= cents)
               throw new Error(
                 "O preço anterior deve ser maior que o preço atual.",
               );
@@ -122,7 +201,13 @@ export function ProductForm({
                 price_cents: cents,
                 previous_price_cents: old,
                 image_path: product?.image_path ?? "",
-                active: product?.active ?? true,
+                active,
+                has_variants: hasVariants,
+                variant_attribute: hasVariants ? attribute.trim() : null,
+                sale_kind: hasVariants ? null : sale.sale_kind,
+                pack_count: hasVariants ? null : sale.pack_count,
+                units_per_pack: hasVariants ? null : sale.units_per_pack,
+                variants,
               },
               photo,
             );
@@ -203,57 +288,119 @@ export function ProductForm({
                 name: `${c.name}${c.active ? "" : " (arquivada)"}`,
               }))}
           />
-          <TextField
-            isDisabled={busy}
-            isRequired
-            value={price}
+          <SelectField
+            label="Tipo de produto"
+            value={hasVariants ? "variants" : "simple"}
+            isDisabled={busy || variantProcessing}
+            options={[
+              { id: "simple", name: "Produto simples" },
+              { id: "variants", name: "Produto com variantes" },
+            ]}
             onChange={(v) => {
-              setPrice(v);
-              setDirty(true);
+              const mode = v === "variants";
+              if (product && mode !== hasVariants) setSwitchMode(mode);
+              else {
+                setHasVariants(mode);
+                setDirty(true);
+              }
             }}
-          >
-            <Label>Preço atual (R$)</Label>
-            <Input
-              inputMode="decimal"
-              placeholder="65,00"
-            />
-          </TextField>
-          <Checkbox
-            isDisabled={busy}
-            isSelected={offer}
-            onChange={(v) => {
-              setOffer(v);
-              setDirty(true);
-            }}
-            className="admin-checkbox"
-          >
-            <span
-              className="checkbox-mark"
-              aria-hidden="true"
-            >
-              {offer ? "✓" : ""}
-            </span>
-            Produto em oferta
-          </Checkbox>
-          {offer && (
+          />
+          {hasVariants ? (
             <>
+              <TextField
+                isRequired
+                isDisabled={busy}
+                value={attribute}
+                onChange={(v) => {
+                  setAttribute(v);
+                  setDirty(true);
+                }}
+                maxLength={80}
+              >
+                <Label>Característica</Label>
+                <Input placeholder="Tamanho, capacidade ou modelo" />
+              </TextField>
+              <VariantEditor
+                value={rows}
+                onChange={(v) => {
+                  setRows(v);
+                  setDirty(true);
+                }}
+                parentImage={
+                  preview ||
+                  (!removed && product
+                    ? photoUrl(product.image_path)
+                    : undefined)
+                }
+                photoUrl={photoUrl}
+                disabled={busy || variantProcessing}
+                onProcessing={setVariantProcessing}
+                onHideLast={() => setActive(false)}
+              />
+            </>
+          ) : (
+            <>
+              <SaleFields
+                value={sale}
+                onChange={(v) => {
+                  setSale(v);
+                  setDirty(true);
+                }}
+                disabled={busy}
+              />
               <TextField
                 isDisabled={busy}
                 isRequired
-                value={previous}
+                value={price}
                 onChange={(v) => {
-                  setPrevious(v);
+                  setPrice(v);
                   setDirty(true);
                 }}
               >
-                <Label>Preço anterior (R$)</Label>
+                <Label>Preço atual (R$)</Label>
                 <Input
                   inputMode="decimal"
-                  placeholder="100,00"
+                  placeholder="65,00"
                 />
               </TextField>
-              {discount > 0 && (
-                <p className="admin-discount">{discount}% de desconto</p>
+              <Checkbox
+                isDisabled={busy}
+                isSelected={offer}
+                onChange={(v) => {
+                  setOffer(v);
+                  setDirty(true);
+                }}
+                className="admin-checkbox"
+              >
+                <span
+                  className="checkbox-mark"
+                  aria-hidden="true"
+                >
+                  {offer ? "✓" : ""}
+                </span>
+                Produto em oferta
+              </Checkbox>
+              {offer && (
+                <>
+                  <TextField
+                    isDisabled={busy}
+                    isRequired
+                    value={previous}
+                    onChange={(v) => {
+                      setPrevious(v);
+                      setDirty(true);
+                    }}
+                  >
+                    <Label>Preço anterior (R$)</Label>
+                    <Input
+                      inputMode="decimal"
+                      placeholder="100,00"
+                    />
+                  </TextField>
+                  {discount > 0 && (
+                    <p className="admin-discount">{discount}% de desconto</p>
+                  )}
+                </>
               )}
             </>
           )}
@@ -285,7 +432,7 @@ export function ProductForm({
         <Button
           type="submit"
           className="touch-button"
-          isDisabled={busy || processing || conflict}
+          isDisabled={busy || processing || variantProcessing || conflict}
         >
           {busy ? "Salvando…" : "Salvar produto"}
         </Button>

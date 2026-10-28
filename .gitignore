@@ -3,6 +3,7 @@
 .env.*
 !.env.example
 !.env.backup.example
+!.env.import.example
 .aws/
 .codex/
 .agents/
@@ -22,3 +23,6 @@ test-results/
 
 # Backups administrativos locais, nunca publicar
 backups/
+
+# Journal privado de importação, sem credenciais
+.catalog-import/

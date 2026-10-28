@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createClient } from "@supabase/supabase-js";
+import { BackupError } from "./config.mjs";
 import { createBackup } from "./catalog-backup.mjs";
 import { verifyBackup, sha256 } from "./manifest.mjs";
 
@@ -34,6 +35,7 @@ const client = createClient(
 const suffix = crypto.randomUUID().replaceAll("-", ""),
   db = `backup_verify_${suffix}`,
   bucket = `backup-verify-${suffix}`;
+const variantParent = crypto.randomUUID();
 const category = crypto.randomUUID(),
   archived = crypto.randomUUID(),
   users = [],
@@ -99,6 +101,10 @@ try {
     insert into public.categories(id,name,active) values ('${category}','Backup ${suffix}',true),('${archived}','Arquivada ${suffix}',false);
     insert into public.products(name,category_id,price_cents,image_path,active) values
      ('Visível ${suffix}','${category}',6500,'${image}',true),('Oculto ${suffix}','${archived}',4500,'${image}',false);`,
+  );
+  query(
+    "postgres",
+    `begin;insert into public.products(id,name,category_id,image_path,active,has_variants,variant_attribute,price_cents,sale_kind,pack_count,units_per_pack) values ('${variantParent}','Variante ${suffix}','${category}','${image}',true,true,'Tamanho',null,null,null,null);insert into public.product_variants(product_id,label,price_cents,sale_kind,pack_count,units_per_pack,image_path) values ('${variantParent}','Grande',3180,'box',12,1,'${orphan}');commit;`,
   );
   const config = {
     root,
@@ -202,6 +208,25 @@ try {
   );
   assert.equal(page.total, 1);
   assert.equal(page.products[0].name, `Visível ${suffix}`);
+  stage = "conferir variantes recuperadas";
+  const restoredVariants = JSON.parse(
+    query(db, "select public.read_catalog_snapshot_v2();"),
+  );
+  const restoredParent = restoredVariants.products.find(
+    (p) => p.id === variantParent,
+  );
+  assert.equal(restoredParent.variants[0].priceCents, 3180);
+  assert.equal(restoredParent.variants[0].sale.packCount, 12);
+  const oldVariantCode = restoredParent.variants[0].code;
+  const nextVariant = query(
+    db,
+    `insert into public.product_variants(product_id,label,price_cents) values ('${variantParent}','Pequeno',100) returning code;`,
+  ).split("\n")[0];
+  assert.notEqual(nextVariant, oldVariantCode);
+  assert.equal(
+    Number(nextVariant.split("-V")[1]),
+    Number(oldVariantCode.split("-V")[1]) + 1,
+  );
   stage = "conferir RLS";
   const visible = Number(
     query(db, "set role anon;select count(*) from public.products;"),
@@ -291,7 +316,8 @@ try {
   console.log(
     `PASS: dump restaurado, Auth e autorização preservados, sequência e RLS de 3 perfis conferidas, ${manifest.summary.photos} fotos recuperadas com hashes iguais\nCópia fictícia local: ${backup.path}`,
   );
-} catch {
+} catch (error) {
+  if (error instanceof BackupError) console.error(error.message);
   console.error(
     `Falha no ensaio local de restauração: ${stage}, nenhuma operação no projeto remoto`,
   );
@@ -304,7 +330,7 @@ try {
   if (dbCreated) query("postgres", `drop database ${db} with (force);`);
   query(
     "postgres",
-    `delete from public.products where category_id in ('${category}','${archived}');delete from public.categories where id in ('${category}','${archived}');`,
+    `delete from public.product_variants where product_id in(select id from public.products where category_id in ('${category}','${archived}'));delete from public.products where category_id in ('${category}','${archived}');delete from public.categories where id in ('${category}','${archived}');`,
   );
   if (uploaded.length)
     await client.storage.from("product-photos").remove(uploaded);

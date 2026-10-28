@@ -14,7 +14,12 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { loadConfig, BackupError } from "./config.mjs";
 import { createDatabase } from "./database.mjs";
 import { createStorage } from "./storage.mjs";
-import { inventory, photoPath, verifyBackup } from "./manifest.mjs";
+import {
+  inventory,
+  photoPath,
+  photoReferences,
+  verifyBackup,
+} from "./manifest.mjs";
 
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -52,10 +57,10 @@ export async function createBackup(config, dependencies = {}) {
     const names = new Set(before.objects.map((o) => photoPath(o.name)));
     if (names.size !== before.objects.length)
       throw new BackupError("Inventário de fotos duplicado");
-    for (const p of before.catalog.products)
-      if (!names.has(photoPath(p.image_path)))
+    for (const path of photoReferences(before))
+      if (!names.has(path))
         throw new BackupError(
-          "Há produto com foto ausente no Storage, corrija antes de repetir o backup",
+          "Há produto/opção com foto ausente no Storage, corrija antes de repetir o backup",
         );
     if (storage.check) await storage.check();
     await database.dump(pending, before.extensions);
@@ -114,7 +119,7 @@ export async function createBackup(config, dependencies = {}) {
     } catch {}
     const manifest = {
       format: "cirandinha-backup",
-      version: 1,
+      version: before.catalog.variantSchema ? 2 : 1,
       complete: true,
       createdAt: new Date().toISOString(),
       origin: config.apiUrl,
@@ -122,6 +127,7 @@ export async function createBackup(config, dependencies = {}) {
       postgres: versions,
       summary: {
         products: before.catalog.products.length,
+        variants: before.catalog.variants?.length || 0,
         categories: before.catalog.categories.length,
         photos: before.objects.length,
         authUsers: before.authUsers,

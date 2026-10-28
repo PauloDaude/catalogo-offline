@@ -2,6 +2,7 @@ import type { CatalogSource, SyncProgress, SyncResult } from "./types";
 import type { CatalogStore } from "./storage";
 import { withSyncLock } from "./sync-lock";
 import { validatePhoto } from "./image-download";
+import { allImagePaths } from "./variants";
 import { parseSnapshot } from "./validation";
 
 export type SyncOptions = {
@@ -26,7 +27,10 @@ export async function syncCatalog(
       const snapshot = parseSnapshot(await source.getSnapshot(options.signal));
       const local = await store.readActive();
 
-      if (local?.snapshot.revision === snapshot.revision) {
+      if (
+        local?.snapshot.revision === snapshot.revision &&
+        local.snapshot.schemaVersion === snapshot.schemaVersion
+      ) {
         await store.markChecked(options.now());
 
         return { status: "unchanged", revision: snapshot.revision };
@@ -39,7 +43,7 @@ export async function syncCatalog(
         : controller.signal;
 
       try {
-        const paths = [...new Set(snapshot.products.map((p) => p.imagePath))];
+        const paths = allImagePaths(snapshot);
         let completed = 0;
         let cursor = 0;
         const results = await Promise.allSettled(

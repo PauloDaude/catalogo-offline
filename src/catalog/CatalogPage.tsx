@@ -5,6 +5,11 @@ import { TextField, Tabs, TabList, Tab, TabPanel } from "react-aria-components";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { type Category, type Product } from "./types";
+import {
+  sellableProducts,
+  quantityForParent,
+  purchaseProduct,
+} from "./variants";
 import { filterProducts } from "./search";
 import { ProductCard } from "./ProductCard";
 import { useCart } from "../cart/useCart";
@@ -40,7 +45,7 @@ export function CatalogPage({
   const filtered = filterProducts(products, query, category);
   const productImages = new Map<string, string>();
 
-  for (const product of products) {
+  for (const product of sellableProducts(products)) {
     const image = images.get(product.imagePath);
     if (image) productImages.set(product.id, image);
   }
@@ -56,7 +61,8 @@ export function CatalogPage({
   }
 
   function addProduct(product: Product) {
-    cart.add(product);
+    if (product.hasVariants) return;
+    cart.add(purchaseProduct(product));
     setAnnouncement(`${product.name} adicionado ao carrinho.`);
   }
 
@@ -179,9 +185,7 @@ export function CatalogPage({
                 setCategory(null);
               }}
               images={images}
-              quantityFor={(id) =>
-                cart.items.find((item) => item.id === id)?.quantity ?? 0
-              }
+              quantityFor={(id) => quantityForParent(cart.items, id)}
               onAdd={addProduct}
             />
           </TabPanel>
@@ -200,11 +204,12 @@ export function CatalogPage({
                       key={product.id}
                       product={product}
                       image={images.get(product.imagePath)}
-                      quantity={
-                        cart.items.find((item) => item.id === product.id)
-                          ?.quantity ?? 0
+                      quantity={quantityForParent(cart.items, product.id)}
+                      onAdd={(selected) => addProduct(selected || product)}
+                      images={images}
+                      quantityFor={(id) =>
+                        cart.items.find((i) => i.id === id)?.quantity || 0
                       }
-                      onAdd={() => addProduct(product)}
                     />
                   ))}
                 </div>

@@ -17,6 +17,12 @@ export function filterProducts(
   return products.filter(
     (p) =>
       (category === null || p.category === category) &&
-      normalize(p.name).includes(needle),
+      normalize(
+        [
+          p.name,
+          p.code,
+          ...(p.variants || []).flatMap((v) => [v.label, v.code]),
+        ].join(" "),
+      ).includes(needle),
   );
 }

@@ -117,7 +117,7 @@ try {
 } finally {
   server?.kill();
   sql(
-    `delete from public.products where category_id in (select id from public.categories where name like '%${suffix}%'); delete from public.categories where name like '%${suffix}%';`,
+    `delete from public.product_variants where product_id in(select id from public.products where category_id in(select id from public.categories where name like '%${suffix}%'));delete from public.products where category_id in (select id from public.categories where name like '%${suffix}%'); delete from public.categories where name like '%${suffix}%';`,
   );
   for (const id of ids) await service.auth.admin.deleteUser(id);
 }

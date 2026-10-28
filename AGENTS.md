@@ -413,3 +413,49 @@ Referências oficiais para consultar conforme necessário:
 - Guia em docs/deployment/backup-local.md, evidências em docs/validation/backup-local.md
 - Sem criptografia ou segunda cópia automática nesta etapa; orientar proteção antes
   de copiar para destino externo. Não restaurar automaticamente projeto remoto
+
+## Preparação dos produtos do WhatsApp — histórico da revisão inicial
+
+- Usuário forneceu docs/produtos/conversa.txt e 67 fotos locais
+- Extração em docs/produtos/produtos-revisao.json: 67 mensagens, 85 itens com preço,
+  incluindo variações, com texto/linha original e vínculo de imagem preservados
+- Tabela e pendências em docs/produtos/revisao-produtos.md, aprovação humana pendente
+- Não importar ou enviar fotos antes da revisão dos nomes, preços, unidade de venda,
+  possíveis duplicatas, fotos compartilhadas e definição de categorias
+- JSON de preparação não implementa variações no app; cada linha é candidata a item
+  separado, modelagem final ainda sujeita à revisão
+- Importação futura deve fazer upload no Storage antes de save_product, preservar
+  códigos gerados pelo banco e começar com piloto de 2 ou 3 itens após aprovação
+- Nenhuma requisição de cadastro/upload foi executada nesta etapa
+
+## Variantes e regra de caixas — decisões aprovadas
+
+- Usuário aprovou correções de ortografia e unidades do JSON do WhatsApp
+- AxB representa caixa com A conjuntos de B unidades, preço já é da caixa; se o
+  texto diz und., multiplicar o unitário pelo conteúdo da caixa uma única vez
+- Coadores caixa de 12: grande 3180, médio 3060 e pequeno 2940 centavos
+- Substitui a restrição anterior: usuário quer variantes reais com preços próprios,
+  agrupadas por produto, com reflexo no painel, catálogo, carrinho, offline e pedido
+- Design/plano em docs/superpowers/{specs,plans}/2026-10-28-variantes*,
+  aprovados pelo usuário para implementação, incluindo migration SQL para o usuário
+- Piloto solicitado após testes: cinco produtos principais do JSON, com cenários
+  de oferta, variantes e caixa; manifesto proposto em docs/produtos/piloto-variantes.json
+- Proposta de segurança do piloto: cinco pais ocultos, oferta de 10% demonstrativa
+  no canivete isolada da tabela comercial, aprovada junto ao plano
+- Nenhuma importação, upload, migration remota ou publicação foi executada
+
+## Variantes implementadas localmente — 28/10/2026
+
+- Migration 005 com variantes, preços/fotos/ofertas próprios, caixas e RPCs V2
+- Um card por produto, escolha obrigatória de opção e carrinho por item vendável
+- Código Pxxx-Vnn monotônico, edição atômica com conflito de versões e RLS administrativa
+- Preço de caixa já é o total, não multiplicar novamente pelo conteúdo
+- Catálogo/carrinho V2 separados dos antigos, cópia preserva V1 e fotos, migração
+  não sobrescreve snapshot V2 existente nem perde seleção por quota de armazenamento
+- Backup V2 inclui variantes e suas fotos, verificador mantém compatibilidade V1
+- Cinco produtos/oito escolhas importados e conferidos apenas no ambiente local,
+  incluindo repetição idempotente e oferta fictícia sempre oculta
+- Envio remoto depende do SQL 005 aplicado pelo usuário, backup V2 real conferido
+  e .env.import privado, nunca solicitar senha no chat ou usar service_role no frontend
+- Guias em docs/deployment/{variantes,importacao-produtos}.md, evidências em
+  docs/validation/variantes.md, sem publicação automática ou importação do lote completo

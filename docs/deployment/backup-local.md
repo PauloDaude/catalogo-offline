@@ -75,7 +75,7 @@ Uma pasta datada é criada em `backups/`, com acesso restrito no Linux:
 - `roles.sql`: definição dos papéis, sem senhas de papéis PostgreSQL
 - `photos/products/`: bytes de todas as fotos do bucket product-photos, incluindo
   fotos antigas/sem vínculo ainda existentes, preservando nomes e caminhos
-- `metadata.json`: inventário de produtos/categorias/autorizações, revisão,
+- `metadata.json`: inventário de produtos/variantes/categorias/autorizações, revisão,
   sequência, bucket e objetos, incluindo produtos ocultos e categorias arquivadas
 - `migrations/`: SQL local versionado para referência
 - `manifest.json`: versão do formato, origem pública, versões das ferramentas,
@@ -158,3 +158,16 @@ cópia fora desse computador; backups/ é ignorada pelo Git e não entra na publ
 O botão Salvar offline do catálogo não substitui esse backup. Downloads também
 consomem transferência do projeto Supabase; a rotina não contrata serviços nem cria
 agendamento, e a exportação real depende das credenciais configuradas pelo usuário.
+
+## Compatibilidade com variantes
+
+Após a migration 005, novas cópias usam manifesto V2 e incluem preços, unidades,
+contador de códigos e fotos exclusivas das opções. Alterações de variantes durante
+uma exportação também invalidam a cópia, evitando inventário misturado
+
+O verificador continua aceitando cópias V1 anteriores, sem inventar variantes que
+não existiam nelas. Para executar o piloto de importação, gere e confira uma cópia
+V2 do projeto correto após aplicar o SQL, uma cópia V1 não cobre a nova estrutura
+
+O ensaio local também restaura um produto com variante em caixa e confere preço,
+conteúdo, foto e geração do próximo código de opção sem reutilização
