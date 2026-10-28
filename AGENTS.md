@@ -392,3 +392,10 @@ Referências oficiais para consultar conforme necessário:
 - Aplicação remota pendente, instruções em docs/deployment/paginacao-painel.md
 - Catálogo público e preparação offline continuam completos, sem paginação pública
 - Design e plano de 27/10 aprovados para execução direta, sem publicação online
+
+## Altura de fotos no tablet — 28/10/2026
+
+- No modo folhear, larguras de tela de 651 a 1024 px limitam a altura das fotos
+  a min(44dvh, 460px), incluindo iPad mini em retrato e paisagem
+- Preservar proporção e foto inteira, ajustando a largura junto com a altura
+- Manter etiqueta e setas alinhadas à foto, sem alterar dimensões da grade/modal

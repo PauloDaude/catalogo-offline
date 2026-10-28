@@ -2,6 +2,8 @@ import { test, expect } from "@playwright/test";
 
 for (const [width, height] of [
   [360, 900],
+  [768, 1024],
+  [1024, 768],
   [1280, 900],
   [844, 390],
 ]) {
@@ -47,6 +49,14 @@ for (const [width, height] of [
         .locator(".book-product-caption")
         .evaluate((el) => el.scrollIntoView({ block: "center" }));
       const photo = (await img.boundingBox())!;
+      if (width >= 651 && width <= 1024) {
+        expect(photo.height).toBeLessThanOrEqual(
+          Math.min(height * 0.44, 460) + 1,
+        );
+      }
+      if (width === 768 && photoWidth === 800) {
+        await page.screenshot({ path: "/tmp/catalogo-ipad-mini-square.png" });
+      }
       const caption = (await page
         .locator(".book-product-caption")
         .boundingBox())!;
