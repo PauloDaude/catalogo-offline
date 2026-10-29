@@ -149,7 +149,7 @@ exatos do manifesto; import-key/hash na RPC garante repetição segura
       sem tokens, sessão administrativa autorizada e dry-run sem rede de escrita
 - [x] Criar e validar os cinco pais primeiro no ambiente local, com catálogo,
       carrinho/PDF, variantes e caixas, incluindo desconto demonstrativo oculto
-- [ ] Após SQL aplicado pelo usuário, backup real conferido e credenciais locais,
+- [x] Após SQL aplicado pelo usuário, backup real conferido e credenciais locais,
       executar envio de cinco pais ocultos, conferir servidor e registrar IDs/códigos
 - [x] Se pré-condição remota faltar, concluir código/testes/documentação e manter
       apenas o envio pendente, sem pedir senha/chave administrativa pelo chat
@@ -175,3 +175,10 @@ aguardando usuário aplicar SQL 005, conferir backup V2 e configurar `.env.impor
 
 Não houve migration remota, importação remota, ativação dos produtos ou publicação
 A validação em hardware real continua pendente, como nas etapas anteriores
+
+### Atualização de 29/10/2026
+
+Pré-condições remotas atendidas, cinco pais ocultos P004–P008 importados e
+conferidos no servidor, incluindo seis fotos e ausência no snapshot público
+A pendência de envio registrada acima está concluída, validação/ativação pelo
+usuário e hardware real continuam separadas, sem publicação da build

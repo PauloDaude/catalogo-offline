@@ -459,3 +459,31 @@ Referências oficiais para consultar conforme necessário:
   e .env.import privado, nunca solicitar senha no chat ou usar service_role no frontend
 - Guias em docs/deployment/{variantes,importacao-produtos}.md, evidências em
   docs/validation/variantes.md, sem publicação automática ou importação do lote completo
+
+## Piloto remoto enviado e conferido — 29/10/2026
+
+- Usuário informou SQL 005 aplicado, configurou .env.import e gerou backup real V2
+- Importador conferiu backup do mesmo projeto e autorização administrativa
+- Cinco pais ocultos enviados: P004 Canivete inox automático, P005 Processador de
+  alimentos, P006 Pano de prato, P007 Coador para café, P008 Funil flexível
+- Oito itens vendáveis, cinco opções sob dois pais e seis fotos JPEG conferidas
+- Leitura administrativa independente confirmou nomes, preços e estado oculto;
+  snapshot público confirmou ausência dos cinco produtos, sem publicação de frontend
+- Canivete mantém oferta fictícia de teste, não ativar como preço comercial sem revisão
+- Preservar .catalog-import privado e manifesto piloto sem editar, hash garante retry
+- Não importar os demais registros nem ativar os cinco sem solicitação posterior
+
+## Ações administrativas em lote — desenho aprovado em 29/10/2026
+
+- Seleção de produtos mantida entre páginas, checkbox por item e Selecionar página
+- Mostrar/ocultar seleção em transação única, ocultação com confirmação e conflito
+  impede o lote inteiro, sem substituir versões capturadas automaticamente
+- Limpar seleção ao mudar filtros, abrir edição, trocar aba ou sair do painel
+- Excluir definitivamente somente produto oculto, individualmente e com modal,
+  removendo suas variantes e preservando fotos potencialmente compartilhadas
+- Ledger conserva exclusão de importados para impedir recriação em retries
+- Lista administrativa com rolagem interna, filtros/barra acima e paginação abaixo
+- Design aprovado em docs/superpowers/specs/2026-10-29-acoes-produtos-design.md
+- Plano em docs/superpowers/plans/2026-10-29-acoes-produtos.md aguarda revisão,
+  execução direta preservada, migration 006 será entregue para aplicação pelo usuário
+- Nenhum produto real deve ser excluído durante implementação/testes, sem publicação

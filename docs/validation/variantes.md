@@ -64,3 +64,25 @@ registros ainda exige agrupamento e revisão, não foi importado
 Guias: [variantes](../deployment/variantes.md),
 [importação](../deployment/importacao-produtos.md) e
 [backup](../deployment/backup-local.md)
+
+## Envio remoto autorizado — 29/10/2026
+
+Após o usuário aplicar SQL 005 e configurar os arquivos privados, o importador
+aceitou o backup V2 do mesmo projeto e cadastrou os cinco pais ocultos
+
+| Código | Produto                  | Opções / apresentação                                         |
+| ------ | ------------------------ | ------------------------------------------------------------- |
+| P004   | Canivete inox automático | R$ 26,91, anterior R$ 29,90, oferta fictícia oculta           |
+| P005   | Processador de alimentos | V01 500 ml R$ 14,90, V02 900 ml R$ 21,90                      |
+| P006   | Pano de prato            | Caixa com 12 R$ 48,90                                         |
+| P007   | Coador para café         | V01 G R$ 31,80, V02 M R$ 30,60, V03 P R$ 29,40, caixas com 12 |
+| P008   | Funil flexível           | R$ 8,90                                                       |
+
+Leitura administrativa separada confirmou os cinco pais e preços, download das
+seis fotos confirmou JPEG e tamanho permitido, leitura pública confirmou que
+nenhum dos cinco aparece no catálogo. As etapas 1 a 3 das pendências acima foram
+atendidas, continuam pendentes revisão/ativação pelo usuário e teste no aparelho real
+
+Nenhuma alteração de frontend foi publicada, o restante dos registros não foi
+importado. IDs/códigos e hashes ficam no journal privado, preservar esse registro
+e o manifesto usado no envio para permitir repetição segura
