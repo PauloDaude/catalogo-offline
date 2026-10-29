@@ -264,3 +264,15 @@ test("backup V2 verifica foto exclusiva de variante e aceita pacotes V1", async 
   await assert.rejects(createBackup(config(root), changed), /alterado/);
   await rm(root, { recursive: true, force: true });
 });
+
+test("inventário aceita WebP e JPEG legados, sem aceitar SVG", async () => {
+  const { photoPath } = await import("./manifest.mjs");
+  for (const ext of ["jpg", "webp"])
+    assert.equal(
+      photoPath(`products/00000000-0000-0000-0000-000000000001.${ext}`),
+      `products/00000000-0000-0000-0000-000000000001.${ext}`,
+    );
+  assert.throws(() =>
+    photoPath("products/00000000-0000-0000-0000-000000000001.svg"),
+  );
+});

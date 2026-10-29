@@ -1,13 +1,13 @@
 {
-  "revision": 3,
-  "updatedAt": "2026-10-15T14:00:00.000Z",
+  "revision": 4,
+  "updatedAt": "2026-10-29T12:00:00.000Z",
   "products": [
     {
       "id": "panela",
       "name": "Panela para o dia a dia",
       "category": "Cozinha",
       "priceCents": 6500,
-      "imagePath": "photos/panela.jpg",
+      "imagePath": "photos/panela.webp",
       "code": "P001",
       "previousPriceCents": 10000
     },
@@ -16,7 +16,7 @@
       "name": "Utensílios de cozinha",
       "category": "Cozinha",
       "priceCents": 2500,
-      "imagePath": "photos/utensilios.jpg",
+      "imagePath": "photos/utensilios.webp",
       "code": "P002"
     },
     {
@@ -24,7 +24,7 @@
       "name": "Kit de pesca",
       "category": "Pesca",
       "priceCents": 4500,
-      "imagePath": "photos/pesca.jpg",
+      "imagePath": "photos/pesca.webp",
       "code": "P003",
       "previousPriceCents": 6000
     },
@@ -33,7 +33,7 @@
       "name": "Sombrinha resistente",
       "category": "Outros",
       "priceCents": 3500,
-      "imagePath": "photos/sombrinha.jpg",
+      "imagePath": "photos/sombrinha.webp",
       "code": "P004"
     },
     {
@@ -41,7 +41,7 @@
       "name": "Lanterna portátil",
       "category": "Iluminação",
       "priceCents": 3000,
-      "imagePath": "photos/lanterna.jpg",
+      "imagePath": "photos/lanterna.webp",
       "code": "P005",
       "previousPriceCents": 4000
     },
@@ -50,7 +50,7 @@
       "name": "Tesoura multiuso",
       "category": "Ferramentas",
       "priceCents": 1500,
-      "imagePath": "photos/tesoura.jpg",
+      "imagePath": "photos/tesoura.webp",
       "code": "P006"
     },
     {
@@ -58,7 +58,7 @@
       "name": "Garrafa térmica",
       "category": "Cozinha",
       "priceCents": 4800,
-      "imagePath": "photos/garrafa.jpg",
+      "imagePath": "photos/garrafa.webp",
       "code": "P007"
     },
     {
@@ -66,7 +66,7 @@
       "name": "Jogo de ferramentas",
       "category": "Ferramentas",
       "priceCents": 8500,
-      "imagePath": "photos/ferramentas.jpg",
+      "imagePath": "photos/ferramentas.webp",
       "code": "P008",
       "previousPriceCents": 11000
     },
@@ -75,7 +75,7 @@
       "name": "Acessórios para viagem",
       "category": "Outros",
       "priceCents": 2200,
-      "imagePath": "photos/acessorios.jpg",
+      "imagePath": "photos/acessorios.webp",
       "code": "P009"
     },
     {
@@ -83,7 +83,7 @@
       "name": "Vara de pesca",
       "category": "Pesca",
       "priceCents": 7500,
-      "imagePath": "photos/vara.jpg",
+      "imagePath": "photos/vara.webp",
       "code": "P010"
     }
   ]

@@ -118,3 +118,47 @@ test("ocultar e excluir usa uma única RPC com consentimento explícito", async 
     p_hide_visible: true,
   });
 });
+
+test("upload deriva extensão e MIME dos bytes preparados", async () => {
+  const upload = vi.fn().mockResolvedValue({ error: null });
+  const rpc = vi.fn().mockResolvedValue({ data: { id: "p" }, error: null });
+  const client = {
+    rpc,
+    storage: { from: () => ({ upload }) },
+  } as unknown as SupabaseClient;
+  const api = createAdminApi(client);
+  for (const type of ["image/webp", "image/jpeg"]) {
+    await api.saveProduct(
+      {
+        name: "Foto",
+        category_id: "c",
+        image_path: "old.jpg",
+        active: true,
+        price_cents: 100,
+        previous_price_cents: null,
+      },
+      null,
+      new Blob(["photo"], { type }),
+    );
+    expect(upload).toHaveBeenLastCalledWith(
+      expect.stringMatching(type === "image/webp" ? /\.webp$/ : /\.jpg$/),
+      expect.any(Blob),
+      { contentType: type, upsert: false },
+    );
+  }
+  await expect(
+    api.saveProduct(
+      {
+        name: "Foto",
+        category_id: "c",
+        image_path: "old.jpg",
+        active: true,
+        price_cents: 100,
+        previous_price_cents: null,
+      },
+      null,
+      new Blob(["png"], { type: "image/png" }),
+    ),
+  ).rejects.toThrow();
+  expect(upload).toHaveBeenCalledTimes(2);
+});

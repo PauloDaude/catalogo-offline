@@ -85,12 +85,15 @@ try {
     null,
   );
   uploaded.push(image);
-  const orphan = `products/${crypto.randomUUID()}.jpg`;
+  const orphan = `products/${crypto.randomUUID()}.webp`;
+  const webpBytes = await readFile(
+    path.join(root, "public/demo/photos/panela.webp"),
+  );
   assert.equal(
     (
       await client.storage
         .from("product-photos")
-        .upload(orphan, bytes, { contentType: "image/jpeg" })
+        .upload(orphan, webpBytes, { contentType: "image/webp" })
     ).error,
     null,
   );
@@ -289,7 +292,7 @@ try {
     (
       await client.storage.createBucket(bucket, {
         public: false,
-        allowedMimeTypes: ["image/jpeg"],
+        allowedMimeTypes: ["image/jpeg", "image/webp"],
       })
     ).error,
     null,
@@ -299,9 +302,11 @@ try {
     const bytes = await readFile(path.join(backup.path, "photos", object.name));
     assert.equal(
       (
-        await client.storage
-          .from(bucket)
-          .upload(object.name, bytes, { contentType: "image/jpeg" })
+        await client.storage.from(bucket).upload(object.name, bytes, {
+          contentType:
+            object.metadata?.mimetype ||
+            (object.name.endsWith(".webp") ? "image/webp" : "image/jpeg"),
+        })
       ).error,
       null,
     );

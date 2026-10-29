@@ -1,0 +1,4436 @@
+{
+  "formato": "cirandinha-produtos-preparados",
+  "versao": 1,
+  "status": "preparado_webp_categorias_aguardando_revisao_e_confirmacao_limpeza",
+  "aprovado_para_importacao": false,
+  "moeda": "BRL",
+  "fonte": {
+    "arquivo_revisao": "produtos-revisao.json",
+    "sha256_revisao": "31338578e423025ba4398b61bb781d81994b77a382511edea20473b23cef147a",
+    "categorias": "categorias.json",
+    "conversao": "conversao-webp.json"
+  },
+  "resumo": {
+    "mensagens_com_imagem": 67,
+    "imagens": 67,
+    "itens_com_preco": 85,
+    "mensagens_com_multiplos_itens": 10,
+    "mensagens_com_preco_separado": 0,
+    "itens_vendidos_em_caixa": 36,
+    "precos_unitarios_convertidos_para_caixa": 3,
+    "categorias": 6,
+    "formato_fotos_preparadas": "WebP"
+  },
+  "regras": [
+    "Preço final é por unidade de venda: unidade ou caixa; preço com und. mais apresentação é multiplicado pelas unidades da caixa",
+    "Variações serão agrupadas em produtos principais na feature planejada, dados de origem continuam separados para auditoria",
+    "Importação completa não foi autorizada; piloto de cinco produtos solicitado após implementação, testes e aplicação do SQL",
+    "Código público Pxxx e IDs do banco serão atribuídos apenas pelo backend no cadastro futuro",
+    "Todas as linhas precisam de revisão humana, mesmo quando não há pendência específica",
+    "Fotos originais preservadas, sem upload, recorte ou compressão nesta etapa",
+    "Categorias definidas por finalidade, conferir produtos-preparados.md antes de autorizar importação",
+    "Fotos WebP são cópias locais, originais e manifesto do piloto preservados, aguardar confirmação da limpeza antes do lote completo"
+  ],
+  "normalizacoes": [
+    "Ortografia, espaços, capitalização de SQ/GP6/PVC/EVA e singular/plural",
+    "Watts para W, Mts/mts para m, Lts/lts para L, polegadas e centímetros com vírgula decimal",
+    "Texto original, preço original e linha da conversa preservados em cada registro"
+  ],
+  "correcoes_para_conferir": [
+    {
+      "itens": ["WA0588-01"],
+      "original": "whast",
+      "corrigido": "watts (exibido como W)",
+      "motivo": "Erro de digitação solicitado pelo usuário",
+      "aprovada_pelo_usuario": true
+    },
+    {
+      "itens": ["WA0597-01"],
+      "original": "Deixa para pé Eva",
+      "corrigido": "Lixa para pé EVA",
+      "motivo": "Contexto da legenda e imagem de lixa para pé",
+      "aprovada_pelo_usuario": true
+    },
+    {
+      "itens": ["WA0624-01"],
+      "original": "Tesouro 9.5''polegadas",
+      "corrigido": "Tesoura 9,5 polegadas",
+      "motivo": "Erro de digitação, foto e segunda linha da mesma legenda",
+      "aprovada_pelo_usuario": true
+    },
+    {
+      "itens": ["WA0623-01"],
+      "original": "Fita isolamento",
+      "corrigido": "Fita isolante",
+      "motivo": "Padronização do nome com a segunda linha da legenda",
+      "aprovada_pelo_usuario": true
+    },
+    {
+      "itens": ["WA0615-01", "WA0615-02", "WA0615-03"],
+      "original": "GD. / Md. / Pg.",
+      "corrigido": "grande / médio / pequeno",
+      "motivo": "Abreviações de tamanhos no grupo de três coadores, propostas para revisão",
+      "aprovada_pelo_usuario": true
+    },
+    {
+      "itens": ["WA0626-02"],
+      "original": "8.5':",
+      "corrigido": "8,5 polegadas",
+      "motivo": "Pontuação incompleta, padrão das outras duas medidas da legenda, confirmar na revisão",
+      "aprovada_pelo_usuario": true
+    }
+  ],
+  "pendencias": [
+    {
+      "id": "PRECO-EMBALAGEM",
+      "tipo": "unidade_de_venda",
+      "itens": [
+        "WA0619-01",
+        "WA0593-01",
+        "WA0601-01",
+        "WA0652-01",
+        "WA0652-02",
+        "WA0608-01",
+        "WA0595-01",
+        "WA0596-01",
+        "WA0616-01",
+        "WA0617-01",
+        "WA0597-01",
+        "WA0623-01",
+        "WA0623-02",
+        "WA0599-01",
+        "WA0634-01",
+        "WA0637-01",
+        "WA0641-01",
+        "WA0646-01",
+        "WA0630-01",
+        "WA0631-01",
+        "WA0635-01",
+        "WA0636-01",
+        "WA0639-01",
+        "WA0640-01",
+        "WA0642-01",
+        "WA0605-01",
+        "WA0645-01",
+        "WA0606-01",
+        "WA0606-02",
+        "WA0606-03",
+        "WA0606-04",
+        "WA0606-05",
+        "WA0669-01"
+      ],
+      "descricao": "Há notações como 10x1, 12x1, 48x1, 50x1, 12x6, 12 x4 e 100x1, sem indicação inequívoca de preço por pacote, kit ou unidade. Os valores foram preservados sem divisão ou multiplicação.",
+      "confirmar": "Definir a unidade de venda e se o preço informado vale pela apresentação completa ou por unidade",
+      "status": "resolvida_pelo_usuario",
+      "decisao": "Notação AxB descreve caixa com A apresentações de B unidades, preço da caixa; quando consta und., multiplicar o preço unitário por A×B"
+    },
+    {
+      "id": "COADOR-UNIDADE",
+      "tipo": "unidade_de_venda",
+      "itens": ["WA0615-01", "WA0615-02", "WA0615-03"],
+      "descricao": "O texto indica 12x1 e também und.; os valores 2,65 / 2,55 / 2,45 foram mantidos como preço por unidade, sem converter para pacote.",
+      "confirmar": "Confirmar se o catálogo venderá coadores por unidade ou pacote de 12",
+      "status": "resolvida_pelo_usuario",
+      "decisao": "Notação AxB descreve caixa com A apresentações de B unidades, preço da caixa; quando consta und., multiplicar o preço unitário por A×B"
+    },
+    {
+      "id": "ESCOVAS-PARECIDAS",
+      "tipo": "possivel_duplicata",
+      "itens": ["WA0595-01", "WA0596-01"],
+      "descricao": "Duas mensagens têm o mesmo nome, 12x1 e preço 35,90, com fotos diferentes e visual parecido. Foram preservadas separadamente.",
+      "confirmar": "Confirmar se são modelos distintos ou duas fotos do mesmo produto; escolher nomes/foto se necessário",
+      "status": "fora_do_piloto_pendente_de_definicao",
+      "decisao": "Preservar dados atuais, não bloquear o planejamento nem importar este caso no lote piloto"
+    },
+    {
+      "id": "CALCULADORAS-MODELOS",
+      "tipo": "distinguir_modelos",
+      "itens": ["WA0611-01", "WA0613-01"],
+      "descricao": "Duas calculadoras médias de 8 dígitos têm preços diferentes: 17,90 e 16,90. As embalagens nas imagens mostram 3122A e 808V, respectivamente; o texto não informa modelo.",
+      "confirmar": "Confirmar se devemos acrescentar modelo ou outra identificação aos nomes, preservando os dois preços",
+      "status": "encaminhamento_aceito",
+      "decisao": "Manter modelos distintos e incluir identificação da embalagem nos nomes"
+    },
+    {
+      "id": "LANTERNAS-MARCAS",
+      "tipo": "distinguir_familias",
+      "itens": [
+        "WA0588-01",
+        "WA0591-01",
+        "WA0609-01",
+        "WA0612-01",
+        "WA0629-01",
+        "WA0590-01"
+      ],
+      "descricao": "A família sem marca no texto e a família SQ repetem potências e preços, mas usam fotos diferentes. As fotos sem marca no texto mostram GP6. Nenhum item foi mesclado nem teve marca acrescentada automaticamente.",
+      "confirmar": "Confirmar que são seis itens distintos e se podemos nomear a primeira família como GP6",
+      "status": "encaminhamento_aceito",
+      "decisao": "Manter famílias GP6 e SQ distintas, agrupadas por potência na futura feature"
+    },
+    {
+      "id": "ABREVIACAO-GD",
+      "tipo": "abreviacao",
+      "itens": ["WA0589-01"],
+      "descricao": "A legenda inclui Gd. antes de 5 watts; mantive GD no nome em vez de presumir tamanho ou marca.",
+      "confirmar": "Confirmar o significado de GD e o nome final da lanterna",
+      "status": "fora_do_piloto_pendente_de_definicao",
+      "decisao": "Preservar dados atuais, não bloquear o planejamento nem importar este caso no lote piloto"
+    },
+    {
+      "id": "PINO-APRESENTACAO",
+      "tipo": "diferenca_texto_imagem",
+      "itens": ["WA0633-01"],
+      "descricao": "A legenda diz Pino 4 saída 4.10; a foto traz Pino cubo 50x1. O preço veio somente da legenda, sem acrescentar 50x1 ao cadastro automaticamente.",
+      "confirmar": "Confirmar nome, número de saídas, embalagem e se 4,10 é o preço unitário",
+      "status": "fora_do_piloto_pendente_de_definicao",
+      "decisao": "Preservar dados atuais, não bloquear o planejamento nem importar este caso no lote piloto"
+    },
+    {
+      "id": "TESOURA-PONTAS",
+      "tipo": "variacao_ambigua",
+      "itens": ["WA0622-01"],
+      "descricao": "Ponta curva e reta aparece em uma única linha, com um preço e uma foto. Mantive um item; não inventei duas variações.",
+      "confirmar": "Confirmar se é um produto único, conjunto ou dois modelos vendidos separadamente pelo mesmo preço",
+      "status": "fora_do_piloto_pendente_de_definicao",
+      "decisao": "Preservar dados atuais, não bloquear o planejamento nem importar este caso no lote piloto"
+    },
+    {
+      "id": "FOTO-COMPARTILHADA",
+      "tipo": "imagem_de_variacoes",
+      "itens": [
+        "WA0600-01",
+        "WA0600-02",
+        "WA0600-03",
+        "WA0652-01",
+        "WA0652-02",
+        "WA0604-01",
+        "WA0604-02",
+        "WA0604-03",
+        "WA0623-01",
+        "WA0623-02",
+        "WA0615-01",
+        "WA0615-02",
+        "WA0615-03",
+        "WA0624-01",
+        "WA0624-02",
+        "WA0626-01",
+        "WA0626-02",
+        "WA0626-03",
+        "WA0628-01",
+        "WA0628-02",
+        "WA0628-03",
+        "WA0643-01",
+        "WA0643-02",
+        "WA0606-01",
+        "WA0606-02",
+        "WA0606-03",
+        "WA0606-04",
+        "WA0606-05"
+      ],
+      "descricao": "Dez legendas descrevem dois a cinco itens com preços próprios usando uma foto para o grupo. A mesma imagem foi associada a cada item da legenda.",
+      "confirmar": "Confirmar se a foto de grupo pode ser usada em todos esses itens ou fornecer fotos individuais",
+      "status": "encaminhamento_aceito",
+      "decisao": "Reutilizar foto de grupo nas variantes, permitindo substituição individual no futuro"
+    }
+  ],
+  "mensagens_com_preco_separado": [],
+  "mensagens": [
+    {
+      "mensagem": "M001",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0588.jpg",
+      "linha": 2,
+      "itens": ["WA0588-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M002",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0591.jpg",
+      "linha": 4,
+      "itens": ["WA0591-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M003",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0609.jpg",
+      "linha": 6,
+      "itens": ["WA0609-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M004",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0589.jpg",
+      "linha": 8,
+      "itens": ["WA0589-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M005",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0603.jpg",
+      "linha": 10,
+      "itens": ["WA0603-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M006",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0632.jpg",
+      "linha": 12,
+      "itens": ["WA0632-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M007",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0612.jpg",
+      "linha": 14,
+      "itens": ["WA0612-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M008",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0629.jpg",
+      "linha": 16,
+      "itens": ["WA0629-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M009",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0590.jpg",
+      "linha": 18,
+      "itens": ["WA0590-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M010",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0644.jpg",
+      "linha": 20,
+      "itens": ["WA0644-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M011",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0594.jpg",
+      "linha": 22,
+      "itens": ["WA0594-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M012",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0619.jpg",
+      "linha": 24,
+      "itens": ["WA0619-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M013",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0593.jpg",
+      "linha": 26,
+      "itens": ["WA0593-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M014",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0592.jpg",
+      "linha": 28,
+      "itens": ["WA0592-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M015",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0638.jpg",
+      "linha": 30,
+      "itens": ["WA0638-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M016",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0601.jpg",
+      "linha": 32,
+      "itens": ["WA0601-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M017",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0600.jpg",
+      "linha": 34,
+      "itens": ["WA0600-01", "WA0600-02", "WA0600-03"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M018",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0652.jpg",
+      "linha": 38,
+      "itens": ["WA0652-01", "WA0652-02"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M019",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0602.jpg",
+      "linha": 41,
+      "itens": ["WA0602-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M020",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0621.jpg",
+      "linha": 43,
+      "itens": ["WA0621-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M021",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0627.jpg",
+      "linha": 45,
+      "itens": ["WA0627-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M022",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0598.jpg",
+      "linha": 47,
+      "itens": ["WA0598-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M023",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0604.jpg",
+      "linha": 49,
+      "itens": ["WA0604-01", "WA0604-02", "WA0604-03"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M024",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0653.jpg",
+      "linha": 53,
+      "itens": ["WA0653-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M025",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0648.jpg",
+      "linha": 55,
+      "itens": ["WA0648-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M026",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0608.jpg",
+      "linha": 57,
+      "itens": ["WA0608-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M027",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0651.jpg",
+      "linha": 59,
+      "itens": ["WA0651-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M028",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0595.jpg",
+      "linha": 61,
+      "itens": ["WA0595-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M029",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0596.jpg",
+      "linha": 63,
+      "itens": ["WA0596-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M030",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0616.jpg",
+      "linha": 65,
+      "itens": ["WA0616-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M031",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0617.jpg",
+      "linha": 67,
+      "itens": ["WA0617-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M032",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0597.jpg",
+      "linha": 69,
+      "itens": ["WA0597-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M033",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0623.jpg",
+      "linha": 71,
+      "itens": ["WA0623-01", "WA0623-02"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M034",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0625.jpg",
+      "linha": 74,
+      "itens": ["WA0625-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M035",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0599.jpg",
+      "linha": 76,
+      "itens": ["WA0599-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M036",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0633.jpg",
+      "linha": 78,
+      "itens": ["WA0633-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M037",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0634.jpg",
+      "linha": 80,
+      "itens": ["WA0634-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M038",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0637.jpg",
+      "linha": 82,
+      "itens": ["WA0637-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M039",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0641.jpg",
+      "linha": 84,
+      "itens": ["WA0641-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M040",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0646.jpg",
+      "linha": 86,
+      "itens": ["WA0646-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M041",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0654.jpg",
+      "linha": 88,
+      "itens": ["WA0654-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M042",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0649.jpg",
+      "linha": 90,
+      "itens": ["WA0649-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M043",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0607.jpg",
+      "linha": 92,
+      "itens": ["WA0607-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M044",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0610.jpg",
+      "linha": 94,
+      "itens": ["WA0610-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M045",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0611.jpg",
+      "linha": 96,
+      "itens": ["WA0611-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M046",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0613.jpg",
+      "linha": 98,
+      "itens": ["WA0613-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M047",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0655.jpg",
+      "linha": 100,
+      "itens": ["WA0655-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M048",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0615.jpg",
+      "linha": 102,
+      "itens": ["WA0615-01", "WA0615-02", "WA0615-03"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M049",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0618.jpg",
+      "linha": 106,
+      "itens": ["WA0618-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M050",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0620.jpg",
+      "linha": 108,
+      "itens": ["WA0620-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M051",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0622.jpg",
+      "linha": 110,
+      "itens": ["WA0622-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M052",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0624.jpg",
+      "linha": 112,
+      "itens": ["WA0624-01", "WA0624-02"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M053",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0626.jpg",
+      "linha": 115,
+      "itens": ["WA0626-01", "WA0626-02", "WA0626-03"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M054",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0628.jpg",
+      "linha": 119,
+      "itens": ["WA0628-01", "WA0628-02", "WA0628-03"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M055",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0630.jpg",
+      "linha": 123,
+      "itens": ["WA0630-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M056",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0631.jpg",
+      "linha": 125,
+      "itens": ["WA0631-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M057",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0635.jpg",
+      "linha": 127,
+      "itens": ["WA0635-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M058",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0636.jpg",
+      "linha": 129,
+      "itens": ["WA0636-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M059",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0639.jpg",
+      "linha": 131,
+      "itens": ["WA0639-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M060",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0640.jpg",
+      "linha": 133,
+      "itens": ["WA0640-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M061",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0642.jpg",
+      "linha": 135,
+      "itens": ["WA0642-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M062",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0643.jpg",
+      "linha": 137,
+      "itens": ["WA0643-01", "WA0643-02"],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M063",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0605.jpg",
+      "linha": 140,
+      "itens": ["WA0605-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M064",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0645.jpg",
+      "linha": 142,
+      "itens": ["WA0645-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M065",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0647.jpg",
+      "linha": 144,
+      "itens": ["WA0647-01"],
+      "imagem_compartilhada": false
+    },
+    {
+      "mensagem": "M066",
+      "data": "02/10/2026",
+      "hora": "14:28",
+      "imagem": "IMG-20261002-WA0606.jpg",
+      "linha": 146,
+      "itens": [
+        "WA0606-01",
+        "WA0606-02",
+        "WA0606-03",
+        "WA0606-04",
+        "WA0606-05"
+      ],
+      "imagem_compartilhada": true
+    },
+    {
+      "mensagem": "M067",
+      "data": "02/10/2026",
+      "hora": "14:39",
+      "imagem": "IMG-20261002-WA0669.jpg",
+      "linha": 152,
+      "itens": ["WA0669-01"],
+      "imagem_compartilhada": false
+    }
+  ],
+  "produtos": [
+    {
+      "id_importacao": "WA0588-01",
+      "familia": "Lanterna recarregável GP6",
+      "nome": "Lanterna recarregável GP6 5 W",
+      "variacao": {
+        "potencia": "5 W"
+      },
+      "preco_centavos": 3890,
+      "preco_texto_original": "38.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0588.webp",
+      "mensagem_origem": "M001",
+      "linha_origem": 3,
+      "texto_original": "Lanterna recarregável 5 whast 38.90",
+      "aprovado": false,
+      "pendencias": ["LANTERNAS-MARCAS"],
+      "preco_base_informado_centavos": 3890,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0588.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0591-01",
+      "familia": "Lanterna recarregável GP6",
+      "nome": "Lanterna recarregável GP6 3 W",
+      "variacao": {
+        "potencia": "3 W"
+      },
+      "preco_centavos": 2790,
+      "preco_texto_original": "27.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0591.webp",
+      "mensagem_origem": "M002",
+      "linha_origem": 5,
+      "texto_original": "Lanterna recarregável 3 watts 27.90",
+      "aprovado": false,
+      "pendencias": ["LANTERNAS-MARCAS"],
+      "preco_base_informado_centavos": 2790,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0591.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0609-01",
+      "familia": "Lanterna recarregável GP6",
+      "nome": "Lanterna recarregável GP6 1 W",
+      "variacao": {
+        "potencia": "1 W"
+      },
+      "preco_centavos": 2290,
+      "preco_texto_original": "22,90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0609.webp",
+      "mensagem_origem": "M003",
+      "linha_origem": 7,
+      "texto_original": "Lanterna recarregável 1 watts 22,90",
+      "aprovado": false,
+      "pendencias": ["LANTERNAS-MARCAS"],
+      "preco_base_informado_centavos": 2290,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0609.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0589-01",
+      "familia": "Lanterna Original",
+      "nome": "Lanterna Original GD 5 W",
+      "variacao": {
+        "potencia": "5 W",
+        "abreviacao_a_confirmar": "Gd."
+      },
+      "preco_centavos": 4190,
+      "preco_texto_original": "41.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0589.webp",
+      "mensagem_origem": "M004",
+      "linha_origem": 9,
+      "texto_original": "Lanterna original Gd. 5 watts 41.90",
+      "aprovado": false,
+      "pendencias": ["ABREVIACAO-GD"],
+      "preco_base_informado_centavos": 4190,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0589.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0603-01",
+      "familia": "Lanterna Original",
+      "nome": "Lanterna Original 3 W",
+      "variacao": {
+        "potencia": "3 W"
+      },
+      "preco_centavos": 3390,
+      "preco_texto_original": "33.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0603.webp",
+      "mensagem_origem": "M005",
+      "linha_origem": 11,
+      "texto_original": "Lanterna original 3 watts 33.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 3390,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0603.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0632-01",
+      "familia": "Lanterna Original",
+      "nome": "Lanterna Original 1 W",
+      "variacao": {
+        "potencia": "1 W"
+      },
+      "preco_centavos": 2590,
+      "preco_texto_original": "25.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0632.webp",
+      "mensagem_origem": "M006",
+      "linha_origem": 13,
+      "texto_original": "Lanterna original 1 watts  25.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 2590,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0632.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0612-01",
+      "familia": "Lanterna recarregável SQ",
+      "nome": "Lanterna recarregável SQ 5 W",
+      "variacao": {
+        "potencia": "5 W"
+      },
+      "preco_centavos": 3890,
+      "preco_texto_original": "38.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0612.webp",
+      "mensagem_origem": "M007",
+      "linha_origem": 15,
+      "texto_original": "Lanterna recarregável  SQ 5 watts  38.90",
+      "aprovado": false,
+      "pendencias": ["LANTERNAS-MARCAS"],
+      "preco_base_informado_centavos": 3890,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0612.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0629-01",
+      "familia": "Lanterna recarregável SQ",
+      "nome": "Lanterna recarregável SQ 3 W",
+      "variacao": {
+        "potencia": "3 W"
+      },
+      "preco_centavos": 2790,
+      "preco_texto_original": "27.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0629.webp",
+      "mensagem_origem": "M008",
+      "linha_origem": 17,
+      "texto_original": "Lanterna recarregável SQ 3 watts 27.90",
+      "aprovado": false,
+      "pendencias": ["LANTERNAS-MARCAS"],
+      "preco_base_informado_centavos": 2790,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0629.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0590-01",
+      "familia": "Lanterna recarregável SQ",
+      "nome": "Lanterna recarregável SQ 1 W",
+      "variacao": {
+        "potencia": "1 W"
+      },
+      "preco_centavos": 2290,
+      "preco_texto_original": "22.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0590.webp",
+      "mensagem_origem": "M009",
+      "linha_origem": 19,
+      "texto_original": "Lanterna recarregável SQ 1 watts 22.90",
+      "aprovado": false,
+      "pendencias": ["LANTERNAS-MARCAS"],
+      "preco_base_informado_centavos": 2290,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0590.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0644-01",
+      "familia": "Lanterna a pilha",
+      "nome": "Lanterna a pilha com 1 LED",
+      "variacao": {
+        "leds": 1
+      },
+      "preco_centavos": 1390,
+      "preco_texto_original": "13.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0644.webp",
+      "mensagem_origem": "M010",
+      "linha_origem": 21,
+      "texto_original": "Lanterna  a pilha 1 LED 13.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 1390,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0644.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0594-01",
+      "familia": "Canivete inox automático",
+      "nome": "Canivete inox automático",
+      "variacao": null,
+      "preco_centavos": 2990,
+      "preco_texto_original": "29.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0594.webp",
+      "mensagem_origem": "M011",
+      "linha_origem": 23,
+      "texto_original": "Canivete inox automático 29.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 2990,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0594.jpg",
+      "categoria_slug": "ferramentas-acessorios",
+      "categoria": "Ferramentas e acessórios"
+    },
+    {
+      "id_importacao": "WA0619-01",
+      "familia": "Elástico para moto",
+      "nome": "Elástico para moto com gancho de plástico 3 m",
+      "variacao": {
+        "comprimento": "3 m",
+        "gancho": "plástico"
+      },
+      "preco_centavos": 4090,
+      "preco_texto_original": "40.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "10x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0619.webp",
+      "mensagem_origem": "M012",
+      "linha_origem": 25,
+      "texto_original": "Elástico para moto gancho de plástico 3 Mts.10x1 40.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 4090,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 10,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 10,
+        "rotulo": "Caixa com 10 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0619.jpg",
+      "categoria_slug": "ferramentas-acessorios",
+      "categoria": "Ferramentas e acessórios"
+    },
+    {
+      "id_importacao": "WA0593-01",
+      "familia": "Elástico para moto",
+      "nome": "Elástico para moto com gancho de ferro 2 m",
+      "variacao": {
+        "comprimento": "2 m",
+        "gancho": "ferro"
+      },
+      "preco_centavos": 4590,
+      "preco_texto_original": "45.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "10x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0593.webp",
+      "mensagem_origem": "M013",
+      "linha_origem": 27,
+      "texto_original": "Elastico para moto gancho de ferro 2Mts 10x1 45.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 4590,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 10,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 10,
+        "rotulo": "Caixa com 10 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0593.jpg",
+      "categoria_slug": "ferramentas-acessorios",
+      "categoria": "Ferramentas e acessórios"
+    },
+    {
+      "id_importacao": "WA0592-01",
+      "familia": "Palito mata-mosquito",
+      "nome": "Palito mata-mosquito",
+      "variacao": null,
+      "preco_centavos": 690,
+      "preco_texto_original": "6.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0592.webp",
+      "mensagem_origem": "M014",
+      "linha_origem": 29,
+      "texto_original": "Palito mata mosquito 6.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 690,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0592.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0638-01",
+      "familia": "Kit para churrasco GP6",
+      "nome": "Kit para churrasco GP6",
+      "variacao": null,
+      "preco_centavos": 1290,
+      "preco_texto_original": "12.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0638.webp",
+      "mensagem_origem": "M015",
+      "linha_origem": 31,
+      "texto_original": "Kit para churrasco gp6 12.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 1290,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0638.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0601-01",
+      "familia": "Talheres inox Extra",
+      "nome": "Talheres inox Extra",
+      "variacao": null,
+      "preco_centavos": 1890,
+      "preco_texto_original": "18.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "6x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0601.webp",
+      "mensagem_origem": "M016",
+      "linha_origem": 33,
+      "texto_original": "Talheres inox Extra 6x1 18.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 1890,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 6,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 6,
+        "rotulo": "Caixa com 6 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0601.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0600-01",
+      "familia": "Faca de cozinha",
+      "nome": "Faca de cozinha 10 polegadas",
+      "variacao": {
+        "tamanho": "10 polegadas"
+      },
+      "preco_centavos": 1590,
+      "preco_texto_original": "15.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0600.webp",
+      "mensagem_origem": "M017",
+      "linha_origem": 35,
+      "texto_original": "Faca cozinha 10'' 15.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1590,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0600.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0600-02",
+      "familia": "Faca de cozinha",
+      "nome": "Faca de cozinha 6 polegadas",
+      "variacao": {
+        "tamanho": "6 polegadas"
+      },
+      "preco_centavos": 1190,
+      "preco_texto_original": "11.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0600.webp",
+      "mensagem_origem": "M017",
+      "linha_origem": 36,
+      "texto_original": "Faca cozinha 6'' 11.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1190,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0600.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0600-03",
+      "familia": "Faca de cozinha",
+      "nome": "Faca de cozinha 5 polegadas",
+      "variacao": {
+        "tamanho": "5 polegadas"
+      },
+      "preco_centavos": 990,
+      "preco_texto_original": "9.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0600.webp",
+      "mensagem_origem": "M017",
+      "linha_origem": 37,
+      "texto_original": "Faca cozinha 5'' 9.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 990,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0600.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0652-01",
+      "familia": "Cortador de unha SQ",
+      "nome": "Cortador de unha SQ grande",
+      "variacao": {
+        "tamanho": "grande"
+      },
+      "preco_centavos": 3390,
+      "preco_texto_original": "33.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0652.webp",
+      "mensagem_origem": "M018",
+      "linha_origem": 39,
+      "texto_original": "Cortador de unha grande SQ12x1 33.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 3390,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0652.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0652-02",
+      "familia": "Cortador de unha SQ",
+      "nome": "Cortador de unha SQ médio",
+      "variacao": {
+        "tamanho": "médio"
+      },
+      "preco_centavos": 2090,
+      "preco_texto_original": "20.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0652.webp",
+      "mensagem_origem": "M018",
+      "linha_origem": 40,
+      "texto_original": "Cortador de unha médio SQ 12x1 20.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 2090,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0652.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0602-01",
+      "familia": "Tubo de látex",
+      "nome": "Tubo de látex 203 15 m",
+      "variacao": {
+        "modelo": "203",
+        "comprimento": "15 m"
+      },
+      "preco_centavos": 5690,
+      "preco_texto_original": "56.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0602.webp",
+      "mensagem_origem": "M019",
+      "linha_origem": 42,
+      "texto_original": "Tubo látex 203 15 mts  56.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 5690,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0602.jpg",
+      "categoria_slug": "lazer",
+      "categoria": "Lazer"
+    },
+    {
+      "id_importacao": "WA0621-01",
+      "familia": "Tubo de látex",
+      "nome": "Tubo de látex 201 15 m",
+      "variacao": {
+        "modelo": "201",
+        "comprimento": "15 m"
+      },
+      "preco_centavos": 4695,
+      "preco_texto_original": "46.95",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0621.webp",
+      "mensagem_origem": "M020",
+      "linha_origem": 44,
+      "texto_original": "Tubo látex 201 15 mts. 46.95",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 4695,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0621.jpg",
+      "categoria_slug": "lazer",
+      "categoria": "Lazer"
+    },
+    {
+      "id_importacao": "WA0627-01",
+      "familia": "Processador de alimentos",
+      "nome": "Processador de alimentos 500 ml",
+      "variacao": {
+        "capacidade": "500 ml"
+      },
+      "preco_centavos": 1490,
+      "preco_texto_original": "14.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0627.webp",
+      "mensagem_origem": "M021",
+      "linha_origem": 46,
+      "texto_original": "Processador de alimentos 500 ml 14.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 1490,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0627.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0598-01",
+      "familia": "Processador de alimentos",
+      "nome": "Processador de alimentos 900 ml",
+      "variacao": {
+        "capacidade": "900 ml"
+      },
+      "preco_centavos": 2190,
+      "preco_texto_original": "21.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0598.webp",
+      "mensagem_origem": "M022",
+      "linha_origem": 48,
+      "texto_original": "Processador de alimento 900 ml 21.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 2190,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0598.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0604-01",
+      "familia": "Tábua",
+      "nome": "Tábua grande",
+      "variacao": {
+        "tamanho": "grande"
+      },
+      "preco_centavos": 3290,
+      "preco_texto_original": "32.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0604.webp",
+      "mensagem_origem": "M023",
+      "linha_origem": 50,
+      "texto_original": "Tábua grande 32.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 3290,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0604.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0604-02",
+      "familia": "Tábua",
+      "nome": "Tábua média",
+      "variacao": {
+        "tamanho": "média"
+      },
+      "preco_centavos": 1490,
+      "preco_texto_original": "14.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0604.webp",
+      "mensagem_origem": "M023",
+      "linha_origem": 51,
+      "texto_original": "Tábua média 14.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1490,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0604.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0604-03",
+      "familia": "Tábua",
+      "nome": "Tábua pequena",
+      "variacao": {
+        "tamanho": "pequena"
+      },
+      "preco_centavos": 1290,
+      "preco_texto_original": "12.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0604.webp",
+      "mensagem_origem": "M023",
+      "linha_origem": 52,
+      "texto_original": "Tábua pequena 12.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1290,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0604.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0653-01",
+      "familia": "Funil flexível",
+      "nome": "Funil flexível",
+      "variacao": null,
+      "preco_centavos": 890,
+      "preco_texto_original": "8.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0653.webp",
+      "mensagem_origem": "M024",
+      "linha_origem": 54,
+      "texto_original": "Funil  flexível 8.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 890,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0653.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0648-01",
+      "familia": "Acendedor de fogão",
+      "nome": "Acendedor de fogão",
+      "variacao": null,
+      "preco_centavos": 770,
+      "preco_texto_original": "7.70",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0648.webp",
+      "mensagem_origem": "M025",
+      "linha_origem": 56,
+      "texto_original": "Acendedor de fogão 7.70",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 770,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0648.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0608-01",
+      "familia": "Pano de prato",
+      "nome": "Pano de prato",
+      "variacao": null,
+      "preco_centavos": 4890,
+      "preco_texto_original": "48,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0608.webp",
+      "mensagem_origem": "M026",
+      "linha_origem": 58,
+      "texto_original": "Pano de prato 12x1 48,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 4890,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0608.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0651-01",
+      "familia": "Balança de cozinha GP6",
+      "nome": "Balança de cozinha GP6 10 kg",
+      "variacao": {
+        "capacidade": "10 kg"
+      },
+      "preco_centavos": 1990,
+      "preco_texto_original": "19.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0651.webp",
+      "mensagem_origem": "M027",
+      "linha_origem": 60,
+      "texto_original": "Balança de cozinha gp6 10kg 19.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 1990,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0651.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0595-01",
+      "familia": "Escova para cabelo",
+      "nome": "Escova para cabelo",
+      "variacao": null,
+      "preco_centavos": 3590,
+      "preco_texto_original": "35,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0595.webp",
+      "mensagem_origem": "M028",
+      "linha_origem": 62,
+      "texto_original": "Escova para cabelo 12x1 35,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "ESCOVAS-PARECIDAS"],
+      "preco_base_informado_centavos": 3590,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0595.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0596-01",
+      "familia": "Escova para cabelo",
+      "nome": "Escova para cabelo",
+      "variacao": null,
+      "preco_centavos": 3590,
+      "preco_texto_original": "35.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0596.webp",
+      "mensagem_origem": "M029",
+      "linha_origem": 64,
+      "texto_original": "Escova para cabelo 12x1 35.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "ESCOVAS-PARECIDAS"],
+      "preco_base_informado_centavos": 3590,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0596.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0616-01",
+      "familia": "Linha para costura Gabrielinha",
+      "nome": "Linha para costura Gabrielinha",
+      "variacao": null,
+      "preco_centavos": 5590,
+      "preco_texto_original": "55,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "48x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0616.webp",
+      "mensagem_origem": "M030",
+      "linha_origem": 66,
+      "texto_original": "Linha para costura Gabrielinha 48x1 55,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 5590,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 48,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 48,
+        "rotulo": "Caixa com 48 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0616.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0617-01",
+      "familia": "Lixa para pé",
+      "nome": "Lixa para pé PVC",
+      "variacao": {
+        "material": "PVC"
+      },
+      "preco_centavos": 3790,
+      "preco_texto_original": "37.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0617.webp",
+      "mensagem_origem": "M031",
+      "linha_origem": 68,
+      "texto_original": "Lixa para pé PVC 12x1 37.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 3790,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0617.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0597-01",
+      "familia": "Lixa para pé",
+      "nome": "Lixa para pé EVA",
+      "variacao": {
+        "material": "EVA"
+      },
+      "preco_centavos": 3790,
+      "preco_texto_original": "37.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0597.webp",
+      "mensagem_origem": "M032",
+      "linha_origem": 70,
+      "texto_original": "Deixa para pé Eva 12x1 37.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 3790,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0597.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0623-01",
+      "familia": "Fita isolante",
+      "nome": "Fita isolante 10 m",
+      "variacao": {
+        "comprimento": "10 m"
+      },
+      "preco_centavos": 2190,
+      "preco_texto_original": "21,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "10x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0623.webp",
+      "mensagem_origem": "M033",
+      "linha_origem": 72,
+      "texto_original": "Fita  isolamento 10mts. 10x1 21,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 2190,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 10,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 10,
+        "rotulo": "Caixa com 10 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0623.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0623-02",
+      "familia": "Fita isolante",
+      "nome": "Fita isolante 5 m",
+      "variacao": {
+        "comprimento": "5 m"
+      },
+      "preco_centavos": 1590,
+      "preco_texto_original": "15,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "10x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0623.webp",
+      "mensagem_origem": "M033",
+      "linha_origem": 73,
+      "texto_original": "Fita isolante 5 mts. 10x1 15,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1590,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 10,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 10,
+        "rotulo": "Caixa com 10 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0623.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0625-01",
+      "familia": "Bomba para encher pneu",
+      "nome": "Bomba para encher pneu",
+      "variacao": null,
+      "preco_centavos": 2190,
+      "preco_texto_original": "21,90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0625.webp",
+      "mensagem_origem": "M034",
+      "linha_origem": 75,
+      "texto_original": "Bomba para encher pneu 21,90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 2190,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0625.jpg",
+      "categoria_slug": "ferramentas-acessorios",
+      "categoria": "Ferramentas e acessórios"
+    },
+    {
+      "id_importacao": "WA0599-01",
+      "familia": "Baralho plástico",
+      "nome": "Baralho plástico",
+      "variacao": null,
+      "preco_centavos": 650,
+      "preco_texto_original": "6,50",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "2x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0599.webp",
+      "mensagem_origem": "M035",
+      "linha_origem": 77,
+      "texto_original": "Baralho plástico 2x1 6,50",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 650,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 2,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 2,
+        "rotulo": "Caixa com 2 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0599.jpg",
+      "categoria_slug": "lazer",
+      "categoria": "Lazer"
+    },
+    {
+      "id_importacao": "WA0633-01",
+      "familia": "Pino com 4 saídas",
+      "nome": "Pino com 4 saídas",
+      "variacao": {
+        "saidas": 4
+      },
+      "preco_centavos": 410,
+      "preco_texto_original": "4.10",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0633.webp",
+      "mensagem_origem": "M036",
+      "linha_origem": 79,
+      "texto_original": "Pino 4 saída 4.10",
+      "aprovado": false,
+      "pendencias": ["PINO-APRESENTACAO"],
+      "preco_base_informado_centavos": 410,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0633.jpg",
+      "categoria_slug": "eletrica-iluminacao",
+      "categoria": "Elétrica e iluminação"
+    },
+    {
+      "id_importacao": "WA0634-01",
+      "familia": "Xuxinha",
+      "nome": "Xuxinha grande",
+      "variacao": {
+        "tamanho": "grande"
+      },
+      "preco_centavos": 2290,
+      "preco_texto_original": "22.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "50x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0634.webp",
+      "mensagem_origem": "M037",
+      "linha_origem": 81,
+      "texto_original": "Xuxinha grande 50x1. 22.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 2290,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 50,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 50,
+        "rotulo": "Caixa com 50 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0634.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0637-01",
+      "familia": "Xuxinha",
+      "nome": "Xuxinha média",
+      "variacao": {
+        "tamanho": "média"
+      },
+      "preco_centavos": 1750,
+      "preco_texto_original": "17.50",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "50x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0637.webp",
+      "mensagem_origem": "M038",
+      "linha_origem": 83,
+      "texto_original": "Xuxinha média 50x1. 17.50",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 1750,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 50,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 50,
+        "rotulo": "Caixa com 50 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0637.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0641-01",
+      "familia": "Escova dental",
+      "nome": "Escova dental adulta GP6",
+      "variacao": {
+        "publico": "adulto"
+      },
+      "preco_centavos": 2390,
+      "preco_texto_original": "23.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0641.webp",
+      "mensagem_origem": "M039",
+      "linha_origem": 85,
+      "texto_original": "Escova dental adulto gp6 12x1 23.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 2390,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0641.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0646-01",
+      "familia": "Escova dental",
+      "nome": "Escova dental infantil",
+      "variacao": {
+        "publico": "infantil"
+      },
+      "preco_centavos": 2390,
+      "preco_texto_original": "23.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0646.webp",
+      "mensagem_origem": "M040",
+      "linha_origem": 87,
+      "texto_original": "Escova de dente infantil 12x1 23.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 2390,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0646.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0654-01",
+      "familia": "Aparelho de barbear de metal",
+      "nome": "Aparelho de barbear de metal com lâmina",
+      "variacao": null,
+      "preco_centavos": 450,
+      "preco_texto_original": "4.50",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0654.webp",
+      "mensagem_origem": "M041",
+      "linha_origem": 89,
+      "texto_original": "Aparelho de metal para barba com lâmina 4.50",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 450,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0654.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0649-01",
+      "familia": "Navalha para barba",
+      "nome": "Navalha para barba",
+      "variacao": null,
+      "preco_centavos": 650,
+      "preco_texto_original": "6.50",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0649.webp",
+      "mensagem_origem": "M042",
+      "linha_origem": 91,
+      "texto_original": "Navalha para barba 6.50",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 650,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0649.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0607-01",
+      "familia": "Afiador de faca",
+      "nome": "Afiador de faca",
+      "variacao": null,
+      "preco_centavos": 1090,
+      "preco_texto_original": "10.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0607.webp",
+      "mensagem_origem": "M043",
+      "linha_origem": 93,
+      "texto_original": "Afiador de faca 10.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 1090,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0607.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0610-01",
+      "familia": "Calculadora",
+      "nome": "Calculadora grande 12 dígitos",
+      "variacao": {
+        "tamanho": "grande",
+        "digitos": 12
+      },
+      "preco_centavos": 2490,
+      "preco_texto_original": "24,90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0610.webp",
+      "mensagem_origem": "M044",
+      "linha_origem": 95,
+      "texto_original": "Calculadora grande 12 dígitos 24,90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 2490,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0610.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0611-01",
+      "familia": "Calculadora",
+      "nome": "Calculadora média 8 dígitos GP6 3122A",
+      "variacao": {
+        "tamanho": "média",
+        "digitos": 8,
+        "modelo_na_embalagem": "3122A"
+      },
+      "preco_centavos": 1790,
+      "preco_texto_original": "17,90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0611.webp",
+      "mensagem_origem": "M045",
+      "linha_origem": 97,
+      "texto_original": "Calculadora média 8 dígitos 17,90",
+      "aprovado": false,
+      "pendencias": ["CALCULADORAS-MODELOS"],
+      "preco_base_informado_centavos": 1790,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "identificacao_adicional_fonte": "foto da embalagem, sugestão de identificação aceita pelo usuário",
+      "imagem_original": "imagens/IMG-20261002-WA0611.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0613-01",
+      "familia": "Calculadora",
+      "nome": "Calculadora média 8 dígitos GP6 808V",
+      "variacao": {
+        "tamanho": "média",
+        "digitos": 8,
+        "modelo_na_embalagem": "808V"
+      },
+      "preco_centavos": 1690,
+      "preco_texto_original": "16.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0613.webp",
+      "mensagem_origem": "M046",
+      "linha_origem": 99,
+      "texto_original": "Calculadora média oito dígitos 16.90",
+      "aprovado": false,
+      "pendencias": ["CALCULADORAS-MODELOS"],
+      "preco_base_informado_centavos": 1690,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "identificacao_adicional_fonte": "foto da embalagem, sugestão de identificação aceita pelo usuário",
+      "imagem_original": "imagens/IMG-20261002-WA0613.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0655-01",
+      "familia": "Calculadora",
+      "nome": "Calculadora grande 8 dígitos",
+      "variacao": {
+        "tamanho": "grande",
+        "digitos": 8
+      },
+      "preco_centavos": 1790,
+      "preco_texto_original": "17,90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0655.webp",
+      "mensagem_origem": "M047",
+      "linha_origem": 101,
+      "texto_original": "Calculadora grande 8 dígitos 17,90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 1790,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0655.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0615-01",
+      "familia": "Coador para café",
+      "nome": "Coador para café grande",
+      "variacao": {
+        "tamanho": "grande"
+      },
+      "preco_centavos": 3180,
+      "preco_texto_original": "2.65",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0615.webp",
+      "mensagem_origem": "M048",
+      "linha_origem": 103,
+      "texto_original": "Coador para café 12x1 GD. 2.65 und.",
+      "aprovado": false,
+      "pendencias": ["COADOR-UNIDADE", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 265,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_unitario_vezes_unidades_da_caixa"
+      },
+      "preco_unitario_informado_centavos": 265,
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0615.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0615-02",
+      "familia": "Coador para café",
+      "nome": "Coador para café médio",
+      "variacao": {
+        "tamanho": "médio"
+      },
+      "preco_centavos": 3060,
+      "preco_texto_original": "2.55",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0615.webp",
+      "mensagem_origem": "M048",
+      "linha_origem": 104,
+      "texto_original": "Coador para café 12x1 Md. 2.55 und.",
+      "aprovado": false,
+      "pendencias": ["COADOR-UNIDADE", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 255,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_unitario_vezes_unidades_da_caixa"
+      },
+      "preco_unitario_informado_centavos": 255,
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0615.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0615-03",
+      "familia": "Coador para café",
+      "nome": "Coador para café pequeno",
+      "variacao": {
+        "tamanho": "pequeno"
+      },
+      "preco_centavos": 2940,
+      "preco_texto_original": "2.45",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0615.webp",
+      "mensagem_origem": "M048",
+      "linha_origem": 105,
+      "texto_original": "Coador para café 12x1 Pg. 2.45 und.",
+      "aprovado": false,
+      "pendencias": ["COADOR-UNIDADE", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 245,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_unitario_vezes_unidades_da_caixa"
+      },
+      "preco_unitario_informado_centavos": 245,
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0615.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0618-01",
+      "familia": "Tesoura profissional",
+      "nome": "Tesoura profissional 10,5 polegadas",
+      "variacao": {
+        "tamanho": "10,5 polegadas"
+      },
+      "preco_centavos": 3890,
+      "preco_texto_original": "38.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0618.webp",
+      "mensagem_origem": "M049",
+      "linha_origem": 107,
+      "texto_original": "Tesoura profissional 10.5'' 38.90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 3890,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0618.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0620-01",
+      "familia": "Tesoura para unha",
+      "nome": "Tesoura para unha com ponta redonda",
+      "variacao": {
+        "ponta": "redonda"
+      },
+      "preco_centavos": 650,
+      "preco_texto_original": "6.50",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0620.webp",
+      "mensagem_origem": "M050",
+      "linha_origem": 109,
+      "texto_original": "Tesoura para unha ponta redonda 6.50",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 650,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0620.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0622-01",
+      "familia": "Tesoura para unha",
+      "nome": "Tesoura para unha com ponta curva e reta",
+      "variacao": {
+        "ponta_informada": "curva e reta"
+      },
+      "preco_centavos": 490,
+      "preco_texto_original": "4.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0622.webp",
+      "mensagem_origem": "M051",
+      "linha_origem": 111,
+      "texto_original": "Tesoura para unha ponta curva e reta 4.90",
+      "aprovado": false,
+      "pendencias": ["TESOURA-PONTAS"],
+      "preco_base_informado_centavos": 490,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0622.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0624-01",
+      "familia": "Tesoura",
+      "nome": "Tesoura 9,5 polegadas",
+      "variacao": {
+        "tamanho": "9,5 polegadas"
+      },
+      "preco_centavos": 790,
+      "preco_texto_original": "7.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0624.webp",
+      "mensagem_origem": "M052",
+      "linha_origem": 113,
+      "texto_original": "Tesouro 9.5''polegadas  7.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 790,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0624.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0624-02",
+      "familia": "Tesoura",
+      "nome": "Tesoura 8 polegadas",
+      "variacao": {
+        "tamanho": "8 polegadas"
+      },
+      "preco_centavos": 750,
+      "preco_texto_original": "7.50",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0624.webp",
+      "mensagem_origem": "M052",
+      "linha_origem": 114,
+      "texto_original": "Tesoura 8'' 7.50",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 750,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0624.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0626-01",
+      "familia": "Tesoura GP6",
+      "nome": "Tesoura GP6 9,5 polegadas",
+      "variacao": {
+        "tamanho": "9,5 polegadas"
+      },
+      "preco_centavos": 990,
+      "preco_texto_original": "9.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0626.webp",
+      "mensagem_origem": "M053",
+      "linha_origem": 116,
+      "texto_original": "Tesoura gp6 9.5'' 9.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 990,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0626.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0626-02",
+      "familia": "Tesoura GP6",
+      "nome": "Tesoura GP6 8,5 polegadas",
+      "variacao": {
+        "tamanho": "8,5 polegadas"
+      },
+      "preco_centavos": 890,
+      "preco_texto_original": "8.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0626.webp",
+      "mensagem_origem": "M053",
+      "linha_origem": 117,
+      "texto_original": "Tesoura gp6 8.5': 8.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 890,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0626.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0626-03",
+      "familia": "Tesoura GP6",
+      "nome": "Tesoura GP6 7,5 polegadas",
+      "variacao": {
+        "tamanho": "7,5 polegadas"
+      },
+      "preco_centavos": 690,
+      "preco_texto_original": "6.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0626.webp",
+      "mensagem_origem": "M053",
+      "linha_origem": 118,
+      "texto_original": "Tesoura gp6 7.5'' 6.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 690,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0626.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0628-01",
+      "familia": "Tesoura",
+      "nome": "Tesoura 23,5 cm",
+      "variacao": {
+        "tamanho": "23,5 cm"
+      },
+      "preco_centavos": 890,
+      "preco_texto_original": "8.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0628.webp",
+      "mensagem_origem": "M054",
+      "linha_origem": 120,
+      "texto_original": "Tesoura 23.5 cm 8.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 890,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0628.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0628-02",
+      "familia": "Tesoura",
+      "nome": "Tesoura 20,3 cm",
+      "variacao": {
+        "tamanho": "20,3 cm"
+      },
+      "preco_centavos": 850,
+      "preco_texto_original": "8.50",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0628.webp",
+      "mensagem_origem": "M054",
+      "linha_origem": 121,
+      "texto_original": "Tesoura 20.3 cm 8.50",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 850,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0628.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0628-03",
+      "familia": "Tesoura",
+      "nome": "Tesoura 18,5 cm",
+      "variacao": {
+        "tamanho": "18,5 cm"
+      },
+      "preco_centavos": 650,
+      "preco_texto_original": "6.50",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0628.webp",
+      "mensagem_origem": "M054",
+      "linha_origem": 122,
+      "texto_original": "Tesoura 18.5cm 6.50",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 650,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0628.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0630-01",
+      "familia": "Kit de tesouras SQ",
+      "nome": "Kit de tesouras SQ",
+      "variacao": null,
+      "preco_centavos": 2090,
+      "preco_texto_original": "20.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "3x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0630.webp",
+      "mensagem_origem": "M055",
+      "linha_origem": 124,
+      "texto_original": "Kit tesoura SQ 3x1  20.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 2090,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 3,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 3,
+        "rotulo": "Caixa com 3 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0630.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0631-01",
+      "familia": "Kit de tesouras",
+      "nome": "Kit de tesouras",
+      "variacao": null,
+      "preco_centavos": 1890,
+      "preco_texto_original": "18.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "3x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0631.webp",
+      "mensagem_origem": "M056",
+      "linha_origem": 126,
+      "texto_original": "Kit tesoura 3x1 18.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 1890,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 3,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 3,
+        "rotulo": "Caixa com 3 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0631.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0635-01",
+      "familia": "Elástico para cabelo",
+      "nome": "Elástico para cabelo",
+      "variacao": null,
+      "preco_centavos": 2290,
+      "preco_texto_original": "22.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x6",
+      "imagem": "imagens-webp/IMG-20261002-WA0635.webp",
+      "mensagem_origem": "M057",
+      "linha_origem": 128,
+      "texto_original": "Elástico para cabelo 12x6 22.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 2290,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 6,
+        "unidades_totais": 72,
+        "rotulo": "Caixa com 12 conjuntos de 6 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0635.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0636-01",
+      "familia": "Rabicó trançado",
+      "nome": "Rabicó trançado",
+      "variacao": null,
+      "preco_centavos": 2290,
+      "preco_texto_original": "22.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12 x4",
+      "imagem": "imagens-webp/IMG-20261002-WA0636.webp",
+      "mensagem_origem": "M058",
+      "linha_origem": 130,
+      "texto_original": "Rabicó trançado 12 x4  22.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 2290,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 4,
+        "unidades_totais": 48,
+        "rotulo": "Caixa com 12 conjuntos de 4 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0636.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0639-01",
+      "familia": "Borracha para panela de silicone",
+      "nome": "Borracha para panela de silicone 2,5 a 4,5 L",
+      "variacao": {
+        "capacidade_compativel": "2,5 a 4,5 L"
+      },
+      "preco_centavos": 3090,
+      "preco_texto_original": "30.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0639.webp",
+      "mensagem_origem": "M059",
+      "linha_origem": 132,
+      "texto_original": "Borracha de panela de silicone 2.5 a 4.5lts. 12x1 30.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 3090,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0639.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0640-01",
+      "familia": "Borracha para panela",
+      "nome": "Borracha para panela 4,5 L",
+      "variacao": {
+        "capacidade_compativel": "4,5 L"
+      },
+      "preco_centavos": 1790,
+      "preco_texto_original": "17.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0640.webp",
+      "mensagem_origem": "M060",
+      "linha_origem": 134,
+      "texto_original": "Borracha para panela 4,5 lts. 12x1 17.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 1790,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0640.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0642-01",
+      "familia": "Borracha para panela de silicone",
+      "nome": "Borracha para panela de silicone 7 L",
+      "variacao": {
+        "capacidade_compativel": "7 L"
+      },
+      "preco_centavos": 3390,
+      "preco_texto_original": "33.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "12x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0642.webp",
+      "mensagem_origem": "M061",
+      "linha_origem": 136,
+      "texto_original": "Borracha para panela de silicone 7 Lts.12x1 33.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 3390,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0642.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0643-01",
+      "familia": "Estilingue",
+      "nome": "Estilingue 203",
+      "variacao": {
+        "modelo": "203"
+      },
+      "preco_centavos": 965,
+      "preco_texto_original": "9.65",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0643.webp",
+      "mensagem_origem": "M062",
+      "linha_origem": 138,
+      "texto_original": "Estilingue 203  9.65",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 965,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0643.jpg",
+      "categoria_slug": "lazer",
+      "categoria": "Lazer"
+    },
+    {
+      "id_importacao": "WA0643-02",
+      "familia": "Estilingue",
+      "nome": "Estilingue 201",
+      "variacao": {
+        "modelo": "201"
+      },
+      "preco_centavos": 890,
+      "preco_texto_original": "8.90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0643.webp",
+      "mensagem_origem": "M062",
+      "linha_origem": 139,
+      "texto_original": "Estilingue 201  8.90",
+      "aprovado": false,
+      "pendencias": ["FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 890,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0643.jpg",
+      "categoria_slug": "lazer",
+      "categoria": "Lazer"
+    },
+    {
+      "id_importacao": "WA0605-01",
+      "familia": "Pente fino",
+      "nome": "Pente fino com cabo",
+      "variacao": {
+        "cabo": "com cabo"
+      },
+      "preco_centavos": 1590,
+      "preco_texto_original": "15,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "24x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0605.webp",
+      "mensagem_origem": "M063",
+      "linha_origem": 141,
+      "texto_original": "Pente fino com cabo 24x1 15,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 1590,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 24,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 24,
+        "rotulo": "Caixa com 24 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0605.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0645-01",
+      "familia": "Pente fino",
+      "nome": "Pente fino sem cabo",
+      "variacao": {
+        "cabo": "sem cabo"
+      },
+      "preco_centavos": 1390,
+      "preco_texto_original": "13,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "24x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0645.webp",
+      "mensagem_origem": "M064",
+      "linha_origem": 143,
+      "texto_original": "Pente fino sem cabo 24x1 13,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 1390,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 24,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 24,
+        "rotulo": "Caixa com 24 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0645.jpg",
+      "categoria_slug": "beleza-higiene",
+      "categoria": "Beleza e higiene"
+    },
+    {
+      "id_importacao": "WA0647-01",
+      "familia": "Raquete elétrica mata-mosquito",
+      "nome": "Raquete elétrica mata-mosquito",
+      "variacao": null,
+      "preco_centavos": 2490,
+      "preco_texto_original": "24,90",
+      "referencia_preco": "unidade",
+      "apresentacao_original": null,
+      "imagem": "imagens-webp/IMG-20261002-WA0647.webp",
+      "mensagem_origem": "M065",
+      "linha_origem": 145,
+      "texto_original": "Raquete elétrica mata mosquito 24,90",
+      "aprovado": false,
+      "pendencias": [],
+      "preco_base_informado_centavos": 2490,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0647.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    },
+    {
+      "id_importacao": "WA0606-01",
+      "familia": "Agulha de mão",
+      "nome": "Agulha de mão nº 2/0",
+      "variacao": {
+        "numero": "2/0"
+      },
+      "preco_centavos": 1150,
+      "preco_texto_original": "11,50",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "20x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+      "mensagem_origem": "M066",
+      "linha_origem": 147,
+      "texto_original": "Agulha de mão n.2/0 20x1 11,50",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1150,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 20,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 20,
+        "rotulo": "Caixa com 20 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0606.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0606-02",
+      "familia": "Agulha de mão",
+      "nome": "Agulha de mão nº 1",
+      "variacao": {
+        "numero": "1"
+      },
+      "preco_centavos": 1090,
+      "preco_texto_original": "10,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "20x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+      "mensagem_origem": "M066",
+      "linha_origem": 148,
+      "texto_original": "Agulha de mão n.1 20x1 10,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1090,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 20,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 20,
+        "rotulo": "Caixa com 20 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0606.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0606-03",
+      "familia": "Agulha de mão",
+      "nome": "Agulha de mão nº 3",
+      "variacao": {
+        "numero": "3"
+      },
+      "preco_centavos": 1090,
+      "preco_texto_original": "10,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "20x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+      "mensagem_origem": "M066",
+      "linha_origem": 149,
+      "texto_original": "Agulha de mão n.3 20x1 10,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 1090,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 20,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 20,
+        "rotulo": "Caixa com 20 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0606.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0606-04",
+      "familia": "Agulha de mão",
+      "nome": "Agulha de mão nº 5",
+      "variacao": {
+        "numero": "5"
+      },
+      "preco_centavos": 990,
+      "preco_texto_original": "9.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "20x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+      "mensagem_origem": "M066",
+      "linha_origem": 150,
+      "texto_original": "Agulha de mão n.5 20x1 9.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 990,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 20,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 20,
+        "rotulo": "Caixa com 20 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0606.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0606-05",
+      "familia": "Agulha de mão",
+      "nome": "Agulha de mão nº 6",
+      "variacao": {
+        "numero": "6"
+      },
+      "preco_centavos": 990,
+      "preco_texto_original": "9.90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "20x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+      "mensagem_origem": "M066",
+      "linha_origem": 151,
+      "texto_original": "Agulha de mão n.6 20x1 9.90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM", "FOTO-COMPARTILHADA"],
+      "preco_base_informado_centavos": 990,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 20,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 20,
+        "rotulo": "Caixa com 20 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0606.jpg",
+      "categoria_slug": "costura-papelaria",
+      "categoria": "Costura e papelaria"
+    },
+    {
+      "id_importacao": "WA0669-01",
+      "familia": "Tampa de pia EVA",
+      "nome": "Tampa de pia EVA",
+      "variacao": {
+        "material": "EVA"
+      },
+      "preco_centavos": 3890,
+      "preco_texto_original": "38,90",
+      "referencia_preco": "caixa",
+      "apresentacao_original": "100x1",
+      "imagem": "imagens-webp/IMG-20261002-WA0669.webp",
+      "mensagem_origem": "M067",
+      "linha_origem": 153,
+      "texto_original": "Tampa de pia EVA 100x1 38,90",
+      "aprovado": false,
+      "pendencias": ["PRECO-EMBALAGEM"],
+      "preco_base_informado_centavos": 3890,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 100,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 100,
+        "rotulo": "Caixa com 100 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      },
+      "preco_regra_aprovada_pelo_usuario": true,
+      "imagem_original": "imagens/IMG-20261002-WA0669.jpg",
+      "categoria_slug": "casa-cozinha",
+      "categoria": "Casa e cozinha"
+    }
+  ],
+  "imagens": [
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0588.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0588.jpg",
+      "largura": 1046,
+      "altura": 1162,
+      "bytes": 32862,
+      "sha256": "d4f7b32dbb43ca91be259d26923aeac74c46bf20b665477d1d6e11bbb758ed4b"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0589.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0589.jpg",
+      "largura": 719,
+      "altura": 871,
+      "bytes": 37502,
+      "sha256": "6f5a5e3e890a506b094a3b60026990309a66c3ac6d1dc6aa898d3d739dec241a"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0590.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0590.jpg",
+      "largura": 720,
+      "altura": 1600,
+      "bytes": 54230,
+      "sha256": "f1501e84f35e7984726fe9a6592eec2f8b8d349cc481de87a86219554468d13d"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0591.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0591.jpg",
+      "largura": 720,
+      "altura": 1600,
+      "bytes": 33530,
+      "sha256": "ac7a1e951ffdcf378ce59eb7d1ec7001a52eaa88aa97566c98c61f4c1099da71"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0592.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0592.jpg",
+      "largura": 1080,
+      "altura": 1076,
+      "bytes": 64534,
+      "sha256": "f5a2df5ad4eb099301175f7c78c0c7b346128b3b3311b00655699cc12366d550"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0593.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0593.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 172756,
+      "sha256": "54098b4e582096f5e713a3501979c18b2450890b4e2afb6ed66cda33ee582caf"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0594.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0594.jpg",
+      "largura": 1037,
+      "altura": 1067,
+      "bytes": 9538,
+      "sha256": "c5254cd60b906df87de69fc2d0bd6b5d6c05059e7cb6122b310630597c757550"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0595.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0595.jpg",
+      "largura": 1042,
+      "altura": 1447,
+      "bytes": 148756,
+      "sha256": "3481f75416133cfc71d1e6f52e6bd91b73b21910088bc29bc5144f856e6bd901"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0596.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0596.jpg",
+      "largura": 1036,
+      "altura": 1429,
+      "bytes": 138266,
+      "sha256": "e10a2d66362a359bf307afdd810015dad01b04b1e7135293499eb58c1ba39940"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0597.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0597.jpg",
+      "largura": 966,
+      "altura": 995,
+      "bytes": 53370,
+      "sha256": "09006a72dafd719c1ec6ce353c0ec222ad96a3ffef8966be716cceacd5481a25"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0598.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0598.jpg",
+      "largura": 1078,
+      "altura": 1055,
+      "bytes": 50058,
+      "sha256": "495e8c4a364e33c647aa55005e912d59e11af7cc81ca01ca3576e705c38ea5d0"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0599.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0599.jpg",
+      "largura": 1080,
+      "altura": 1474,
+      "bytes": 86164,
+      "sha256": "23eec22d1631b3d9a95541aac1dc6684a24ba1c0305a0e7ca680336fde0cddf6"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0600.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0600.jpg",
+      "largura": 713,
+      "altura": 970,
+      "bytes": 63456,
+      "sha256": "807e60d866cc0d2c782c204210e9e79ec6d7555d391b7d8d447477a36393c86e"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0601.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0601.jpg",
+      "largura": 988,
+      "altura": 1599,
+      "bytes": 153770,
+      "sha256": "275d433743f72f72fad584abcd14c687d956953337c7b7d4b312fb2ab1c8364d"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0602.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0602.jpg",
+      "largura": 1057,
+      "altura": 1152,
+      "bytes": 62126,
+      "sha256": "ac9580baa579ba9274d4e5056aa4aad02dbc64e15618c5b95ee3a8b82af0acb3"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0603.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0603.jpg",
+      "largura": 717,
+      "altura": 722,
+      "bytes": 17592,
+      "sha256": "1db2c1c499b7b3a8dd5d71f9a3ef52b156007a4977d82a2bde0c5ec5869d4ab5"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0604.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0604.jpg",
+      "largura": 1039,
+      "altura": 975,
+      "bytes": 66830,
+      "sha256": "14ae57b8975bcbfcec2d059c09fb00e8e2ee1671c987fba178a158b37f5d648f"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0605.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0605.jpg",
+      "largura": 1077,
+      "altura": 992,
+      "bytes": 60812,
+      "sha256": "d734d3e6722dd8c41a01a2e2cfcec2e036df72e42a0257824129285e60c2099b"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0606.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0606.jpg",
+      "largura": 1066,
+      "altura": 1212,
+      "bytes": 106492,
+      "sha256": "edba1df0416175c1d72b81b43fad7ad94551c8584669d976e5001d9f6c1ffafb"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0607.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0607.jpg",
+      "largura": 1080,
+      "altura": 1057,
+      "bytes": 50674,
+      "sha256": "6daf5dbb773ba48c7009973a5a3266831e4698c5152ad67326de69e0c644a26f"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0608.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0608.jpg",
+      "largura": 1349,
+      "altura": 1600,
+      "bytes": 128474,
+      "sha256": "b01f8981392044c80402a33c2e0f91ef271b8e4b053ad004974724cca25c5781"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0609.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0609.jpg",
+      "largura": 1080,
+      "altura": 1557,
+      "bytes": 41166,
+      "sha256": "179bca8bf0c575c7b7b4714d8b2ac2cdd94e60136ceeba67c0a0e5c562a6c69b"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0610.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0610.jpg",
+      "largura": 1072,
+      "altura": 1286,
+      "bytes": 58878,
+      "sha256": "358e87795c151912f6cfecc28880e8ed6124864476c3c23ab8e6ace24e7aae3e"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0611.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0611.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 100794,
+      "sha256": "c834658a5b5884d15d18957929508f267e26cde6a02c0bb2a7a7d57781df2859"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0612.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0612.jpg",
+      "largura": 1055,
+      "altura": 1270,
+      "bytes": 23622,
+      "sha256": "274eac9cda3a2b50dec586ea3408ccc6bf7d81093c2b16614f3a0faecaf02409"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0613.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0613.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 117324,
+      "sha256": "c6dcacf4349cdfb3e3d5b05530efae42acc52cb33ecbc410bb523ef835f36038"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0615.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0615.jpg",
+      "largura": 1067,
+      "altura": 1066,
+      "bytes": 28890,
+      "sha256": "37ec81ef1b129ef1a197b839a71274cb4887acc27c5849a4941566c7e151ca16"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0616.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0616.jpg",
+      "largura": 1075,
+      "altura": 896,
+      "bytes": 39176,
+      "sha256": "82209f76aad8b2f1e926b30a226b09e7ac9049090b664aa9995ba6c1f9389737"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0617.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0617.jpg",
+      "largura": 1076,
+      "altura": 1066,
+      "bytes": 33092,
+      "sha256": "0efa30e9b6793de6ec1380f33e6235caf943cbc4adc962c37d042a2fa8f5cffe"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0618.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0618.jpg",
+      "largura": 1044,
+      "altura": 1345,
+      "bytes": 50986,
+      "sha256": "d5a9d3381cae5cdb97354e8f81f6f3920f341705229c50eeb6f0ccdf40f5c186"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0619.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0619.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 178568,
+      "sha256": "9bdfbaf95d9f836d6526fbf667b2ee3a8e32b2edb8088d20227d6d46176aa211"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0620.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0620.jpg",
+      "largura": 1042,
+      "altura": 1075,
+      "bytes": 37574,
+      "sha256": "58f0a69bd04a8537bd8465150ac9f14360b59547c4c7a6156b620c1cbc90a36f"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0621.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0621.jpg",
+      "largura": 1007,
+      "altura": 957,
+      "bytes": 36754,
+      "sha256": "2fb9c894940936e50111d3cce86425ae3684fe0dd8f44852cf9c0e8b1ba37b16"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0622.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0622.jpg",
+      "largura": 1008,
+      "altura": 1066,
+      "bytes": 59360,
+      "sha256": "bca8580d43f1985d378c5d0d7e01baa09ce8dd3975fc6af26d1d6397c4fb11af"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0623.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0623.jpg",
+      "largura": 1049,
+      "altura": 905,
+      "bytes": 44608,
+      "sha256": "fde5afa556dbc36e25c07a927ab0ab3300be8e310edb0fe9e098580e2acc8c12"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0624.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0624.jpg",
+      "largura": 1077,
+      "altura": 1062,
+      "bytes": 33944,
+      "sha256": "2d7922223c1156ab74bd719a63b7fdc4fc126c7ac07ba8bdc14d1b78cfbd4390"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0625.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0625.jpg",
+      "largura": 1048,
+      "altura": 1073,
+      "bytes": 40084,
+      "sha256": "f1785821fdebd0d4c6974adace92901d57339cd14c8007c098e27fa2530626a5"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0626.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0626.jpg",
+      "largura": 1072,
+      "altura": 1165,
+      "bytes": 39796,
+      "sha256": "31a62864223b0ace5949580dbb91abaac12208b06471d3f9832385c60bf5af32"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0627.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0627.jpg",
+      "largura": 1065,
+      "altura": 929,
+      "bytes": 42626,
+      "sha256": "139f0899269c3a8fdfe5cf459ca615e032a2c7216661dc8fd275de1281f6e069"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0628.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0628.jpg",
+      "largura": 1073,
+      "altura": 1080,
+      "bytes": 32492,
+      "sha256": "f5e1458d73957e9fa6b846b8f402bf2df8a601dad04b3b1d57a58b46b961697e"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0629.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0629.jpg",
+      "largura": 1060,
+      "altura": 1071,
+      "bytes": 21048,
+      "sha256": "1e02af2633384b2ad24d43cbfe0503f760249b84c5fb9a32291880b91f2d53d4"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0630.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0630.jpg",
+      "largura": 1062,
+      "altura": 1416,
+      "bytes": 55440,
+      "sha256": "9178f5a1e32e51c578fdc17a4ed09af6df128c682f09a843aa3033f3b84e3560"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0631.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0631.jpg",
+      "largura": 1070,
+      "altura": 1418,
+      "bytes": 56634,
+      "sha256": "fe34eafe0495d95160714ede85640fef44aec43ce1def3c061fc2aed70d10814"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0632.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0632.jpg",
+      "largura": 720,
+      "altura": 1040,
+      "bytes": 32826,
+      "sha256": "8544117e22a5e646e94f55b6fe2fabadb370ea1ef8da167293f87ef2d96c4dab"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0633.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0633.jpg",
+      "largura": 1010,
+      "altura": 1600,
+      "bytes": 37710,
+      "sha256": "737e248f2895ade9d26e0531bea40855898d925d5068f2bf8d2fd2bea63d1b58"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0634.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0634.jpg",
+      "largura": 1050,
+      "altura": 1542,
+      "bytes": 89746,
+      "sha256": "ef4b077b1da9706a92f7af56af6b794aabe69ac419c2d3e593aff16a339b0fcd"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0635.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0635.jpg",
+      "largura": 964,
+      "altura": 1599,
+      "bytes": 148970,
+      "sha256": "db34add60383b8fdf326decc7c11c8b860fe0b9f3a0230562c2ac837b31429e5"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0636.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0636.jpg",
+      "largura": 1080,
+      "altura": 1249,
+      "bytes": 196338,
+      "sha256": "9594168810b55d279a0c7b3f73f4352dbeb8f6dd7233442b9eea674b7c4daab8"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0637.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0637.jpg",
+      "largura": 1020,
+      "altura": 1082,
+      "bytes": 181488,
+      "sha256": "4664e60d30d43bdc8a7120fe72941984e12f5da9346dd5a980e07773a4aaee83"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0638.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0638.jpg",
+      "largura": 1059,
+      "altura": 1067,
+      "bytes": 14858,
+      "sha256": "9778df026078968463546af4e043af6ddf41f45fce994d63d463ce8399a62529"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0639.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0639.jpg",
+      "largura": 1071,
+      "altura": 1442,
+      "bytes": 52792,
+      "sha256": "3d4e52d48bf7f52097df125f3acc296ad54cc276ea5e78f7ddff620e3e676993"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0640.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0640.jpg",
+      "largura": 1064,
+      "altura": 1101,
+      "bytes": 67616,
+      "sha256": "a470d1fc769bc347225b52a64b9ea591620263d9caa0e8e0ce59e6b5d3f492e9"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0641.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0641.jpg",
+      "largura": 1078,
+      "altura": 1343,
+      "bytes": 195640,
+      "sha256": "e617d619fc116e0b0c6951c24b77b40612ba7ff45ff27ff8e41914eae57a28bd"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0642.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0642.jpg",
+      "largura": 977,
+      "altura": 1057,
+      "bytes": 91000,
+      "sha256": "556f437a14073752f28f1e8e2587bd800c0cb7b6f7ba6bf19028b34d40e92eb5"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0643.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0643.jpg",
+      "largura": 463,
+      "altura": 463,
+      "bytes": 4286,
+      "sha256": "a795e78414d442767c7f25d089850dc2cbea8e62f6dc4becd434ab7a15768af6"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0644.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0644.jpg",
+      "largura": 957,
+      "altura": 888,
+      "bytes": 27140,
+      "sha256": "4ab3d2f421c3c4da2d878d652656d0e13ac66089334b280f3f9417a096578434"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0645.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0645.jpg",
+      "largura": 1051,
+      "altura": 1188,
+      "bytes": 36308,
+      "sha256": "9b87b61a869b611134ccd363c0ec328dee32891d4f35f51ff36c2d1630565578"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0646.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0646.jpg",
+      "largura": 1072,
+      "altura": 1281,
+      "bytes": 90086,
+      "sha256": "bddbaf09ac164f8a88a15a990e28f9d0c4222181597f0735dcc0dc44fc329961"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0647.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0647.jpg",
+      "largura": 1080,
+      "altura": 1429,
+      "bytes": 40686,
+      "sha256": "9d9fc5aa56fde38ca1770916acfa4096e8dac17027421b9cabd5c1011c382f01"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0648.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0648.jpg",
+      "largura": 1028,
+      "altura": 1064,
+      "bytes": 27644,
+      "sha256": "6342121d6869d992dc720c976d48d46cecdee0815d306d2891e2a9c0a022272f"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0649.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0649.jpg",
+      "largura": 1014,
+      "altura": 1061,
+      "bytes": 39730,
+      "sha256": "112444cf11eaf0dea1e7d9bc03c217fb65fd022da70b6952b0ccbdbe3714532f"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0651.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0651.jpg",
+      "largura": 1080,
+      "altura": 1075,
+      "bytes": 31592,
+      "sha256": "97ebf2f5f48cd3f3a8c541b92f83ab823a8ad66895adbf68d0cf889b1aef7c9b"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0652.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0652.jpg",
+      "largura": 1064,
+      "altura": 1062,
+      "bytes": 52380,
+      "sha256": "3315cbe01bc307f22179daa47b31c3ca9ebe5a8b7f3aacc56c51087fec300158"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0653.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0653.jpg",
+      "largura": 1071,
+      "altura": 949,
+      "bytes": 33324,
+      "sha256": "8b998c760ad0da9cf0c861837f04ea276501203dc4fb7a0319bf36aa8ce285ac"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0654.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0654.jpg",
+      "largura": 1080,
+      "altura": 1082,
+      "bytes": 48972,
+      "sha256": "af2e9662354da07d552ac92264fe07932b36b4d877758b96b6070410ef40fdb5"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0655.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0655.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 122948,
+      "sha256": "22e96ac75127a27997bee9cc7bfd8a8f2fc62b91c5ec013dc37768fa924b1b48"
+    },
+    {
+      "arquivo": "imagens-webp/IMG-20261002-WA0669.webp",
+      "arquivo_original": "imagens/IMG-20261002-WA0669.jpg",
+      "largura": 1078,
+      "altura": 1318,
+      "bytes": 51656,
+      "sha256": "eb0b854d6b72cf1ac372e40f1486215ce2343dd01db1c2c7b4c723ccf2f2206d"
+    }
+  ],
+  "decisoes_revisao": {
+    "correcoes_aprovadas": true,
+    "precos_embalagens_aprovados": true,
+    "modelo_de_produtos_com_variantes_solicitado": true,
+    "conversoes_unitario_para_caixa": [
+      {
+        "id_importacao": "WA0615-01",
+        "preco_unitario_centavos": 265,
+        "unidades": 12,
+        "preco_caixa_centavos": 3180
+      },
+      {
+        "id_importacao": "WA0615-02",
+        "preco_unitario_centavos": 255,
+        "unidades": 12,
+        "preco_caixa_centavos": 3060
+      },
+      {
+        "id_importacao": "WA0615-03",
+        "preco_unitario_centavos": 245,
+        "unidades": 12,
+        "preco_caixa_centavos": 2940
+      }
+    ],
+    "observacao": "Regra AxB aplicada como A apresentações de B unidades; apresentações compostas preservam esses dois números no rótulo, sem alterar o preço da caixa"
+  },
+  "aguardar_confirmacao_limpeza": true,
+  "fonte_original": {
+    "arquivo": "conversa.txt",
+    "sha256": "4d76759276ac2da004598511c119f9b758c7c5a844ad95efc1539cd8c83cc26c",
+    "data_mensagens": "2026-10-02"
+  },
+  "imagens_originais": [
+    {
+      "arquivo": "imagens/IMG-20261002-WA0588.jpg",
+      "largura": 1046,
+      "altura": 1162,
+      "bytes": 101254,
+      "sha256": "5c9ff6b9f8932c416cddb200c917cdfadf9064f89f6486f6a453fab7c482d363"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0589.jpg",
+      "largura": 719,
+      "altura": 871,
+      "bytes": 54141,
+      "sha256": "598e97333db49c337f3c9d99ebb91992b4f8958d47cd9e4d2015a57d052a153c"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0590.jpg",
+      "largura": 720,
+      "altura": 1600,
+      "bytes": 99120,
+      "sha256": "2e6b25062cdfcf037c65bef8a6f69ec65dd37d697b54ff268cfcffa342944607"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0591.jpg",
+      "largura": 720,
+      "altura": 1600,
+      "bytes": 63541,
+      "sha256": "e601f992d96092eb047b0f7ac4bee41b7be37153b2ba0edf72d4efc0ff74037a"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0592.jpg",
+      "largura": 1080,
+      "altura": 1076,
+      "bytes": 111575,
+      "sha256": "e1590917ddfae84c34413028504b7a2f5dd1343bb3191490e77e8c85829a8a82"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0593.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 228212,
+      "sha256": "be5821042ac392eb4554af5dc3b1f5a6ee9d29bbac6b88e3fe8cbd47cd3abbc9"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0594.jpg",
+      "largura": 1037,
+      "altura": 1067,
+      "bytes": 27184,
+      "sha256": "34bd2318f9d4ce4eccf78ef17eb968e1765960f30f964398bf0ae3a3701e51fb"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0595.jpg",
+      "largura": 1042,
+      "altura": 1447,
+      "bytes": 198123,
+      "sha256": "7cd366d18c15329dc312418d77d13f879b308e0abdcda9f4e1d49f30ed9e22e1"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0596.jpg",
+      "largura": 1036,
+      "altura": 1429,
+      "bytes": 189565,
+      "sha256": "9d3f2cd86283e4ba51a66e66014507c4aef1cb5ed1e3f46d1fd73e68b9d95e22"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0597.jpg",
+      "largura": 966,
+      "altura": 995,
+      "bytes": 80002,
+      "sha256": "8ae668e6fd57fca25ea251ead26d13ee336bee5bfdef1e819bad9a9ae968a1e8"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0598.jpg",
+      "largura": 1078,
+      "altura": 1055,
+      "bytes": 75742,
+      "sha256": "e84ef1e7a5bb9cd66e111b24c78d1a56b59cec0d96ddb224453c76c9896890b7"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0599.jpg",
+      "largura": 1080,
+      "altura": 1474,
+      "bytes": 126433,
+      "sha256": "3628b84ca15940b3b2b45236f01679acd2103ed33126f50786ef482f528fa227"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0600.jpg",
+      "largura": 713,
+      "altura": 970,
+      "bytes": 90035,
+      "sha256": "16a2c5c7881ee90d7a252548dae2129d58c2a719040e46ba2e61200e3960294a"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0601.jpg",
+      "largura": 988,
+      "altura": 1599,
+      "bytes": 224343,
+      "sha256": "ae58fa4fe5b9beffa7ddb8b70fdf6736f0073f45db9ac86a01c1f2e53409e922"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0602.jpg",
+      "largura": 1057,
+      "altura": 1152,
+      "bytes": 100565,
+      "sha256": "b7900ccbfc5e58464830043e15bbcc0fdc3ea4fed45e4fa70749d88f68ff2207"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0603.jpg",
+      "largura": 717,
+      "altura": 722,
+      "bytes": 34107,
+      "sha256": "48be4d8784fec2440df3b53325bb53b783de72e373f67e42ec33aeaf126dc123"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0604.jpg",
+      "largura": 1039,
+      "altura": 975,
+      "bytes": 104953,
+      "sha256": "f8b47a31f4b07900401f659dc974b1c3f7a594eff9e3c31c4e1725c2b02d926f"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0605.jpg",
+      "largura": 1077,
+      "altura": 992,
+      "bytes": 86218,
+      "sha256": "e5452a6e49e365c22c14b6f979ab350c492120193ee03cb27312655b87bd2ad0"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0606.jpg",
+      "largura": 1066,
+      "altura": 1212,
+      "bytes": 144210,
+      "sha256": "079e32ad94c045bcdf2306ab829a59be549cda335663421e7474338b52ba2b1b"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0607.jpg",
+      "largura": 1080,
+      "altura": 1057,
+      "bytes": 82779,
+      "sha256": "688e36009e1e0133a957fff181357e4b268ec3900bb76d0d1d8f0521255430ca"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0608.jpg",
+      "largura": 1350,
+      "altura": 1601,
+      "bytes": 204831,
+      "sha256": "db8010de7a8bce06bce69832139f80db93ea1d051778a6e876f644b53e294871"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0609.jpg",
+      "largura": 1080,
+      "altura": 1557,
+      "bytes": 73400,
+      "sha256": "8303f202d3c1d3c48465f5dbae5ab1088c1c250e74d01e87c3a79a48ee9880e4"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0610.jpg",
+      "largura": 1072,
+      "altura": 1286,
+      "bytes": 104105,
+      "sha256": "31eb6059dd8e038ef40fc40a8d050759cb7b809359bde3e26750ca64b1436e0f"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0611.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 169008,
+      "sha256": "cb4ff1903f3c4fae4999e7a8d8801302724852d0a71f378d206497650ca6cc94"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0612.jpg",
+      "largura": 1055,
+      "altura": 1270,
+      "bytes": 49861,
+      "sha256": "359b3193ce32f361616ef4b3d4562bcfea62520399bbab4f68a7817a9db0026b"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0613.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 181315,
+      "sha256": "39a7c61d37bf452f1bd55a87ff2262ae1968bc1bb38e66a00607a3478f3ac0f5"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0615.jpg",
+      "largura": 1067,
+      "altura": 1066,
+      "bytes": 54260,
+      "sha256": "6fd5ca1498dc0cc1a6872c8a8c4acbf2a8f616a080f18ff8078e93315fa397f1"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0616.jpg",
+      "largura": 1075,
+      "altura": 896,
+      "bytes": 67773,
+      "sha256": "f9ea8addfb0299bb6b1851bec7aca0fd500bc5016d4249693e4aa369a91a1595"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0617.jpg",
+      "largura": 1076,
+      "altura": 1066,
+      "bytes": 59392,
+      "sha256": "8203ae36a4894ed43a5522cafe0244ced2f44952404f544e4a9b52649218151e"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0618.jpg",
+      "largura": 1044,
+      "altura": 1345,
+      "bytes": 87539,
+      "sha256": "3b67e81940f45425a07cb4f1172401889b4ed973d6f8c925bbd558ab8cb6db2f"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0619.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 236316,
+      "sha256": "eb382dfbf928ef1a282be07f7589b0b8b475b52aba1f1add2ac2976ed488fb85"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0620.jpg",
+      "largura": 1042,
+      "altura": 1075,
+      "bytes": 61499,
+      "sha256": "4fbf109fa81d28cfe863772fda912ded5b97b4b7266264c52be19ae86f3cc203"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0621.jpg",
+      "largura": 1007,
+      "altura": 957,
+      "bytes": 58368,
+      "sha256": "f1ac63e7d97e7b916f2046e203caaea812877c1c1bf8211f6dc5c8b270625a89"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0622.jpg",
+      "largura": 1008,
+      "altura": 1066,
+      "bytes": 92110,
+      "sha256": "bf5610d2d9494a884a39d99a0f0435df5273b6fa31aeff6ae280ed415c92ae6d"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0623.jpg",
+      "largura": 1049,
+      "altura": 905,
+      "bytes": 69708,
+      "sha256": "e1d079fad8d02301ebb2273d1b494e238d7086e1fbc984280a0e4fa334a0027b"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0624.jpg",
+      "largura": 1077,
+      "altura": 1062,
+      "bytes": 61214,
+      "sha256": "892e433776e02169352dbee8e5ef161c30f5b61b162bd218d1c5fa18c0857471"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0625.jpg",
+      "largura": 1048,
+      "altura": 1073,
+      "bytes": 74800,
+      "sha256": "061927a9c62c092fd843cbaf5111c08293d92cba2d76e885809a82206bf0641b"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0626.jpg",
+      "largura": 1072,
+      "altura": 1165,
+      "bytes": 69980,
+      "sha256": "576cecb8d55fbff5d608060adad909b28cdca72031778d82ba6792fd21dd5138"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0627.jpg",
+      "largura": 1065,
+      "altura": 929,
+      "bytes": 70520,
+      "sha256": "e513522ef7752cea47230cb62f90640f89b27b590163e52582d3b19f553ef599"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0628.jpg",
+      "largura": 1073,
+      "altura": 1080,
+      "bytes": 58638,
+      "sha256": "f97f56abf0a6e8a5b5bde5677f3d35c7f4c5041414646b09f61f9d7bde807a7e"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0629.jpg",
+      "largura": 1060,
+      "altura": 1071,
+      "bytes": 41503,
+      "sha256": "504890405f9423b24e0fa1fbe13c12b1f41d8d32431f4c65805747372fde88c9"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0630.jpg",
+      "largura": 1062,
+      "altura": 1416,
+      "bytes": 104873,
+      "sha256": "c0aed8b734e806420e83fde180732f9d60029267fdd0dd2192edf6f30df10e9c"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0631.jpg",
+      "largura": 1070,
+      "altura": 1418,
+      "bytes": 101420,
+      "sha256": "689f7fd9cffc50f26d6e94f904e801b3018bf8220bf58dfe7833c346637771a7"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0632.jpg",
+      "largura": 720,
+      "altura": 1040,
+      "bytes": 57356,
+      "sha256": "40970e1076f5ff72dacc57dfe7fc2e9a3ecbab520a98fd5ba4ce0cd54cb676ef"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0633.jpg",
+      "largura": 1010,
+      "altura": 1600,
+      "bytes": 85301,
+      "sha256": "0d193f6404d089c9ee1b4a9ebdf646b14726cc6f87e43d58145f172f42713427"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0634.jpg",
+      "largura": 1050,
+      "altura": 1542,
+      "bytes": 135976,
+      "sha256": "dd689405f4d20b01e9c0122524acfa5c00d4c7a56167c2788594ed23e0d25a1e"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0635.jpg",
+      "largura": 964,
+      "altura": 1599,
+      "bytes": 221269,
+      "sha256": "52374202120744705d9965fc3d9c3d427b251cf0df95fd352dd7e70dd647db7f"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0636.jpg",
+      "largura": 1080,
+      "altura": 1249,
+      "bytes": 236263,
+      "sha256": "09ee5e45a3c0b36f22330b30e84e5d77ff6e54846fb393bb58aa42ec2542e7db"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0637.jpg",
+      "largura": 1020,
+      "altura": 1082,
+      "bytes": 203840,
+      "sha256": "3289808fbb41c99031402995af5515d849f0d603efa8841d723dab280de09fb1"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0638.jpg",
+      "largura": 1059,
+      "altura": 1067,
+      "bytes": 30668,
+      "sha256": "172b8263985628f37650eea7aa36a9418ced9f9d9b3f5780972df5e670dc549d"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0639.jpg",
+      "largura": 1071,
+      "altura": 1442,
+      "bytes": 92498,
+      "sha256": "027e4ba00671445457039736b7a73bd0f050ac5add5a6dbd085830b787ee4d98"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0640.jpg",
+      "largura": 1064,
+      "altura": 1101,
+      "bytes": 106788,
+      "sha256": "3c5ce99f27b46116f1d2c986e5722ad22166001df043d6c498fd45253f984d1d"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0641.jpg",
+      "largura": 1078,
+      "altura": 1343,
+      "bytes": 243514,
+      "sha256": "76f56bb2394e44ddb4cc003fa4272b53cb07d7706f4384456a67351d02d95067"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0642.jpg",
+      "largura": 977,
+      "altura": 1057,
+      "bytes": 125964,
+      "sha256": "12be8cab6732639ed8a22612954e91173418d45ecf689760fdf683b854483510"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0643.jpg",
+      "largura": 463,
+      "altura": 463,
+      "bytes": 11671,
+      "sha256": "c4b5493ac67018759cc47750ce13997b8887209e9dcc0ea3634019b004e58735"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0644.jpg",
+      "largura": 957,
+      "altura": 888,
+      "bytes": 46202,
+      "sha256": "ce42f527272ceee475f33b53b4126094dbced665fc070ac9ce9047857cc98aa5"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0645.jpg",
+      "largura": 1051,
+      "altura": 1188,
+      "bytes": 63451,
+      "sha256": "a8c88cfc874a54e98c4e5cef3ce39298a09f1ac27050d5b560f00b1188cd467b"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0646.jpg",
+      "largura": 1072,
+      "altura": 1281,
+      "bytes": 141434,
+      "sha256": "da6f1237a0dd9ce6c7234d77489f2091f86189cb620e830046cc17c4643d4e59"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0647.jpg",
+      "largura": 1080,
+      "altura": 1429,
+      "bytes": 75603,
+      "sha256": "669f49c332dddc8f7eaf45bbc20c9ca124bdbdbf8b366aa3200423c2c73a5f1e"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0648.jpg",
+      "largura": 1028,
+      "altura": 1064,
+      "bytes": 49011,
+      "sha256": "24189f27f92607878d9c323ac6befc011317e2f9d7f87fa86a82b0459d03fa58"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0649.jpg",
+      "largura": 1014,
+      "altura": 1061,
+      "bytes": 70006,
+      "sha256": "85f1857088afa1fe899b7a5dee14338b6ec74e4bcaf8b99d16badd3fd9bf7eee"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0651.jpg",
+      "largura": 1080,
+      "altura": 1075,
+      "bytes": 61826,
+      "sha256": "7a2f6d85bede0399eb2923cbeccd0405b75615f9be9198e497e5ade814d76e7a"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0652.jpg",
+      "largura": 1064,
+      "altura": 1062,
+      "bytes": 89708,
+      "sha256": "959b6e8e6f35a4d69471ac66fa9e0312c61d2bb37f5bc4af8f5f88ef96b62077"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0653.jpg",
+      "largura": 1071,
+      "altura": 949,
+      "bytes": 59802,
+      "sha256": "4a4cb5910a81840248372d1b85ef59f511aa6eda17b3e635cb80de0c1daff460"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0654.jpg",
+      "largura": 1080,
+      "altura": 1082,
+      "bytes": 78733,
+      "sha256": "ac94984b0a68888333a2db72d34bc9b6c4e80cfcbc58f6686ed3368513f9590e"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0655.jpg",
+      "largura": 900,
+      "altura": 1600,
+      "bytes": 191755,
+      "sha256": "610b84212ed232b89fa245980065ceea3ab07c689b4f7391c9f628887f62a408"
+    },
+    {
+      "arquivo": "imagens/IMG-20261002-WA0669.jpg",
+      "largura": 1078,
+      "altura": 1318,
+      "bytes": 83041,
+      "sha256": "4cee68bfa02b1aa9e81799a5d681995a3503ff33b3abee88669ba7a2d3e94cd4"
+    }
+  ],
+  "categorias": [
+    {
+      "slug": "casa-cozinha",
+      "nome": "Casa e cozinha",
+      "descricao": "Utensílios para preparar alimentos, servir, cuidar da pia e da panela, além de utilidades domésticas contra mosquitos."
+    },
+    {
+      "slug": "beleza-higiene",
+      "nome": "Beleza e higiene",
+      "descricao": "Acessórios para cabelo, unhas, pés, barba e higiene bucal."
+    },
+    {
+      "slug": "costura-papelaria",
+      "nome": "Costura e papelaria",
+      "descricao": "Linhas, agulhas, tesouras de uso geral e calculadoras para o dia a dia."
+    },
+    {
+      "slug": "eletrica-iluminacao",
+      "nome": "Elétrica e iluminação",
+      "descricao": "Lanternas, fitas isolantes e adaptadores de tomada."
+    },
+    {
+      "slug": "ferramentas-acessorios",
+      "nome": "Ferramentas e acessórios",
+      "descricao": "Canivetes, elásticos de fixação para moto e bomba para encher pneus."
+    },
+    {
+      "slug": "lazer",
+      "nome": "Lazer",
+      "descricao": "Baralho, estilingues e tubos de látex usados como acessórios de lazer e exercício."
+    }
+  ]
+}

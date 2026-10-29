@@ -222,3 +222,20 @@ npm run import:catalog -- --pilot
 A simulação não escreve, o piloto usa exclusivamente o manifesto aprovado e não
 ativa produtos nem publica o frontend. Evidências em
 [docs/validation/variantes.md](docs/validation/variantes.md)
+
+## Fotos WebP e categorias
+
+Novos uploads do painel usam WebP, mantendo compatibilidade com JPEG existente
+Antes de enviar novas fotos, aplique a migration 009 conforme o
+[guia WebP](docs/deployment/webp.md)
+
+```bash
+npm run images:webp
+npm run test:images
+```
+
+Os originais são preservados, o relatório fica em
+`docs/produtos/conversao-webp.json`
+Produtos categorizados para revisão em
+[docs/produtos/produtos-preparados.md](docs/produtos/produtos-preparados.md)
+A importação completa aguarda a confirmação do usuário após limpar o banco

@@ -25,10 +25,14 @@ export async function optimizePhoto(file: File): Promise<Blob> {
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
-    for (let quality = 0.9; quality >= 0.3; quality -= 0.1) {
+    for (const quality of [0.82, 0.72, 0.62, 0.52, 0.42, 0.32]) {
       const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/jpeg", quality),
+        canvas.toBlob(resolve, "image/webp", quality),
       );
+      if (blob && blob.type !== "image/webp")
+        throw new Error(
+          "Este navegador não conseguiu gerar WebP, use um navegador atualizado",
+        );
       if (blob && blob.size <= 500_000 && blob.size > 0) return blob;
     }
     throw new Error(

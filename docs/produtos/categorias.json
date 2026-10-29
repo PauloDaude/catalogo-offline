@@ -1,0 +1,201 @@
+{
+  "status": "categorias_definidas_para_revisao_antes_da_importacao",
+  "fonte": "docs/produtos/produtos-revisao.json",
+  "criterio": "Uma categoria comercial por registro, por finalidade predominante; nomes, preços, fotos e estrutura dos registros de origem preservados. Contagens referem-se aos 85 registros de origem, não a produtos pais após agrupamento futuro de variantes.",
+  "categorias": [
+    {
+      "slug": "casa-cozinha",
+      "nome": "Casa e cozinha",
+      "descricao": "Utensílios para preparar alimentos, servir, cuidar da pia e da panela, além de utilidades domésticas contra mosquitos."
+    },
+    {
+      "slug": "beleza-higiene",
+      "nome": "Beleza e higiene",
+      "descricao": "Acessórios para cabelo, unhas, pés, barba e higiene bucal."
+    },
+    {
+      "slug": "costura-papelaria",
+      "nome": "Costura e papelaria",
+      "descricao": "Linhas, agulhas, tesouras de uso geral e calculadoras para o dia a dia."
+    },
+    {
+      "slug": "eletrica-iluminacao",
+      "nome": "Elétrica e iluminação",
+      "descricao": "Lanternas, fitas isolantes e adaptadores de tomada."
+    },
+    {
+      "slug": "ferramentas-acessorios",
+      "nome": "Ferramentas e acessórios",
+      "descricao": "Canivetes, elásticos de fixação para moto e bomba para encher pneus."
+    },
+    {
+      "slug": "lazer",
+      "nome": "Lazer",
+      "descricao": "Baralho, estilingues e tubos de látex usados como acessórios de lazer e exercício."
+    }
+  ],
+  "mapeamento": {
+    "WA0588-01": "eletrica-iluminacao",
+    "WA0591-01": "eletrica-iluminacao",
+    "WA0609-01": "eletrica-iluminacao",
+    "WA0589-01": "eletrica-iluminacao",
+    "WA0603-01": "eletrica-iluminacao",
+    "WA0632-01": "eletrica-iluminacao",
+    "WA0612-01": "eletrica-iluminacao",
+    "WA0629-01": "eletrica-iluminacao",
+    "WA0590-01": "eletrica-iluminacao",
+    "WA0644-01": "eletrica-iluminacao",
+    "WA0594-01": "ferramentas-acessorios",
+    "WA0619-01": "ferramentas-acessorios",
+    "WA0593-01": "ferramentas-acessorios",
+    "WA0592-01": "casa-cozinha",
+    "WA0638-01": "casa-cozinha",
+    "WA0601-01": "casa-cozinha",
+    "WA0600-01": "casa-cozinha",
+    "WA0600-02": "casa-cozinha",
+    "WA0600-03": "casa-cozinha",
+    "WA0652-01": "beleza-higiene",
+    "WA0652-02": "beleza-higiene",
+    "WA0602-01": "lazer",
+    "WA0621-01": "lazer",
+    "WA0627-01": "casa-cozinha",
+    "WA0598-01": "casa-cozinha",
+    "WA0604-01": "casa-cozinha",
+    "WA0604-02": "casa-cozinha",
+    "WA0604-03": "casa-cozinha",
+    "WA0653-01": "casa-cozinha",
+    "WA0648-01": "casa-cozinha",
+    "WA0608-01": "casa-cozinha",
+    "WA0651-01": "casa-cozinha",
+    "WA0595-01": "beleza-higiene",
+    "WA0596-01": "beleza-higiene",
+    "WA0616-01": "costura-papelaria",
+    "WA0617-01": "beleza-higiene",
+    "WA0597-01": "beleza-higiene",
+    "WA0623-01": "eletrica-iluminacao",
+    "WA0623-02": "eletrica-iluminacao",
+    "WA0625-01": "ferramentas-acessorios",
+    "WA0599-01": "lazer",
+    "WA0633-01": "eletrica-iluminacao",
+    "WA0634-01": "beleza-higiene",
+    "WA0637-01": "beleza-higiene",
+    "WA0641-01": "beleza-higiene",
+    "WA0646-01": "beleza-higiene",
+    "WA0654-01": "beleza-higiene",
+    "WA0649-01": "beleza-higiene",
+    "WA0607-01": "casa-cozinha",
+    "WA0610-01": "costura-papelaria",
+    "WA0611-01": "costura-papelaria",
+    "WA0613-01": "costura-papelaria",
+    "WA0655-01": "costura-papelaria",
+    "WA0615-01": "casa-cozinha",
+    "WA0615-02": "casa-cozinha",
+    "WA0615-03": "casa-cozinha",
+    "WA0618-01": "costura-papelaria",
+    "WA0620-01": "beleza-higiene",
+    "WA0622-01": "beleza-higiene",
+    "WA0624-01": "costura-papelaria",
+    "WA0624-02": "costura-papelaria",
+    "WA0626-01": "costura-papelaria",
+    "WA0626-02": "costura-papelaria",
+    "WA0626-03": "costura-papelaria",
+    "WA0628-01": "costura-papelaria",
+    "WA0628-02": "costura-papelaria",
+    "WA0628-03": "costura-papelaria",
+    "WA0630-01": "costura-papelaria",
+    "WA0631-01": "costura-papelaria",
+    "WA0635-01": "beleza-higiene",
+    "WA0636-01": "beleza-higiene",
+    "WA0639-01": "casa-cozinha",
+    "WA0640-01": "casa-cozinha",
+    "WA0642-01": "casa-cozinha",
+    "WA0643-01": "lazer",
+    "WA0643-02": "lazer",
+    "WA0605-01": "beleza-higiene",
+    "WA0645-01": "beleza-higiene",
+    "WA0647-01": "casa-cozinha",
+    "WA0606-01": "costura-papelaria",
+    "WA0606-02": "costura-papelaria",
+    "WA0606-03": "costura-papelaria",
+    "WA0606-04": "costura-papelaria",
+    "WA0606-05": "costura-papelaria",
+    "WA0669-01": "casa-cozinha"
+  },
+  "contagens": {
+    "casa-cozinha": 24,
+    "beleza-higiene": 18,
+    "costura-papelaria": 21,
+    "eletrica-iluminacao": 13,
+    "ferramentas-acessorios": 4,
+    "lazer": 5
+  },
+  "total_registros": 85,
+  "casos_limite": [
+    {
+      "itens": [
+        "WA0618-01",
+        "WA0624-01",
+        "WA0624-02",
+        "WA0626-01",
+        "WA0626-02",
+        "WA0626-03",
+        "WA0628-01",
+        "WA0628-02",
+        "WA0628-03",
+        "WA0630-01",
+        "WA0631-01"
+      ],
+      "categoria": "costura-papelaria",
+      "motivo": "Fotos conferidas: tesouras multiuso, com indicação de corte de tecido, papel, plástico e borracha; a profissional de 10,5 polegadas também é multiuso, sem evidência de ser para cabelo. As duas tesouras explicitamente para unha ficam em Beleza e higiene."
+    },
+    {
+      "itens": ["WA0610-01", "WA0611-01", "WA0613-01", "WA0655-01"],
+      "categoria": "costura-papelaria",
+      "motivo": "Calculadoras são procuradas em papelaria; compartilhamento de categoria com artigos de costura evita uma categoria só para esta família. Se o sortimento de escritório crescer, separar Papelaria futuramente."
+    },
+    {
+      "itens": ["WA0602-01", "WA0621-01"],
+      "categoria": "lazer",
+      "motivo": "Tubos de látex próximos dos estilingues no sortimento; foto do 201 mostra exercício e estilingue. Inferência comercial, sem alterar nome ou alegar finalidade médica. Vendedor pode preferir Ferramentas e acessórios caso o uso predominante de sua clientela seja outro."
+    },
+    {
+      "itens": ["WA0592-01", "WA0647-01"],
+      "categoria": "casa-cozinha",
+      "motivo": "Palito e raquete mata-mosquito são utilidades domésticas; classificar pelo uso, e não colocar a raquete em Elétrica apenas por ser elétrica."
+    },
+    {
+      "itens": [
+        "WA0608-01",
+        "WA0639-01",
+        "WA0640-01",
+        "WA0642-01",
+        "WA0669-01"
+      ],
+      "categoria": "casa-cozinha",
+      "motivo": "Pano de prato, borrachas de panela e tampa de pia ficam junto aos demais utensílios domésticos, sem criar categorias isoladas de limpeza ou reposição."
+    },
+    {
+      "itens": ["WA0594-01"],
+      "categoria": "ferramentas-acessorios",
+      "motivo": "Canivete é ferramenta portátil de uso geral; facas de cozinha e kit de churrasco ficam em Casa e cozinha."
+    },
+    {
+      "itens": ["WA0619-01", "WA0593-01", "WA0625-01"],
+      "categoria": "ferramentas-acessorios",
+      "motivo": "Elásticos para fixação e bomba para pneus permanecem juntos por uso utilitário; evita categorias separadas de moto e bicicleta com poucos registros."
+    },
+    {
+      "itens": ["WA0635-01", "WA0636-01", "WA0634-01", "WA0637-01"],
+      "categoria": "beleza-higiene",
+      "motivo": "Elásticos de cabelo, rabicó e xuxinhas pertencem a cabelo; não se misturam aos elásticos de fixação para moto."
+    }
+  ],
+  "observacoes": [
+    "Proposta exclusivamente local, sem acesso a rede, credenciais ou banco.",
+    "Não altera nem agrupa registros como variantes.",
+    "Não libera pendências comerciais anteriores nem autoriza upload, importação ou limpeza do banco.",
+    "Antes de qualquer limpeza ou upload completo, avisar o usuário e obter confirmação explícita do escopo."
+  ],
+  "importacao_autorizada": false,
+  "aguardar_confirmacao_limpeza": true
+}

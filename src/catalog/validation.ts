@@ -132,12 +132,15 @@ export function parseSnapshot(input: unknown): CatalogSnapshot {
 }
 
 export const isRemoteImagePath = (path: string) =>
-  /^products\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.jpg$/.test(
+  /^products\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|webp)$/.test(
     path,
   );
 
+export const isDemoImagePath = (path: string) =>
+  /^photos\/[a-zA-Z0-9_-]+\.(jpg|webp)$/.test(path);
+
 export const isImagePath = (path: string) =>
-  /^photos\/[a-zA-Z0-9_-]+\.jpg$/.test(path) || isRemoteImagePath(path);
+  isDemoImagePath(path) || isRemoteImagePath(path);
 
 export function parseSale(input: unknown): Sale {
   const s = input as Sale;

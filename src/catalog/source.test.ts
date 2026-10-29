@@ -120,3 +120,27 @@ test.each([
     ).toThrow();
   },
 );
+
+test("baixa WebP e JPEG da demo pelo mesmo guard do parser", async () => {
+  const fetchPhoto = vi.fn(
+    async (url: string) =>
+      new Response("photo", {
+        headers: {
+          "content-type": url.endsWith(".webp") ? "image/webp" : "image/jpeg",
+        },
+      }),
+  );
+  vi.stubGlobal("fetch", fetchPhoto);
+  const source = createHttpSource("/catalogo/");
+  for (const ext of ["jpg", "webp"])
+    expect((await source.getPhoto(`photos/panela.${ext}`)).type).toBe(
+      ext === "webp" ? "image/webp" : "image/jpeg",
+    );
+  for (const path of [
+    "../private.webp",
+    "https://evil.test/x.webp",
+    "products/00000000-0000-0000-0000-000000000001.webp",
+  ])
+    await expect(source.getPhoto(path)).rejects.toThrow();
+  expect(fetchPhoto).toHaveBeenCalledTimes(2);
+});

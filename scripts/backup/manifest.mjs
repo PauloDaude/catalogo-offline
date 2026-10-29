@@ -20,7 +20,7 @@ export function safeRelative(name) {
 }
 export function photoPath(name) {
   if (
-    !/^products\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.jpg$/.test(
+    !/^products\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|webp)$/.test(
       name,
     )
   )

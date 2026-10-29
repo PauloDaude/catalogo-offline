@@ -143,10 +143,19 @@ export function createAdminApi(client: SupabaseClient) {
     ) {
       const uploaded: string[] = [];
       async function upload(blob: Blob) {
-        const path = `products/${crypto.randomUUID()}.jpg`;
+        if (
+          !["image/jpeg", "image/webp"].includes(blob.type) ||
+          !blob.size ||
+          blob.size > 500000
+        )
+          throw new AdminError(
+            "invalid",
+            "Escolha uma foto JPEG ou WebP preparada para o catálogo",
+          );
+        const path = `products/${crypto.randomUUID()}.${blob.type === "image/webp" ? "webp" : "jpg"}`;
         const { error } = await client.storage
           .from("product-photos")
-          .upload(path, blob, { contentType: "image/jpeg", upsert: false });
+          .upload(path, blob, { contentType: blob.type, upsert: false });
         check(error);
         uploaded.push(path);
         return path;

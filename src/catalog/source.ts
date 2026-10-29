@@ -1,5 +1,5 @@
 import type { CatalogSource } from "./types";
-import { parseSnapshot } from "./validation";
+import { isDemoImagePath, parseSnapshot } from "./validation";
 
 export function createHttpSource(baseUrl: string): CatalogSource {
   const prefix = `${baseUrl.replace(/\/$/, "")}/demo/`;
@@ -22,8 +22,7 @@ export function createHttpSource(baseUrl: string): CatalogSource {
     getSnapshot,
     getRevision: async (signal) => (await getSnapshot(signal)).revision,
     getPhoto: async (path, signal) => {
-      if (!/^photos\/[a-zA-Z0-9_-]+\.jpg$/.test(path))
-        throw new Error("Caminho inválido");
+      if (!isDemoImagePath(path)) throw new Error("Caminho inválido");
 
       return (await request(path, signal)).blob();
     },

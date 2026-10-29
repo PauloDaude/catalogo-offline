@@ -97,7 +97,7 @@ try {
   );
   const created = await client.storage.createBucket(bucket, {
     public: false,
-    allowedMimeTypes: ["image/jpeg"],
+    allowedMimeTypes: ["image/jpeg", "image/webp"],
     fileSizeLimit: 5242880,
   });
   assert.equal(created.error, null);
@@ -107,16 +107,18 @@ try {
     .list("products", { limit: 1000 });
   assert.equal(listed.error, null);
   for (const object of listed.data) {
-    assert.match(object.name, /^[0-9a-f-]{36}\.jpg$/);
+    assert.match(object.name, /^[0-9a-f-]{36}\.(jpg|webp)$/);
     const path = `products/${object.name}`;
     const download = await client.storage.from("product-photos").download(path);
     assert.equal(download.error, null);
     const bytes = Buffer.from(await download.data.arrayBuffer());
     writeFileSync(`${folder}/${object.name}`, bytes, { mode: 0o600 });
     const restored = readFileSync(`${folder}/${object.name}`);
-    const upload = await client.storage
-      .from(bucket)
-      .upload(path, restored, { contentType: "image/jpeg" });
+    const upload = await client.storage.from(bucket).upload(path, restored, {
+      contentType:
+        object.metadata?.mimetype ||
+        (path.endsWith(".webp") ? "image/webp" : "image/jpeg"),
+    });
     assert.equal(upload.error, null);
     paths.push(path);
     const verify = await client.storage.from(bucket).download(path);

@@ -25,14 +25,14 @@ for (const [width, height] of [
           const ctx = canvas.getContext("2d")!;
           ctx.fillStyle = "#cbd5e1";
           ctx.fillRect(0, 0, w, h);
-          return canvas.toDataURL("image/jpeg").split(",")[1];
+          return canvas.toDataURL("image/webp").split(",")[1];
         },
         [photoWidth, photoHeight],
       );
-      await page.route("**/demo/photos/panela.jpg", (route) =>
+      await page.route("**/demo/photos/panela.webp", (route) =>
         route.fulfill({
           body: Buffer.from(base64, "base64"),
-          contentType: "image/jpeg",
+          contentType: "image/webp",
         }),
       );
       await page.reload();

@@ -554,3 +554,24 @@ Referências oficiais para consultar conforme necessário:
 - Opção de incluir visíveis em painel próprio, exclusão irreversível em aviso separado
 - Cabeçalho e ações permanecem visíveis, somente conteúdo do modal rola quando preciso
 - Estilos restritos ao modal de ações de produtos, sem alteração de SQL ou regras
+
+## WebP e categorias do lote real — 29/10/2026
+
+- Escopo confirmado: converter fotos locais e próximos uploads, sem migrar fotos
+  já existentes no Supabase
+- Preparadas 67 fotos reais e 10 da demo, mantendo originais, saída WebP até
+  1600 px e 500.000 bytes, painel também gera WebP e rejeita fallback PNG
+- Substitui a saída JPEG anteriormente definida para novas fotos, JPEG legado
+  continua aceito em produtos, variantes, offline e backup
+- Migration 202610290009_webp_photos.sql aplicada somente no Supabase local,
+  aplicação remota pelo usuário ainda pendente, instruções em docs/deployment/webp.md
+- Usuário informou aplicação remota das migrations 007/008, sem auditoria independente
+- Seis categorias propostas para os 85 registros: Casa e cozinha, Beleza e higiene,
+  Costura e papelaria, Elétrica e iluminação, Ferramentas e acessórios, Lazer
+- Dados separados em docs/produtos/produtos-preparados.json, revisão legível no
+  Markdown correspondente, agrupamento final em produtos/variantes ainda pendente
+- Não alterar manifesto/journal do piloto JPEG para preservar retries
+- **Antes do lote completo, avisar e aguardar confirmação explícita do usuário
+  de que terminou de limpar o banco**, não limpar nem importar automaticamente
+- Não houve publicação nem alteração remota nesta preparação
+- Handoff da conversa em handoff.md, ler antes de continuar em novo chat
