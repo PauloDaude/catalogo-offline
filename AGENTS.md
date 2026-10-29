@@ -546,3 +546,11 @@ Referências oficiais para consultar conforme necessário:
 
 - Validação desta opção: 182 unitários, 8 cenários de navegador, API local com rollback
   de falha após ocultar e revisão independente aprovados, SQL008 ensaiado em cópia
+
+## Hierarquia visual das confirmações de produto — 29/10/2026
+
+- Refinamento visual solicitado: grupos com título/contador separados, nomes em
+  destaque e códigos menores em linha própria, explicações com contraste secundário
+- Opção de incluir visíveis em painel próprio, exclusão irreversível em aviso separado
+- Cabeçalho e ações permanecem visíveis, somente conteúdo do modal rola quando preciso
+- Estilos restritos ao modal de ações de produtos, sem alteração de SQL ou regras

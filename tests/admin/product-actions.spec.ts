@@ -425,6 +425,7 @@ test("modal diferencia estados e exclui apenas os ocultos de seleção mista", a
       name: "Precisam ser ocultados antes de excluir",
     }),
   ).toContainText(visible);
+  await page.screenshot({ path: "/tmp/catalogo-modal-hierarquia-desktop.png" });
   await page
     .getByRole("button", {
       name: "Excluir 2 produtos definitivamente",
@@ -466,6 +467,7 @@ test("modal diferencia estados e exclui apenas os ocultos de seleção mista", a
 test("opção explícita oculta e exclui visíveis junto dos ocultos", async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 360, height: 900 });
   const image = (
     await client
       .from("products")
@@ -518,6 +520,7 @@ test("opção explícita oculta e exclui visíveis junto dos ocultos", async ({
       name: "Precisam ser ocultados antes de excluir",
     }),
   ).toContainText(visibleName);
+  await page.screenshot({ path: "/tmp/catalogo-modal-hierarquia-mobile.png" });
   await page
     .locator("label.admin-selection-checkbox")
     .filter({ has: option })

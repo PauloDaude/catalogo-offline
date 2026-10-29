@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Checkbox } from "react-aria-components";
-import { Check } from "lucide-react";
+import { Check, TriangleAlert } from "lucide-react";
 import { ConfirmDialog } from "../ConfirmDialog";
 import { partitionSelection, type ProductSelectionItem } from "./selection";
 export type ProductAction = {
@@ -56,13 +56,21 @@ export function ProductActionDialog({
     : showing
       ? "Já estão visíveis, não serão alterados"
       : "Já estão ocultos, não serão alterados";
+  const skippedHeading = deleting
+    ? "Fora desta exclusão"
+    : showing
+      ? "Já estão visíveis"
+      : "Já estão ocultos";
   const list = (items: ProductSelectionItem[]) => (
     <ul className="admin-action-targets">
       {items.map((p) => (
         <li key={p.id}>
-          <strong>{p.name}</strong> <span>#{p.code}</span>
+          <strong>{p.name}</strong>{" "}
+          <span className="admin-action-code">#{p.code}</span>
           {deleting && hideVisible && p.active && (
-            <small> — Será ocultado antes da exclusão</small>
+            <small className="admin-action-item-note">
+              Será ocultado antes da exclusão
+            </small>
           )}
         </li>
       ))}
@@ -72,6 +80,7 @@ export function ProductActionDialog({
     <ConfirmDialog
       isOpen
       title={title}
+      className="admin-product-action-dialog"
       confirmLabel={confirmLabel}
       busy={busy}
       error={error}
@@ -80,7 +89,7 @@ export function ProductActionDialog({
       onConfirm={() => onConfirm(hideVisible)}
       onCancel={onCancel}
     >
-      <p>
+      <p className="admin-action-intro">
         {deleting
           ? hideVisible
             ? "Os produtos selecionados serão excluídos definitivamente, incluindo suas variantes"
@@ -89,7 +98,7 @@ export function ProductActionDialog({
       </p>
       {deleting && action.targets.some((p) => p.active) && (
         <Checkbox
-          className="admin-selection-checkbox"
+          className="admin-selection-checkbox admin-action-option"
           isSelected={hideVisible}
           isDisabled={busy}
           onChange={setHideVisible}
@@ -106,15 +115,21 @@ export function ProductActionDialog({
       {count > 0 ? (
         <section
           role="region"
+          className="admin-action-group"
+          data-destructive={deleting || undefined}
           aria-label={eligibleLabel}
         >
           <h3>
-            {eligibleLabel} ({count})
+            <span>{eligibleLabel}</span>
+            <span className="admin-action-count">{count}</span>
           </h3>
           {list(eligible)}
         </section>
       ) : (
-        <p role="status">
+        <p
+          role="status"
+          className="admin-action-empty"
+        >
           {deleting
             ? "Nenhum produto oculto foi selecionado"
             : "Nenhum produto precisa desta alteração"}
@@ -123,19 +138,33 @@ export function ProductActionDialog({
       {skipped.length > 0 && (
         <section
           role="region"
+          className="admin-action-group admin-action-group-muted"
           aria-label={skippedLabel}
         >
           <h3>
-            {skippedLabel} ({skipped.length})
+            <span>{skippedHeading}</span>
+            <span className="admin-action-count">{skipped.length}</span>
           </h3>
+          {deleting && (
+            <p className="admin-action-group-note">
+              Estão visíveis no catálogo
+            </p>
+          )}
           {list(skipped)}
         </section>
       )}
       {count > 0 && (
-        <p>
-          {deleting
-            ? "Não será possível desfazer pelo painel"
-            : "Você poderá alterar a visibilidade novamente quando quiser"}
+        <p
+          className={
+            deleting ? "admin-action-warning" : "admin-action-footnote"
+          }
+        >
+          {deleting && <TriangleAlert aria-hidden="true" />}
+          <span>
+            {deleting
+              ? "Exclusão definitiva, sem opção de desfazer"
+              : "Você poderá alterar a visibilidade novamente quando quiser"}
+          </span>
         </p>
       )}
     </ConfirmDialog>

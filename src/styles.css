@@ -2547,3 +2547,156 @@ progress {
     gap: 8px;
   }
 }
+
+/* Product confirmations: decision, affected items, then irreversible consequence. */
+.admin-product-action-dialog {
+  max-width: min(520px, calc(100% - 32px));
+  gap: 20px;
+}
+.admin-product-action-dialog .admin-dialog-body {
+  gap: 16px;
+}
+.admin-product-action-dialog .admin-action-intro {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.admin-product-action-dialog .admin-action-option {
+  align-items: flex-start;
+  padding: 12px 14px;
+  border: 1px solid #d6e1f3;
+  border-radius: 10px;
+  background: #f2f6fc;
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.admin-action-option .admin-selection-checkbox-box {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.admin-action-group {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.admin-action-group h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.admin-action-count {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+.admin-action-group[data-destructive] .admin-action-count {
+  background: #fff0ee;
+  color: #b42318;
+}
+.admin-action-group-muted {
+  background: #f7f8fb;
+}
+.admin-action-group-note {
+  margin: 10px 14px 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.admin-product-action-dialog .admin-action-targets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.admin-product-action-dialog .admin-action-targets li {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 12px 14px;
+}
+.admin-product-action-dialog .admin-action-targets li + li {
+  border-top: 1px solid var(--border);
+}
+.admin-action-targets strong {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.admin-action-code,
+.admin-product-action-dialog .admin-action-item-note {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.admin-product-action-dialog .admin-action-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff8eb;
+  color: #854d0e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.admin-action-warning svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+}
+.admin-action-footnote,
+.admin-action-empty {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .admin-product-action-dialog {
+    padding: 20px;
+  }
+}
+.admin-product-action-dialog {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.admin-product-action-dialog [data-slot="dialog"] {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.admin-product-action-dialog [data-slot="dialog-title"],
+.admin-product-action-dialog .admin-dialog-actions {
+  flex-shrink: 0;
+}
+.admin-product-action-dialog .admin-dialog-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+.admin-product-action-dialog .admin-dialog-body {
+  display: flex;
+  flex-direction: column;
+}
+.admin-product-action-dialog .admin-dialog-body > * {
+  flex-shrink: 0;
+}

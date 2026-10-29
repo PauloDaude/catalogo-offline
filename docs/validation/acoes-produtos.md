@@ -135,3 +135,14 @@ com rollback integral, além da remoção bem-sucedida e proteção contra reimp
 SQL007+008 integrais ensaiados em cópia descartável do banco anterior, com produtos
 e grants preservados. Revisão independente sem achados materiais, build/lint e
 formatação conferidos. Nenhuma exclusão real ou migration remota nesta etapa
+
+## Hierarquia visual do modal — 29/10/2026
+
+Grupos de produtos com bordas e títulos/contadores separados, códigos em linha
+secundária, opção de incluir visíveis em painel azul suave e aviso irreversível
+separado. Ações e título ficam fora da rolagem do conteúdo, estilos limitados ao
+modal de produtos sem alterar as regras de elegibilidade ou o banco
+
+Verificados os 12 testes unitários de modal/gerenciamento e dois fluxos de navegador
+existentes, com inspeção visual em 1280×720 e 360×900, incluindo nomes longos
+Capturas esperam a animação de entrada terminar para verificar o estado final

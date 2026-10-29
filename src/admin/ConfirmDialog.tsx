@@ -5,6 +5,7 @@ import { Button } from "../components/ui/button";
 export function ConfirmDialog({
   isOpen,
   title,
+  className,
   children,
   confirmLabel,
   busy = false,
@@ -16,6 +17,7 @@ export function ConfirmDialog({
 }: {
   isOpen: boolean;
   title: string;
+  className?: string;
   children: ReactNode;
   confirmLabel: string;
   busy?: boolean;
@@ -34,7 +36,7 @@ export function ConfirmDialog({
       isDismissable={!busy}
       isKeyboardDismissDisabled={busy}
       showCloseButton={false}
-      className="admin-dialog"
+      className={`admin-dialog ${className || ""}`}
     >
       <DialogTitle>{title}</DialogTitle>
       <div className="admin-dialog-body">{children}</div>
