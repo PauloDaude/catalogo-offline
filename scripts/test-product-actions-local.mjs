@@ -263,6 +263,60 @@ try {
     ).error,
     null,
   );
+  const d1 = await simple("Lote oculto1 " + suffix, false),
+    d2 = await simple("Lote oculto2 " + suffix, false);
+  const removeBatch = (items) =>
+    admin.rpc("remove_products", { p_items: items });
+  assert.equal(
+    (await removeBatch([item(d1), { ...item(d2), expected_version: 0 }])).error
+      ?.code,
+    "40001",
+  );
+  assert.equal((await get(d1.id)).active, false);
+  assert.equal(
+    (await removeBatch([item(d1), item(visible)])).error?.code,
+    "23514",
+  );
+  assert.ok(await get(d1.id));
+  for (const c of [anon, clients[1]])
+    assert.ok((await c.rpc("remove_products", { p_items: [item(d1)] })).error);
+  for (const items of [
+    [],
+    [item(d1), item(d1)],
+    [{ id: crypto.randomUUID(), expected_version: 1 }],
+  ])
+    assert.ok((await removeBatch(items)).error);
+  const batchKey = "actions-" + suffix + "-batch";
+  const importedBatch = await admin.rpc("import_product_v2", {
+    p_import_key: batchKey,
+    p_payload: payload,
+  });
+  assert.equal(importedBatch.error, null);
+  const batch = await removeBatch([
+    item(d1),
+    item(d2),
+    item(importedBatch.data),
+  ]);
+  assert.equal(batch.error, null);
+  assert.equal(batch.data.deleted, 3);
+  assert.equal(
+    (
+      await admin
+        .from("products")
+        .select("id")
+        .in("id", [d1.id, d2.id, importedBatch.data.id])
+    ).data.length,
+    0,
+  );
+  assert.equal(
+    (
+      await admin.rpc("import_product_v2", {
+        p_import_key: batchKey,
+        p_payload: payload,
+      })
+    ).error?.code,
+    "P0002",
+  );
   console.log(
     "PASS: lote integral, conflitos, três perfis, ocultos, variantes, tombstone e códigos preservados",
   );

@@ -26,7 +26,7 @@ transação no banco, evitando que parte dos produtos mude e outra parte falhe
 - Proposta: trocar pesquisa, categoria, Mostrar ou abrir edição limpa a seleção,
   evitando ações em itens que ficaram fora do contexto atual
 - Ocultar abre um modal com quantidade e nomes/códigos, mostrando que o lote pode
-  conter produtos de outras páginas, Mostrar segue a ação direta atual
+  conter produtos de outras páginas, Mostrar também abre a confirmação por decisão posterior
 - Alterar somente a visibilidade dos pais, preservando opções, fotos e preços
 - Validar autorização, versões e condições para mostrar antes de mudar o lote,
   incluindo categoria ativa e ao menos uma opção ativa em produtos com variantes
@@ -35,9 +35,9 @@ transação no banco, evitando que parte dos produtos mude e outra parte falhe
 
 ### Exclusão definitiva
 
-- Botão Excluir disponível individualmente somente em produtos ocultos
+- Botão Excluir individual para ocultos e Excluir selecionados para os ocultos da seleção
 - Modal com nome/código e aviso de remoção definitiva do produto e suas variantes,
-  botão destrutivo e cancelamento, sem exclusão em lote nesta etapa
+  botão destrutivo e cancelamento, exclusão em lote habilitada pela decisão posterior de 29/10
 - Banco confirma que o produto continua oculto e na versão exibida, com autorização
   administrativa real e proteção contra exclusão direta de produtos visíveis
 - Remover variantes e produto na mesma transação, códigos não são reutilizados
@@ -70,3 +70,9 @@ fotos compartilhadas e rolagem responsiva com os controles fora da área roláve
 
 Não inclui apagar os produtos atuais durante o desenvolvimento, importar novos
 produtos, ativar ofertas fictícias ou publicar o frontend
+
+## Refinamento posterior de 29/10/2026
+
+Modal de Mostrar/Ocultar separa elegíveis e já no estado solicitado, confirmação
+somente com elegíveis. Exclusão em lote lista ocultos elegíveis e visíveis fora da
+operação, transação única e nova migration007, preservando o restante das regras

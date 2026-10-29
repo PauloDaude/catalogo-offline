@@ -17,6 +17,7 @@ import {
 import { ProductListViewport } from "./products/ProductListViewport";
 import {
   toggleProduct,
+  partitionSelection,
   togglePage,
   type ProductSelection,
   type ProductSelectionItem,
@@ -64,7 +65,8 @@ export function Management({ client }: { client: SupabaseClient }) {
     kind: "show" | "hide" | "delete",
     targets: ProductSelectionItem[],
   ) => {
-    if (busy || !targets.length) return;
+    const { eligible } = partitionSelection(kind, targets);
+    if (busy || !eligible.length) return;
     const report = (text: string) =>
       action ? setActionError(text) : setError(text);
     if (!navigator.onLine) {
@@ -77,16 +79,21 @@ export function Management({ client }: { client: SupabaseClient }) {
     setMessage("");
     try {
       let updated = 0;
-      if (kind === "delete")
-        await api.removeProduct(targets[0].id, targets[0].version);
-      else
+      if (kind === "delete") {
+        if (eligible.length === 1) {
+          await api.removeProduct(eligible[0].id, eligible[0].version);
+          updated = 1;
+        } else updated = (await api.removeProducts(eligible)).deleted;
+      } else
         updated = (await api.setProductsVisibility(targets, kind === "show"))
           .updated;
       setAction(null);
       clearSelection();
       setMessage(
         kind === "delete"
-          ? "Produto excluído definitivamente"
+          ? updated === 1
+            ? "Produto excluído definitivamente"
+            : `${updated} produtos excluídos definitivamente`
           : updated === 0
             ? "Os produtos já estavam no estado solicitado"
             : updated === 1
@@ -285,8 +292,9 @@ export function Management({ client }: { client: SupabaseClient }) {
                 setSelection((previous) => togglePage(previous, products))
               }
               onClear={clearSelection}
-              onShow={() => void executeAction("show", [...selection.values()])}
+              onShow={() => openAction("show", [...selection.values()])}
               onHide={() => openAction("hide", [...selection.values()])}
+              onDelete={() => openAction("delete", [...selection.values()])}
             />
             {!loading && !error && (
               <p

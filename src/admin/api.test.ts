@@ -78,3 +78,20 @@ test("erro do lote informa revisão e não usa mensagem de salvar formulário", 
     api.setProductsVisibility([{ id: "a", version: 1 }], true),
   ).rejects.toThrow(/Revise a seleção/);
 });
+
+test("exclusão em lote usa uma única RPC transacional", async () => {
+  const rpc = vi.fn().mockResolvedValue({ data: { deleted: 2 }, error: null });
+  const api = createAdminApi({ rpc } as unknown as SupabaseClient);
+  expect(
+    await api.removeProducts([
+      { id: "a", version: 1 },
+      { id: "b", version: 2 },
+    ]),
+  ).toEqual({ deleted: 2 });
+  expect(rpc).toHaveBeenCalledWith("remove_products", {
+    p_items: [
+      { id: "a", expected_version: 1 },
+      { id: "b", expected_version: 2 },
+    ],
+  });
+});

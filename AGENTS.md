@@ -515,3 +515,19 @@ Referências oficiais para consultar conforme necessário:
   na página ao atingir as bordas da lista, sem alterar sua altura máxima
 - Filtros e paginação continuam fora da região rolável, sem exigir que toda a seção
   caiba simultaneamente na altura do dispositivo
+
+## Estados e exclusão em lote implementados localmente — 29/10/2026
+
+- Substitui ação direta de Mostrar selecionados: Mostrar/Ocultar em lote abrem modal
+- Modal separa os elegíveis dos já visíveis/ocultos, sem repetir mudança de estado
+- Botões da barra permanecem habilitados com seleção, confirmação fica desabilitada
+  quando não há elegíveis, com mensagem explícita no modal
+- Nova decisão substitui exclusão apenas individual: Excluir selecionados opera só
+  nos ocultos, lista visíveis como fora da operação e não os oculta automaticamente
+- Exclusão elegível em transação única via migration007, nenhuma exclusão parcial em
+  conflito/indisponibilidade, fotos/tombstones/códigos preservados como na006
+- Nenhuma exclusão real ou SQL remoto durante implementação, aplicação007 pelo usuário
+
+- Validação desta etapa: 180 unitários e 24 cenários de navegador aprovados, teste SQL
+  de lote indivisível/3 perfis/importado aprovado, revisão independente sem achados
+- SQL007 integral ensaiado em cópia prévia, guia atualizado em docs/deployment/acoes-produtos.md

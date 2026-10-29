@@ -89,3 +89,27 @@ de altura ou reintroduzir cálculos pela posição do documento
 Uma regressão com gesto real de wheel falhou antes da correção, a página ficava
 parada mesmo após o fim da lista. O teste verifica que scrollY externo aumenta
 nessa situação e que a altura da região permanece igual
+
+## Estados da seleção e exclusão de ocultos em lote — 29/10/2026
+
+Mostrar e Ocultar selecionados abrem modal com seções de elegíveis e já no estado
+solicitado, os botões da barra continuam habilitados, a confirmação fica inativa
+quando não há elegíveis. Excluir selecionados mostra ocultos elegíveis e visíveis
+fora da operação, somente o conjunto oculto confirmado vai ao backend
+
+A migration007 adiciona exclusão atômica com locks ordenados, valida todos os IDs,
+versões e estados antes de remover e reutiliza o helper006 para manter fotos,
+sequências e tombstones. Nada é excluído se um elegível mudou ou ficou visível
+
+Testes SQL falharam antes da RPC existir e passaram depois, incluindo versão antiga,
+produto visível no lote, IDs repetidos/ausentes, visitante/usuário comum negados e
+exclusão de importado com variantes sem recriação por retry
+
+Unitários completos: 180 testes em 48 arquivos aprovados, incluindo modal sem itens
+elegíveis, estados mistos e payload único de exclusão. Navegador completo do painel: 24 cenários aprovados, incluindo novo fluxo de
+Mostrar confirmado, divisão de estados, exclusão de dois ocultos preservando o
+visível e confirmações desabilitadas sem elegíveis
+
+O SQL integral foi ensaiado em cópia descartável pré-007, preservando produtos e
+grants. Revisão independente sem achados materiais de autorização/atomicidade
+Nenhuma migration ou exclusão remota nesta etapa, aplicar a 007 conforme guia

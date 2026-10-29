@@ -245,6 +245,10 @@ test("seleção entre páginas, confirmação, conflito e exclusão do importado
   await page
     .getByRole("button", { name: "Mostrar selecionados", exact: true })
     .click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Mostrar 3 produtos", exact: true })
+    .click();
   await expect(
     page.getByText("3 produtos visíveis no catálogo", { exact: true }),
   ).toBeVisible();
@@ -335,4 +339,126 @@ test("exclusão exige revisão no carrinho e preserva foto compartilhada", async
     .click();
   await expect(page.locator(".cart-grand-total")).toHaveText("R$ 0,00");
   await expect(page.getByText("Indisponível — fora do total")).toBeVisible();
+});
+
+test("modal diferencia estados e exclui apenas os ocultos de seleção mista", async ({
+  page,
+}) => {
+  const image = (
+    await client
+      .from("products")
+      .select("image_path")
+      .eq("category_id", categoryId)
+      .limit(1)
+      .single()
+  ).data.image_path;
+  const visible = `Condição visível ${prefix}`,
+    a = `Condição oculto A ${prefix}`,
+    b = `Condição oculto B ${prefix}`;
+  for (const [name, active] of [
+    [visible, true],
+    [b, false],
+  ] as const)
+    expect(
+      (
+        await client.rpc("save_product_v2", {
+          p_payload: {
+            name,
+            active,
+            category_id: categoryId,
+            image_path: image,
+            price_cents: 100,
+          },
+        })
+      ).error,
+    ).toBeNull();
+  expect(
+    (
+      await client.rpc("import_product_v2", {
+        p_import_key: `actions-browser-${prefix}-condition`,
+        p_payload: {
+          name: a,
+          active: false,
+          category_id: categoryId,
+          image_path: image,
+          has_variants: true,
+          variant_attribute: "Modelo",
+          variants: [
+            { label: "A", price_cents: 100, active: true },
+            { label: "B", price_cents: 200, active: true },
+          ],
+        },
+      })
+    ).error,
+  ).toBeNull();
+  await login(page);
+  await page.getByLabel("Pesquisar produtos").fill("Condição");
+  await expect(page.locator(".admin-product-row")).toHaveCount(3);
+  await mark(page, "Selecionar página");
+  await page.getByRole("button", { name: "Ocultar selecionados" }).click();
+  await expect(
+    page.getByRole("region", { name: "Serão ocultados" }),
+  ).toContainText(visible);
+  await expect(
+    page.getByRole("region", { name: "Já estão ocultos, não serão alterados" }),
+  ).toContainText(a);
+  await expect(
+    page.getByRole("region", { name: "Já estão ocultos, não serão alterados" }),
+  ).toContainText(b);
+  await page.getByRole("button", { name: "Cancelar", exact: true }).click();
+  await page.getByRole("button", { name: "Mostrar selecionados" }).click();
+  await expect(
+    page.getByRole("region", { name: "Serão mostrados" }),
+  ).toContainText(a);
+  await expect(
+    page.getByRole("region", {
+      name: "Já estão visíveis, não serão alterados",
+    }),
+  ).toContainText(visible);
+  await page.getByRole("button", { name: "Cancelar", exact: true }).click();
+  await page.getByRole("button", { name: "Excluir selecionados" }).click();
+  await expect(
+    page.getByRole("region", { name: "Serão excluídos" }),
+  ).toContainText(a);
+  await expect(
+    page.getByRole("region", {
+      name: "Precisam ser ocultados antes de excluir",
+    }),
+  ).toContainText(visible);
+  await page
+    .getByRole("button", {
+      name: "Excluir 2 produtos definitivamente",
+      exact: true,
+    })
+    .click();
+  await expect(
+    page.getByText("2 produtos excluídos definitivamente", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".admin-product-row")).toHaveCount(1);
+  await mark(page, `Selecionar ${visible}`);
+  await page.getByRole("button", { name: "Mostrar selecionados" }).click();
+  await expect(
+    page.getByText("Nenhum produto precisa desta alteração"),
+  ).toBeVisible();
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByRole("button", { name: "Mostrar produtos", exact: true }),
+  ).toBeDisabled();
+  await page.getByRole("button", { name: "Cancelar", exact: true }).click();
+  await page.getByRole("button", { name: "Ocultar selecionados" }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Ocultar produto", exact: true })
+    .click();
+  await expect(
+    page.getByText("Produto ocultado no servidor", { exact: true }),
+  ).toBeVisible();
+  await mark(page, `Selecionar ${visible}`);
+  await page.getByRole("button", { name: "Ocultar selecionados" }).click();
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByRole("button", { name: "Ocultar produtos", exact: true }),
+  ).toBeDisabled();
 });

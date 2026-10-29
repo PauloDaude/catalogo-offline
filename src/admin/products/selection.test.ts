@@ -19,3 +19,21 @@ test("versão selecionada é capturada sem acompanhar edição silenciosamente",
   expect(selected.get("a")?.version).toBe(1);
   expect(toggleProduct(selected, newer).size).toBe(0);
 });
+
+test("ações separam itens elegíveis dos que já estão no estado solicitado", async () => {
+  const { partitionSelection } = await import("./selection");
+  const visible = { ...a, active: true },
+    hidden = { ...b, active: false };
+  expect(partitionSelection("hide", [visible, hidden])).toEqual({
+    eligible: [visible],
+    skipped: [hidden],
+  });
+  expect(partitionSelection("show", [visible, hidden])).toEqual({
+    eligible: [hidden],
+    skipped: [visible],
+  });
+  expect(partitionSelection("delete", [visible, hidden])).toEqual({
+    eligible: [hidden],
+    skipped: [visible],
+  });
+});

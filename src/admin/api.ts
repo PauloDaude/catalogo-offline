@@ -82,6 +82,13 @@ export function createAdminApi(client: SupabaseClient) {
       checkProductAction(error);
       return data as { updated: number };
     },
+    async removeProducts(items: Array<Pick<AdminProduct, "id" | "version">>) {
+      const { data, error } = await client.rpc("remove_products", {
+        p_items: items.map((p) => ({ id: p.id, expected_version: p.version })),
+      });
+      checkProductAction(error, true);
+      return data as { deleted: number };
+    },
     async removeProduct(id: string, expectedVersion: number) {
       const { error } = await client.rpc("remove_product", {
         p_id: id,

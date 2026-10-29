@@ -1,5 +1,5 @@
 import { Checkbox } from "react-aria-components";
-import { Check, Minus } from "lucide-react";
+import { Check, Minus, Trash2 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
   pageSelection,
@@ -14,6 +14,7 @@ export function ProductBulkActions({
   onClear,
   onShow,
   onHide,
+  onDelete,
 }: {
   products: ProductSelectionItem[];
   selection: ProductSelection;
@@ -22,6 +23,7 @@ export function ProductBulkActions({
   onClear: () => void;
   onShow: () => void;
   onHide: () => void;
+  onDelete: () => void;
 }) {
   const state = pageSelection(selection, products),
     count = selection.size;
@@ -66,6 +68,16 @@ export function ProductBulkActions({
               onPress={onHide}
             >
               Ocultar
+            </Button>
+            <Button
+              variant="destructive"
+              className="touch-button"
+              aria-label="Excluir selecionados"
+              isDisabled={disabled}
+              onPress={onDelete}
+            >
+              <Trash2 aria-hidden="true" />
+              Excluir
             </Button>
             <Button
               variant="ghost"

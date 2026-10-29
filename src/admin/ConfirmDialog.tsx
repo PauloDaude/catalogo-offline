@@ -8,6 +8,8 @@ export function ConfirmDialog({
   children,
   confirmLabel,
   busy = false,
+  isConfirmDisabled = false,
+  confirmVariant = "destructive",
   error,
   onCancel,
   onConfirm,
@@ -17,6 +19,8 @@ export function ConfirmDialog({
   children: ReactNode;
   confirmLabel: string;
   busy?: boolean;
+  isConfirmDisabled?: boolean;
+  confirmVariant?: "default" | "destructive";
   error?: string;
   onCancel: () => void;
   onConfirm: () => void;
@@ -52,10 +56,10 @@ export function ConfirmDialog({
           Cancelar
         </Button>
         <Button
-          variant="destructive"
+          variant={confirmVariant}
           className="touch-button"
           onPress={onConfirm}
-          isDisabled={busy}
+          isDisabled={busy || isConfirmDisabled}
         >
           {busy ? "Aguarde…" : confirmLabel}
         </Button>

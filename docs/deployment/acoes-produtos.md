@@ -1,7 +1,7 @@
 # Ativar seleção em lote e exclusão de produtos
 
-A interface e o SQL foram testados no Supabase local, a migration 006 deve ser
-aplicada no projeto real para habilitar as novas ações
+A interface e o SQL foram testados no Supabase local, as migrations 006 e 007 devem ser
+aplicadas no projeto real para habilitar as novas ações
 
 ## Aplicar no Supabase
 
@@ -11,18 +11,23 @@ aplicada no projeto real para habilitar as novas ações
 3. Copie todo o arquivo
    [202610290006_product_actions.sql](../../supabase/migrations/202610290006_product_actions.sql)
    e clique em **Run**, o arquivo exige a migration 005 anterior
-4. Confira as funções e a proteção contra DELETE direto:
+   Se a 006 já foi aplicada, não a repita
+4. Depois, execute integralmente
+   [202610290007_bulk_remove_products.sql](../../supabase/migrations/202610290007_bulk_remove_products.sql)
+   para habilitar a exclusão de vários ocultos em uma transação
+5. Confira as funções e a proteção contra DELETE direto:
 
 ```sql
 select
   to_regprocedure('public.set_products_visibility(jsonb,boolean)') as lote,
   to_regprocedure('public.remove_product(uuid,bigint)') as exclusao,
+  to_regprocedure('public.remove_products(jsonb)') as exclusao_em_lote,
   has_table_privilege('authenticated','public.products','DELETE') as delete_direto;
 ```
 
-Os dois primeiros campos devem mostrar as funções, `delete_direto` deve ser false
+Os três primeiros campos devem mostrar as funções, `delete_direto` deve ser false
 
-5. Recarregue o painel local e confira a seleção usando produtos de teste próprios
+6. Recarregue o painel local e confira a seleção usando produtos de teste próprios
 
 Aplicar esse SQL não exclui nem oculta produtos existentes, não importa novos
 produtos e não atualiza a build publicada
@@ -31,10 +36,13 @@ produtos e não atualiza a build publicada
 
 - Marque produtos individualmente ou use **Selecionar página**
 - A contagem inclui produtos marcados em outras páginas
-- **Mostrar** e **Ocultar** operam sobre os selecionados, a ocultação abre confirmação
-  com nomes/códigos, inclusive dos selecionados em outras páginas
+- **Mostrar** e **Ocultar** abrem confirmação separando quem será alterado de quem
+  já está no estado escolhido, com nomes/códigos de todas as páginas selecionadas
+- Quando não há itens elegíveis, a confirmação fica desabilitada e o modal explica
 - Trocar filtros, abrir edição ou trocar a aba limpa a seleção
 - Depois de ocultar um produto, **Excluir** abre uma confirmação definitiva
+- **Excluir selecionados** permite remover vários ocultos, produtos visíveis aparecem
+  numa seção separada e ficam fora da operação, sem ocultação automática
 - A lista tem rolagem interna, com filtros e ações acima e paginação abaixo
 
 Para mostrar, todos os produtos precisam de categoria ativa e opções disponíveis

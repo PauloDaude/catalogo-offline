@@ -11,7 +11,8 @@ const a = {
 };
 test("conta seleção entre páginas e mostra estado parcial da página atual", async () => {
   const toggle = vi.fn(),
-    hide = vi.fn();
+    hide = vi.fn(),
+    remove = vi.fn();
   render(
     <ProductBulkActions
       products={[a, { ...a, id: "b" }]}
@@ -26,6 +27,7 @@ test("conta seleção entre páginas e mostra estado parcial da página atual", 
       onClear={() => {}}
       onShow={() => {}}
       onHide={hide}
+      onDelete={remove}
     />,
   );
   expect(
@@ -36,6 +38,10 @@ test("conta seleção entre páginas e mostra estado parcial da página atual", 
     screen.getByRole("button", { name: "Ocultar selecionados" }),
   );
   expect(hide).toHaveBeenCalledOnce();
+  await userEvent.click(
+    screen.getByRole("button", { name: "Excluir selecionados" }),
+  );
+  expect(remove).toHaveBeenCalledOnce();
   await userEvent.click(
     screen.getByRole("checkbox", { name: "Selecionar página" }),
   );

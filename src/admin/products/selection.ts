@@ -32,3 +32,16 @@ export function togglePage(
   }
   return next;
 }
+
+export function partitionSelection(
+  kind: "show" | "hide" | "delete",
+  targets: ProductSelectionItem[],
+) {
+  const eligible = targets.filter((p) =>
+    kind === "hide" ? p.active : !p.active,
+  );
+  const skipped = targets.filter((p) =>
+    kind === "hide" ? !p.active : p.active,
+  );
+  return { eligible, skipped };
+}
