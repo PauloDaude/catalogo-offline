@@ -531,3 +531,18 @@ Referências oficiais para consultar conforme necessário:
 - Validação desta etapa: 180 unitários e 24 cenários de navegador aprovados, teste SQL
   de lote indivisível/3 perfis/importado aprovado, revisão independente sem achados
 - SQL007 integral ensaiado em cópia prévia, guia atualizado em docs/deployment/acoes-produtos.md
+
+## Ocultar e excluir visíveis com confirmação explícita — 29/10/2026
+
+- Modal de exclusão em lote inclui opção Ocultar e excluir também os produtos visíveis,
+  desmarcada por padrão, não persiste após cancelar/fechar e fica bloqueada durante envio
+- Ao ativar, itens visíveis entram na lista de exclusão, com aviso por item e botão
+  Ocultar e excluir N produtos, sem ocultação automática antes da confirmação
+- Nova RPC remove_products_v2 na migration008 requer flag explícita e faz ocultação/
+  exclusão numa transação, valida versões antes de alterar e usa versões pós-update
+- Falha na transação de exclusão desfaz a ocultação e mantém versão/estado anteriores, fotos,
+  códigos e tombstones seguem as regras existentes, RPC007 continua só para ocultos
+- SQL008 somente no local, aplicação remota pelo usuário depois da007, sem publicação
+
+- Validação desta opção: 182 unitários, 8 cenários de navegador, API local com rollback
+  de falha após ocultar e revisão independente aprovados, SQL008 ensaiado em cópia

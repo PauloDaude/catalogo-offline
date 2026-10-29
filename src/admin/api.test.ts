@@ -95,3 +95,26 @@ test("exclusão em lote usa uma única RPC transacional", async () => {
     ],
   });
 });
+
+test("ocultar e excluir usa uma única RPC com consentimento explícito", async () => {
+  const rpc = vi
+    .fn()
+    .mockResolvedValue({ data: { deleted: 2, hidden: 1 }, error: null });
+  const api = createAdminApi({ rpc } as unknown as SupabaseClient);
+  expect(
+    await api.removeProducts(
+      [
+        { id: "a", version: 1 },
+        { id: "b", version: 2 },
+      ],
+      true,
+    ),
+  ).toEqual({ deleted: 2, hidden: 1 });
+  expect(rpc).toHaveBeenCalledExactlyOnceWith("remove_products_v2", {
+    p_items: [
+      { id: "a", expected_version: 1 },
+      { id: "b", expected_version: 2 },
+    ],
+    p_hide_visible: true,
+  });
+});

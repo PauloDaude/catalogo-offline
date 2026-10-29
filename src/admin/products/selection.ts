@@ -36,7 +36,10 @@ export function togglePage(
 export function partitionSelection(
   kind: "show" | "hide" | "delete",
   targets: ProductSelectionItem[],
+  hideVisible = false,
 ) {
+  if (kind === "delete" && hideVisible)
+    return { eligible: [...targets], skipped: [] };
   const eligible = targets.filter((p) =>
     kind === "hide" ? p.active : !p.active,
   );

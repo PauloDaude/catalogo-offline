@@ -462,3 +462,105 @@ test("modal diferencia estados e exclui apenas os ocultos de seleção mista", a
       .getByRole("button", { name: "Ocultar produtos", exact: true }),
   ).toBeDisabled();
 });
+
+test("opção explícita oculta e exclui visíveis junto dos ocultos", async ({
+  page,
+}) => {
+  const image = (
+    await client
+      .from("products")
+      .select("image_path")
+      .eq("category_id", categoryId)
+      .limit(1)
+      .single()
+  ).data.image_path;
+  const visibleName = `Excluir junto visível ${prefix}`,
+    hiddenName = `Excluir junto oculto ${prefix}`;
+  const payload = {
+    name: visibleName,
+    active: true,
+    category_id: categoryId,
+    image_path: image,
+    has_variants: true,
+    variant_attribute: "Cor",
+    variants: [
+      { label: "Azul", price_cents: 100, active: true },
+      { label: "Verde", price_cents: 200, active: true },
+    ],
+  };
+  const key = `actions-browser-${prefix}-hide-delete`;
+  const imported = await client.rpc("import_product_v2", {
+    p_import_key: key,
+    p_payload: payload,
+  });
+  expect(imported.error).toBeNull();
+  const hidden = await client.rpc("save_product_v2", {
+    p_payload: {
+      name: hiddenName,
+      active: false,
+      category_id: categoryId,
+      image_path: image,
+      price_cents: 100,
+    },
+  });
+  expect(hidden.error).toBeNull();
+  await login(page);
+  await page.getByLabel("Pesquisar produtos").fill("Excluir junto");
+  await expect(page.locator(".admin-product-row")).toHaveCount(2);
+  await mark(page, "Selecionar página");
+  await page.getByRole("button", { name: "Excluir selecionados" }).click();
+  const option = page.getByRole("checkbox", {
+    name: "Ocultar e excluir também os produtos visíveis",
+  });
+  await expect(option).not.toBeChecked();
+  await expect(
+    page.getByRole("region", {
+      name: "Precisam ser ocultados antes de excluir",
+    }),
+  ).toContainText(visibleName);
+  await page
+    .locator("label.admin-selection-checkbox")
+    .filter({ has: option })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Serão excluídos" }),
+  ).toContainText(visibleName);
+  await page.getByRole("button", { name: "Cancelar", exact: true }).click();
+  await page.getByRole("button", { name: "Excluir selecionados" }).click();
+  await expect(option).not.toBeChecked();
+  await page
+    .locator("label.admin-selection-checkbox")
+    .filter({ has: option })
+    .click();
+  await page
+    .getByRole("button", { name: "Ocultar e excluir 2 produtos", exact: true })
+    .click();
+  await expect(
+    page.getByText("2 produtos excluídos definitivamente", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".admin-product-row")).toHaveCount(0);
+  expect(
+    (
+      await client
+        .from("products")
+        .select("id")
+        .in("id", [imported.data.id, hidden.data.id])
+    ).data.length,
+  ).toBe(0);
+  expect(
+    (
+      await client
+        .from("product_variants")
+        .select("id")
+        .eq("product_id", imported.data.id)
+    ).data.length,
+  ).toBe(0);
+  expect(
+    (
+      await client.rpc("import_product_v2", {
+        p_import_key: key,
+        p_payload: payload,
+      })
+    ).error?.code,
+  ).toBe("P0002");
+});

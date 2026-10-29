@@ -317,6 +317,81 @@ try {
     ).error?.code,
     "P0002",
   );
+  const hv = await simple("Visível para exclusão " + suffix),
+    hh = await simple("Oculto para exclusão " + suffix, false);
+  const args2 = { p_items: [item(hv), item(hh)], p_hide_visible: true };
+  const remove2 = () => admin.rpc("remove_products_v2", args2);
+  assert.equal(
+    (await admin.rpc("remove_products_v2", { ...args2, p_hide_visible: false }))
+      .error?.code,
+    "23514",
+  );
+  assert.equal((await get(hv.id)).active, true);
+  for (const c of [anon, clients[1]])
+    assert.ok((await c.rpc("remove_products_v2", args2)).error);
+  assert.equal(
+    (
+      await admin.rpc("remove_products_v2", {
+        ...args2,
+        p_items: [item(hv), { ...item(hh), expected_version: 0 }],
+      })
+    ).error?.code,
+    "40001",
+  );
+  assert.equal((await get(hv.id)).active, true);
+  assert.equal((await get(hv.id)).version, hv.version);
+  const blocker = "actions_blocker_" + suffix.replaceAll("-", "");
+  try {
+    sql(
+      `create table private.${blocker}(product_id uuid references public.products(id));insert into private.${blocker} values ('${hh.id}');`,
+    );
+    assert.equal((await remove2()).error?.code, "23503");
+    assert.equal((await get(hv.id)).active, true);
+    assert.equal((await get(hv.id)).version, hv.version);
+  } finally {
+    sql(`drop table if exists private.${blocker};`);
+  }
+  const combined = await remove2();
+  assert.equal(combined.error, null);
+  assert.deepEqual(combined.data, { deleted: 2, hidden: 1 });
+  assert.equal(
+    (await admin.from("products").select("id").in("id", [hv.id, hh.id])).data
+      .length,
+    0,
+  );
+  const importVisibleKey = "actions-" + suffix + "-visible";
+  const importedVisible = await admin.rpc("import_product_v2", {
+    p_import_key: importVisibleKey,
+    p_payload: { ...payload, active: true },
+  });
+  assert.equal(importedVisible.error, null);
+  assert.equal(
+    (
+      await admin.rpc("remove_products_v2", {
+        p_items: [item(importedVisible.data)],
+        p_hide_visible: true,
+      })
+    ).error,
+    null,
+  );
+  assert.equal(
+    (
+      await admin
+        .from("product_variants")
+        .select("id")
+        .eq("product_id", importedVisible.data.id)
+    ).data.length,
+    0,
+  );
+  assert.equal(
+    (
+      await admin.rpc("import_product_v2", {
+        p_import_key: importVisibleKey,
+        p_payload: { ...payload, active: true },
+      })
+    ).error?.code,
+    "P0002",
+  );
   console.log(
     "PASS: lote integral, conflitos, três perfis, ocultos, variantes, tombstone e códigos preservados",
   );

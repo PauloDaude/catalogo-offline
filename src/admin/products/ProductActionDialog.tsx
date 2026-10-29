@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Checkbox } from "react-aria-components";
+import { Check } from "lucide-react";
 import { ConfirmDialog } from "../ConfirmDialog";
 import { partitionSelection, type ProductSelectionItem } from "./selection";
 export type ProductAction = {
@@ -14,10 +17,15 @@ export function ProductActionDialog({
   action: ProductAction;
   busy: boolean;
   error: string;
-  onConfirm: () => void;
+  onConfirm: (hideVisible: boolean) => void;
   onCancel: () => void;
 }) {
-  const { eligible, skipped } = partitionSelection(action.kind, action.targets);
+  const [hideVisible, setHideVisible] = useState(false);
+  const { eligible, skipped } = partitionSelection(
+    action.kind,
+    action.targets,
+    hideVisible,
+  );
   const deleting = action.kind === "delete",
     showing = action.kind === "show",
     count = eligible.length;
@@ -32,9 +40,11 @@ export function ProductActionDialog({
       : "Excluir produto definitivamente?"
     : `${visibilityLabel}?`;
   const confirmLabel = deleting
-    ? count > 1
-      ? `Excluir ${count} produtos definitivamente`
-      : "Excluir definitivamente"
+    ? hideVisible
+      ? `Ocultar e excluir ${count === 1 ? "produto" : `${count} produtos`}`
+      : count > 1
+        ? `Excluir ${count} produtos definitivamente`
+        : "Excluir definitivamente"
     : visibilityLabel;
   const eligibleLabel = deleting
     ? "Serão excluídos"
@@ -51,6 +61,9 @@ export function ProductActionDialog({
       {items.map((p) => (
         <li key={p.id}>
           <strong>{p.name}</strong> <span>#{p.code}</span>
+          {deleting && hideVisible && p.active && (
+            <small> — Será ocultado antes da exclusão</small>
+          )}
         </li>
       ))}
     </ul>
@@ -64,14 +77,32 @@ export function ProductActionDialog({
       error={error}
       isConfirmDisabled={!count}
       confirmVariant={showing ? "default" : "destructive"}
-      onConfirm={onConfirm}
+      onConfirm={() => onConfirm(hideVisible)}
       onCancel={onCancel}
     >
       <p>
         {deleting
-          ? "Apenas os produtos ocultos serão excluídos definitivamente, incluindo suas variantes"
+          ? hideVisible
+            ? "Os produtos selecionados serão excluídos definitivamente, incluindo suas variantes"
+            : "Apenas os produtos ocultos serão excluídos definitivamente, incluindo suas variantes"
           : "Confira os produtos selecionados, incluindo os de outras páginas"}
       </p>
+      {deleting && action.targets.some((p) => p.active) && (
+        <Checkbox
+          className="admin-selection-checkbox"
+          isSelected={hideVisible}
+          isDisabled={busy}
+          onChange={setHideVisible}
+        >
+          <span
+            className="admin-selection-checkbox-box"
+            aria-hidden="true"
+          >
+            <Check />
+          </span>
+          <span>Ocultar e excluir também os produtos visíveis</span>
+        </Checkbox>
+      )}
       {count > 0 ? (
         <section
           role="region"

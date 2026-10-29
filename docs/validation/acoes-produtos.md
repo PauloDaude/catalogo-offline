@@ -113,3 +113,25 @@ visível e confirmações desabilitadas sem elegíveis
 O SQL integral foi ensaiado em cópia descartável pré-007, preservando produtos e
 grants. Revisão independente sem achados materiais de autorização/atomicidade
 Nenhuma migration ou exclusão remota nesta etapa, aplicar a 007 conforme guia
+
+## Opção ocultar e excluir visíveis — 29/10/2026
+
+A opção começa desmarcada, inclui os visíveis somente por escolha explícita,
+identifica esses itens no modal e troca o texto da confirmação para Ocultar e
+excluir N produtos. Cancelar/fechar não conserva a escolha, durante envio fica bloqueada
+
+SQL008 acrescenta RPC V2 com flag explícita, mantendo RPC007 só para ocultos,
+valida autorização/versões antes das alterações e mantém ocultação/exclusão numa
+transação, usando versões pós-ocultação no helper de exclusão
+
+Regressões falharam antes da implementação e passaram depois. Suite completa:
+182 testes unitários em 48 arquivos, oito cenários da listagem no navegador,
+incluindo cancelamento com reset da opção, seleção mista, variantes e tombstone
+
+Teste de API local verifica visitante/comum negados, ausência de opt-in recusando
+visíveis, conflito sem alteração de estado/versão e falha de FK após a ocultação
+com rollback integral, além da remoção bem-sucedida e proteção contra reimportação
+
+SQL007+008 integrais ensaiados em cópia descartável do banco anterior, com produtos
+e grants preservados. Revisão independente sem achados materiais, build/lint e
+formatação conferidos. Nenhuma exclusão real ou migration remota nesta etapa

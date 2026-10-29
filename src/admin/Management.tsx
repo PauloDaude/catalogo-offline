@@ -64,8 +64,9 @@ export function Management({ client }: { client: SupabaseClient }) {
   const executeAction = async (
     kind: "show" | "hide" | "delete",
     targets: ProductSelectionItem[],
+    hideVisible = false,
   ) => {
-    const { eligible } = partitionSelection(kind, targets);
+    const { eligible } = partitionSelection(kind, targets, hideVisible);
     if (busy || !eligible.length) return;
     const report = (text: string) =>
       action ? setActionError(text) : setError(text);
@@ -80,7 +81,9 @@ export function Management({ client }: { client: SupabaseClient }) {
     try {
       let updated = 0;
       if (kind === "delete") {
-        if (eligible.length === 1) {
+        if (hideVisible)
+          updated = (await api.removeProducts(eligible, true)).deleted;
+        else if (eligible.length === 1) {
           await api.removeProduct(eligible[0].id, eligible[0].version);
           updated = 1;
         } else updated = (await api.removeProducts(eligible)).deleted;
@@ -186,7 +189,9 @@ export function Management({ client }: { client: SupabaseClient }) {
           busy={busy}
           error={actionError}
           onCancel={() => setAction(null)}
-          onConfirm={() => void executeAction(action.kind, action.targets)}
+          onConfirm={(hideVisible) =>
+            void executeAction(action.kind, action.targets, hideVisible)
+          }
         />
       )}
       <nav

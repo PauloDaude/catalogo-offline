@@ -76,3 +76,12 @@ produtos, ativar ofertas fictícias ou publicar o frontend
 Modal de Mostrar/Ocultar separa elegíveis e já no estado solicitado, confirmação
 somente com elegíveis. Exclusão em lote lista ocultos elegíveis e visíveis fora da
 operação, transação única e nova migration007, preservando o restante das regras
+
+## Inclusão explícita dos visíveis na exclusão — 29/10/2026
+
+Opção desmarcada por padrão no modal permite ocultar e excluir os visíveis também,
+com indicação por item e confirmação Ocultar e excluir N produtos. Fechar/cancelar
+limpa essa escolha, o caminho antigo continua a excluir somente ocultos
+
+SQL008 valida seleção/versões e executa as duas ações numa transação, qualquer falha
+preserva estado/versão anteriores, sem ocultação intermediária no frontend

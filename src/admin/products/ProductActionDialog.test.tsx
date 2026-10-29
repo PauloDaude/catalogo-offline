@@ -97,3 +97,33 @@ test("mostrar também distingue os já visíveis", () => {
     ).getByText("Visível"),
   ).toBeVisible();
 });
+
+test("incluir visíveis exige opção explícita e confirmação de ocultar e excluir", async () => {
+  const { default: userEvent } = await import("@testing-library/user-event");
+  const { vi } = await import("vitest");
+  const confirm = vi.fn();
+  render(
+    <ProductActionDialog
+      {...props}
+      onConfirm={confirm}
+      action={{ kind: "delete", targets: [visible] }}
+    />,
+  );
+  expect(
+    screen.getByRole("button", { name: "Excluir definitivamente" }),
+  ).toBeDisabled();
+  const option = screen.getByRole("checkbox", {
+    name: "Ocultar e excluir também os produtos visíveis",
+  });
+  expect(option).not.toBeChecked();
+  await userEvent.click(option);
+  expect(
+    within(screen.getByRole("region", { name: "Serão excluídos" })).getByText(
+      "Visível",
+    ),
+  ).toBeVisible();
+  await userEvent.click(
+    screen.getByRole("button", { name: "Ocultar e excluir produto" }),
+  );
+  expect(confirm).toHaveBeenCalledWith(true);
+});
