@@ -65,3 +65,17 @@ Os testes antigos de confirmação/paginação usam a nova RPC e o texto sem pon
 
 As fotos continuam no Storage, remoção do produto não revoga downloads ou cópias
 offline existentes. A validação local não representa auditoria do projeto remoto
+
+## Correção posterior solicitada pelo usuário — 29/10/2026
+
+O usuário rejeitou o crescimento da região conforme a página principal rolava
+Esta decisão substitui o cálculo/autoalinhamento descrito na revisão anterior
+
+A lista agora usa somente CSS, max-height de 560 px, ou 420 px até largura de 600 px,
+com overflow automático ao atingir o limite. Foram removidos listeners de scroll/
+resize, ResizeObserver, cálculo pela posição na página e scrollIntoView automático
+
+O teste de regressão falhou com altura inline calculada antes da correção e passou
+após removê-la. A regressão de navegador verifica os limites fixos, altura e
+scrollTop internos inalterados após scroll externo, seleção e paginação
+Não se exige mais que toda a seção caiba simultaneamente no viewport

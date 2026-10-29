@@ -120,31 +120,27 @@ for (const viewport of [
       exact: true,
     });
     await expect(region).toBeVisible();
-    for (const control of [
-      page.getByLabel("Pesquisar produtos"),
-      region,
-      page.getByRole("navigation", { name: "Paginação dos produtos" }),
-    ]) {
-      await expect
-        .poll(async () => {
-          const box = await control.boundingBox();
-          return !!box && box.y >= 0 && box.y + box.height <= viewport.height;
-        })
-        .toBe(true);
-    }
+    const limit = viewport.width <= 600 ? 420 : 560;
+    expect(await region.evaluate((el) => getComputedStyle(el).maxHeight)).toBe(
+      `${limit}px`,
+    );
+    const before = await region.evaluate((el) => ({
+      height: el.clientHeight,
+      top: el.scrollTop,
+    }));
+    await page.evaluate(async () => {
+      window.scrollTo(0, 200);
+      await new Promise(requestAnimationFrame);
+      await new Promise(requestAnimationFrame);
+    });
+    expect(
+      await region.evaluate((el) => ({
+        height: el.clientHeight,
+        top: el.scrollTop,
+      })),
+    ).toEqual(before);
     await mark(page, "Selecionar página");
-    for (const control of [
-      page.getByLabel("Pesquisar produtos"),
-      region,
-      page.getByRole("navigation", { name: "Paginação dos produtos" }),
-    ]) {
-      await expect
-        .poll(async () => {
-          const box = await control.boundingBox();
-          return !!box && box.y >= 0 && box.y + box.height <= viewport.height;
-        })
-        .toBe(true);
-    }
+    expect(await region.evaluate((el) => el.clientHeight)).toBe(before.height);
     await page
       .getByRole("button", { name: "Limpar seleção", exact: true })
       .click();

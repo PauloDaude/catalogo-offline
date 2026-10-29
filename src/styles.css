@@ -2485,6 +2485,7 @@ progress {
   cursor: default;
 }
 .admin-product-viewport {
+  max-height: 560px;
   overflow-y: auto;
   overscroll-behavior-y: contain;
   scrollbar-gutter: stable;
@@ -2508,6 +2509,9 @@ progress {
   margin-block: 8px;
 }
 @media (max-width: 600px) {
+  .admin-product-viewport {
+    max-height: 420px;
+  }
   .admin-product-viewport .admin-product-row {
     display: grid;
     grid-template-columns: 48px 56px minmax(0, 1fr);
@@ -2523,9 +2527,6 @@ progress {
   .admin-product-viewport .admin-actions {
     grid-column: 1/-1;
   }
-}
-.admin-list-controls {
-  scroll-margin-top: 12px;
 }
 .admin-list-count {
   margin: 8px 0;

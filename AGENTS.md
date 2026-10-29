@@ -503,3 +503,13 @@ Referências oficiais para consultar conforme necessário:
 - Guia docs/deployment/acoes-produtos.md e evidências docs/validation/acoes-produtos.md
 - SQL006 ainda depende de aplicação pelo usuário no remoto, sem exclusão real ou publicação
 - Usuário perguntou sobre WebP, formato das fotos permanece JPEG, adaptação ainda não autorizada
+
+## Correção da rolagem administrativa — 29/10/2026
+
+- Decisão mais recente substitui o cálculo de altura pela posição no viewport
+- Listagem cresce somente até max-height fixo: 560 px, ou 420 px até largura600 px
+- Rolagem externa não muda altura nem posição interna da lista, sem listeners de
+  scroll/resize, ResizeObserver ou scrollIntoView automático nesse componente
+- Manter overflow-y:auto, overscroll-behavior:contain e reset somente por página/filtro
+- Filtros e paginação continuam fora da região rolável, sem exigir que toda a seção
+  caiba simultaneamente na altura do dispositivo

@@ -19,3 +19,16 @@ test("região continua utilizável sem ResizeObserver e reseta rolagem ao trocar
   expect(region.tabIndex).toBe(0);
   vi.unstubAllGlobals();
 });
+
+test("a altura não é calculada pela posição da lista na página", () => {
+  render(
+    <section className="admin-surface">
+      <ProductListViewport resetKey="1">
+        <p>Produto</p>
+      </ProductListViewport>
+      <nav className="admin-pagination" />
+    </section>,
+  );
+  const region = screen.getByRole("region", { name: "Lista de produtos" });
+  expect(region.style.maxHeight).toBe("");
+});

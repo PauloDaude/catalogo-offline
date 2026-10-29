@@ -52,8 +52,9 @@ transação no banco, evitando que parte dos produtos mude e outra parte falhe
 
 - Somente a área de produtos rola, filtros e barra de seleção ficam acima,
   paginação fica abaixo, ambos fora dessa área rolável
-- Altura ajustada à área disponível em celular, tablet e desktop, com acesso por
-  toque, mouse e teclado, sem criar rolagem horizontal ou cortar controles
+- Correção solicitada em 29/10: altura máxima fixa de 560 px, ou 420 px até largura
+  de 600 px, sem crescer quando o documento rola e sem alinhamento automático
+- Acesso por toque, mouse e teclado, preservando a independência das duas rolagens
 - Mudança de página ou filtro retorna a lista ao início
 - Cadastro e edição mantêm seu comportamento atual, sem prender formulários nessa área
 
