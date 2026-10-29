@@ -2423,3 +2423,126 @@ progress {
     height: min(26dvh, 260px);
   }
 }
+
+.admin-bulk-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 16px;
+  padding: 8px 0;
+  border-block: 1px solid var(--border);
+}
+.admin-bulk-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.admin-selection-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  cursor: pointer;
+  color: var(--foreground);
+  flex-shrink: 0;
+}
+.admin-row-checkbox {
+  justify-content: center;
+  width: 48px;
+}
+.admin-selection-checkbox-box {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #8797af;
+  border-radius: 5px;
+  background: white;
+}
+.admin-selection-checkbox-box svg {
+  width: 16px;
+  height: 16px;
+  visibility: hidden;
+}
+.admin-selection-checkbox[data-selected] .admin-selection-checkbox-box,
+.admin-selection-checkbox[data-indeterminate] .admin-selection-checkbox-box {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+.admin-selection-checkbox[data-selected] svg,
+.admin-selection-checkbox[data-indeterminate] svg {
+  visibility: visible;
+}
+.admin-selection-checkbox[data-focus-visible] .admin-selection-checkbox-box {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.admin-selection-checkbox[data-disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+.admin-product-viewport {
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  min-width: 0;
+}
+.admin-product-viewport:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.admin-product-viewport .admin-list {
+  margin-top: 0;
+}
+.admin-action-targets {
+  max-height: min(35dvh, 280px);
+  overflow: auto;
+  padding-left: 20px;
+  overflow-wrap: anywhere;
+}
+.admin-action-targets li {
+  margin-block: 8px;
+}
+@media (max-width: 600px) {
+  .admin-product-viewport .admin-product-row {
+    display: grid;
+    grid-template-columns: 48px 56px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .admin-product-viewport .admin-row-checkbox {
+    width: 48px;
+  }
+  .admin-product-viewport .admin-product-row > img {
+    width: 56px;
+    height: 56px;
+  }
+  .admin-product-viewport .admin-actions {
+    grid-column: 1/-1;
+  }
+}
+.admin-list-controls {
+  scroll-margin-top: 12px;
+}
+.admin-list-count {
+  margin: 8px 0;
+  font-size: 14px;
+}
+@media (max-height: 500px) {
+  .admin-products-panel {
+    padding: 12px;
+  }
+  .admin-products-panel .admin-pagination {
+    margin-top: 8px;
+  }
+  .admin-products-panel .admin-bulk-actions {
+    padding-block: 0;
+    margin-top: 8px;
+  }
+  .admin-products-panel .admin-filters {
+    gap: 8px;
+  }
+}

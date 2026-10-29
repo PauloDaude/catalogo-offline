@@ -180,7 +180,7 @@ for (const viewport of [
         exact: true,
       })
       .click();
-    await expect(page.getByText("Produto visível no catálogo.")).toBeVisible();
+    await expect(page.getByText("Produto visível no catálogo")).toBeVisible();
     await choose(page, "Mostrar", "Visíveis");
     await hide(page, "Nome atualizado");
     await page.getByRole("button", { name: "Categorias", exact: true }).click();

@@ -487,3 +487,19 @@ Referências oficiais para consultar conforme necessário:
 - Plano em docs/superpowers/plans/2026-10-29-acoes-produtos.md aguarda revisão,
   execução direta preservada, migration 006 será entregue para aplicação pelo usuário
 - Nenhum produto real deve ser excluído durante implementação/testes, sem publicação
+
+## Ações administrativas implementadas localmente — 29/10/2026
+
+- Seleção por checkbox entre páginas, barra de mostrar/ocultar e confirmação do lote
+- Excluir individual de ocultos remove pai/variantes, preserva fotos e tombstone da
+  importação, impedindo reimportação silenciosa e reutilização de código
+- Migration 006 com lote invoker e exclusão via helper privado definer restrito,
+  nenhuma concessão de DELETE genérico aos clientes
+- Lista rolável com filtros/feedback acima e paginação abaixo, altura por viewport;
+  em pouca altura alinha controles na tela, mantendo header acessível acima
+- Revisão final identificou e corrigiu P2 de altura, teste exige bounds dentro do viewport
+- Unitários173 e painel22 aprovados, cenário extra de carrinho após exclusão1,
+  importador3, backup14 e restauração local de186 fotos com hashes iguais
+- Guia docs/deployment/acoes-produtos.md e evidências docs/validation/acoes-produtos.md
+- SQL006 ainda depende de aplicação pelo usuário no remoto, sem exclusão real ou publicação
+- Usuário perguntou sobre WebP, formato das fotos permanece JPEG, adaptação ainda não autorizada

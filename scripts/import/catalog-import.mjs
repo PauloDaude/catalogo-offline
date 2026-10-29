@@ -299,7 +299,7 @@ async function loadConfig() {
     throw new ImportError("URL do Supabase inválida");
   return { ...local, isLocal, origin: url.origin };
 }
-function createApi(client, manifest) {
+export function createApi(client, manifest) {
   return {
     categories: async () => {
       const { data, error } = await client
@@ -350,6 +350,10 @@ function createApi(client, manifest) {
         p_import_key: key,
         p_payload: payload,
       });
+      if (error?.code === "P0002")
+        throw new ImportError(
+          "Este produto da importação foi excluído, não será recriado automaticamente",
+        );
       if (error)
         throw new ImportError(
           "Cadastro não confirmado, confira a migration, autorização e conexão, repita com o mesmo journal",

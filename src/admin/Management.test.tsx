@@ -8,6 +8,8 @@ const api = vi.hoisted(() => ({
   listCategories: vi.fn(),
   listCategoryProducts: vi.fn().mockResolvedValue([]),
   saveProduct: vi.fn(),
+  setProductsVisibility: vi.fn().mockResolvedValue({ updated: 1 }),
+  removeProduct: vi.fn().mockResolvedValue(undefined),
   photoUrl: () => "photo.jpg",
   removeCategory: vi.fn().mockResolvedValue(undefined),
 }));
@@ -182,8 +184,9 @@ test("ocultar último produto da última página retorna à página válida", as
     products: page === 2 ? (total === 21 ? [product(21)] : []) : [product(1)],
     total,
   }));
-  api.saveProduct.mockImplementation(async () => {
+  api.setProductsVisibility.mockImplementation(async () => {
     total = 20;
+    return { updated: 1 };
   });
   const user = userEvent.setup();
   render(<Management client={{} as SupabaseClient} />);

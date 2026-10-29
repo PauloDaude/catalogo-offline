@@ -50,8 +50,45 @@ function check(error: { code?: string; message?: string } | null) {
   );
 }
 
+function checkProductAction(error: { code?: string } | null, removing = false) {
+  if (!error) return;
+  const messages: Record<string, string> = {
+    "40001":
+      "Um produto foi alterado em outro lugar\nRevise a seleção com os dados atualizados antes de tentar novamente",
+    P0002: "Um produto não existe mais, atualize a lista e refaça a seleção",
+    "42501": "Sua conta não tem permissão para esta ação",
+    "23514": removing
+      ? "Oculte o produto antes de excluir"
+      : "Para mostrar, todos os produtos precisam de categoria ativa e opções disponíveis",
+    "22P02": "A seleção está inválida, atualize a lista e selecione novamente",
+  };
+  throw new AdminError(
+    error.code || "network",
+    messages[error.code || ""] ||
+      "Não foi possível concluir a ação, confira sua conexão e atualize a lista antes de tentar novamente",
+  );
+}
+
 export function createAdminApi(client: SupabaseClient) {
   return {
+    async setProductsVisibility(
+      items: Array<Pick<AdminProduct, "id" | "version">>,
+      active: boolean,
+    ) {
+      const { data, error } = await client.rpc("set_products_visibility", {
+        p_items: items.map((p) => ({ id: p.id, expected_version: p.version })),
+        p_active: active,
+      });
+      checkProductAction(error);
+      return data as { updated: number };
+    },
+    async removeProduct(id: string, expectedVersion: number) {
+      const { error } = await client.rpc("remove_product", {
+        p_id: id,
+        p_expected_version: expectedVersion,
+      });
+      checkProductAction(error, true);
+    },
     async listProducts(query: ProductQuery) {
       const { data, error } = await client.rpc("list_admin_products_v2", {
         p_page: query.page,

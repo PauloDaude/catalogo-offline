@@ -49,30 +49,30 @@ e scripts/import/import.test.mjs somente para o retorno de produto excluído
 retorna {updated: number}; p_items contém apenas {id, expected_version}.
 public.remove_product(p_id uuid, p_expected_version bigint) retorna void
 
-- [ ] Escrever ensaio local com admin, autenticado comum e visitante, fixtures próprias:
+- [x] Escrever ensaio local com admin, autenticado comum e visitante, fixtures próprias:
       lote misto visível/oculto, versões corretas, versão antiga no último item,
       UUID repetido/ausente, categoria arquivada e pai oculto sem opção ativa
-- [ ] Rodar `node scripts/test-product-actions-local.mjs` antes do SQL, confirmar falha
+- [x] Rodar `node scripts/test-product-actions-local.mjs` antes do SQL, confirmar falha
       por RPC ausente, sem alterações em dados remotos
-- [ ] Implementar lote SECURITY INVOKER com search_path fixo, autorização explícita,
+- [x] Implementar lote SECURITY INVOKER com search_path fixo, autorização explícita,
       payload de 1 a 1000 IDs distintos, locks de pais ordenados por UUID e validação
       de todo o conjunto antes de atualizar somente active quando houver mudança
-- [ ] Garantir conflitos SQLSTATE 40001, ausentes P0002, inválidos 23514 e negados 42501,
+- [x] Garantir conflitos SQLSTATE 40001, ausentes P0002, inválidos 23514 e negados 42501,
       sem alterar opções ou fotos e sem incrementar versões de itens já no estado pedido
-- [ ] Implementar exclusão por RPC invoker chamando helper privado SECURITY DEFINER
+- [x] Implementar exclusão por RPC invoker chamando helper privado SECURITY DEFINER
       restrito à remoção desse produto, justificativa: não conceder DELETE genérico
       de produtos/variantes ou UPDATE genérico do ledger a authenticated
-- [ ] Helper valida administrador, UUID/versão e estado oculto sob lock, remove filhos
+- [x] Helper valida administrador, UUID/versão e estado oculto sob lock, remove filhos
       e pai na mesma transação, com revisão pública e sequência de códigos preservadas
-- [ ] Ledger de importação: tornar product_id anulável com ON DELETE SET NULL,
+- [x] Ledger de importação: tornar product_id anulável com ON DELETE SET NULL,
       guardar código/data de exclusão por trigger privado e preservar chave/hash;
       import_product_v2 detecta o registro excluído e retorna P0002 em vez de recriar
-- [ ] Testar exclusão de simples, pai com opções e importado, negar visível/versão
+- [x] Testar exclusão de simples, pai com opções e importado, negar visível/versão
       antiga/DELETE direto como authenticated, confirmar ledger sem recriação,
       ausência pública, próximo código maior e bytes de fotos compartilhadas intactos
-- [ ] Ajustar mensagem do importador para P0002 sem editar manifesto ou journal existente,
+- [x] Ajustar mensagem do importador para P0002 sem editar manifesto ou journal existente,
       testar retry de produto excluído sem upload novo nem recriação
-- [ ] Rodar ensaio completo e testes Node do importador, ambos verdes, depois ensaiar
+- [x] Rodar ensaio completo e testes Node do importador, ambos verdes, depois ensaiar
       migration integral em cópia descartável local pré-006, sem resetar dados atuais
 
 ### 2. API administrativa e seleção entre páginas
@@ -84,17 +84,17 @@ src/admin/products/selection.ts e selection.test.ts
 Map<string, ProductSelectionItem>. API setProductsVisibility(items, active)
 retorna {updated:number}; removeProduct(id, expectedVersion) retorna Promise<void>
 
-- [ ] Testar seleção de dois produtos na página 1 e um na página 2, contador 3,
+- [x] Testar seleção de dois produtos na página 1 e um na página 2, contador 3,
       desmarcar só a página atual preservando os demais, estado parcial e limpeza
-- [ ] Testar que refresh não troca silenciosamente versões capturadas, nem inclui
+- [x] Testar que refresh não troca silenciosamente versões capturadas, nem inclui
       produtos novos na seleção, e seleção não é persistida no armazenamento local
-- [ ] Confirmar falhas, implementar helpers puros toggleProduct, togglePage e pageSelection
+- [x] Confirmar falhas, implementar helpers puros toggleProduct, togglePage e pageSelection
       sobre IDs explícitos, sem opção implícita de selecionar todo resultado da busca
-- [ ] Testar payload exato das duas RPCs e mensagens específicas de ação para conflito,
+- [x] Testar payload exato das duas RPCs e mensagens específicas de ação para conflito,
       ausente, sem permissão e invalidez, sem reaproveitar texto de erro de categoria
-- [ ] Implementar wrappers da API sem chamar saveProduct por item, enviar apenas IDs/
+- [x] Implementar wrappers da API sem chamar saveProduct por item, enviar apenas IDs/
       versões e active, sem fotos, dados do cliente ou credenciais em logs
-- [ ] Rodar `npx vitest run src/admin/products/selection.test.ts src/admin/api.test.ts`
+- [x] Rodar `npx vitest run src/admin/products/selection.test.ts src/admin/api.test.ts`
       e confirmar aprovação dos cenários antigos e novos
 
 ### 3. Controles de lote e exclusão individual
@@ -107,21 +107,21 @@ marcação/limpeza/mostrar/ocultar, sem executar chamadas ao banco por conta pr�
 ProductActionDialog recebe ação hide|delete e uma cópia congelada dos alvos,
 busy/error/onConfirm/onCancel, reutilizando ConfirmDialog
 
-- [ ] Testar checkbox React Aria por produto, Selecionar página com estado parcial,
+- [x] Testar checkbox React Aria por produto, Selecionar página com estado parcial,
       contador global e ações por teclado, sem confundir marcar com Editar
-- [ ] Confirmar falhas e implementar barra N selecionados, Mostrar, Ocultar e Limpar
+- [x] Confirmar falhas e implementar barra N selecionados, Mostrar, Ocultar e Limpar
       seleção, incluindo nomes/códigos de outras páginas no modal de ocultação
-- [ ] Integrar seleção em Management, preservando ao paginar e limpando nos eventos
+- [x] Integrar seleção em Management, preservando ao paginar e limpando nos eventos
       definidos nas restrições, sem apagar o formulário nem alterar dados do catálogo
-- [ ] Ligar mostrar/ocultar à RPC única, desabilitar ações enquanto houver requisição,
+- [x] Ligar mostrar/ocultar à RPC única, desabilitar ações enquanto houver requisição,
       impedir duplo envio e explicar falha de conexão sem afirmar sucesso parcial
-- [ ] Em sucesso limpar seleção e atualizar lista/contagem/página, em conflito manter
+- [x] Em sucesso limpar seleção e atualizar lista/contagem/página, em conflito manter
       seleção e pedir nova revisão, sem substituir versões e repetir automaticamente
-- [ ] Exibir Excluir apenas no item oculto, com modal de nome/código e número de opções,
+- [x] Exibir Excluir apenas no item oculto, com modal de nome/código e número de opções,
       botão vermelho Excluir definitivamente, confirmação não afeta outros produtos
-- [ ] Após exclusão atualizar a página, inclusive ao remover o último item, preservando
+- [x] Após exclusão atualizar a página, inclusive ao remover o último item, preservando
       fotos e o fluxo existente de revisão de indisponibilidade de carrinhos
-- [ ] Rodar testes de componentes e `npx tsc -b`, resultado sem falhas
+- [x] Rodar testes de componentes e `npx tsc -b`, resultado sem falhas
 
 ### 4. Área rolável com filtros e paginação externos
 
@@ -131,17 +131,17 @@ modificar Management.tsx e src/styles.css
 **Interface:** ProductListViewport recebe children e resetKey, contendo a lista numa
 região identificada como Lista de produtos, com foco de teclado e ref interna
 
-- [ ] Criar teste de navegador que rola a lista e compara a posição de filtros/barra/
+- [x] Criar teste de navegador que rola a lista e compara a posição de filtros/barra/
       paginação antes/depois, verificando scrollTop interno maior e posição externa igual
-- [ ] Confirmar falha no layout atual, implementar região overflow-y:auto, gutter
+- [x] Confirmar falha no layout atual, implementar região overflow-y:auto, gutter
       estável e altura adaptada ao espaço disponível, sem alturas fixas por aparelho
-- [ ] Usar medição de viewport/elementos e ResizeObserver se CSS não cobrir altura
+- [x] Usar medição de viewport/elementos e ResizeObserver se CSS não cobrir altura
       variável de filtros, barra, mensagens e paginação, sem loops de resize
-- [ ] Manter controles e paginação fora da região, sem aplicar restrição a formulários
+- [x] Manter controles e paginação fora da região, sem aplicar restrição a formulários
       ou categorias, nem forçar overflow:hidden global no body
-- [ ] Resetar scrollTop ao trocar página/filtro via resetKey, manter posição ao marcar
+- [x] Resetar scrollTop ao trocar página/filtro via resetKey, manter posição ao marcar
       itens e garantir que foco em botões abaixo da dobra role a região corretamente
-- [ ] Testar 320x720, 800x1100, 800x360 e 1280x900, incluindo mensagens longas,
+- [x] Testar 320x720, 800x1100, 800x360 e 1280x900, incluindo mensagens longas,
       ausência de rolagem horizontal, toque e teclado com ações alcançáveis
 
 ### 5. Integração, regressão e entrega do SQL
@@ -149,22 +149,22 @@ região identificada como Lista de produtos, com foco de teclado e ref interna
 **Files:** criar tests/admin/product-actions.spec.ts, docs/deployment/acoes-produtos.md,
 docs/validation/acoes-produtos.md; atualizar AGENTS.md, spec e este plano
 
-- [ ] Usar fixtures locais com 25 produtos, opções e categorias ativas/arquivadas,
+- [x] Usar fixtures locais com 25 produtos, opções e categorias ativas/arquivadas,
       testar seleção entre duas páginas, lote misto e limpeza ao trocar filtros/aba
-- [ ] Testar cancelamento da ocultação, confirmação única de lote, erro de conflito
+- [x] Testar cancelamento da ocultação, confirmação única de lote, erro de conflito
       causado por outra sessão, sucesso e descarte da seleção, produto não marcado intacto
-- [ ] Testar Excluir somente após ocultar, cancelar sem remover, excluir importado com
+- [x] Testar Excluir somente após ocultar, cancelar sem remover, excluir importado com
       opções e confirmar que novo retry da importação falha sem produto duplicado
-- [ ] Rodar `node scripts/test-admin-local.mjs`, `node scripts/test-product-actions-local.mjs`,
+- [x] Rodar `node scripts/test-admin-local.mjs`, `node scripts/test-product-actions-local.mjs`,
       `npm test -- --maxWorkers=2`, `npm run test:import`, `npm run test:backup`,
       `npm run lint`, `npm run build`, Prettier dos arquivos da entrega e diff --check
-- [ ] Conferir comportamento público/carrinho após sincronização de produto removido,
+- [x] Conferir comportamento público/carrinho após sincronização de produto removido,
       usando dados fictícios, sem exigir descarte de IndexedDB ou seleção antiga
-- [ ] Revisar autorização/atomicidade, seleção oculta por paginação, tombstone e
+- [x] Revisar autorização/atomicidade, seleção oculta por paginação, tombstone e
       rolagem de teclado, corrigir falhas com regressões verificadas antes de concluir
-- [ ] Entregar SQL 006 integral e guia Dashboard → SQL Editor, com backup V2 antes
+- [x] Entregar SQL 006 integral e guia Dashboard → SQL Editor, com backup V2 antes
       de aplicar e consulta de checagem de RPCs, sem executar a migration remota
-- [ ] Registrar testes reais e pendências de aparelho/SQL remoto, atualizar decisões
+- [x] Registrar testes reais e pendências de aparelho/SQL remoto, atualizar decisões
       e criar commit local explícito, sem incluir segredos, fotos originais ou publicação
 
 ## Revisão do plano
@@ -175,3 +175,11 @@ correspondente, as interfaces mantêm UUID/versão como identidade da operação
 
 As escolhas de helper privado, limite técnico de 1000 IDs e decomposição de
 componentes são decisões de implementação, sem ampliar a exclusão para lote
+
+## Resultado em 29/10/2026
+
+Implementação local concluída, SQL 006 entregue sem aplicação remota, revisão
+independente concluída e P2 de altura corrigido com teste RED→GREEN
+Unitários173, painel22, cenário adicional de carrinho excluído1, importador3 e
+backup14 aprovados, recuperação local restaurou186 fotos com hashes iguais
+Detalhes em docs/validation/acoes-produtos.md, publicação não executada

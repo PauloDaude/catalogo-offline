@@ -82,3 +82,12 @@ test("resposta perdida pode ser repetida com mesmo payload e sem outra criação
   assert.ok(!journal.includes("password"));
   await rm(temp, { recursive: true, force: true });
 });
+
+test("produto excluído bloqueia retry com orientação explícita", async () => {
+  const { createApi } = await import("./catalog-import.mjs");
+  const client = {
+    rpc: async () => ({ data: null, error: { code: "P0002" } }),
+  };
+  const api = createApi(client, {});
+  await assert.rejects(api.save("deleted", {}), /excluído/);
+});

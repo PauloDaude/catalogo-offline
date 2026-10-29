@@ -1,6 +1,6 @@
 # Seleção em lote, exclusão e rolagem da lista administrativa
 
-Status: desenho aprovado pelo usuário em 29/10/2026, plano de execução em revisão, sem implementação ou alteração remota
+Status: desenho e plano aprovados, implementado e validado localmente em 29/10/2026, SQL 006 remoto pendente
 
 ## Pedidos confirmados
 

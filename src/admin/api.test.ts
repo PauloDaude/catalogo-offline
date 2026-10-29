@@ -45,3 +45,36 @@ test("falha da consulta não se transforma em lista vazia", async () => {
     api.listProducts({ page: 1, query: "", category: "", visibility: "all" }),
   ).rejects.toMatchObject({ code: "denied" });
 });
+
+test("ações usam uma RPC de lote e exclusão com versão, sem salvar produtos individualmente", async () => {
+  const rpc = vi.fn().mockResolvedValue({ data: { updated: 2 }, error: null });
+  const api = createAdminApi({ rpc } as unknown as SupabaseClient);
+  expect(
+    await api.setProductsVisibility(
+      [
+        { id: "a", version: 3 },
+        { id: "b", version: 7 },
+      ],
+      false,
+    ),
+  ).toEqual({ updated: 2 });
+  expect(rpc).toHaveBeenCalledWith("set_products_visibility", {
+    p_items: [
+      { id: "a", expected_version: 3 },
+      { id: "b", expected_version: 7 },
+    ],
+    p_active: false,
+  });
+  await api.removeProduct("a", 3);
+  expect(rpc).toHaveBeenLastCalledWith("remove_product", {
+    p_id: "a",
+    p_expected_version: 3,
+  });
+});
+test("erro do lote informa revisão e não usa mensagem de salvar formulário", async () => {
+  const rpc = vi.fn().mockResolvedValue({ error: { code: "40001" } });
+  const api = createAdminApi({ rpc } as unknown as SupabaseClient);
+  await expect(
+    api.setProductsVisibility([{ id: "a", version: 1 }], true),
+  ).rejects.toThrow(/Revise a seleção/);
+});
