@@ -8,7 +8,7 @@ import type {
 } from "./types";
 import type { CatalogStore } from "./storage";
 import { syncCatalog } from "./sync";
-import { ensureOfflineShell } from "../pwa/register";
+import { ensureOfflineShell, OfflineShellError } from "../pwa/register";
 
 type View = {
   snapshot?: CatalogSnapshot;
@@ -99,13 +99,16 @@ export function useCatalog(source: CatalogSource, store: CatalogStore) {
           ...v,
           state: "error",
           progress: null,
-          message: quota
-            ? "Não há espaço suficiente para atualizar o catálogo"
-            : !navigator.locks
-              ? "Para salvar offline, use um navegador atualizado, como o Chrome."
-              : v.saved
-                ? "Não foi possível atualizar. Você pode continuar usando o catálogo salvo"
-                : "Não foi possível salvar o catálogo. Verifique a internet e o espaço disponível e tente novamente.",
+          message:
+            error instanceof OfflineShellError
+              ? error.message
+              : quota
+                ? "Não há espaço suficiente para atualizar o catálogo"
+                : !navigator.locks
+                  ? "Para salvar offline, use um navegador atualizado, como o Chrome."
+                  : v.saved
+                    ? "Não foi possível atualizar. Você pode continuar usando o catálogo salvo"
+                    : "Não foi possível salvar o catálogo. Verifique a internet e o espaço disponível e tente novamente.",
         }));
       } finally {
         if (current.current === controller) current.current = null;

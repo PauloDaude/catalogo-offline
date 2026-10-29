@@ -1,3 +1,5 @@
+export class OfflineShellError extends Error {}
+
 let registration: Promise<ServiceWorkerRegistration> | undefined;
 
 export function registerAppShell() {
@@ -35,8 +37,10 @@ export async function ensureOfflineShell(): Promise<void> {
   const pending = registerAppShell();
 
   if (!pending)
-    throw new Error(
-      "A preparação offline exige acesso seguro e a versão de produção.",
+    throw new OfflineShellError(
+      import.meta.env.DEV
+        ? "Para salvar offline, abra a versão de produção local ou o site publicado"
+        : "Para salvar offline, abra o catálogo por HTTPS em um navegador com suporte offline",
     );
 
   await pending;
@@ -45,7 +49,11 @@ export async function ensureOfflineShell(): Promise<void> {
     new Promise<never>((_, reject) =>
       setTimeout(
         () =>
-          reject(new Error("Não foi possível preparar o aplicativo offline")),
+          reject(
+            new OfflineShellError(
+              "Não foi possível instalar o aplicativo offline, recarregue a página com internet e tente novamente",
+            ),
+          ),
         15_000,
       ),
     ),
@@ -59,7 +67,7 @@ export async function ensureOfflineShell(): Promise<void> {
         "controllerchange",
         controlled,
       );
-      reject(new Error("Aguarde a instalação e tente novamente"));
+      reject(new OfflineShellError("Aguarde a instalação e tente novamente"));
     }, 15_000);
     const controlled = () => {
       clearTimeout(timer);

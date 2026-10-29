@@ -1,13 +1,16 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 
+import { ensureOfflineShell, OfflineShellError } from "../pwa/register";
+
 import { useCatalog } from "./useCatalog";
 import { createCatalogStore, type CatalogStore } from "./storage";
 import { snapshotA, snapshotB } from "../test/fixtures";
 import { installBrowserFakes, makeSource, jpeg } from "../test/sync-fixtures";
 
-vi.mock("../pwa/register", () => ({
-  ensureOfflineShell: async () => {},
+vi.mock("../pwa/register", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("../pwa/register")>()),
+  ensureOfflineShell: vi.fn(async () => {}),
   requestAppUpdate: async () => {},
 }));
 
@@ -151,4 +154,18 @@ test("notificação de outra aba preserva sincronização local pendente", async
 
   expect(result.current.products[0].priceCents).toBe(3500);
   expect(result.current.state).toBe("saved");
+});
+
+test("falha do aplicativo offline apresenta orientação específica sem salvar dados", async () => {
+  const { result } = renderHook(() => useCatalog(makeSourceStable, store));
+  await waitFor(() => expect(result.current.products).toHaveLength(10));
+  vi.mocked(ensureOfflineShell).mockRejectedValueOnce(
+    new OfflineShellError("Abra a versão de produção para salvar offline"),
+  );
+  await act(() => result.current.prepareOffline());
+  expect(result.current.message).toBe(
+    "Abra a versão de produção para salvar offline",
+  );
+  expect(result.current.saved).toBe(false);
+  expect(await store.readActive()).toBeNull();
 });
