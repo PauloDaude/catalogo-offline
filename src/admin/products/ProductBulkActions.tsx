@@ -8,6 +8,7 @@ import {
 } from "./selection";
 export function ProductBulkActions({
   products,
+  summary,
   selection,
   disabled,
   onTogglePage,
@@ -17,6 +18,7 @@ export function ProductBulkActions({
   onDelete,
 }: {
   products: ProductSelectionItem[];
+  summary?: string;
   selection: ProductSelection;
   disabled: boolean;
   onTogglePage: () => void;
@@ -29,22 +31,32 @@ export function ProductBulkActions({
     count = selection.size;
   return (
     <div className="admin-bulk-actions">
-      <Checkbox
-        aria-label="Selecionar página"
-        className="admin-selection-checkbox"
-        isSelected={state === "all"}
-        isIndeterminate={state === "partial"}
-        isDisabled={disabled || !products.length}
-        onChange={onTogglePage}
-      >
-        <span
-          className="admin-selection-checkbox-box"
-          aria-hidden="true"
+      <div className="admin-selection-summary">
+        <Checkbox
+          aria-label="Selecionar página"
+          className="admin-selection-checkbox"
+          isSelected={state === "all"}
+          isIndeterminate={state === "partial"}
+          isDisabled={disabled || !products.length}
+          onChange={onTogglePage}
         >
-          {state === "partial" ? <Minus /> : <Check />}
-        </span>
-        <span>Selecionar página</span>
-      </Checkbox>
+          <span
+            className="admin-selection-checkbox-box"
+            aria-hidden="true"
+          >
+            {state === "partial" ? <Minus /> : <Check />}
+          </span>
+          <span>Selecionar página</span>
+        </Checkbox>
+        {summary && (
+          <p
+            className="admin-list-count"
+            role="status"
+          >
+            {summary}
+          </p>
+        )}
+      </div>
       {count > 0 && (
         <>
           <strong role="status">

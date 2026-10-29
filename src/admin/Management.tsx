@@ -291,6 +291,13 @@ export function Management({ client }: { client: SupabaseClient }) {
             </div>
             <ProductBulkActions
               products={products}
+              summary={
+                !loading && !error
+                  ? data.total
+                    ? `${(page - 1) * 20 + 1}–${Math.min(page * 20, data.total)} de ${data.total} produtos`
+                    : "0 produtos"
+                  : undefined
+              }
               selection={selection}
               disabled={busy || loading}
               onTogglePage={() =>
@@ -301,16 +308,6 @@ export function Management({ client }: { client: SupabaseClient }) {
               onHide={() => openAction("hide", [...selection.values()])}
               onDelete={() => openAction("delete", [...selection.values()])}
             />
-            {!loading && !error && (
-              <p
-                className="admin-list-count"
-                role="status"
-              >
-                {data.total
-                  ? `${(page - 1) * 20 + 1}–${Math.min(page * 20, data.total)} de ${data.total} produtos`
-                  : "0 produtos"}
-              </p>
-            )}
           </div>
           {loading ? (
             <p role="status">Carregando produtos…</p>

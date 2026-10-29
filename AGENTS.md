@@ -575,3 +575,8 @@ Referências oficiais para consultar conforme necessário:
   de que terminou de limpar o banco**, não limpar nem importar automaticamente
 - Não houve publicação nem alteração remota nesta preparação
 - Handoff da conversa em handoff.md, ler antes de continuar em novo chat
+
+## Contagem na seleção administrativa — 29/10/2026
+
+- Contagem de produtos alinhada à direita na mesma linha de Selecionar página
+- Ações em lote ficam abaixo dessa linha quando há seleção
