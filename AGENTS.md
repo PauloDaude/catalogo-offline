@@ -510,6 +510,8 @@ Referências oficiais para consultar conforme necessário:
 - Listagem cresce somente até max-height fixo: 560 px, ou 420 px até largura600 px
 - Rolagem externa não muda altura nem posição interna da lista, sem listeners de
   scroll/resize, ResizeObserver ou scrollIntoView automático nesse componente
-- Manter overflow-y:auto, overscroll-behavior:contain e reset somente por página/filtro
+- Manter overflow-y:auto e reset somente por página/filtro
+- Ajuste posterior confirmado: overscroll-behavior-y:auto permite continuar a rolagem
+  na página ao atingir as bordas da lista, sem alterar sua altura máxima
 - Filtros e paginação continuam fora da região rolável, sem exigir que toda a seção
   caiba simultaneamente na altura do dispositivo

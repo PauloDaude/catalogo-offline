@@ -79,3 +79,13 @@ O teste de regressão falhou com altura inline calculada antes da correção e p
 após removê-la. A regressão de navegador verifica os limites fixos, altura e
 scrollTop internos inalterados após scroll externo, seleção e paginação
 Não se exige mais que toda a seção caiba simultaneamente no viewport
+
+## Continuação da rolagem nas bordas — 29/10/2026
+
+O usuário pediu que continuar rolando após chegar ao fim da lista mova a página
+A causa era overscroll-behavior-y:contain, alterado para auto sem mudar os limites
+de altura ou reintroduzir cálculos pela posição do documento
+
+Uma regressão com gesto real de wheel falhou antes da correção, a página ficava
+parada mesmo após o fim da lista. O teste verifica que scrollY externo aumenta
+nessa situação e que a altura da região permanece igual

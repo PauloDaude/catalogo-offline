@@ -165,6 +165,26 @@ for (const viewport of [
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
+    // At the inner boundary, a real wheel gesture must continue on the document.
+    await region.evaluate((el) =>
+      window.scrollTo(
+        0,
+        el.getBoundingClientRect().top +
+          window.scrollY -
+          window.innerHeight / 3,
+      ),
+    );
+    const bounds = await region.boundingBox();
+    await page.mouse.move(
+      bounds!.x + bounds!.width / 2,
+      Math.max(10, bounds!.y + 24),
+    );
+    const outerBefore = await page.evaluate(() => window.scrollY);
+    await page.mouse.wheel(0, 240);
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(outerBefore);
+    expect(await region.evaluate((el) => el.clientHeight)).toBe(before.height);
     await page.screenshot({
       path: `/tmp/catalogo-acoes-${viewport.width}x${viewport.height}.png`,
       fullPage: true,
