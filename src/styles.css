@@ -777,7 +777,8 @@ progress {
 
   .sync-panel {
     bottom: calc(16px + env(safe-area-inset-bottom));
-    width: calc((100vw - 40px) * 0.4);
+    width: max-content;
+    max-width: calc((100vw - 40px) * 0.4);
     height: 56px;
     padding: 0;
     border: 0;
@@ -786,9 +787,11 @@ progress {
   }
 
   .sync-panel .sync-button {
-    width: 100%;
+    width: max-content;
+    max-width: 100%;
     height: 56px;
-    padding: 0 6px;
+    padding: 0 8px;
+    white-space: normal;
     gap: 4px;
     font-size: 12px;
   }
@@ -1078,7 +1081,8 @@ progress {
 
 @media (max-width: 650px) {
   .cart-trigger {
-    width: calc((100vw - 40px) * 0.6);
+    width: max-content;
+    max-width: calc((100vw - 40px) * 0.6);
     height: 56px;
     padding: 0 8px;
     gap: 6px;
@@ -1097,7 +1101,7 @@ progress {
   }
 
   .cart-trigger strong {
-    flex: 1;
+    flex: 0 1 auto;
     min-width: 0;
     padding-left: 6px;
     font-size: 12px;

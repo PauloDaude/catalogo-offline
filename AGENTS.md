@@ -693,3 +693,10 @@ Referências oficiais para consultar conforme necessário:
   entre grade e folhear, alteração continua reiniciando carrossel no primeiro item
 - Categorias vêm dos produtos públicos/snapshot offline, sem nova API ou paginação
 - Remoção/renomeação da categoria selecionada continua retornando a Todas
+
+## Largura dos botões flutuantes no celular — 30/10/2026
+
+- Salvar offline/Atualizar e Carrinho usam largura pelo conteúdo, sem expandir
+  para ocupar a faixa inferior ou criar espaço vazio entre rótulo e total
+- Preservar altura 56 px e ancoragem em cantos opostos, limites máximos responsivos
+  evitam sobreposição e permitem quebra de texto/total quando necessário
