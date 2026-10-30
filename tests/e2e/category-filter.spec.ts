@@ -33,6 +33,12 @@ for (const width of [360, 800, 1280]) {
     expect((await filter.boundingBox())!.height).toBe(48);
     await trigger.click();
     await expect(page.getByRole("option")).toHaveCount(7);
+    await expect(page.locator(".category-filter-popover")).not.toHaveAttribute(
+      "data-entering",
+    );
+    const selected = page.getByRole("option", { name: "Todas as categorias" });
+    await selected.hover();
+    await expect(selected).toHaveCSS("box-shadow", "none");
     for (const item of await page.getByRole("option").all())
       expect((await item.boundingBox())!.height).toBeGreaterThanOrEqual(48);
     await page
@@ -45,6 +51,9 @@ for (const width of [360, 800, 1280]) {
     await trigger.press("Enter");
     await page.keyboard.press("Home");
     await page.keyboard.press("ArrowDown");
+    await expect(
+      page.getByRole("option", { name: "Beleza e higiene", exact: true }),
+    ).toHaveAttribute("data-focus-visible");
     await page.keyboard.press("Enter");
     await expect(trigger).toHaveText("Beleza e higiene");
     await chooseCategory(page, "Todas as categorias");

@@ -711,3 +711,6 @@ Referências oficiais para consultar conforme necessário:
 - Refinamento dos botões flutuantes: padding lateral de 14 px no celular, largura
   continua pelo conteúdo, ícone de carrinho visível a partir de 360 px e preservado
   em tablet/desktop, oculto abaixo de 360 px para priorizar rótulo e total
+
+- Opções dos selects sem borda lateral ao passar o mouse; marcador lateral de
+  foco reservado à navegação por teclado, mantendo fundo e check de seleção

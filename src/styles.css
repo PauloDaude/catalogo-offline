@@ -1866,6 +1866,8 @@ progress {
 }
 [data-slot="select-item"][data-focused] {
   background: var(--primary-soft);
+}
+[data-slot="select-item"][data-focus-visible] {
   box-shadow: inset 3px 0 var(--primary);
 }
 .photo-dropzone {
