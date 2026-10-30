@@ -24,6 +24,7 @@ import {
 } from "./products/selection";
 import { useManagementData } from "./useManagementData";
 import { Categories } from "./categories/Categories";
+import { ActionToast } from "./ActionToast";
 
 export function Management({ client }: { client: SupabaseClient }) {
   const api = useMemo(() => createAdminApi(client), [client]);
@@ -119,14 +120,6 @@ export function Management({ client }: { client: SupabaseClient }) {
 
   const feedback = (
     <>
-      {message && (
-        <p
-          role="status"
-          className="admin-notice"
-        >
-          {message}
-        </p>
-      )}
       {error && (
         <div
           role="alert"
@@ -183,6 +176,12 @@ export function Management({ client }: { client: SupabaseClient }) {
 
   return (
     <>
+      {message && (
+        <ActionToast
+          message={message}
+          onClose={() => setMessage("")}
+        />
+      )}
       {action && (
         <ProductActionDialog
           action={action}
@@ -418,7 +417,7 @@ export function Management({ client }: { client: SupabaseClient }) {
                 </ProductListViewport>
 
                 {!products.length && (
-                  <p>
+                  <p className="admin-products-empty">
                     Use Adicionar produto para cadastrar seu primeiro item ou
                     ajuste os filtros para encontrar um produto
                   </p>

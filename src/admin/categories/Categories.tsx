@@ -5,6 +5,7 @@ import { Plus, Pencil, Archive, ArchiveRestore, Trash2 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Dialog, DialogTitle } from "../../components/ui/dialog";
 import { ConfirmDialog } from "../ConfirmDialog";
+import { ActionToast } from "../ActionToast";
 import { explainError, type AdminApi } from "../api";
 import type { AdminCategory, CategoryProduct } from "../types";
 
@@ -59,7 +60,12 @@ export function Categories({
           Criar categoria
         </Button>
       </div>
-      {message && <p role="status">{message}</p>}
+      {message && (
+        <ActionToast
+          message={message}
+          onClose={() => setMessage("")}
+        />
+      )}
       {error && (
         <p
           role="alert"

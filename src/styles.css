@@ -2708,3 +2708,48 @@ progress {
 .admin-product-action-dialog .admin-dialog-body > * {
   flex-shrink: 0;
 }
+
+.admin-products-empty {
+  margin: 0;
+  padding: 32px 16px;
+  line-height: 1.7;
+  text-align: center;
+  color: var(--muted-foreground);
+}
+.admin-action-toast {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  right: max(24px, env(safe-area-inset-right));
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(460px, calc(100% - 32px));
+  padding: 12px 12px 12px 16px;
+  border: 1px solid var(--primary);
+  border-radius: 14px;
+  background: white;
+  color: var(--foreground);
+  box-shadow: 0 8px 28px #143b8426;
+}
+.admin-action-toast > svg {
+  flex-shrink: 0;
+  width: 22px;
+  color: var(--primary);
+}
+.admin-action-toast p {
+  flex: 1;
+  margin: 0;
+  line-height: 1.5;
+}
+.admin-toast-close {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+}
+@media (max-width: 600px) {
+  .admin-action-toast {
+    right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
