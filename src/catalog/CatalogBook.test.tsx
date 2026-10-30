@@ -1,3 +1,4 @@
+import { chooseCategory } from "../test/catalog-ui";
 import { beforeEach, expect, test } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -36,7 +37,7 @@ test("demonstração folheia Cozinha sem perder a seleção ao comparar os visua
   expect(
     screen.getByRole("tabpanel", { name: "Folhear catálogo" }),
   ).toBeVisible();
-  await user.click(screen.getByRole("button", { name: "Cozinha" }));
+  await chooseCategory(user, "Cozinha");
   expect(screen.getByText("Produto 1 de 3")).toBeVisible();
   expect(
     screen.getByRole("button", { name: "Produto anterior" }),

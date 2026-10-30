@@ -1,3 +1,4 @@
+import { chooseCategory } from "./helpers";
 import { test, expect } from "@playwright/test";
 
 for (const width of [360, 800, 1280]) {
@@ -17,7 +18,7 @@ for (const width of [360, 800, 1280]) {
       name: "Categorias",
       exact: true,
     });
-    await filters.getByRole("button", { name: "Pesca", exact: true }).click();
+    await chooseCategory(page, "Pesca");
     await page.getByRole("searchbox").fill("kit");
     await expect(
       page.getByRole("button", { name: "Ver Kit de pesca", exact: true }),
@@ -25,8 +26,8 @@ for (const width of [360, 800, 1280]) {
     await page.getByRole("tab", { name: "Ver grade" }).click();
     await expect(page.getByRole("searchbox")).toHaveValue("kit");
     await expect(
-      filters.getByRole("button", { name: "Pesca", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
+      filters.getByRole("button", { name: /Categoria$/ }),
+    ).toHaveText("Pesca");
     await expect(page.locator(".product-card")).toHaveCount(1);
     await page.getByRole("tab", { name: "Folhear catálogo" }).click();
     await expect(page.getByRole("searchbox")).toHaveValue("kit");
@@ -37,8 +38,8 @@ for (const width of [360, 800, 1280]) {
       .click();
     await expect(page.getByRole("searchbox")).toHaveValue("");
     await expect(
-      filters.getByRole("button", { name: "Todas", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
+      filters.getByRole("button", { name: /Categoria$/ }),
+    ).toHaveText("Todas as categorias");
     const tabs = (await page.getByRole("tablist").boundingBox())!;
     const search = (await page.getByRole("searchbox").boundingBox())!;
     if (width > 760)

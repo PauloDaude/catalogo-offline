@@ -682,3 +682,14 @@ Referências oficiais para consultar conforme necessário:
 - LoadingImage preserva classes/dimensões, callbacks e URLs, incluindo Blob/cache,
   e encerra skeleton ao carregar ou falhar, sem criar novas requisições
 - Salvar/excluir/sincronizar mantêm textos/progresso explícitos, sem esconder formulários
+
+## Categorias compactas aprovadas — 30/10/2026
+
+- Usuário escolheu seletor único de categorias em vez de chips em várias linhas
+- Substitui o visual anterior de botões arredondados de categoria no catálogo público
+- Controle React Aria de 48 px abaixo da pesquisa, Todas as categorias por padrão,
+  categoria escolhida visível, menu com opções de toque de 48 px e altura limitada
+- Seleção única e aplicação imediata, sem botão Aplicar, busca/categoria preservadas
+  entre grade e folhear, alteração continua reiniciando carrossel no primeiro item
+- Categorias vêm dos produtos públicos/snapshot offline, sem nova API ou paginação
+- Remoção/renomeação da categoria selecionada continua retornando a Todas

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { addToCart } from "./helpers";
+import { addToCart, chooseCategory } from "./helpers";
 
 test.use({ hasTouch: true });
 
@@ -46,7 +46,7 @@ test("carrossel usa foto proporcional, faixa sobreposta e o carrinho azul", asyn
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/?visualizacao=folhear");
-  await page.getByRole("button", { name: "Cozinha", exact: true }).click();
+  await chooseCategory(page, "Cozinha");
   await expect(page.locator(".book-product")).toHaveCount(1);
   const photo = await page.locator(".book-product-photo").boundingBox();
   const caption = await page.locator(".book-product-caption").boundingBox();
@@ -76,7 +76,7 @@ test("arrastar à esquerda avança, direita retorna e gesto não abre detalhes",
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/?visualizacao=folhear");
-  await page.getByRole("button", { name: "Cozinha", exact: true }).click();
+  await chooseCategory(page, "Cozinha");
   const slide = page.locator(".book-viewport");
   await expect(slide).toBeVisible();
   await slide.scrollIntoViewIfNeeded();
@@ -115,7 +115,7 @@ test("arrastar com mouse respeita limites e arrasto curto não abre modal", asyn
 }) => {
   await page.setViewportSize({ width: 800, height: 1000 });
   await page.goto("/?visualizacao=folhear");
-  await page.getByRole("button", { name: "Cozinha", exact: true }).click();
+  await chooseCategory(page, "Cozinha");
   const viewport = page.locator(".book-viewport");
   await viewport.scrollIntoViewIfNeeded();
   const box = await viewport.boundingBox();
@@ -146,7 +146,7 @@ test("botão de carrinho na faixa adiciona sem abrir detalhes e funciona por tec
 }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto("/?visualizacao=folhear");
-  await page.getByRole("button", { name: "Cozinha", exact: true }).click();
+  await chooseCategory(page, "Cozinha");
   const add = page.getByRole("button", {
     name: "Adicionar Panela para o dia a dia ao carrinho",
   });

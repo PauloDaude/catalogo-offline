@@ -1,3 +1,4 @@
+import { chooseCategory } from "./helpers";
 import { test, expect } from "@playwright/test";
 
 for (const width of [360, 1280]) {
@@ -6,7 +7,7 @@ for (const width of [360, 1280]) {
   }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
-    await page.getByRole("button", { name: "Cozinha", exact: true }).click();
+    await chooseCategory(page, "Cozinha");
     const previous = page.getByRole("button", {
       name: "Voltar produto",
       exact: true,

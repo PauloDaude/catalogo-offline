@@ -3027,3 +3027,30 @@ progress {
     min-height: 190px;
   }
 }
+
+.category-filter {
+  margin: 20px 0 16px;
+  width: min(100%, 360px);
+}
+.category-select {
+  width: 100%;
+}
+.category-select [data-slot="select-trigger"] {
+  min-height: 48px;
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.category-select [data-slot="select-value"] {
+  min-width: 0;
+}
+.category-filter-popover {
+  max-height: min(360px, 60dvh);
+}
+.category-filter-popover [data-slot="select-item"] {
+  min-height: 48px;
+  padding: 12px 36px 12px 14px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

@@ -36,3 +36,8 @@ export async function addToCart(page: Page, name: string) {
   await page.getByRole("button", { name: /^Adicionar ao carrinho/ }).click();
   await page.getByRole("button", { name: "Fechar", exact: true }).click();
 }
+
+export async function chooseCategory(page: Page, name: string) {
+  await page.getByRole("button", { name: /Categoria$/ }).click();
+  await page.getByRole("option", { name, exact: true }).click();
+}

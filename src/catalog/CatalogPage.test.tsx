@@ -1,3 +1,4 @@
+import { chooseCategory } from "../test/catalog-ui";
 import { beforeEach, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -18,7 +19,7 @@ test("usuário encontra produto por nome e categoria", async () => {
   await user.type(screen.getByRole("searchbox"), "tesoura");
   expect(screen.getByText("Tesoura de cozinha")).toBeVisible();
   expect(screen.queryByText("Lanterna 1")).not.toBeInTheDocument();
-  await user.click(screen.getByRole("button", { name: /^Iluminação$/ }));
+  await chooseCategory(user, "Iluminação");
   expect(screen.getByText("Nenhum produto encontrado")).toBeVisible();
 });
 
@@ -45,14 +46,13 @@ test("pesquisa e categoria são compartilhadas entre folhear e grade", async () 
   );
 
   expect(screen.getAllByRole("searchbox")).toHaveLength(1);
-  await user.click(screen.getByRole("button", { name: "Iluminação" }));
+  await chooseCategory(user, "Iluminação");
   await user.type(screen.getByRole("searchbox"), "Lanterna 1");
   expect(screen.getByRole("button", { name: "Ver Lanterna 1" })).toBeVisible();
   await user.click(screen.getByRole("tab", { name: "Ver grade" }));
   expect(screen.getByRole("searchbox")).toHaveValue("Lanterna 1");
-  expect(screen.getByRole("button", { name: "Iluminação" })).toHaveAttribute(
-    "aria-pressed",
-    "true",
+  expect(screen.getByRole("button", { name: /Categoria$/ })).toHaveTextContent(
+    "Iluminação",
   );
   expect(screen.getByRole("button", { name: "Ver Lanterna 1" })).toBeVisible();
   await user.click(screen.getByRole("tab", { name: "Folhear catálogo" }));
@@ -68,16 +68,15 @@ test("renomear a categoria selecionada não deixa filtro invisível ativo", asyn
       images={new Map()}
     />,
   );
-  await userEvent.click(screen.getByRole("button", { name: "Original" }));
+  await chooseCategory(userEvent.setup(), "Original");
   rerender(
     <CatalogPage
       products={[{ ...product, category: "Renomeada" }]}
       images={new Map()}
     />,
   );
-  expect(screen.getByRole("button", { name: "Todas" })).toHaveAttribute(
-    "aria-pressed",
-    "true",
+  expect(screen.getByRole("button", { name: /Categoria$/ })).toHaveTextContent(
+    "Todas as categorias",
   );
   expect(screen.getByText(product.name)).toBeVisible();
 });

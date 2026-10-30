@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { prepare } from "./helpers";
+import { prepare, chooseCategory } from "./helpers";
 
 for (const [width, height] of [
   [360, 800],
@@ -17,7 +17,7 @@ for (const [width, height] of [
     ).toBe(true);
 
     for (const button of await page
-      .locator(".category-button,.sync-button")
+      .locator(".category-select [data-slot=select-trigger],.sync-button")
       .all()) {
       const box = await button.boundingBox();
       expect(box!.height).toBeGreaterThanOrEqual(48);
@@ -25,7 +25,7 @@ for (const [width, height] of [
 
     await page.getByRole("searchbox").fill("TESOURA");
     await expect(page.locator(".product-card")).toHaveCount(1);
-    await page.getByRole("button", { name: /^Iluminação$/ }).click();
+    await chooseCategory(page, "Iluminação");
     await expect(page.getByText("Nenhum produto encontrado")).toBeVisible();
   });
 }

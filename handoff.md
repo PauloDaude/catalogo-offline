@@ -207,3 +207,16 @@ Esta seção substitui as pendências de envio do lote e agrupamento acima.
 - Usuário autorizou commit/push das pendências na main e escolheu deploy automático
   do Cloudflare Pages a cada atualização da main, substituindo publicação manual
 - Domínio escolhido catalogo.daude.dev, sem configurar Cloudflare/DNS nesta etapa
+
+## Skeletons e categorias compactas — 30/10/2026
+
+- Skeletons implementados para catálogo inicial/grade/folhear, painel/autorização,
+  listas, imagens, processamento inicial de foto e prévia PDF, sem novas dependências
+- Preservar dados da mesma consulta no refresh, inclusive após falha com erro/retry
+- Animação respeita reduced motion, imagem em cache/falha não fica presa em loading
+- Usuário aprovou substituir chips por seletor único de categoria de 48 px abaixo
+  da pesquisa, Todas as categorias por padrão e seleção compartilhada entre abas
+- Menu React Aria com toque/teclado, nomes longos e retorno de foco, sem alterar API
+- Validação final: 204 unitários e 36 cenários públicos de navegador aprovados,
+  build, lint e formatação conferidos; hardware real continua pendente
+- Skeletons em commit f65a498, seletor em commit separado, ambos via main/Cloudflare

@@ -16,6 +16,7 @@ import { useCart } from "../cart/useCart";
 import { CartPanel } from "../cart/CartPanel";
 import { CatalogBook } from "./CatalogBook";
 import { CatalogSkeleton, Skeleton } from "../components/LoadingSkeleton";
+import { CategoryFilter } from "./CategoryFilter";
 
 export type CatalogPageProps = {
   products: Product[];
@@ -145,30 +146,14 @@ export function CatalogPage({
               />
             </TextField>
           </div>
-          <nav
-            aria-label="Categorias"
-            className="category-list"
-          >
-            {[
-              { name: "Todas", value: null },
-              ...Array.from(new Set(products.map((p) => p.category)))
-                .sort((a, b) => a.localeCompare(b, "pt-BR"))
-                .map((name) => ({
-                  name: name === "Todas" ? "Todas (categoria)" : name,
-                  value: name,
-                })),
-            ].map((c) => (
-              <Button
-                key={c.value === null ? "all" : `category:${c.value}`}
-                variant={category === c.value ? "default" : "outline"}
-                aria-pressed={category === c.value}
-                onPress={() => setCategory(c.value)}
-                className="category-button"
-              >
-                {c.name}
-              </Button>
-            ))}
-          </nav>
+          <CategoryFilter
+            categories={Array.from(
+              new Set(products.map((p) => p.category)),
+            ).sort((a, b) => a.localeCompare(b, "pt-BR"))}
+            value={category}
+            onChange={setCategory}
+            isDisabled={initialLoading}
+          />
           <p
             className="result-count"
             aria-live="polite"
