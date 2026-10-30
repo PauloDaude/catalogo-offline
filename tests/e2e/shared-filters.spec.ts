@@ -1,7 +1,7 @@
 import { chooseCategory } from "./helpers";
 import { test, expect } from "@playwright/test";
 
-for (const width of [360, 800, 1280]) {
+for (const width of [360, 700, 800, 1280]) {
   test(`filtros únicos preservados nas duas abas e pesquisa alinhada em ${width}px`, async ({
     page,
   }) => {
@@ -42,11 +42,19 @@ for (const width of [360, 800, 1280]) {
     ).toHaveText("Todas as categorias");
     const tabs = (await page.getByRole("tablist").boundingBox())!;
     const search = (await page.getByRole("searchbox").boundingBox())!;
-    if (width > 760)
+    const category = (await filters.boundingBox())!;
+    expect(search.y).toBeGreaterThanOrEqual(tabs.y + tabs.height);
+    if (width > 650) {
       expect(
-        Math.abs(tabs.y + tabs.height / 2 - search.y - search.height / 2),
+        Math.abs(
+          search.y + search.height / 2 - category.y - category.height / 2,
+        ),
       ).toBeLessThan(2);
-    else expect(Math.abs(tabs.x - search.x)).toBeLessThan(2);
+      expect(search.x + search.width).toBeLessThanOrEqual(category.x - 16);
+    } else {
+      expect(category.y).toBeGreaterThanOrEqual(search.y + search.height);
+      expect(Math.abs(tabs.x - search.x)).toBeLessThan(2);
+    }
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,

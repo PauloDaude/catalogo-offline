@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-for (const width of [320, 360, 800, 1280]) {
+for (const width of [320, 360, 390, 650, 800, 1280]) {
   test(`aviso offline fixo e compacto sem sobrepor carrinho em ${width}px`, async ({
     page,
   }) => {
@@ -23,6 +23,9 @@ for (const width of [320, 360, 800, 1280]) {
       .getByRole("button", { name: /Abrir carrinho/ })
       .boundingBox())!;
     expect(after.x + after.width).toBeLessThanOrEqual(cart.x - 8);
+    const icon = page.locator(".cart-trigger > svg");
+    if (width >= 360) await expect(icon).toBeVisible();
+    else await expect(icon).toBeHidden();
     if (width <= 650) {
       expect(Math.abs(after.y - cart.y)).toBeLessThan(1);
       expect(Math.abs(after.height - cart.height)).toBeLessThan(1);

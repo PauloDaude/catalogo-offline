@@ -132,6 +132,8 @@ export function CatalogPage({
                 Ver grade
               </Tab>
             </TabList>
+          </div>
+          <div className="catalog-filter-row">
             <TextField
               aria-label="Pesquisar produtos"
               value={query}
@@ -145,15 +147,15 @@ export function CatalogPage({
                 className="search-input"
               />
             </TextField>
+            <CategoryFilter
+              categories={Array.from(
+                new Set(products.map((p) => p.category)),
+              ).sort((a, b) => a.localeCompare(b, "pt-BR"))}
+              value={category}
+              onChange={setCategory}
+              isDisabled={initialLoading}
+            />
           </div>
-          <CategoryFilter
-            categories={Array.from(
-              new Set(products.map((p) => p.category)),
-            ).sort((a, b) => a.localeCompare(b, "pt-BR"))}
-            value={category}
-            onChange={setCategory}
-            isDisabled={initialLoading}
-          />
           <p
             className="result-count"
             aria-live="polite"

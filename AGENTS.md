@@ -700,3 +700,14 @@ Referências oficiais para consultar conforme necessário:
   para ocupar a faixa inferior ou criar espaço vazio entre rótulo e total
 - Preservar altura 56 px e ancoragem em cantos opostos, limites máximos responsivos
   evitam sobreposição e permitem quebra de texto/total quando necessário
+
+## Linha de filtros em tablet e desktop — 30/10/2026
+
+- Em larguras a partir de 651 px, busca à esquerda e categoria à direita na mesma
+  linha, sempre abaixo das abas Folhear catálogo/Ver grade
+- Substitui o alinhamento anterior de pesquisa ao lado das abas no desktop
+- No celular, abas, pesquisa e categoria permanecem empilhadas, sem duplicar filtros
+
+- Refinamento dos botões flutuantes: padding lateral de 14 px no celular, largura
+  continua pelo conteúdo, ícone de carrinho visível a partir de 360 px e preservado
+  em tablet/desktop, oculto abaixo de 360 px para priorizar rótulo e total
