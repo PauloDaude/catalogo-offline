@@ -37,7 +37,9 @@ administrativo, login, Supabase nem produtos reais. Não é o MVP completo de pr
 
 ## Executar localmente
 
-Usar Node.js 24 LTS e npm. Há um único lockfile versionado.
+Usar Node.js 24 LTS e npm. O único lockfile versionado é `package-lock.json`.
+Não versionar lockfiles de outros gerenciadores, pois o Cloudflare os detecta
+e pode selecionar uma instalação diferente da usada no desenvolvimento.
 
 ```bash
 npm ci

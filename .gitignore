@@ -10,6 +10,9 @@
 
 # Dependências, builds e resultados locais
 node_modules/
+# npm é o gerenciador do projeto, manter somente package-lock.json
+pnpm-lock.yaml
+yarn.lock
 dist/
 coverage/
 playwright-report/

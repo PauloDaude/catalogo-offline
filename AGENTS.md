@@ -638,3 +638,11 @@ Referências oficiais para consultar conforme necessário:
 - Esta decisão substitui a preferência anterior de publicação somente manual
 - Configurar main como branch de produção e manter automatic deployments ativo
 - A integração, variáveis de build e domínio ainda serão configurados no Cloudflare
+
+## Instalação no Cloudflare corrigida — 30/10/2026
+
+- npm é o gerenciador do projeto, com package-lock.json como único lockfile
+- pnpm-lock.yaml legado estava desatualizado e causou ERR_PNPM_OUTDATED_LOCKFILE
+  no primeiro deploy, removido e ignorado para não alterar detecção do Cloudflare
+- Não usar --no-frozen-lockfile para contornar divergências, manter instalação
+  reproduzível com npm ci e build npm run build
