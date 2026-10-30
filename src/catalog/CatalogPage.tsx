@@ -236,9 +236,6 @@ export function CatalogPage({
           {children}
         </div>
       </main>
-      <footer>
-        Catálogo de demonstração · Fotos ilustrativas · Preços fictícios
-      </footer>
     </div>
   );
 }
