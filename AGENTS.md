@@ -580,3 +580,61 @@ Referências oficiais para consultar conforme necessário:
 
 - Contagem de produtos alinhada à direita na mesma linha de Selecionar página
 - Ações em lote ficam abaixo dessa linha quando há seleção
+
+## Estado vazio e notificações administrativas — 29/10/2026
+
+- Mensagem da lista vazia com espaçamento próprio e texto centralizado
+- Sucessos de ações de produtos/categorias em toast temporário de 5 segundos,
+  com fechamento manual e pausa enquanto houver foco ou mouse sobre a notificação
+- Erros continuam persistentes, sem expiração automática
+- Usuário confirmou que limpou os produtos, incluindo os itens anteriores
+- Importação completa ainda depende de agrupamento/manifesto, revisão e autorização
+  de envio, limpeza confirmada não autoriza importação imediata
+
+## Aviso de demonstração removido — 29/10/2026
+
+- Remover o rodapé Catálogo de demonstração · Fotos ilustrativas · Preços fictícios
+  em todos os ambientes, independente da fonte de produtos
+
+## Importação completa autorizada — 29/10/2026
+
+- Usuário autorizou envio dos produtos e categorias após confirmar limpeza
+- Confirmou todos visíveis e quatro casos comerciais: escovas como Modelo 1/2,
+  GD somente na lanterna de 5 W, pino de quatro saídas unitário R$ 4,10, tesoura
+  com ponta curva e reta mantida como uma opção de R$ 4,90
+- Manifesto novo lote-completo-20261029.json: 48 pais, 85 itens, 67 fotos WebP,
+  seis categorias, preços comerciais sem a oferta fictícia do canivete
+- Journal/chaves do lote separados do piloto, preservar ambos nas retomadas
+
+## Importação completa enviada — retomada em 30/10/2026
+
+- Execução de 29/10 concluiu mesmo após interrupção do chat por limite de uso
+- 48 produtos principais P009–P056, com 24 simples e 24 com variantes, 61 variantes
+  e 85 itens vendáveis no total, todos visíveis, seis categorias criadas
+- 67 fotos WebP conferidas publicamente por MIME e SHA-256, nove fotos anteriores
+  preservadas, sem limpeza do Storage e sem reutilizar códigos do piloto excluído
+- Conferência independente de produtos, preços, caixas, opções e visibilidade pública
+  registrada no verification.json privado do journal do lote
+- Backup real antes do envio em backups/2026-10-29T20-49-34.193Z-bf4acc5a
+- Sem nova migration, sem push ou publicação de frontend, preservar manifesto/journal
+
+## Domínio de produção escolhido — 30/10/2026
+
+- Usuário escolheu catalogo.daude.dev para publicação no Cloudflare
+- Substitui a proposta anterior cirandinha.daude.dev, configuração/publicação ainda
+  pendentes, não executar push, criar hospedagem ou alterar DNS sem solicitação
+
+## Integração Cloudflare com GitHub — 30/10/2026
+
+- Usuário prefere vincular hospedagem ao repositório GitHub em vez de Direct Upload
+- Publicação automática por push ainda não foi autorizada, manter controle explícito
+- Antes da primeira publicação via Git, concluir commits e push das mudanças locais
+  mediante solicitação, configurar fonte Supabase e variáveis públicas no build
+
+## Publicação automática pela main autorizada — 30/10/2026
+
+- Usuário autorizou commitar pendências e enviar a main ao GitHub nesta etapa
+- Escolheu atualização automática do Cloudflare Pages a cada push na main
+- Esta decisão substitui a preferência anterior de publicação somente manual
+- Configurar main como branch de produção e manter automatic deployments ativo
+- A integração, variáveis de build e domínio ainda serão configurados no Cloudflare

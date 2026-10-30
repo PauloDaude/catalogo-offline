@@ -171,3 +171,39 @@ Resultados finais: 190 testes unitários, 74 testes públicos de navegador,
 Restauração local recuperou 255 fotos com hashes iguais
 TypeScript e build demo aprovados, lint e formatação conferidos
 A execução unitária usou dois workers e timeout de 15 s devido à carga local
+
+## Atualização após retomada — 29/10/2026
+
+- Usuário confirmou que concluiu a limpeza dos produtos no remoto
+- Agrupamento final/manifesto ainda pendentes, não houve nova importação
+- Categorias continuam as seis propostas, podem ser criadas/reutilizadas pelo
+  futuro importador, sem necessidade de criação manual prévia
+- Estado vazio administrativo com espaçamento próprio, confirmações de produtos
+  e categorias passam a toast de 5 segundos com fechar e pausa por foco/mouse
+- Erros permanecem persistentes, alteração ainda local e sem publicação
+
+## Importação concluída — retomar daqui em 30/10/2026
+
+Esta seção substitui as pendências de envio do lote e agrupamento acima.
+
+- Usuário confirmou limpeza dos produtos e categorias e autorizou envio completo
+- Confirmou produtos visíveis e os quatro casos comerciais apresentados
+- Lote de 29/10 concluído: 48 pais P009–P056, 85 itens vendáveis, 61 variantes,
+  seis categorias e 67 fotos WebP, todos os pais visíveis no catálogo público
+- Manifesto imutável docs/produtos/lote-completo-20261029.json e versão legível .md
+- Executor scripts/import/full-import.mjs, modos --dry-run/--check/--full/--verify
+- Não reenviar com novo manifesto ou apagar journal para contornar divergências
+- Journal novo em .catalog-import/<hash-origem>/lote-completo-20261029-v1/, privado
+- Conferência de 29/10 terminou às 20:56 UTC, mesmo com chat interrompido por limite
+- Backup prévio real de 29/10 com 0 produtos e 9 fotos, Storage anterior preservado
+- Casos aprovados: escovas Modelo 1/2, GD só em 5 W, pino unitário R$ 4,10,
+  tesoura curva/reta única R$ 4,90, canivete comercial R$ 29,90 sem oferta fictícia
+- Frontend continua sem publicação e alterações desta etapa ainda sem commit
+- Revalidação remota em 30/10 às 09:46 local confirmou 48 pais, 85 escolhas e
+  67 fotos, sem reenviar, evidências em docs/validation/importacao-completa.md
+
+## Publicação pelo GitHub — decisão de 30/10/2026
+
+- Usuário autorizou commit/push das pendências na main e escolheu deploy automático
+  do Cloudflare Pages a cada atualização da main, substituindo publicação manual
+- Domínio escolhido catalogo.daude.dev, sem configurar Cloudflare/DNS nesta etapa
