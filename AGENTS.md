@@ -646,3 +646,14 @@ Referências oficiais para consultar conforme necessário:
   no primeiro deploy, removido e ignorado para não alterar detecção do Cloudflare
 - Não usar --no-frozen-lockfile para contornar divergências, manter instalação
   reproduzível com npm ci e build npm run build
+
+## Foto completa nos detalhes — 30/10/2026
+
+- Ações do modal usam grade, Fechar com mínimo de 96 px de largura e 48 px de altura
+  no celular, sem ser comprimido pelo contêiner do botão Adicionar
+- Foto nos detalhes tem botão Ampliar foto, abre visualização ocupando o viewport
+  com object-fit:contain, fechamento por botão ou Escape e retorno de foco à foto
+- Ampliação reutiliza a imagem da opção selecionada e URLs da sessão, sem novo
+  armazenamento ou dependência, ausência de foto mantém indicação sem botão vazio
+- Limite de altura em produtos com variantes é aplicado à imagem, evitando recorte
+  causado por limitar só o contêiner, mantendo proporção e foto inteira

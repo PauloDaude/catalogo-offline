@@ -7,6 +7,7 @@ import { AddToCartButton } from "../cart/AddToCartButton";
 
 import type { Product } from "./types";
 import { ProductPrice } from "./ProductPrice";
+import { ProductPhotoViewer } from "./ProductPhotoViewer";
 
 export function ProductDialog({
   product,
@@ -40,10 +41,9 @@ export function ProductDialog({
       <div className="product-detail-layout">
         <div className="product-detail-photo">
           {shownImage ? (
-            <img
+            <ProductPhotoViewer
               src={shownImage}
-              alt={product.name}
-              className="dialog-image"
+              name={product.name}
             />
           ) : (
             <span className="image-placeholder">Foto indisponível</span>
