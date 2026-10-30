@@ -714,3 +714,11 @@ Referências oficiais para consultar conforme necessário:
 
 - Opções dos selects sem borda lateral ao passar o mouse; marcador lateral de
   foco reservado à navegação por teclado, mantendo fundo e check de seleção
+
+## Hierarquia do formulário de produtos — 30/10/2026
+
+- Criação e edição compartilham seções Identificação e Venda e preços
+- Rótulos menores e semibold, campos com fundo cinza-azulado sutil, foco azul visível
+- Foto alinhada ao topo, sem esticar para acompanhar toda a altura dos campos
+- Quantidades da caixa lado a lado no desktop, formulário em uma coluna até 800 px
+- Visual aplicado também aos campos das variantes, sem alterar regras de salvamento

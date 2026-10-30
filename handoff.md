@@ -220,3 +220,12 @@ Esta seção substitui as pendências de envio do lote e agrupamento acima.
 - Validação final: 204 unitários e 36 cenários públicos de navegador aprovados,
   build, lint e formatação conferidos; hardware real continua pendente
 - Skeletons em commit f65a498, seletor em commit separado, ambos via main/Cloudflare
+
+## Hierarquia visual de criação/edição — 30/10/2026
+
+- ProductForm organizado em Identificação e Venda e preços, campos com fundo sutil
+  e rótulos menores/semibold, foto alinhada ao topo e uma coluna até 800 px
+- Dados de teste locais usados na inspeção visual, nenhum produto remoto alterado
+- Quatro testes de ProductForm e quatro inspeções de navegador (criação/edição em
+  390 e 1280 px) passaram, junto com build e lint
+- Selects sem marcador lateral no hover, marcador preservado no foco por teclado

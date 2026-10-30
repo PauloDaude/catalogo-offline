@@ -1690,6 +1690,75 @@ progress {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
   gap: 24px;
+  align-items: start;
+}
+.product-form-fields {
+  gap: 24px;
+  min-width: 0;
+}
+.product-form-section {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.product-form-section > h2 {
+  margin: 0 0 4px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--primary);
+}
+.product-form .react-aria-Label,
+.product-form .photo-field > span:first-child {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #40516b;
+}
+.admin-shell .product-form input:not([type="checkbox"]),
+.product-form .admin-select [data-slot="select-trigger"] {
+  background: #f5f7fb;
+  border-color: #d8dfeb;
+  box-shadow: none;
+}
+.admin-shell .product-form input:focus-visible,
+.product-form .admin-select [data-slot="select-trigger"]:focus-visible {
+  background: white;
+  border-color: var(--primary);
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.product-form .sale-fields > p {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--primary-soft);
+  color: #52627b;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.product-form > .photo-field {
+  gap: 12px;
+}
+@media (min-width: 1000px) {
+  .product-form .sale-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .product-form .sale-fields > .admin-select,
+  .product-form .sale-fields > p {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 800px) {
+  .product-form {
+    grid-template-columns: 1fr;
+  }
+  .product-form-section {
+    padding: 18px;
+  }
 }
 .product-form > p,
 .product-form > button {

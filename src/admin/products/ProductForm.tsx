@@ -259,151 +259,163 @@ export function ProductForm({
           }}
         />
         <div className="product-form-fields">
-          <TextField
-            isDisabled={busy}
-            isRequired
-            maxLength={160}
-            value={name}
-            onChange={(v) => {
-              setName(v);
-              setDirty(true);
-            }}
+          <section
+            className="product-form-section"
+            aria-labelledby="product-identification"
           >
-            <Label>Nome do produto</Label>
-            <Input />
-          </TextField>
-          <SelectField
-            label="Categoria"
-            value={category}
-            onChange={(value) => {
-              setCategory(value);
-              setDirty(true);
-            }}
-            isDisabled={busy}
-            isRequired
-            options={categories
-              .filter((c) => c.active || c.id === category)
-              .map((c) => ({
-                id: c.id,
-                name: `${c.name}${c.active ? "" : " (arquivada)"}`,
-              }))}
-          />
-          <SelectField
-            label="Tipo de produto"
-            value={hasVariants ? "variants" : "simple"}
-            isDisabled={busy || variantProcessing}
-            options={[
-              { id: "simple", name: "Produto simples" },
-              { id: "variants", name: "Produto com variantes" },
-            ]}
-            onChange={(v) => {
-              const mode = v === "variants";
-              if (product && mode !== hasVariants) setSwitchMode(mode);
-              else {
-                setHasVariants(mode);
+            <h2 id="product-identification">Identificação</h2>
+            <TextField
+              isDisabled={busy}
+              isRequired
+              maxLength={160}
+              value={name}
+              onChange={(v) => {
+                setName(v);
                 setDirty(true);
-              }
-            }}
-          />
-          {hasVariants ? (
-            <>
-              <TextField
-                isRequired
-                isDisabled={busy}
-                value={attribute}
-                onChange={(v) => {
-                  setAttribute(v);
+              }}
+            >
+              <Label>Nome do produto</Label>
+              <Input />
+            </TextField>
+            <SelectField
+              label="Categoria"
+              value={category}
+              onChange={(value) => {
+                setCategory(value);
+                setDirty(true);
+              }}
+              isDisabled={busy}
+              isRequired
+              options={categories
+                .filter((c) => c.active || c.id === category)
+                .map((c) => ({
+                  id: c.id,
+                  name: `${c.name}${c.active ? "" : " (arquivada)"}`,
+                }))}
+            />
+            <SelectField
+              label="Tipo de produto"
+              value={hasVariants ? "variants" : "simple"}
+              isDisabled={busy || variantProcessing}
+              options={[
+                { id: "simple", name: "Produto simples" },
+                { id: "variants", name: "Produto com variantes" },
+              ]}
+              onChange={(v) => {
+                const mode = v === "variants";
+                if (product && mode !== hasVariants) setSwitchMode(mode);
+                else {
+                  setHasVariants(mode);
                   setDirty(true);
-                }}
-                maxLength={80}
-              >
-                <Label>Característica</Label>
-                <Input placeholder="Tamanho, capacidade ou modelo" />
-              </TextField>
-              <VariantEditor
-                value={rows}
-                onChange={(v) => {
-                  setRows(v);
-                  setDirty(true);
-                }}
-                parentImage={
-                  preview ||
-                  (!removed && product
-                    ? photoUrl(product.image_path)
-                    : undefined)
                 }
-                photoUrl={photoUrl}
-                disabled={busy || variantProcessing}
-                onProcessing={setVariantProcessing}
-                onHideLast={() => setActive(false)}
-              />
-            </>
-          ) : (
-            <>
-              <SaleFields
-                value={sale}
-                onChange={(v) => {
-                  setSale(v);
-                  setDirty(true);
-                }}
-                disabled={busy}
-              />
-              <TextField
-                isDisabled={busy}
-                isRequired
-                value={price}
-                onChange={(v) => {
-                  setPrice(v);
-                  setDirty(true);
-                }}
-              >
-                <Label>Preço atual (R$)</Label>
-                <Input
-                  inputMode="decimal"
-                  placeholder="65,00"
-                />
-              </TextField>
-              <Checkbox
-                isDisabled={busy}
-                isSelected={offer}
-                onChange={(v) => {
-                  setOffer(v);
-                  setDirty(true);
-                }}
-                className="admin-checkbox"
-              >
-                <span
-                  className="checkbox-mark"
-                  aria-hidden="true"
+              }}
+            />
+          </section>
+          <section
+            className="product-form-section"
+            aria-labelledby="product-sale"
+          >
+            <h2 id="product-sale">Venda e preços</h2>
+            {hasVariants ? (
+              <>
+                <TextField
+                  isRequired
+                  isDisabled={busy}
+                  value={attribute}
+                  onChange={(v) => {
+                    setAttribute(v);
+                    setDirty(true);
+                  }}
+                  maxLength={80}
                 >
-                  {offer ? "✓" : ""}
-                </span>
-                Produto em oferta
-              </Checkbox>
-              {offer && (
-                <>
-                  <TextField
-                    isDisabled={busy}
-                    isRequired
-                    value={previous}
-                    onChange={(v) => {
-                      setPrevious(v);
-                      setDirty(true);
-                    }}
+                  <Label>Característica</Label>
+                  <Input placeholder="Tamanho, capacidade ou modelo" />
+                </TextField>
+                <VariantEditor
+                  value={rows}
+                  onChange={(v) => {
+                    setRows(v);
+                    setDirty(true);
+                  }}
+                  parentImage={
+                    preview ||
+                    (!removed && product
+                      ? photoUrl(product.image_path)
+                      : undefined)
+                  }
+                  photoUrl={photoUrl}
+                  disabled={busy || variantProcessing}
+                  onProcessing={setVariantProcessing}
+                  onHideLast={() => setActive(false)}
+                />
+              </>
+            ) : (
+              <>
+                <SaleFields
+                  value={sale}
+                  onChange={(v) => {
+                    setSale(v);
+                    setDirty(true);
+                  }}
+                  disabled={busy}
+                />
+                <TextField
+                  isDisabled={busy}
+                  isRequired
+                  value={price}
+                  onChange={(v) => {
+                    setPrice(v);
+                    setDirty(true);
+                  }}
+                >
+                  <Label>Preço atual (R$)</Label>
+                  <Input
+                    inputMode="decimal"
+                    placeholder="65,00"
+                  />
+                </TextField>
+                <Checkbox
+                  isDisabled={busy}
+                  isSelected={offer}
+                  onChange={(v) => {
+                    setOffer(v);
+                    setDirty(true);
+                  }}
+                  className="admin-checkbox"
+                >
+                  <span
+                    className="checkbox-mark"
+                    aria-hidden="true"
                   >
-                    <Label>Preço anterior (R$)</Label>
-                    <Input
-                      inputMode="decimal"
-                      placeholder="100,00"
-                    />
-                  </TextField>
-                  {discount > 0 && (
-                    <p className="admin-discount">{discount}% de desconto</p>
-                  )}
-                </>
-              )}
-            </>
-          )}
+                    {offer ? "✓" : ""}
+                  </span>
+                  Produto em oferta
+                </Checkbox>
+                {offer && (
+                  <>
+                    <TextField
+                      isDisabled={busy}
+                      isRequired
+                      value={previous}
+                      onChange={(v) => {
+                        setPrevious(v);
+                        setDirty(true);
+                      }}
+                    >
+                      <Label>Preço anterior (R$)</Label>
+                      <Input
+                        inputMode="decimal"
+                        placeholder="100,00"
+                      />
+                    </TextField>
+                    {discount > 0 && (
+                      <p className="admin-discount">{discount}% de desconto</p>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </section>
         </div>
         {error && (
           <p
