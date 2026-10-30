@@ -1,3 +1,4 @@
+import { LoadingImage } from "../components/LoadingImage";
 import { useEffect, useMemo, useState } from "react";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { Checkbox, TextField, Label, Input } from "react-aria-components";
@@ -25,6 +26,7 @@ import {
 import { useManagementData } from "./useManagementData";
 import { Categories } from "./categories/Categories";
 import { ActionToast } from "./ActionToast";
+import { AdminListSkeleton } from "../components/LoadingSkeleton";
 
 export function Management({ client }: { client: SupabaseClient }) {
   const api = useMemo(() => createAdminApi(client), [client]);
@@ -39,8 +41,16 @@ export function Management({ client }: { client: SupabaseClient }) {
   const [action, setAction] = useState<ProductAction | null>(null);
   const [actionError, setActionError] = useState("");
   const [page, setPage] = useState(1);
-  const { data, initialized, refresh, error, setError, loading } =
-    useManagementData(api, { page, query, category, visibility }, setPage);
+  const {
+    data,
+    initialized,
+    hasCurrentData,
+    refreshing,
+    refresh,
+    error,
+    setError,
+    loading,
+  } = useManagementData(api, { page, query, category, visibility }, setPage);
   useEffect(() => {
     if (
       category &&
@@ -222,18 +232,25 @@ export function Management({ client }: { client: SupabaseClient }) {
       </nav>
       {tab === "categories" && feedback}
       {tab === "categories" ? (
-        <Categories
-          categories={data.categories}
-          api={api}
-          onChanged={refresh}
-        />
+        !initialized && loading ? (
+          <AdminListSkeleton categories />
+        ) : (
+          <Categories
+            categories={data.categories}
+            api={api}
+            onChanged={refresh}
+          />
+        )
       ) : (
-        <section className="admin-surface admin-products-panel">
+        <section
+          className="admin-surface admin-products-panel"
+          aria-busy={loading}
+        >
           <div className="admin-toolbar">
             <h1>Produtos</h1>
             <Button
               className="touch-button"
-              isDisabled={busy}
+              isDisabled={busy || loading}
               onPress={() => {
                 clearSelection();
                 setEditing(null);
@@ -308,10 +325,18 @@ export function Management({ client }: { client: SupabaseClient }) {
               onDelete={() => openAction("delete", [...selection.values()])}
             />
           </div>
-          {loading ? (
-            <p role="status">Carregando produtos…</p>
+          {refreshing && (
+            <span
+              role="status"
+              className="sr-only"
+            >
+              Atualizando produtos…
+            </span>
+          )}
+          {loading && !refreshing ? (
+            <AdminListSkeleton />
           ) : (
-            !error && (
+            (!error || hasCurrentData) && (
               <>
                 <ProductListViewport
                   resetKey={JSON.stringify([page, query, category, visibility])}
@@ -326,7 +351,7 @@ export function Management({ client }: { client: SupabaseClient }) {
                           className="admin-selection-checkbox admin-row-checkbox"
                           aria-label={`Selecionar ${p.name}`}
                           isSelected={selection.has(p.id)}
-                          isDisabled={busy}
+                          isDisabled={busy || loading}
                           onChange={() =>
                             setSelection((previous) =>
                               toggleProduct(previous, p),
@@ -340,7 +365,7 @@ export function Management({ client }: { client: SupabaseClient }) {
                             <Check />
                           </span>
                         </Checkbox>
-                        <img
+                        <LoadingImage
                           src={api.photoUrl(p.image_path)}
                           alt=""
                           loading="lazy"
@@ -374,7 +399,7 @@ export function Management({ client }: { client: SupabaseClient }) {
                               clearSelection();
                               setEditing(p);
                             }}
-                            isDisabled={busy}
+                            isDisabled={busy || loading}
                           >
                             Editar
                           </Button>
@@ -382,7 +407,7 @@ export function Management({ client }: { client: SupabaseClient }) {
                             variant="outline"
                             className="touch-button"
                             aria-label={`${p.active ? "Ocultar" : "Mostrar novamente"} ${p.name}`}
-                            isDisabled={busy}
+                            isDisabled={busy || loading}
                             onPress={() =>
                               p.active
                                 ? openAction("hide", [p])
@@ -396,7 +421,7 @@ export function Management({ client }: { client: SupabaseClient }) {
                               variant="destructive"
                               className="touch-button"
                               aria-label={`Excluir ${p.name}`}
-                              isDisabled={busy}
+                              isDisabled={busy || loading}
                               onPress={() =>
                                 openAction("delete", [
                                   {

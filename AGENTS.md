@@ -668,3 +668,17 @@ Referências oficiais para consultar conforme necessário:
   botão percentual para restaurar 100%, sem dependências adicionais
 - Imagem completa e controles permanecem dentro do viewport, URLs/Blob existentes
   reutilizados, fechamento dos detalhes continua confortável e visível
+
+## Skeletons de carregamento — 30/10/2026
+
+- Skeletons na carga inicial do catálogo em grade/folhear, abertura/autorização do
+  painel, listas administrativas, fotos, processamento inicial de foto e prévia PDF
+- Não mostrar vazio/zero produtos enquanto a consulta inicial estiver pendente
+- Trocar abas com dados prontos não cria espera artificial, dados públicos salvos
+  e listas da mesma consulta permanecem visíveis durante atualização
+- Falha ao atualizar a mesma consulta administrativa preserva a última lista junto
+  ao erro/retry, nunca mostrar lista de um filtro anterior como resultado novo
+- Skeletons discretos, sem controles falsamente interativos, respeitam reduced motion
+- LoadingImage preserva classes/dimensões, callbacks e URLs, incluindo Blob/cache,
+  e encerra skeleton ao carregar ou falhar, sem criar novas requisições
+- Salvar/excluir/sincronizar mantêm textos/progresso explícitos, sem esconder formulários

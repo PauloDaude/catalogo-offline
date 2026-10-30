@@ -1,3 +1,5 @@
+import { DocumentSkeleton } from "../components/LoadingSkeleton";
+import { LoadingImage } from "../components/LoadingImage";
 import { useEffect, useState } from "react";
 export function OrderPreview({ preview }: { preview: Blob | null }) {
   const [url, setUrl] = useState("");
@@ -12,8 +14,10 @@ export function OrderPreview({ preview }: { preview: Blob | null }) {
   }, [preview]);
   return (
     <div className="order-pdf-preview">
-      {url ? (
-        <img
+      {preview && !url ? (
+        <DocumentSkeleton label="Carregando prévia do PDF…" />
+      ) : url ? (
+        <LoadingImage
           src={url}
           alt="Prévia do topo da primeira página do pedido PDF"
         />

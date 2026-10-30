@@ -63,6 +63,8 @@ export function useManagementData(
   return {
     data,
     initialized: loadedKey !== "",
+    hasCurrentData: loadedKey === key && query === debouncedQuery,
+    refreshing: loading && loadedKey === key && query === debouncedQuery,
     refresh,
     error,
     setError,

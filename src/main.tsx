@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App";
+import { AccessSkeleton } from "./components/LoadingSkeleton";
 import "./styles.css";
 
 const AdminApp = lazy(() => import("./admin/AdminApp"));
@@ -10,7 +11,13 @@ const router = createBrowserRouter([
   {
     path: "/admin/*",
     element: (
-      <Suspense fallback={<p role="status">Abrindo…</p>}>
+      <Suspense
+        fallback={
+          <div className="admin-shell">
+            <AccessSkeleton label="Abrindo painel…" />
+          </div>
+        }
+      >
         <AdminApp />
       </Suspense>
     ),

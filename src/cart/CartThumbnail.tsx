@@ -1,3 +1,4 @@
+import { LoadingImage } from "../components/LoadingImage";
 import { useState } from "react";
 import { ImageOff } from "lucide-react";
 
@@ -17,7 +18,7 @@ export function CartThumbnail({ src, name }: { src?: string; name: string }) {
   }
 
   return (
-    <img
+    <LoadingImage
       className="cart-thumbnail"
       src={src}
       alt={name}

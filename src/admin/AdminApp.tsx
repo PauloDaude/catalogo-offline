@@ -8,6 +8,7 @@ import { Button } from "../components/ui/button";
 import { UnsavedContext, useUnsaved, useIsUnsaved } from "./unsaved";
 import { Management } from "./Management";
 import { AuthScreen } from "./auth/AuthScreen";
+import { AccessSkeleton } from "../components/LoadingSkeleton";
 
 export default function AdminApp() {
   const [client] = useState<{ value?: SupabaseClient; error?: string }>(() => {
@@ -166,8 +167,7 @@ function AdminSession({ client }: { client: SupabaseClient }) {
     </>
   );
 
-  if (access === "loading")
-    return layout(<p role="status">Conferindo acesso…</p>);
+  if (access === "loading") return layout(<AccessSkeleton />);
   if (location.pathname === "/admin/recuperar-senha")
     return layout(
       session ? (

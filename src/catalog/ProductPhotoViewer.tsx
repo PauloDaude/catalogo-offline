@@ -1,3 +1,4 @@
+import { LoadingImage } from "../components/LoadingImage";
 import { Expand } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Dialog, DialogTitle, DialogTrigger } from "../components/ui/dialog";
@@ -17,7 +18,7 @@ export function ProductPhotoViewer({
         className="product-photo-trigger"
         aria-label={`Ver foto completa de ${name}`}
       >
-        <img
+        <LoadingImage
           src={src}
           alt={name}
           className="dialog-image"

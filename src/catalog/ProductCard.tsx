@@ -1,3 +1,4 @@
+import { LoadingImage } from "../components/LoadingImage";
 import { useState } from "react";
 import { ShoppingCart, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -48,7 +49,7 @@ export function ProductCard({
 
       <div className="product-image">
         {image ? (
-          <img
+          <LoadingImage
             src={image}
             alt={product.name}
             loading="lazy"

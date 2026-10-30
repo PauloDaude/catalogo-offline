@@ -1,3 +1,4 @@
+import { DocumentSkeleton } from "../components/LoadingSkeleton";
 import { useEffect, useRef, useState } from "react";
 import {
   Form,
@@ -267,7 +268,7 @@ export function OrderDialog({
             {generating ? "Gerando…" : "Gerar PDF"}
           </Button>
           {generating && (
-            <p role="status">Gerando seu PDF, aguarde nesta tela</p>
+            <DocumentSkeleton label="Gerando seu PDF, aguarde nesta tela" />
           )}
         </Form>
       )}

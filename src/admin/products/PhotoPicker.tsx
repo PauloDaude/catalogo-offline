@@ -1,3 +1,5 @@
+import { Skeleton } from "../../components/LoadingSkeleton";
+import { LoadingImage } from "../../components/LoadingImage";
 import { DropZone, FileTrigger, Text } from "react-aria-components";
 import { ImagePlus, ImageUp, RefreshCw, Trash2 } from "lucide-react";
 import { Button } from "../../components/ui/button";
@@ -36,8 +38,10 @@ export function PhotoPicker({
           if (item?.kind === "file") await onSelect(await item.getFile());
         }}
       >
-        {image ? (
-          <img
+        {isProcessing && !image ? (
+          <Skeleton className="skeleton-processing-photo" />
+        ) : image ? (
+          <LoadingImage
             className="admin-photo-preview"
             src={image}
             alt="Prévia da foto do produto"

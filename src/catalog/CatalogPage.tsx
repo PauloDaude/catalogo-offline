@@ -15,12 +15,14 @@ import { ProductCard } from "./ProductCard";
 import { useCart } from "../cart/useCart";
 import { CartPanel } from "../cart/CartPanel";
 import { CatalogBook } from "./CatalogBook";
+import { CatalogSkeleton, Skeleton } from "../components/LoadingSkeleton";
 
 export type CatalogPageProps = {
   products: Product[];
   images: Map<string, string>;
   children?: React.ReactNode;
   catalogReady?: boolean;
+  loading?: boolean;
 };
 
 export function CatalogPage({
@@ -28,6 +30,7 @@ export function CatalogPage({
   images,
   children,
   catalogReady = true,
+  loading = false,
 }: CatalogPageProps) {
   const cart = useCart(products, catalogReady);
   const [bookMode, setBookMode] = useState(
@@ -42,6 +45,7 @@ export function CatalogPage({
     if (category !== null && !products.some((p) => p.category === category))
       setCategory(null);
   }, [products, category]);
+  const initialLoading = loading && !catalogReady;
   const filtered = filterProducts(products, query, category);
   const productImages = new Map<string, string>();
 
@@ -169,25 +173,36 @@ export function CatalogPage({
             className="result-count"
             aria-live="polite"
           >
-            {filtered.length} {filtered.length === 1 ? "produto" : "produtos"}
+            {initialLoading ? (
+              <Skeleton className="skeleton-result-count" />
+            ) : (
+              <>
+                {filtered.length}{" "}
+                {filtered.length === 1 ? "produto" : "produtos"}
+              </>
+            )}
           </p>
 
           <TabPanel
             id="folhear"
             className="catalog-view-panel"
           >
-            <CatalogBook
-              key={`${category}:${query}`}
-              products={filtered}
-              category={category}
-              onClearFilters={() => {
-                setQuery("");
-                setCategory(null);
-              }}
-              images={images}
-              quantityFor={(id) => quantityForParent(cart.items, id)}
-              onAdd={addProduct}
-            />
+            {initialLoading ? (
+              <CatalogSkeleton book />
+            ) : (
+              <CatalogBook
+                key={`${category}:${query}`}
+                products={filtered}
+                category={category}
+                onClearFilters={() => {
+                  setQuery("");
+                  setCategory(null);
+                }}
+                images={images}
+                quantityFor={(id) => quantityForParent(cart.items, id)}
+                onAdd={addProduct}
+              />
+            )}
           </TabPanel>
           <TabPanel
             id="cards"
@@ -197,7 +212,9 @@ export function CatalogPage({
               aria-label="Produtos"
               className="catalog-section"
             >
-              {filtered.length ? (
+              {initialLoading ? (
+                <CatalogSkeleton book={false} />
+              ) : filtered.length ? (
                 <div className="product-grid">
                   {filtered.map((product) => (
                     <ProductCard

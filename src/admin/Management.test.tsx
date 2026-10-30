@@ -253,3 +253,64 @@ test("Próxima permanece focada durante e após carregar outra página", async (
   await screen.findByText("Produto 21", { exact: true });
   expect(next).toHaveFocus();
 });
+
+test("lista inicial mostra skeleton até receber dados, depois mostra vazio real", async () => {
+  let finish!: (value: { products: never[]; total: number }) => void;
+  api.listProducts.mockReturnValue(
+    new Promise((resolve) => {
+      finish = resolve;
+    }),
+  );
+  render(<Management client={{} as SupabaseClient} />);
+  expect(screen.getByRole("status")).toHaveTextContent("Carregando produtos");
+  expect(document.querySelector(".skeleton-admin-list")).toBeInTheDocument();
+  expect(screen.queryByText("0 produtos")).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: "Adicionar produto" }),
+  ).toBeDisabled();
+  finish({ products: [], total: 0 });
+  await screen.findByText("0 produtos");
+  expect(
+    document.querySelector(".skeleton-admin-list"),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: "Adicionar produto" }),
+  ).toBeEnabled();
+});
+
+for (const fail of [false, true]) {
+  test(`atualização da mesma consulta preserva a lista durante espera e ${fail ? "falha" : "sucesso"}`, async () => {
+    const row = { ...product(1), active: false };
+    const initial = { products: [row], total: 1 };
+    let resolve!: (value: typeof initial) => void;
+    let reject!: (error: Error) => void;
+    const pending = new Promise<typeof initial>((ok, no) => {
+      resolve = ok;
+      reject = no;
+    });
+    api.listProducts
+      .mockResolvedValue(initial)
+      .mockResolvedValueOnce(initial)
+      .mockReturnValueOnce(pending);
+    render(<Management client={{} as SupabaseClient} />);
+    await screen.findByText("Produto 1");
+    await userEvent.click(
+      screen.getByRole("button", { name: "Mostrar novamente Produto 1" }),
+    );
+    await screen.findByText("Atualizando produtos…");
+    expect(screen.getByText("Produto 1")).toBeVisible();
+    expect(
+      document.querySelector(".skeleton-admin-list"),
+    ).not.toBeInTheDocument();
+    if (fail) {
+      reject(new Error("rede"));
+      await screen.findByText(
+        "A ação foi concluída, mas não foi possível atualizar a lista",
+      );
+    } else {
+      resolve({ products: [{ ...row, active: true }], total: 1 });
+      await screen.findByRole("button", { name: "Ocultar Produto 1" });
+    }
+    expect(screen.getByText("Produto 1")).toBeVisible();
+  });
+}

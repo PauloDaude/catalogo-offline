@@ -1,3 +1,4 @@
+import { LoadingImage } from "../components/LoadingImage";
 import { useId, useRef, useState, type PointerEvent } from "react";
 import { Minus, Plus } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -91,7 +92,7 @@ export function ProductPhotoZoom({ src, name }: { src: string; name: string }) {
         onLostPointerCapture={end}
         data-zoomed={view.scale > 1 || undefined}
       >
-        <img
+        <LoadingImage
           src={src}
           alt={name}
           className="product-photo-full"

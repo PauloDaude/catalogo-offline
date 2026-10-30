@@ -38,6 +38,7 @@ export default function App() {
       products={catalog.products}
       images={catalog.images}
       catalogReady={catalog.snapshot !== undefined}
+      loading={catalog.state === "loading"}
     >
       <SyncStatus
         {...catalog}

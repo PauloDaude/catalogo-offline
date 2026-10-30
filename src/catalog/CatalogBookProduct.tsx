@@ -1,3 +1,4 @@
+import { LoadingImage } from "../components/LoadingImage";
 import { ShoppingCart, Plus } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -89,7 +90,7 @@ export function CatalogBookProduct({
         </Button>
 
         {image ? (
-          <img
+          <LoadingImage
             src={image}
             alt={product.name}
             draggable={false}
