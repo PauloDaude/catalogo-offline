@@ -14,7 +14,7 @@ import { pathToFileURL, fileURLToPath } from "node:url";
 import { parseEnv } from "node:util";
 import { createClient } from "@supabase/supabase-js";
 import { verifyBackup } from "../backup/manifest.mjs";
-class ImportError extends Error {}
+export class ImportError extends Error {}
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const projectRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -107,7 +107,7 @@ export async function buildPayload(p, categories, resolvePhoto) {
     name: p.nome,
     category_id: category,
     image_path: await resolvePhoto(p.imagem),
-    active: false,
+    active: p.ativo ?? false,
     has_variants: p.tem_variantes,
   };
   if (!p.tem_variantes)
@@ -191,7 +191,9 @@ export async function importPilot({
       const raw = await readFile(path.join(root, "docs/produtos", source)),
         key = hash(raw);
       if (!journal.assets[key]) {
-        journal.assets[key] = { path: `products/${randomUUID()}.jpg` };
+        journal.assets[key] = {
+          path: `products/${randomUUID()}.${source.endsWith(".webp") ? "webp" : "jpg"}`,
+        };
         await saveJournal(file, journal);
       }
       const asset = journal.assets[key];
@@ -265,7 +267,7 @@ function matchesPayload(saved, payload) {
     );
   });
 }
-async function loadConfig() {
+export async function loadConfig() {
   const file = path.join(projectRoot, ".env.import");
   let local;
   try {
@@ -331,7 +333,10 @@ export function createApi(client, manifest) {
         );
       const result = await client.storage
         .from("product-photos")
-        .upload(path, bytes, { contentType: "image/jpeg", upsert: false });
+        .upload(path, bytes, {
+          contentType: path.endsWith(".webp") ? "image/webp" : "image/jpeg",
+          upsert: false,
+        });
       if (result.error) {
         const retry = await client.storage
           .from("product-photos")

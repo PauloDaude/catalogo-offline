@@ -67,3 +67,33 @@ sobrescrever arquivos existentes e conferidas por hash em uma retomada
 Confira no painel **Mostrar → Todos** os códigos, nomes, fotos e preços retornados,
 além das opções e do conteúdo das caixas. O comando não publica a build nem importa
 os demais registros da conversa, a ativação dos produtos exige revisão posterior
+
+## Lote completo — 29/10/2026
+
+Preparação em `docs/produtos/lote-completo-20261029.json`: 48 pais, 85 escolhas,
+67 fotos WebP e seis categorias. Preços comerciais preservados, canivete R$ 29,90,
+sem oferta fictícia. O usuário confirmou todos visíveis e aprovou os quatro casos comerciais antes
+do primeiro envio, conforme a revisão legível do lote completo.
+
+O novo executor é separado do piloto:
+
+```bash
+node scripts/import/full-import.mjs --dry-run
+node scripts/import/full-import.mjs --check
+node scripts/import/full-import.mjs --full
+node scripts/import/full-import.mjs --verify
+```
+
+`--dry-run` confere cobertura, fotos e hashes sem rede. `--check` autentica e
+confere por leitura o banco e o backup V2. `--full` cria/reutiliza categorias ativas,
+envia WebP antes de cada produto e confere o resultado. `--verify` só lê os dados
+remotos e baixa fotos para conferir hashes e MIME, sem cadastrar/alterar registros.
+
+Chaves `lote-completo-20261029-v1:*` e subpasta de journal exclusiva não modificam
+o piloto. O manifesto fica imutável após o início: não trocar visibilidade, nomes,
+preços ou agrupamento para contornar conflito. Ajustes posteriores usam o painel.
+Retries com o mesmo manifesto/journal conferem conteúdo, não duplicam o lote.
+Categorias arquivadas com o mesmo nome bloqueiam a operação para revisão.
+
+Não apaga fotos antigas, não reinicia sequência de códigos, não publica frontend.
+Backend precisa da migration009 e frontend atualizado para mostrar fotos WebP.

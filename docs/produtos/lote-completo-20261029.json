@@ -1,0 +1,1721 @@
+{
+  "formato": "cirandinha-lote-completo",
+  "versao": 1,
+  "lote": "lote-completo-20261029-v1",
+  "origens": 85,
+  "produtos": [
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0588-01",
+      "nome": "Lanterna recarregável GP6",
+      "categoria": "Elétrica e iluminação",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0588.webp",
+      "origens": ["WA0588-01", "WA0591-01", "WA0609-01"],
+      "caracteristica": "Potência",
+      "variantes": [
+        {
+          "origens": ["WA0588-01"],
+          "nome_origem": "Lanterna recarregável GP6 5 W",
+          "preco_centavos": 3890,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0588.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0588-01",
+          "rotulo": "5 W"
+        },
+        {
+          "origens": ["WA0591-01"],
+          "nome_origem": "Lanterna recarregável GP6 3 W",
+          "preco_centavos": 2790,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0591.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0591-01",
+          "rotulo": "3 W"
+        },
+        {
+          "origens": ["WA0609-01"],
+          "nome_origem": "Lanterna recarregável GP6 1 W",
+          "preco_centavos": 2290,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0609.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0609-01",
+          "rotulo": "1 W"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0589-01",
+      "nome": "Lanterna Original",
+      "categoria": "Elétrica e iluminação",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0589.webp",
+      "origens": ["WA0589-01", "WA0603-01", "WA0632-01"],
+      "caracteristica": "Potência",
+      "variantes": [
+        {
+          "origens": ["WA0589-01"],
+          "nome_origem": "Lanterna Original GD 5 W",
+          "preco_centavos": 4190,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0589.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0589-01",
+          "rotulo": "GD 5 W"
+        },
+        {
+          "origens": ["WA0603-01"],
+          "nome_origem": "Lanterna Original 3 W",
+          "preco_centavos": 3390,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0603.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0603-01",
+          "rotulo": "3 W"
+        },
+        {
+          "origens": ["WA0632-01"],
+          "nome_origem": "Lanterna Original 1 W",
+          "preco_centavos": 2590,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0632.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0632-01",
+          "rotulo": "1 W"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0612-01",
+      "nome": "Lanterna recarregável SQ",
+      "categoria": "Elétrica e iluminação",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0612.webp",
+      "origens": ["WA0612-01", "WA0629-01", "WA0590-01"],
+      "caracteristica": "Potência",
+      "variantes": [
+        {
+          "origens": ["WA0612-01"],
+          "nome_origem": "Lanterna recarregável SQ 5 W",
+          "preco_centavos": 3890,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0612.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0612-01",
+          "rotulo": "5 W"
+        },
+        {
+          "origens": ["WA0629-01"],
+          "nome_origem": "Lanterna recarregável SQ 3 W",
+          "preco_centavos": 2790,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0629.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0629-01",
+          "rotulo": "3 W"
+        },
+        {
+          "origens": ["WA0590-01"],
+          "nome_origem": "Lanterna recarregável SQ 1 W",
+          "preco_centavos": 2290,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0590.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0590-01",
+          "rotulo": "1 W"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0644-01",
+      "nome": "Lanterna a pilha com 1 LED",
+      "categoria": "Elétrica e iluminação",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0644.webp",
+      "origens": ["WA0644-01"],
+      "nome_origem": "Lanterna a pilha com 1 LED",
+      "preco_centavos": 1390,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0594-01",
+      "nome": "Canivete inox automático",
+      "categoria": "Ferramentas e acessórios",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0594.webp",
+      "origens": ["WA0594-01"],
+      "nome_origem": "Canivete inox automático",
+      "preco_centavos": 2990,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0619-01",
+      "nome": "Elástico para moto",
+      "categoria": "Ferramentas e acessórios",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0619.webp",
+      "origens": ["WA0619-01", "WA0593-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0619-01"],
+          "nome_origem": "Elástico para moto com gancho de plástico 3 m",
+          "preco_centavos": 4090,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0619.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 10,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 10,
+            "rotulo": "Caixa com 10 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0619-01",
+          "rotulo": "com gancho de plástico 3 m"
+        },
+        {
+          "origens": ["WA0593-01"],
+          "nome_origem": "Elástico para moto com gancho de ferro 2 m",
+          "preco_centavos": 4590,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0593.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 10,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 10,
+            "rotulo": "Caixa com 10 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0593-01",
+          "rotulo": "com gancho de ferro 2 m"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0592-01",
+      "nome": "Palito mata-mosquito",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0592.webp",
+      "origens": ["WA0592-01"],
+      "nome_origem": "Palito mata-mosquito",
+      "preco_centavos": 690,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0638-01",
+      "nome": "Kit para churrasco GP6",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0638.webp",
+      "origens": ["WA0638-01"],
+      "nome_origem": "Kit para churrasco GP6",
+      "preco_centavos": 1290,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0601-01",
+      "nome": "Talheres inox Extra",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0601.webp",
+      "origens": ["WA0601-01"],
+      "nome_origem": "Talheres inox Extra",
+      "preco_centavos": 1890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 6,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 6,
+        "rotulo": "Caixa com 6 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0600-01",
+      "nome": "Faca de cozinha",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0600.webp",
+      "origens": ["WA0600-01", "WA0600-02", "WA0600-03"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0600-01"],
+          "nome_origem": "Faca de cozinha 10 polegadas",
+          "preco_centavos": 1590,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0600.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0600-01",
+          "rotulo": "10 polegadas"
+        },
+        {
+          "origens": ["WA0600-02"],
+          "nome_origem": "Faca de cozinha 6 polegadas",
+          "preco_centavos": 1190,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0600.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0600-02",
+          "rotulo": "6 polegadas"
+        },
+        {
+          "origens": ["WA0600-03"],
+          "nome_origem": "Faca de cozinha 5 polegadas",
+          "preco_centavos": 990,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0600.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0600-03",
+          "rotulo": "5 polegadas"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0652-01",
+      "nome": "Cortador de unha SQ",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0652.webp",
+      "origens": ["WA0652-01", "WA0652-02"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0652-01"],
+          "nome_origem": "Cortador de unha SQ grande",
+          "preco_centavos": 3390,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0652.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0652-01",
+          "rotulo": "grande"
+        },
+        {
+          "origens": ["WA0652-02"],
+          "nome_origem": "Cortador de unha SQ médio",
+          "preco_centavos": 2090,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0652.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0652-02",
+          "rotulo": "médio"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0602-01",
+      "nome": "Tubo de látex",
+      "categoria": "Lazer",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0602.webp",
+      "origens": ["WA0602-01", "WA0621-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0602-01"],
+          "nome_origem": "Tubo de látex 203 15 m",
+          "preco_centavos": 5690,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0602.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0602-01",
+          "rotulo": "203 · 15 m"
+        },
+        {
+          "origens": ["WA0621-01"],
+          "nome_origem": "Tubo de látex 201 15 m",
+          "preco_centavos": 4695,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0621.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0621-01",
+          "rotulo": "201 · 15 m"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0627-01",
+      "nome": "Processador de alimentos",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0627.webp",
+      "origens": ["WA0627-01", "WA0598-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0627-01"],
+          "nome_origem": "Processador de alimentos 500 ml",
+          "preco_centavos": 1490,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0627.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0627-01",
+          "rotulo": "500 ml"
+        },
+        {
+          "origens": ["WA0598-01"],
+          "nome_origem": "Processador de alimentos 900 ml",
+          "preco_centavos": 2190,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0598.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0598-01",
+          "rotulo": "900 ml"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0604-01",
+      "nome": "Tábua",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0604.webp",
+      "origens": ["WA0604-01", "WA0604-02", "WA0604-03"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0604-01"],
+          "nome_origem": "Tábua grande",
+          "preco_centavos": 3290,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0604.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0604-01",
+          "rotulo": "grande"
+        },
+        {
+          "origens": ["WA0604-02"],
+          "nome_origem": "Tábua média",
+          "preco_centavos": 1490,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0604.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0604-02",
+          "rotulo": "média"
+        },
+        {
+          "origens": ["WA0604-03"],
+          "nome_origem": "Tábua pequena",
+          "preco_centavos": 1290,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0604.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0604-03",
+          "rotulo": "pequena"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0653-01",
+      "nome": "Funil flexível",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0653.webp",
+      "origens": ["WA0653-01"],
+      "nome_origem": "Funil flexível",
+      "preco_centavos": 890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0648-01",
+      "nome": "Acendedor de fogão",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0648.webp",
+      "origens": ["WA0648-01"],
+      "nome_origem": "Acendedor de fogão",
+      "preco_centavos": 770,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0608-01",
+      "nome": "Pano de prato",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0608.webp",
+      "origens": ["WA0608-01"],
+      "nome_origem": "Pano de prato",
+      "preco_centavos": 4890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0651-01",
+      "nome": "Balança de cozinha GP6 10 kg",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0651.webp",
+      "origens": ["WA0651-01"],
+      "nome_origem": "Balança de cozinha GP6 10 kg",
+      "preco_centavos": 1990,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0595-01",
+      "nome": "Escova para cabelo",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0595.webp",
+      "origens": ["WA0595-01", "WA0596-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0595-01"],
+          "nome_origem": "Escova para cabelo",
+          "preco_centavos": 3590,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0595.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0595-01",
+          "rotulo": "Modelo 1"
+        },
+        {
+          "origens": ["WA0596-01"],
+          "nome_origem": "Escova para cabelo",
+          "preco_centavos": 3590,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0596.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0596-01",
+          "rotulo": "Modelo 2"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0616-01",
+      "nome": "Linha para costura Gabrielinha",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0616.webp",
+      "origens": ["WA0616-01"],
+      "nome_origem": "Linha para costura Gabrielinha",
+      "preco_centavos": 5590,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 48,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 48,
+        "rotulo": "Caixa com 48 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0617-01",
+      "nome": "Lixa para pé",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0617.webp",
+      "origens": ["WA0617-01", "WA0597-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0617-01"],
+          "nome_origem": "Lixa para pé PVC",
+          "preco_centavos": 3790,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0617.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0617-01",
+          "rotulo": "PVC"
+        },
+        {
+          "origens": ["WA0597-01"],
+          "nome_origem": "Lixa para pé EVA",
+          "preco_centavos": 3790,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0597.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0597-01",
+          "rotulo": "EVA"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0623-01",
+      "nome": "Fita isolante",
+      "categoria": "Elétrica e iluminação",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0623.webp",
+      "origens": ["WA0623-01", "WA0623-02"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0623-01"],
+          "nome_origem": "Fita isolante 10 m",
+          "preco_centavos": 2190,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0623.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 10,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 10,
+            "rotulo": "Caixa com 10 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0623-01",
+          "rotulo": "10 m"
+        },
+        {
+          "origens": ["WA0623-02"],
+          "nome_origem": "Fita isolante 5 m",
+          "preco_centavos": 1590,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0623.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 10,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 10,
+            "rotulo": "Caixa com 10 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0623-02",
+          "rotulo": "5 m"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0625-01",
+      "nome": "Bomba para encher pneu",
+      "categoria": "Ferramentas e acessórios",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0625.webp",
+      "origens": ["WA0625-01"],
+      "nome_origem": "Bomba para encher pneu",
+      "preco_centavos": 2190,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0599-01",
+      "nome": "Baralho plástico",
+      "categoria": "Lazer",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0599.webp",
+      "origens": ["WA0599-01"],
+      "nome_origem": "Baralho plástico",
+      "preco_centavos": 650,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 2,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 2,
+        "rotulo": "Caixa com 2 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0633-01",
+      "nome": "Pino com 4 saídas",
+      "categoria": "Elétrica e iluminação",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0633.webp",
+      "origens": ["WA0633-01"],
+      "nome_origem": "Pino com 4 saídas",
+      "preco_centavos": 410,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0634-01",
+      "nome": "Xuxinha",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0634.webp",
+      "origens": ["WA0634-01", "WA0637-01"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0634-01"],
+          "nome_origem": "Xuxinha grande",
+          "preco_centavos": 2290,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0634.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 50,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 50,
+            "rotulo": "Caixa com 50 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0634-01",
+          "rotulo": "grande"
+        },
+        {
+          "origens": ["WA0637-01"],
+          "nome_origem": "Xuxinha média",
+          "preco_centavos": 1750,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0637.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 50,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 50,
+            "rotulo": "Caixa com 50 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0637-01",
+          "rotulo": "média"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0641-01",
+      "nome": "Escova dental",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0641.webp",
+      "origens": ["WA0641-01", "WA0646-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0641-01"],
+          "nome_origem": "Escova dental adulta GP6",
+          "preco_centavos": 2390,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0641.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0641-01",
+          "rotulo": "adulta GP6"
+        },
+        {
+          "origens": ["WA0646-01"],
+          "nome_origem": "Escova dental infantil",
+          "preco_centavos": 2390,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0646.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0646-01",
+          "rotulo": "infantil"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0654-01",
+      "nome": "Aparelho de barbear de metal com lâmina",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0654.webp",
+      "origens": ["WA0654-01"],
+      "nome_origem": "Aparelho de barbear de metal com lâmina",
+      "preco_centavos": 450,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0649-01",
+      "nome": "Navalha para barba",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0649.webp",
+      "origens": ["WA0649-01"],
+      "nome_origem": "Navalha para barba",
+      "preco_centavos": 650,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0607-01",
+      "nome": "Afiador de faca",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0607.webp",
+      "origens": ["WA0607-01"],
+      "nome_origem": "Afiador de faca",
+      "preco_centavos": 1090,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0610-01",
+      "nome": "Calculadora",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0610.webp",
+      "origens": ["WA0610-01", "WA0611-01", "WA0613-01", "WA0655-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0610-01"],
+          "nome_origem": "Calculadora grande 12 dígitos",
+          "preco_centavos": 2490,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0610.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0610-01",
+          "rotulo": "grande 12 dígitos"
+        },
+        {
+          "origens": ["WA0611-01"],
+          "nome_origem": "Calculadora média 8 dígitos GP6 3122A",
+          "preco_centavos": 1790,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0611.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0611-01",
+          "rotulo": "média 8 dígitos GP6 3122A"
+        },
+        {
+          "origens": ["WA0613-01"],
+          "nome_origem": "Calculadora média 8 dígitos GP6 808V",
+          "preco_centavos": 1690,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0613.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0613-01",
+          "rotulo": "média 8 dígitos GP6 808V"
+        },
+        {
+          "origens": ["WA0655-01"],
+          "nome_origem": "Calculadora grande 8 dígitos",
+          "preco_centavos": 1790,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0655.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0655-01",
+          "rotulo": "grande 8 dígitos"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0615-01",
+      "nome": "Coador para café",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0615.webp",
+      "origens": ["WA0615-01", "WA0615-02", "WA0615-03"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0615-01"],
+          "nome_origem": "Coador para café grande",
+          "preco_centavos": 3180,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0615.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_unitario_vezes_unidades_da_caixa"
+          },
+          "chave_opcao": "WA0615-01",
+          "rotulo": "grande"
+        },
+        {
+          "origens": ["WA0615-02"],
+          "nome_origem": "Coador para café médio",
+          "preco_centavos": 3060,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0615.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_unitario_vezes_unidades_da_caixa"
+          },
+          "chave_opcao": "WA0615-02",
+          "rotulo": "médio"
+        },
+        {
+          "origens": ["WA0615-03"],
+          "nome_origem": "Coador para café pequeno",
+          "preco_centavos": 2940,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0615.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_unitario_vezes_unidades_da_caixa"
+          },
+          "chave_opcao": "WA0615-03",
+          "rotulo": "pequeno"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0618-01",
+      "nome": "Tesoura profissional 10,5 polegadas",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0618.webp",
+      "origens": ["WA0618-01"],
+      "nome_origem": "Tesoura profissional 10,5 polegadas",
+      "preco_centavos": 3890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0620-01",
+      "nome": "Tesoura para unha",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0620.webp",
+      "origens": ["WA0620-01", "WA0622-01"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0620-01"],
+          "nome_origem": "Tesoura para unha com ponta redonda",
+          "preco_centavos": 650,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0620.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0620-01",
+          "rotulo": "com ponta redonda"
+        },
+        {
+          "origens": ["WA0622-01"],
+          "nome_origem": "Tesoura para unha com ponta curva e reta",
+          "preco_centavos": 490,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0622.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0622-01",
+          "rotulo": "com ponta curva e reta"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0624-01",
+      "nome": "Tesoura polegadas",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0624.webp",
+      "origens": ["WA0624-01", "WA0624-02"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0624-01"],
+          "nome_origem": "Tesoura 9,5 polegadas",
+          "preco_centavos": 790,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0624.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0624-01",
+          "rotulo": "9,5 polegadas"
+        },
+        {
+          "origens": ["WA0624-02"],
+          "nome_origem": "Tesoura 8 polegadas",
+          "preco_centavos": 750,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0624.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0624-02",
+          "rotulo": "8 polegadas"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0626-01",
+      "nome": "Tesoura GP6",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0626.webp",
+      "origens": ["WA0626-01", "WA0626-02", "WA0626-03"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0626-01"],
+          "nome_origem": "Tesoura GP6 9,5 polegadas",
+          "preco_centavos": 990,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0626.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0626-01",
+          "rotulo": "9,5 polegadas"
+        },
+        {
+          "origens": ["WA0626-02"],
+          "nome_origem": "Tesoura GP6 8,5 polegadas",
+          "preco_centavos": 890,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0626.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0626-02",
+          "rotulo": "8,5 polegadas"
+        },
+        {
+          "origens": ["WA0626-03"],
+          "nome_origem": "Tesoura GP6 7,5 polegadas",
+          "preco_centavos": 690,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0626.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0626-03",
+          "rotulo": "7,5 polegadas"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0628-01",
+      "nome": "Tesoura cm",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0628.webp",
+      "origens": ["WA0628-01", "WA0628-02", "WA0628-03"],
+      "caracteristica": "Tamanho",
+      "variantes": [
+        {
+          "origens": ["WA0628-01"],
+          "nome_origem": "Tesoura 23,5 cm",
+          "preco_centavos": 890,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0628.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0628-01",
+          "rotulo": "23,5 cm"
+        },
+        {
+          "origens": ["WA0628-02"],
+          "nome_origem": "Tesoura 20,3 cm",
+          "preco_centavos": 850,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0628.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0628-02",
+          "rotulo": "20,3 cm"
+        },
+        {
+          "origens": ["WA0628-03"],
+          "nome_origem": "Tesoura 18,5 cm",
+          "preco_centavos": 650,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0628.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0628-03",
+          "rotulo": "18,5 cm"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0630-01",
+      "nome": "Kit de tesouras SQ",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0630.webp",
+      "origens": ["WA0630-01"],
+      "nome_origem": "Kit de tesouras SQ",
+      "preco_centavos": 2090,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 3,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 3,
+        "rotulo": "Caixa com 3 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0631-01",
+      "nome": "Kit de tesouras",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0631.webp",
+      "origens": ["WA0631-01"],
+      "nome_origem": "Kit de tesouras",
+      "preco_centavos": 1890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 3,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 3,
+        "rotulo": "Caixa com 3 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0635-01",
+      "nome": "Elástico para cabelo",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0635.webp",
+      "origens": ["WA0635-01"],
+      "nome_origem": "Elástico para cabelo",
+      "preco_centavos": 2290,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 6,
+        "unidades_totais": 72,
+        "rotulo": "Caixa com 12 conjuntos de 6 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0636-01",
+      "nome": "Rabicó trançado",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0636.webp",
+      "origens": ["WA0636-01"],
+      "nome_origem": "Rabicó trançado",
+      "preco_centavos": 2290,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 4,
+        "unidades_totais": 48,
+        "rotulo": "Caixa com 12 conjuntos de 4 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0639-01",
+      "nome": "Borracha para panela de silicone",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0639.webp",
+      "origens": ["WA0639-01", "WA0642-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0639-01"],
+          "nome_origem": "Borracha para panela de silicone 2,5 a 4,5 L",
+          "preco_centavos": 3090,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0639.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0639-01",
+          "rotulo": "2,5 a 4,5 L"
+        },
+        {
+          "origens": ["WA0642-01"],
+          "nome_origem": "Borracha para panela de silicone 7 L",
+          "preco_centavos": 3390,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0642.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 12,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 12,
+            "rotulo": "Caixa com 12 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0642-01",
+          "rotulo": "7 L"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0640-01",
+      "nome": "Borracha para panela 4,5 L",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0640.webp",
+      "origens": ["WA0640-01"],
+      "nome_origem": "Borracha para panela 4,5 L",
+      "preco_centavos": 1790,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 12,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 12,
+        "rotulo": "Caixa com 12 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0643-01",
+      "nome": "Estilingue",
+      "categoria": "Lazer",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0643.webp",
+      "origens": ["WA0643-01", "WA0643-02"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0643-01"],
+          "nome_origem": "Estilingue 203",
+          "preco_centavos": 965,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0643.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0643-01",
+          "rotulo": "203"
+        },
+        {
+          "origens": ["WA0643-02"],
+          "nome_origem": "Estilingue 201",
+          "preco_centavos": 890,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0643.webp",
+          "venda": {
+            "tipo": "unidade",
+            "unidades_totais": 1,
+            "rotulo": "Unidade",
+            "regra_preco": "preco_informado"
+          },
+          "chave_opcao": "WA0643-02",
+          "rotulo": "201"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0605-01",
+      "nome": "Pente fino",
+      "categoria": "Beleza e higiene",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0605.webp",
+      "origens": ["WA0605-01", "WA0645-01"],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0605-01"],
+          "nome_origem": "Pente fino com cabo",
+          "preco_centavos": 1590,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0605.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 24,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 24,
+            "rotulo": "Caixa com 24 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0605-01",
+          "rotulo": "com cabo"
+        },
+        {
+          "origens": ["WA0645-01"],
+          "nome_origem": "Pente fino sem cabo",
+          "preco_centavos": 1390,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0645.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 24,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 24,
+            "rotulo": "Caixa com 24 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0645-01",
+          "rotulo": "sem cabo"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0647-01",
+      "nome": "Raquete elétrica mata-mosquito",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0647.webp",
+      "origens": ["WA0647-01"],
+      "nome_origem": "Raquete elétrica mata-mosquito",
+      "preco_centavos": 2490,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "unidade",
+        "unidades_totais": 1,
+        "rotulo": "Unidade",
+        "regra_preco": "preco_informado"
+      }
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0606-01",
+      "nome": "Agulha de mão",
+      "categoria": "Costura e papelaria",
+      "ativo": true,
+      "tem_variantes": true,
+      "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+      "origens": [
+        "WA0606-01",
+        "WA0606-02",
+        "WA0606-03",
+        "WA0606-04",
+        "WA0606-05"
+      ],
+      "caracteristica": "Opção",
+      "variantes": [
+        {
+          "origens": ["WA0606-01"],
+          "nome_origem": "Agulha de mão nº 2/0",
+          "preco_centavos": 1150,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 20,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 20,
+            "rotulo": "Caixa com 20 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0606-01",
+          "rotulo": "2/0"
+        },
+        {
+          "origens": ["WA0606-02"],
+          "nome_origem": "Agulha de mão nº 1",
+          "preco_centavos": 1090,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 20,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 20,
+            "rotulo": "Caixa com 20 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0606-02",
+          "rotulo": "1"
+        },
+        {
+          "origens": ["WA0606-03"],
+          "nome_origem": "Agulha de mão nº 3",
+          "preco_centavos": 1090,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 20,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 20,
+            "rotulo": "Caixa com 20 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0606-03",
+          "rotulo": "3"
+        },
+        {
+          "origens": ["WA0606-04"],
+          "nome_origem": "Agulha de mão nº 5",
+          "preco_centavos": 990,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 20,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 20,
+            "rotulo": "Caixa com 20 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0606-04",
+          "rotulo": "5"
+        },
+        {
+          "origens": ["WA0606-05"],
+          "nome_origem": "Agulha de mão nº 6",
+          "preco_centavos": 990,
+          "preco_anterior_centavos": null,
+          "imagem": "imagens-webp/IMG-20261002-WA0606.webp",
+          "venda": {
+            "tipo": "caixa",
+            "embalagens_por_caixa": 20,
+            "unidades_por_embalagem": 1,
+            "unidades_totais": 20,
+            "rotulo": "Caixa com 20 unidades",
+            "regra_preco": "preco_da_caixa_informado"
+          },
+          "chave_opcao": "WA0606-05",
+          "rotulo": "6"
+        }
+      ]
+    },
+    {
+      "chave_importacao": "lote-completo-20261029-v1:WA0669-01",
+      "nome": "Tampa de pia EVA",
+      "categoria": "Casa e cozinha",
+      "ativo": true,
+      "tem_variantes": false,
+      "imagem": "imagens-webp/IMG-20261002-WA0669.webp",
+      "origens": ["WA0669-01"],
+      "nome_origem": "Tampa de pia EVA",
+      "preco_centavos": 3890,
+      "preco_anterior_centavos": null,
+      "venda": {
+        "tipo": "caixa",
+        "embalagens_por_caixa": 100,
+        "unidades_por_embalagem": 1,
+        "unidades_totais": 100,
+        "rotulo": "Caixa com 100 unidades",
+        "regra_preco": "preco_da_caixa_informado"
+      }
+    }
+  ]
+}
