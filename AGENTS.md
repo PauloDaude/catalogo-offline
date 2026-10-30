@@ -657,3 +657,14 @@ Referências oficiais para consultar conforme necessário:
   armazenamento ou dependência, ausência de foto mantém indicação sem botão vazio
 - Limite de altura em produtos com variantes é aplicado à imagem, evitando recorte
   causado por limitar só o contêiner, mantendo proporção e foto inteira
+
+## Ampliação com overlay e zoom — 30/10/2026
+
+- Substitui o fundo branco da ampliação: overlay preto com opacidade 78% e blur 8 px
+- Tocar fora da foto fecha apenas a ampliação, toque na foto não fecha, Escape e
+  retorno de foco preservados, botão Fechar removido somente da ampliação
+- Título centralizado logo acima da imagem, com margem de 12 px
+- Zoom de 100% a 400% por pinça ou botões, arrasto limitado à imagem ampliada e
+  botão percentual para restaurar 100%, sem dependências adicionais
+- Imagem completa e controles permanecem dentro do viewport, URLs/Blob existentes
+  reutilizados, fechamento dos detalhes continua confortável e visível

@@ -24,3 +24,16 @@ existente da imagem/Blob, preservando a consulta offline após preparação.
 - Validação em hardware Android permanece pendente
 
 O build demo é apenas para testes locais e não altera variáveis do Cloudflare.
+
+## Refinamentos solicitados em seguida
+
+A ampliação passa a usar overlay preto a 78% com blur de 8 px, título junto à
+imagem e nenhum botão Fechar visível nessa camada. Clicar no fundo fecha somente
+a ampliação, clicar na imagem não fecha, Escape e foco seguem funcionando.
+
+Zoom limitado a 100–400%, pinça com dois dedos, botões +/- e restauração a 100%,
+com arrasto limitado pelas bordas. Foto e controles reutilizam URLs da sessão.
+Quatro cenários de navegador nos mesmos viewports aprovados, incluindo clique
+fora/dentro, distância do título, zoom, arrasto e gesto de pinça via eventos touch
+no Chromium. Hardware real continua pendente. Testes unitários incluem limites
+mínimo/máximo e restauração do zoom.

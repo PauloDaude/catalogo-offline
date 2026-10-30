@@ -94,7 +94,10 @@ test("ampliação usa a foto da opção escolhida e mantém a seleção ao fecha
   );
   const photo = screen.getByRole("dialog", { name: `Foto de ${product.name}` });
   expect(within(photo).getByRole("img")).toHaveAttribute("src", "blob:v2");
-  await user.click(within(photo).getByRole("button", { name: /^Fechar$/ }));
+  expect(
+    within(photo).queryByRole("button", { name: /^Fechar$/ }),
+  ).not.toBeInTheDocument();
+  await user.keyboard("{Escape}");
   expect(screen.getByRole("button", { name: /Potência$/ })).toHaveTextContent(
     "3 W",
   );

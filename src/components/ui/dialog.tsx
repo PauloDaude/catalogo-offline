@@ -68,6 +68,7 @@ function DialogOverlay({
 
 function Dialog({
   className,
+  overlayClassName,
   children,
   showCloseButton = true,
   isDismissable = true,
@@ -77,9 +78,11 @@ function Dialog({
     className?: string;
     children: React.ReactNode;
     showCloseButton?: boolean;
+    overlayClassName?: string;
   }) {
   return (
     <DialogOverlay
+      className={overlayClassName}
       isDismissable={isDismissable}
       {...props}
     >

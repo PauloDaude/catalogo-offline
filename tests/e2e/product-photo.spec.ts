@@ -83,6 +83,9 @@ for (const [width, height] of [
       name: "Foto de Lanterna recarregável GP6",
     });
     await expect(photo).toBeVisible();
+    const overlay = page.locator(".product-photo-overlay");
+    await expect(overlay).toHaveCSS("background-color", "rgba(0, 0, 0, 0.78)");
+    await expect(overlay).toHaveCSS("backdrop-filter", "blur(8px)");
     const full = photo.locator(".product-photo-full");
     await expect(full).toHaveCSS("object-fit", "contain");
     expect(
@@ -99,12 +102,90 @@ for (const [width, height] of [
     expect(fullBox!.y + fullBox!.height).toBeLessThanOrEqual(height + 1);
     await expect(
       photo.getByRole("button", { name: "Fechar", exact: true }),
-    ).toBeInViewport();
+    ).toHaveCount(0);
+    const titleBox = await photo.getByRole("heading").boundingBox();
+    const stage = photo.locator(".product-photo-stage");
+    const stageBox = await stage.boundingBox();
+    expect(
+      stageBox!.y - (titleBox!.y + titleBox!.height),
+    ).toBeGreaterThanOrEqual(8);
+    expect(stageBox!.y - (titleBox!.y + titleBox!.height)).toBeLessThanOrEqual(
+      16,
+    );
+    await photo.getByRole("button", { name: "Aproximar foto" }).click();
+    await expect(
+      photo.getByRole("button", { name: "Restaurar tamanho da foto" }),
+    ).toHaveText("150%");
+    const zoomed = await full.boundingBox();
+    expect(zoomed!.width).toBeGreaterThan(fullBox!.width * 1.4);
+    await expect(stage).toHaveCSS("overflow", "hidden");
+    await page.mouse.move(
+      stageBox!.x + stageBox!.width / 2,
+      stageBox!.y + stageBox!.height / 2,
+    );
+    await page.mouse.down();
+    await page.mouse.move(
+      stageBox!.x + stageBox!.width / 2 + 25,
+      stageBox!.y + stageBox!.height / 2 + 20,
+    );
+    await page.mouse.up();
+    const panned = await full.boundingBox();
+    expect(panned!.x).toBeGreaterThan(zoomed!.x);
+    await photo
+      .getByRole("button", { name: "Restaurar tamanho da foto" })
+      .click();
+    if (width === 390) {
+      const cdp = await page.context().newCDPSession(page);
+      await cdp.send("Emulation.setTouchEmulationEnabled", {
+        enabled: true,
+        maxTouchPoints: 2,
+      });
+      const cx = stageBox!.x + stageBox!.width / 2,
+        cy = stageBox!.y + stageBox!.height / 2;
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: [
+          { x: cx - 20, y: cy, id: 1 },
+          { x: cx + 20, y: cy, id: 2 },
+        ],
+      });
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: [
+          { x: cx - 35, y: cy, id: 1 },
+          { x: cx + 35, y: cy, id: 2 },
+        ],
+      });
+      await cdp.send("Input.dispatchTouchEvent", {
+        type: "touchEnd",
+        touchPoints: [],
+      });
+      await expect
+        .poll(async () =>
+          parseInt(
+            await photo
+              .getByRole("button", { name: "Restaurar tamanho da foto" })
+              .innerText(),
+          ),
+        )
+        .toBeGreaterThanOrEqual(150);
+      await photo
+        .getByRole("button", { name: "Restaurar tamanho da foto" })
+        .click();
+      await cdp.detach();
+    }
     if (width === 390)
       await page.screenshot({
         path: "/tmp/catalogo-photo-fullscreen-mobile.png",
       });
-    await photo.getByRole("button", { name: "Fechar", exact: true }).click();
+    await full.click();
+    await expect(photo).toBeVisible();
+    await page.mouse.click(8, height / 2);
+    await expect(photo).toHaveCount(0);
+    await expect(photoButton).toBeFocused();
+    await photoButton.click();
+    await expect(photo).toBeVisible();
+    await page.keyboard.press("Escape");
     await expect(photo).toHaveCount(0);
     await expect(photoButton).toBeFocused();
     await expect(

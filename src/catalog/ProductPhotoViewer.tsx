@@ -1,11 +1,7 @@
-import { Expand, X } from "lucide-react";
+import { Expand } from "lucide-react";
 import { Button } from "../components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogTitle,
-  DialogTrigger,
-} from "../components/ui/dialog";
+import { Dialog, DialogTitle, DialogTrigger } from "../components/ui/dialog";
+import { ProductPhotoZoom } from "./ProductPhotoZoom";
 
 export function ProductPhotoViewer({
   src,
@@ -37,18 +33,15 @@ export function ProductPhotoViewer({
       <Dialog
         showCloseButton={false}
         className="product-photo-viewer"
+        overlayClassName="product-photo-overlay"
       >
         <div className="product-photo-viewer-header">
-          <DialogTitle>Foto de {name}</DialogTitle>
-          <DialogClose className="touch-button">
-            <X aria-hidden="true" />
-            Fechar
-          </DialogClose>
+          <DialogTitle aria-label={`Foto de ${name}`}>{name}</DialogTitle>
         </div>
-        <img
+        <ProductPhotoZoom
+          key={src}
           src={src}
-          alt={name}
-          className="product-photo-full"
+          name={name}
         />
       </Dialog>
     </DialogTrigger>
